@@ -1,0 +1,1306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9525CA08-2F26-4A11-8F77-C667D2A3A5DF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>BudgetManual.My.MyApplication</StartupObject>
+    <RootNamespace>BudgetManual</RootNamespace>
+    <AssemblyName>BudgetingSystem</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+    <SignManifests>false</SignManifests>
+    <ApplicationIcon>Images\kspread_ksp.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>true</GenerateManifests>
+    <ManifestCertificateThumbprint>091E4A1C65BF1A336CD24CC5E82E902704BE6B0A</ManifestCertificateThumbprint>
+    <ManifestKeyFile>BudgetManual_TemporaryKey.pfx</ManifestKeyFile>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>D:\Project\2012\btmt\Budget\Released\Publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <InstallUrl>\\10.30.99.37\Install\</InstallUrl>
+    <UpdateUrl>\\10.30.99.37\Install\</UpdateUrl>
+    <ProductName>BTMT Budgeting System</ProductName>
+    <PublisherName>INNOVA Software</PublisherName>
+    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationVersion>1.1.6.9</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>BudgetingSystem.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>BudgetingSystem.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Enterprise.Framework, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.Enterprise.InfoStore, Version=10.5.3700.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73" />
+    <Reference Include="Interop.SQLDMO, Version=8.5.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\WINDOWS\assembly\GAC_MSIL\System.Web.Services\2.0.0.0__b03f5f7f11d50a3a\System.Web.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BL\clsBG0000BL.vb" />
+    <Compile Include="BL\clsBG0010BL.vb" />
+    <Compile Include="BL\clsBG0110BL.vb" />
+    <Compile Include="BL\clsBG0395BL.vb" />
+    <Compile Include="BL\clsBG0710BL.vb" />
+    <Compile Include="BL\clsBG0310BL.vb" />
+    <Compile Include="BL\clsBG0320BL.vb" />
+    <Compile Include="BL\clsBG0012BL.vb" />
+    <Compile Include="BL\clsBG0610BL.vb" />
+    <Compile Include="BL\clsBG0200BL.vb" />
+    <Compile Include="BL\clsBG0620BL.vb" />
+    <Compile Include="BL\clsBG0630BL.vb" />
+    <Compile Include="BL\clsBG0640BL.vb" />
+    <Compile Include="BL\clsBG0650BL.vb" />
+    <Compile Include="BL\clsBG0660BL.vb" />
+    <Compile Include="BL\clsBG0380BL.vb" />
+    <Compile Include="BL\clsBG0680BL.vb" />
+    <Compile Include="BL\clsBG0410BL.vb" />
+    <Compile Include="BL\clsBG0430BL.vb" />
+    <Compile Include="BL\clsBG0330BL.vb" />
+    <Compile Include="BL\clsBG0401BL.vb" />
+    <Compile Include="BL\clsBG0360BL.vb" />
+    <Compile Include="BL\clsBG0450BL.vb" />
+    <Compile Include="BL\clsBG0420BL.vb" />
+    <Compile Include="BL\clsBG0350BL.vb" />
+    <Compile Include="BL\clsBG0460BL.vb" />
+    <Compile Include="BL\clsBG0440BL.vb" />
+    <Compile Include="BL\clsBG0670BL.vb" />
+    <Compile Include="BL\clsBG0690BL.vb" />
+    <Compile Include="BL\clsBG0390BL.vb" />
+    <Compile Include="BL\clsBG0720BL.vb" />
+    <Compile Include="BL\clsBG0611BL.vb" />
+    <Compile Include="BL\clsBG0681BL.vb" />
+    <Compile Include="BL\clsBG0682BL.vb" />
+    <Compile Include="BL\clsBG0730BL.vb" />
+    <Compile Include="BL\clsBG0470BL.vb" />
+    <Compile Include="BL\clsBG0471BL.vb" />
+    <Compile Include="BL\clsBG0472BL.vb" />
+    <Compile Include="BL\clsBG0473BL.vb" />
+    <Compile Include="BL\clsBG0474BL.vb" />
+    <Compile Include="clsScript.vb" />
+    <Compile Include="clsZip.vb" />
+    <Compile Include="Common\BGConstant.vb" />
+    <Compile Include="Common\BGSendMail.vb" />
+    <Compile Include="DB\BG_M_ACCOUNT.vb" />
+    <Compile Include="DB\BG_M_ASSET_GROUP.vb" />
+    <Compile Include="DB\BG_M_CHILD_PIC.vb" />
+    <Compile Include="DB\BG_M_DEPT.vb" />
+    <Compile Include="DB\BG_M_PERIOD.vb" />
+    <Compile Include="DB\BG_M_PERSON_IN_CHARGE.vb" />
+    <Compile Include="DB\BG_M_SETTINGS.vb" />
+    <Compile Include="DB\BG_M_TRANSFER_MASTER.vb" />
+    <Compile Include="DB\BG_M_USER.vb" />
+    <Compile Include="DB\BG_M_BUDGET_ORDER.vb" />
+    <Compile Include="DB\BG_T_BUDGET_ADJUST.vb" />
+    <Compile Include="DB\BG_T_BUDGET_DATA.vb" />
+    <Compile Include="DB\BG_T_BUDGET_DATA_REINPUT.vb" />
+    <Compile Include="DB\BG_T_BUDGET_HEADER.vb" />
+    <Compile Include="DB\BG_T_BUDGET_PERIOD.vb" />
+    <Compile Include="DB\BG_T_INFORMATION.vb" />
+    <Compile Include="DB\BG_T_UPLOAD_DATA.vb" />
+    <Compile Include="DB\BG_T_TRANS_LOG.vb" />
+    <Compile Include="DB\BG_T_ACCOUNT_REOPEN.vb" />
+    <Compile Include="DB\BG_T_BUDGET_REFERENCE.vb" />
+    <Compile Include="Reports\RPT007-4.vb">
+      <DependentUpon>RPT007-4.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\RPT007-3.vb">
+      <DependentUpon>RPT007-3.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT007-2.vb">
+      <DependentUpon>RPT007-2.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\DS007.vb">
+      <DependentUpon>DS007.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RPT007-1.vb">
+      <DependentUpon>RPT007-1.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT007.vb">
+      <DependentUpon>RPT007.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\DS007.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS007.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RPT002-5.vb">
+      <DependentUpon>RPT002-5.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT005-5.vb">
+      <DependentUpon>RPT005-5.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT004-5.vb">
+      <DependentUpon>RPT004-5.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\RPT003-5.vb">
+      <DependentUpon>RPT003-5.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\RPT006-4_old.vb">
+      <DependentUpon>RPT006-4_old.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT005-4_old.vb">
+      <DependentUpon>RPT005-4_old.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT004-4_old.vb">
+      <DependentUpon>RPT004-4_old.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT003-4_old.vb">
+      <DependentUpon>RPT003-4_old.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\RPT001-4_old.vb">
+      <DependentUpon>RPT001-4_old.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\DS004.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS004.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DS006.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS006.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RPT001-4.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT001-4.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT001-5.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT001-5.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT002-1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT002-1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT002-2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT002-2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT002-3.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT002-3.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT002-4.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT002-4.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT003-1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT003-1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT003-4.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT003-4.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT004-1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT004-1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT004-2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT004-2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT004-3.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT004-3.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT004-4.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT004-4.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT005-3.vb">
+      <DependentUpon>RPT005-3.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT005-2.vb">
+      <DependentUpon>RPT005-2.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\DS002.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS002.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DS002.vb">
+      <DependentUpon>DS002.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DS005.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS005.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RPT003-3.vb">
+      <DependentUpon>RPT003-3.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT003-2.vb">
+      <DependentUpon>RPT003-2.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\DS001.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS001.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\DS003.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS003.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RPT001-1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT001-1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT001-2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT001-2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT001-3.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT001-3.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT005-1.vb">
+      <DependentUpon>RPT005-1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT005-4.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT005-4.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT006-1.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT006-1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT006-2.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT006-2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT006-3.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT006-3.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT006-4.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT006-4.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="UI\frmBG0474.Designer.vb">
+      <DependentUpon>frmBG0474.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0474.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0473.Designer.vb">
+      <DependentUpon>frmBG0473.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0473.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0472.Designer.vb">
+      <DependentUpon>frmBG0472.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0472.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0471.Designer.vb">
+      <DependentUpon>frmBG0471.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0471.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0395.Designer.vb">
+      <DependentUpon>frmBG0395.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0395.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0682.Designer.vb">
+      <DependentUpon>frmBG0682.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0682.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0681.Designer.vb">
+      <DependentUpon>frmBG0681.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0681.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0611.Designer.vb">
+      <DependentUpon>frmBG0611.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0611.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0720.Designer.vb">
+      <DependentUpon>frmBG0720.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0720.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0390.Designer.vb">
+      <DependentUpon>frmBG0390.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0390.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0690.Designer.vb">
+      <DependentUpon>frmBG0690.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0690.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0670.Designer.vb">
+      <DependentUpon>frmBG0670.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0670.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0420.Designer.vb">
+      <DependentUpon>frmBG0420.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0420.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0440.Designer.vb">
+      <DependentUpon>frmBG0440.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0440.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0460.Designer.vb">
+      <DependentUpon>frmBG0460.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0460.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0350.Designer.vb">
+      <DependentUpon>frmBG0350.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0350.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0450.Designer.vb">
+      <DependentUpon>frmBG0450.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0450.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0360.Designer.vb">
+      <DependentUpon>frmBG0360.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0360.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0401.Designer.vb">
+      <DependentUpon>frmBG0401.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0401.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0330.Designer.vb">
+      <DependentUpon>frmBG0330.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0330.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0380.designer.vb">
+      <DependentUpon>frmBG0380.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0380.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0400.Designer.vb">
+      <DependentUpon>frmBG0400.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0400.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0410.Designer.vb">
+      <DependentUpon>frmBG0410.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0410.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0430.Designer.vb">
+      <DependentUpon>frmBG0430.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0430.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0680.Designer.vb">
+      <DependentUpon>frmBG0680.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0680.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0660.Designer.vb">
+      <DependentUpon>frmBG0660.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0660.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0650.Designer.vb">
+      <DependentUpon>frmBG0650.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0650.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0640.Designer.vb">
+      <DependentUpon>frmBG0640.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0640.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0630.Designer.vb">
+      <DependentUpon>frmBG0630.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0630.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0620.Designer.vb">
+      <DependentUpon>frmBG0620.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0620.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0200.Designer.vb">
+      <DependentUpon>frmBG0200.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0200.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0610.Designer.vb">
+      <DependentUpon>frmBG0610.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0610.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0012.Designer.vb">
+      <DependentUpon>frmBG0012.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0012.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0320.Designer.vb">
+      <DependentUpon>frmBG0320.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0320.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0310.Designer.vb">
+      <DependentUpon>frmBG0310.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0310.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0011.Designer.vb">
+      <DependentUpon>frmBG0011.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0011.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0000.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0000.Designer.vb">
+      <DependentUpon>frmBG0000.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Common\BGCommon.vb" />
+    <Compile Include="UI\frmBG0010.Designer.vb">
+      <DependentUpon>frmBG0010.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0010.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0110.Designer.vb">
+      <DependentUpon>frmBG0110.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0110.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0710.Designer.vb">
+      <DependentUpon>frmBG0710.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0710.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0730.Designer.vb">
+      <DependentUpon>frmBG0730.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0730.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0470.Designer.vb">
+      <DependentUpon>frmBG0470.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0470.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\RPT005-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT005-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT005-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT005-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT003-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT003-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT003-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT003-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT001-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT001-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT001-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT001-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT001-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT001-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT005-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT005-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT006-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT006-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT006-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT006-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT002-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT002-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT002-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT002-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT001-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT001-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT002-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT002-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT003-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT003-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT005-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT005-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT006-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT006-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT003-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT003-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT002-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT002-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT006-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT006-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT001-4_old.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT001-4_old.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT003-4_old.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT003-4_old.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-4_old.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-4_old.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT005-4_old.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT005-4_old.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT006-4_old.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT006-4_old.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT003-5.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT003-5.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT001-5.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT001-5.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-5.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-5.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT005-5.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT005-5.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT002-5.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT002-5.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT007.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT007.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT007-1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT007-1.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT007-2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT007-2.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT007-3.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT007-3.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT007-4.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT007-4.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="UI\frmBG0474.resx">
+      <DependentUpon>frmBG0474.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0473.resx">
+      <DependentUpon>frmBG0473.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0472.resx">
+      <DependentUpon>frmBG0472.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0471.resx">
+      <DependentUpon>frmBG0471.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0395.resx">
+      <DependentUpon>frmBG0395.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0682.resx">
+      <DependentUpon>frmBG0682.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0681.resx">
+      <DependentUpon>frmBG0681.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0611.resx">
+      <DependentUpon>frmBG0611.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0720.resx">
+      <DependentUpon>frmBG0720.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0390.resx">
+      <DependentUpon>frmBG0390.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0690.resx">
+      <DependentUpon>frmBG0690.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0670.resx">
+      <DependentUpon>frmBG0670.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0420.resx">
+      <DependentUpon>frmBG0420.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0440.resx">
+      <DependentUpon>frmBG0440.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0460.resx">
+      <DependentUpon>frmBG0460.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0350.resx">
+      <DependentUpon>frmBG0350.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0450.resx">
+      <DependentUpon>frmBG0450.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0360.resx">
+      <DependentUpon>frmBG0360.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0401.resx">
+      <DependentUpon>frmBG0401.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0330.resx">
+      <DependentUpon>frmBG0330.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0380.resx">
+      <DependentUpon>frmBG0380.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0400.resx">
+      <DependentUpon>frmBG0400.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0410.resx">
+      <DependentUpon>frmBG0410.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0430.resx">
+      <DependentUpon>frmBG0430.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0680.resx">
+      <DependentUpon>frmBG0680.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0660.resx">
+      <DependentUpon>frmBG0660.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0650.resx">
+      <DependentUpon>frmBG0650.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0640.resx">
+      <DependentUpon>frmBG0640.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0630.resx">
+      <DependentUpon>frmBG0630.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0620.resx">
+      <DependentUpon>frmBG0620.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0200.resx">
+      <DependentUpon>frmBG0200.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0610.resx">
+      <DependentUpon>frmBG0610.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0012.resx">
+      <DependentUpon>frmBG0012.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0320.resx">
+      <DependentUpon>frmBG0320.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0310.resx">
+      <DependentUpon>frmBG0310.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0011.resx">
+      <DependentUpon>frmBG0011.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0000.resx">
+      <DependentUpon>frmBG0000.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0010.resx">
+      <DependentUpon>frmBG0010.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0110.resx">
+      <DependentUpon>frmBG0110.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0710.resx">
+      <DependentUpon>frmBG0710.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0730.resx">
+      <DependentUpon>frmBG0730.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0470.resx">
+      <DependentUpon>frmBG0470.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+    </None>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS001.xsc">
+      <DependentUpon>DS001.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS001.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS001.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS001.xss">
+      <DependentUpon>DS001.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS002.xsc">
+      <DependentUpon>DS002.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS002.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS002.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS002.xss">
+      <DependentUpon>DS002.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS003.xsc">
+      <DependentUpon>DS003.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS003.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS003.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS003.xss">
+      <DependentUpon>DS003.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS005.xsc">
+      <DependentUpon>DS005.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS005.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS005.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reports\DS005.xss">
+      <DependentUpon>DS005.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS006.xsc">
+      <DependentUpon>DS006.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS006.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS006.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS006.xss">
+      <DependentUpon>DS006.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB\SqlCmd.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Lib\ICSharpCode.SharpZipLib.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Lib\Interop.SQLDMO.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Images\BS-Tagline-big.jpg" />
+    <None Include="Images\BS-Tagline-small.jpg" />
+    <None Include="Images\AUTH1.jpg" />
+    <None Include="Images\AUTH2.jpg" />
+    <None Include="Images\bridgestone-turanza-sebring-tire.png" />
+    <None Include="Images\Bridgestone_B.JPG" />
+    <None Include="Images\bridgestone_logo.jpg" />
+    <None Include="Images\Close.ico" />
+    <None Include="Images\Home.ico" />
+    <None Include="Images\kspread_ksp.ico" />
+    <None Include="Reports\DS004.xsc">
+      <DependentUpon>DS004.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS004.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS004.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS004.xss">
+      <DependentUpon>DS004.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS007.xsc">
+      <DependentUpon>DS007.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS007.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS007.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS007.xss">
+      <DependentUpon>DS007.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="BusinessObjects.CrystalReports.10.5">
+      <Visible>False</Visible>
+      <ProductName>Crystal Reports Basic for Visual Studio 2008 %28x86, x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.ReportViewer.8.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft Visual Studio 2008 Report Viewer</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{967B4E0D-AD0C-4609-AB67-0FA40C0206D8}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Microsoft.Office.Interop.Excel">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.Vbe.Interop">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="office">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="stdole">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
