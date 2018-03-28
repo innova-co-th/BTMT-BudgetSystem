@@ -1218,7 +1218,7 @@ Public Class frmBG0440
         'SUM(ISNULL(REVISE_BUDGET.H2,0)) AS REVISE_2ND_HALF,
         row = dtColumns.NewRow()
         row("Column_Name") = "REVISE_2ND_HALF"
-        row("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        row("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         'SUM(ISNULL(ACTUAL_DATA.M7, 0)) AS M7,
@@ -2359,7 +2359,7 @@ Public Class frmBG0440
 
         row = dtColumns.NewRow()
         row("Column_Name") = "REVYEAR"
-        row("Column_Title") = "Revise Year'" & strYear
+        row("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow

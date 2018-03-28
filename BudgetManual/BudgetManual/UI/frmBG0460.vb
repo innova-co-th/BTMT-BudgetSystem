@@ -1024,7 +1024,7 @@ Public Class frmBG0460
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "REVISE_SECOND_HALF"
-        dRow("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        dRow("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow

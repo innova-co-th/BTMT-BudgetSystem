@@ -914,7 +914,7 @@ Public Class frmBG0430
         'ISNULL(REVISE_BUDGET.H2,0) AS REVISE_BUDGET_2ND_HALF,
         row = dtColumns.NewRow()
         row("Column_Name") = "REVISE_BUDGET_2ND_HALF"
-        row("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        row("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         'ISNULL(MASTER_DATA.M1,0) AS M1,
@@ -1889,7 +1889,7 @@ Public Class frmBG0430
         '0 AS REVISE_YEAR,
         row = dtColumns.NewRow()
         row("Column_Name") = "RevYear"
-        row("Column_Title") = "Revise Year'" & strYear
+        row("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
