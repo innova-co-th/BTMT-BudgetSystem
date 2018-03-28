@@ -834,7 +834,7 @@ Public Class BGCommon
 
         Else
 
-            strDiffPeriod = "Diff vs RB"
+            strDiffPeriod = "Diff vs OB"
 
         End If
 
