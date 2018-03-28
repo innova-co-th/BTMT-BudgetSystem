@@ -4768,21 +4768,13 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@M04", CStr(Nz(Me.BudgetData("M4"), "0")).Replace(",", ""))
                 strSQL = strSQL.Replace("@M05", CStr(Nz(Me.BudgetData("M5"), "0")).Replace(",", ""))
                 strSQL = strSQL.Replace("@M06", CStr(Nz(Me.BudgetData("M6"), "0")).Replace(",", ""))
-                If Me.BudgetType = P_BUDGET_TYPE_EXPENSE Then
-                    strSQL = strSQL.Replace("@M07", CStr(Nz(Me.BudgetData("M7"), "0")).Replace(",", ""))
-                    strSQL = strSQL.Replace("@M08", "0")
-                    strSQL = strSQL.Replace("@M09", "0")
-                    strSQL = strSQL.Replace("@M10", "0")
-                    strSQL = strSQL.Replace("@M11", "0")
-                    strSQL = strSQL.Replace("@M12", "0")
-                Else
-                    strSQL = strSQL.Replace("@M07", CStr(Nz(Me.BudgetData("M7"), "0")).Replace(",", ""))
-                    strSQL = strSQL.Replace("@M08", CStr(Nz(Me.BudgetData("M8"), "0")).Replace(",", ""))
-                    strSQL = strSQL.Replace("@M09", CStr(Nz(Me.BudgetData("M9"), "0")).Replace(",", ""))
-                    strSQL = strSQL.Replace("@M10", CStr(Nz(Me.BudgetData("M10"), "0")).Replace(",", ""))
-                    strSQL = strSQL.Replace("@M11", CStr(Nz(Me.BudgetData("M11"), "0")).Replace(",", ""))
-                    strSQL = strSQL.Replace("@M12", CStr(Nz(Me.BudgetData("M12"), "0")).Replace(",", ""))
-                End If
+                
+                strSQL = strSQL.Replace("@M07", CStr(Nz(Me.BudgetData("M7"), "0")).Replace(",", ""))
+                strSQL = strSQL.Replace("@M08", CStr(Nz(Me.BudgetData("M8"), "0")).Replace(",", ""))
+                strSQL = strSQL.Replace("@M09", CStr(Nz(Me.BudgetData("M9"), "0")).Replace(",", ""))
+                strSQL = strSQL.Replace("@M10", CStr(Nz(Me.BudgetData("M10"), "0")).Replace(",", ""))
+                strSQL = strSQL.Replace("@M11", CStr(Nz(Me.BudgetData("M11"), "0")).Replace(",", ""))
+                strSQL = strSQL.Replace("@M12", CStr(Nz(Me.BudgetData("M12"), "0")).Replace(",", ""))
 
                 strSQL = strSQL.Replace("@RRT1", "0")
                 strSQL = strSQL.Replace("@RRT2", "0")

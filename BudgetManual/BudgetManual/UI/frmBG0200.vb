@@ -1044,29 +1044,30 @@ Public Class frmBG0200
             '// Load data into datagrid
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then   '// Original Budget
                 '// Set data binding
-                If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                    ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
-                    grvBudget1.Columns("g1colex1").DataPropertyName = "Total2H"
-                    grvBudget1.Columns("g1col15").DataPropertyName = "M7"
-                    grvBudget1.Columns("g1col15").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 1
-                    '//-- Add 2011-05-11 by S.Watcharapong
-                    grvBudget1.Columns("g1col16").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 2
-                    '//-- Add 2012-11-01 by Hussadin
-                    grvBudget1.Columns("g1col25").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 3
-                    grvBudget1.Columns("g1col26").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 4
-                    '//End Add 2012-11-01
-                    grvBudget1.Columns("g1col17").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 5
-                    grvBudget1.Columns("g1col18").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 6
-                    '//End Add 2011-05-11
-                Else
-                    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
-                    ''grvBudget1.Columns("g1col15").DataPropertyName = ""
-                    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
-                    grvBudget1.Columns("g1col15").DefaultCellStyle.BackColor = grvBudget1.DefaultCellStyle.BackColor
-                    grvBudget1.Columns("g1col15").ReadOnly = True
-                End If
+                'If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
+                '    ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
+                '    grvBudget1.Columns("g1colex1").DataPropertyName = "Total2H"
+                '    grvBudget1.Columns("g1col15").DataPropertyName = "M7"
+                '    grvBudget1.Columns("g1col15").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 1
+                '    '//-- Add 2011-05-11 by S.Watcharapong
+                '    grvBudget1.Columns("g1col16").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 2
+                '    '//-- Add 2012-11-01 by Hussadin
+                '    grvBudget1.Columns("g1col25").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 3
+                '    grvBudget1.Columns("g1col26").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 4
+                '    '//End Add 2012-11-01
+                '    grvBudget1.Columns("g1col17").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 5
+                '    grvBudget1.Columns("g1col18").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 6
+                '    '//End Add 2011-05-11
+                'Else
+                '    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
+                '    ''grvBudget1.Columns("g1col15").DataPropertyName = ""
+                '    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
+                '    grvBudget1.Columns("g1col15").DefaultCellStyle.BackColor = grvBudget1.DefaultCellStyle.BackColor
+                '    grvBudget1.Columns("g1col15").ReadOnly = True
+                'End If
 
                 '// Bind Datasource
+                grvBudget1.AutoGenerateColumns = False
                 grvBudget1.DataSource = dtGrid
 
                 '// Set Column Headers
@@ -1092,16 +1093,16 @@ Public Class frmBG0200
 
                 '// Hide Jul - Dec
                 If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                    For i = 1 To 6
-                        grvBudget1.Columns("g1colex" & CStr(i)).Visible = False
-                    Next
+                    'For i = 1 To 6
+                    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = False
+                    'Next
                     ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
                     grvBudget1.Columns("g1colex1").DataPropertyName = "Total2H"
                     grvBudget1.Columns("g1col15").DataPropertyName = "M7"
                 Else
-                    For i = 1 To 6
-                        grvBudget1.Columns("g1colex" & CStr(i)).Visible = True
-                    Next
+                    'For i = 1 To 6
+                    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = True
+                    'Next
                     grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
                     ''grvBudget1.Columns("g1col15").DataPropertyName = ""
                     grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
@@ -1223,7 +1224,11 @@ Public Class frmBG0200
                             '// Current Year
                             grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
                             grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Replace("@1", CInt(Mid(Me.BudgetKey, 3, 2)).ToString("00"))
+
                         Next
+
+                        grvBudget4.Columns("g4colDiff1").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (1)).ToString("00")
+                        grvBudget4.Columns("g4colDiff2").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (2)).ToString("00")
 
                         For i = 1 To 4
                             '// Previous Year
@@ -1231,17 +1236,18 @@ Public Class frmBG0200
                             grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
                         Next
 
+
                     End If
                 End If
 
                 If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
                     '// Show MTP Budget
-                    For i = 9 To 17
+                    For i = 9 To 12
                         grvBudget4.Columns("g4col" & CStr(i)).Visible = True
                     Next
 
                     '// Show MTP Budget CAL
-                    For i = 1 To 5
+                    For i = 1 To 2
                         grvBudget4.Columns("g4ex0" & CStr(i)).Visible = True
                     Next
 
@@ -1255,12 +1261,12 @@ Public Class frmBG0200
 
                 Else
                     '// Hide MTP Budget
-                    For i = 9 To 17
+                    For i = 9 To 12
                         grvBudget4.Columns("g4col" & CStr(i)).Visible = False
 
                     Next
                     '// Hide MTP Budget CAL
-                    For i = 1 To 5
+                    For i = 1 To 2
                         grvBudget4.Columns("g4ex0" & CStr(i)).Visible = False
                     Next
                 End If
