@@ -615,7 +615,7 @@ Public Class frmBG0670
                     '    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget
                     '    cboRefPeriodType_SelectedIndexChanged("", Nothing)
                 ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
-                    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.ReviseBudget
+                    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget ' Edited by Kwang for Prototype No.4. Menu : Budget Adjust Master 'BGConstant.enumPeriodType.ReviseBudget
                     cboRefPeriodType_SelectedIndexChanged("", Nothing)
                 Else
                     grbReference.Enabled = False
