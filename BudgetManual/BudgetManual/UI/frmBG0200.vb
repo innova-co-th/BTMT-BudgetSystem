@@ -256,13 +256,15 @@ Public Class frmBG0200
             '    HighlightMTPValueAll()
             'End If
 
-
             If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) And _
                 Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
                 HighlightMTPValueAllNew()
             End If
 
         End If
+
+        '//Highlight for comment
+        grvBudget1.Item("g1Col8", 0).Style.BackColor = Color.Lavender
 
         myDataLoadingFlg = False
         myForceCloseFlg = False
@@ -5256,6 +5258,20 @@ Public Class frmBG0200
             mydtBG3 = Nothing
             mydtBG4 = Nothing
         End If
+    End Sub
+
+    Private Sub grvBudget1_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget1.CellDoubleClick
+        'If Not Me.IsGridPreviewOnly Then
+        If e.RowIndex >= 0 Then
+            'If grvBudget2.Columns(e.ColumnIndex).Name = "g2col22" Then
+            p_frmBG0201 = New frmBG0201
+            If p_frmBG0201.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
+                'grvBudget2.Item(e.ColumnIndex, e.RowIndex).Value = p_frmBG0201.Remark
+            End If
+            p_frmBG0201.Dispose()
+            'End If
+        End If
+        'End If
     End Sub
     '  Public Delegate Sub InvokeDelegate()
 

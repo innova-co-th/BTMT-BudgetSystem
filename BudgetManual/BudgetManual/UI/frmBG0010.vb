@@ -880,6 +880,8 @@ Public Class frmBG0010
                 trvMenu.Nodes("nodMenu").Nodes("nodReports").Nodes.Add("nodRPT005", "Summary by Applicant", _
                                                                           "document.ico", "document.ico")
             End If
+
+         
         End If
 
         If p_intUserLevelId < enumUserLevel.NormalUser Then
@@ -889,6 +891,15 @@ Public Class frmBG0010
                                                                           "document.ico", "document.ico")
             End If
         End If
+
+
+        '// [Comment by Person In Charge Report] Menu (RPT008)
+        If trvMenu.Nodes("nodMenu").Nodes("nodReports").Nodes("nodRPT008") Is Nothing Then
+            trvMenu.Nodes("nodMenu").Nodes("nodReports").Nodes.Add("nodRPT008", "Comment by Person In Charge Report", _
+                                                                      "document.ico", "document.ico")
+        End If
+
+
 
     End Sub
 
@@ -1442,6 +1453,19 @@ Public Class frmBG0010
                         p_frmBG0474.WindowState = FormWindowState.Normal
                     End If
                     p_frmBG0474.BringToFront()
+                End If
+
+            ElseIf nodSelNode.Name = "nodRPT008" Then
+
+                '// Open Comment by Person In Charge Report
+                If p_frmBG0480 Is Nothing OrElse p_frmBG0480.IsDisposed Then
+                    p_frmBG0480 = New frmBG0480(Me, "Comment by Person In Charge Report", True)
+                    p_frmBG0480.Show()
+                Else
+                    If p_frmBG0480.WindowState = FormWindowState.Minimized Then
+                        p_frmBG0480.WindowState = FormWindowState.Normal
+                    End If
+                    p_frmBG0480.BringToFront()
                 End If
 
             ElseIf nodSelNode.Name = "nodOpenPeriod" Then

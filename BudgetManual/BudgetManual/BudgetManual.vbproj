@@ -497,6 +497,18 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="UI\frmBG0201.Designer.vb">
+      <DependentUpon>frmBG0201.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0201.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\frmBG0480.Designer.vb">
+      <DependentUpon>frmBG0480.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UI\frmBG0480.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\frmBG0474.Designer.vb">
       <DependentUpon>frmBG0474.vb</DependentUpon>
     </Compile>
@@ -963,6 +975,12 @@
       <LastGenOutput>RPT007-4.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="UI\frmBG0201.resx">
+      <DependentUpon>frmBG0201.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\frmBG0480.resx">
+      <DependentUpon>frmBG0480.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmBG0474.resx">
       <DependentUpon>frmBG0474.vb</DependentUpon>
     </EmbeddedResource>

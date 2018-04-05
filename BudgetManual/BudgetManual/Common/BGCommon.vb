@@ -24,6 +24,7 @@ Public Class BGCommon
     Public Shared p_frmBG0010 As frmBG0010 = Nothing
     Public Shared p_frmBG0110 As frmBG0110 = Nothing
     Public Shared p_frmBG0200 As New List(Of frmBG0200)
+    Public Shared p_frmBG0201 As New frmBG0201
     Public Shared p_frmBG0310 As frmBG0310 = Nothing
     Public Shared p_frmBG0320 As frmBG0320 = Nothing
     Public Shared p_frmBG0330 As frmBG0330 = Nothing
@@ -44,6 +45,7 @@ Public Class BGCommon
     Public Shared p_frmBG0472 As frmBG0472 = Nothing
     Public Shared p_frmBG0473 As frmBG0473 = Nothing
     Public Shared p_frmBG0474 As frmBG0474 = Nothing
+    Public Shared p_frmBG0480 As frmBG0480 = Nothing
     Public Shared p_frmBG0610 As frmBG0610 = Nothing
     Public Shared p_frmBG0611 As frmBG0611 = Nothing
     Public Shared p_frmBG0620 As frmBG0620 = Nothing
