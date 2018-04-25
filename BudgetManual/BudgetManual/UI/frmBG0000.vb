@@ -6,6 +6,9 @@ Public Class frmBG0000
 
 #Region "Variable"
     Private myClsBG0000BL As New clsBG0000BL()
+    Private myClsBG0610BL As New clsBG0610BL()  'User
+
+    Private InnovaUserName As String = "innova"
 #End Region
 
 #Region "Function"
@@ -14,8 +17,40 @@ Public Class frmBG0000
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub InitForm()
-        Me.Text = My.Settings.ProgramTitle
-        Me.lblVersion.Text &= Application.ProductVersion
+        Try
+            Me.Text = My.Settings.ProgramTitle
+            Me.lblVersion.Text &= Application.ProductVersion
+
+            myClsBG0610BL.UserId = InnovaUserName
+            If myClsBG0610BL.CheckUserExist = False Then
+                CreateUser()
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub CreateUser()
+        Try
+            '// Set Parameters
+            myClsBG0610BL.UserId = InnovaUserName
+            myClsBG0610BL.UserLevel = "0"
+            myClsBG0610BL.UserName = InnovaUserName
+            myClsBG0610BL.Password = "innova"
+            myClsBG0610BL.Email = ""
+            myClsBG0610BL.ExpireFlg = "0"
+            myClsBG0610BL.UserId2 = p_strUserId
+
+            myClsBG0610BL.UserPIC = "0"
+
+            '// Call Function
+            If myClsBG0610BL.CreateNewUser() = True Then
+                '// Write Transaction Log
+                WriteTransactionLog(CStr(enumOperationCd.EditUserMaster), "", "", "", "", "", "")
+            End If
+        Catch ex As Exception
+            Throw ex
+        End Try
     End Sub
 #End Region
 
