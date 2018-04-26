@@ -264,7 +264,8 @@ Public Class frmBG0200
         End If
 
         '//Highlight for comment
-        grvBudget1.Item("g1Col8", 0).Style.BackColor = Color.Lavender
+        'grvBudget1.Item("g1Col8", 0).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242) 'Color.Yellow
+        'grvBudget1.Item("g1Col8", 3).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
 
         myDataLoadingFlg = False
         myForceCloseFlg = False
