@@ -75,7 +75,7 @@ Public Class frmBG0650
 
     Public Sub setText(ByVal intRow As Integer)
         isInsert = False
-        Me.txtPicNo.Enabled = False
+        Me.txtPicNo.Enabled = True
         Me.txtPicNo.Text = CStr(Me.grvMaster.Rows(intRow).Cells("PERSON_IN_CHARGE_NO").Value)
         Me.txtPicName.Text = CStr(Me.grvMaster.Rows(intRow).Cells("PERSON_IN_CHARGE_NAME").Value)
     End Sub
