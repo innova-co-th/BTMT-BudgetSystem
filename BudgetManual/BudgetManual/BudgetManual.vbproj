@@ -183,6 +183,9 @@
     <Compile Include="DB\BG_T_TRANS_LOG.vb" />
     <Compile Include="DB\BG_T_ACCOUNT_REOPEN.vb" />
     <Compile Include="DB\BG_T_BUDGET_REFERENCE.vb" />
+    <Compile Include="Reports\DS001.vb">
+      <DependentUpon>DS001.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\RPT005-5_5Y.vb">
       <DependentUpon>RPT005-5_5Y.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
