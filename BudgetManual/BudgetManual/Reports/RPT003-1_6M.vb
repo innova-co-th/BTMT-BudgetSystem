@@ -18,7 +18,7 @@ Imports System
 Imports System.ComponentModel
 
 
-Public Class RPT002_1_2H
+Public Class RPT003_1_6M
     Inherits ReportClass
     
     Public Sub New()
@@ -27,7 +27,7 @@ Public Class RPT002_1_2H
     
     Public Overrides Property ResourceName() As String
         Get
-            Return "RPT002-1_2H.rpt"
+            Return "RPT003-1_6M.rpt"
         End Get
         Set
             'Do nothing
@@ -45,7 +45,7 @@ Public Class RPT002_1_2H
     
     Public Overrides Property FullResourceName() As String
         Get
-            Return "BudgetManual.RPT002-1_2H.rpt"
+            Return "BudgetManual.RPT003-1_6M.rpt"
         End Get
         Set
             'Do nothing
@@ -126,7 +126,7 @@ Public Class RPT002_1_2H
     
     <Browsable(false),  _
      DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
-    Public ReadOnly Property Parameter_PERIOD() As CrystalDecisions.[Shared].IParameterField
+    Public ReadOnly Property Parameter_ACCOUNT_NO() As CrystalDecisions.[Shared].IParameterField
         Get
             Return Me.DataDefinition.ParameterFields(2)
         End Get
@@ -134,15 +134,31 @@ Public Class RPT002_1_2H
     
     <Browsable(false),  _
      DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
-    Public ReadOnly Property Parameter_PROJECT_NO() As CrystalDecisions.[Shared].IParameterField
+    Public ReadOnly Property Parameter_FC_COST() As CrystalDecisions.[Shared].IParameterField
         Get
             Return Me.DataDefinition.ParameterFields(3)
+        End Get
+    End Property
+    
+    <Browsable(false),  _
+     DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
+    Public ReadOnly Property Parameter_ADMIN_COST() As CrystalDecisions.[Shared].IParameterField
+        Get
+            Return Me.DataDefinition.ParameterFields(4)
+        End Get
+    End Property
+    
+    <Browsable(false),  _
+     DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)>  _
+    Public ReadOnly Property Parameter_PROJECT_NO() As CrystalDecisions.[Shared].IParameterField
+        Get
+            Return Me.DataDefinition.ParameterFields(5)
         End Get
     End Property
 End Class
 
 <System.Drawing.ToolboxBitmapAttribute(GetType(CrystalDecisions.[Shared].ExportOptions), "report.bmp")>  _
-Public Class CachedRPT002_1_2H
+Public Class CachedRPT003_1_6M
     Inherits Component
     Implements ICachedReport
     
@@ -184,7 +200,7 @@ Public Class CachedRPT002_1_2H
     End Property
     
     Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
-        Dim rpt As RPT002_1_2H = New RPT002_1_2H
+        Dim rpt As RPT003_1_6M = New RPT003_1_6M
         rpt.Site = Me.Site
         Return rpt
     End Function
