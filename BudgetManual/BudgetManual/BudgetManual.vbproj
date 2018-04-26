@@ -183,6 +183,13 @@
     <Compile Include="DB\BG_T_TRANS_LOG.vb" />
     <Compile Include="DB\BG_T_ACCOUNT_REOPEN.vb" />
     <Compile Include="DB\BG_T_BUDGET_REFERENCE.vb" />
+    <Compile Include="Reports\RPT004-5_5Y.vb">
+      <DependentUpon>RPT004-5_5Y.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\RPT003-5_5Y.vb">
       <DependentUpon>RPT003-5_5Y.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1069,6 +1076,11 @@
     <Content Include="Reports\RPT003-5_5Y.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RPT003-5_5Y.vb</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\RPT004-5_5Y.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT004-5_5Y.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="UI\frmBG0201.resx">
