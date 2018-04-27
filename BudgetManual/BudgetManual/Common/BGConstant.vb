@@ -1,6 +1,7 @@
 ﻿Public Class BGConstant
 
 #Region "Constant"
+    Public Const P_PIC_ALL As String = "0000"
 
     '// Constant Variables
     Public Const P_BUDGET_TYPE_EXPENSE As String = "E"
