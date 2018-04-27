@@ -466,6 +466,42 @@ Public Class frmBG0430
         row("Column_Title") = "Total 1st Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
+        'ISNULL(MASTER_DATA.M7,0) AS M7,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M7"
+        row("Column_Title") = "Jul'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        'ISNULL(MASTER_DATA.M8,0) AS M8,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M8"
+        row("Column_Title") = "Aug'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        'ISNULL(MASTER_DATA.M9,0) AS M9,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M9"
+        row("Column_Title") = "Sept'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        'ISNULL(MASTER_DATA.M10,0) AS M10,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M10"
+        row("Column_Title") = "Oct'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        'ISNULL(MASTER_DATA.M11,0) AS M11,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M11"
+        row("Column_Title") = "Nov'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        'ISNULL(MASTER_DATA.M12,0) AS M12,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M12"
+        row("Column_Title") = "Dec'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
         '--(ISNULL(MASTER_DATA.M7,0) + ISNULL(MASTER_DATA.M8,0) + ISNULL(MASTER_DATA.M9,0) + ISNULL(MASTER_DATA.M10,0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12,0)) AS TOTAL_2ND_HALF
         '0 AS TOTAL_2ND_HALF,
         row = dtColumns.NewRow()
@@ -692,13 +728,15 @@ Public Class frmBG0430
             MergeColumnsCells(ws, 4, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 5, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 6, colStartIndex - 1, colStartIndex)
+
             MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 15, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 16, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 17, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 18, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 19, colStartIndex - 1, colStartIndex)
+
+            MergeColumnsCells(ws, 20, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 21, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 22, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 23, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 24, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 25, colStartIndex - 1, colStartIndex)
 
             '//Setup Budget order number Title
             ws.Range(ws.Cells(colStartIndex - 1, 1), ws.Cells(colStartIndex, 2)).ClearContents()
@@ -713,6 +751,12 @@ Public Class frmBG0430
             ws.Range(ws.Cells(colStartIndex - 1, 7), ws.Cells(colStartIndex - 1, 12)).MergeCells = True
             ws.Range(ws.Cells(colStartIndex - 1, 7), ws.Cells(colStartIndex - 1, 12)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 7), ws.Cells(colStartIndex - 1, 12)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+
+            '//Setup Original Title
+            ws.Cells(colStartIndex - 1, 14) = "2nd Half'" & Me.numYear.Text.ToString().Substring(2, 2)
+            ws.Range(ws.Cells(colStartIndex - 1, 14), ws.Cells(colStartIndex - 1, 19)).MergeCells = True
+            ws.Range(ws.Cells(colStartIndex - 1, 14), ws.Cells(colStartIndex - 1, 19)).Font.Bold = True
+            ws.Range(ws.Cells(colStartIndex - 1, 14), ws.Cells(colStartIndex - 1, 19)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
             '//Setup Data
             For rowIndex As Integer = 0 To dsData.Tables(intSheetCount).Rows.Count - 1
@@ -773,7 +817,7 @@ Public Class frmBG0430
 
             Dim rowMax As Integer = dsData.Tables(intSheetCount).Rows.Count + colStartIndex
             Dim colMax As Integer = dtColumns.Rows.Count
-            Dim intAuthorizeStart As Integer = 17
+            Dim intAuthorizeStart As Integer = 25
             'Dim intAuthorizeEnd As Integer
 
             '//Setup budget order name column to be left align
