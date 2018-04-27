@@ -41,7 +41,7 @@ Public Class frmBG0000
             myClsBG0610BL.ExpireFlg = "0"
             myClsBG0610BL.UserId2 = p_strUserId
 
-            myClsBG0610BL.UserPIC = "0"
+            myClsBG0610BL.UserPIC = P_PIC_ALL
 
             '// Call Function
             If myClsBG0610BL.CreateNewUser() = True Then
