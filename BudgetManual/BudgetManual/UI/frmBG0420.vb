@@ -696,7 +696,7 @@ Public Class frmBG0420
 
             If strPeriod = "Original" Then
 
-                arrCols = New Integer() {1, 4, 5, 12, 13, 14, 15, 16, 17, 18}
+                arrCols = New Integer() {1, 4, 5, 12, 19, 20, 21, 22, 23, 24}
                 SetupOriginalColumnsCells(xSt, colStartIndex, 2, 3, "Person in Charge Section", arrCols, 6, 11, strYear)
 
             ElseIf strPeriod = "Estimate" Then
@@ -841,9 +841,14 @@ Public Class frmBG0420
                 xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).WrapText = True
 
                 xSt.Range(xSt.Cells(2, 6), xSt.Cells(rowMax, 11)).Columns.ColumnWidth = 12
+                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 18)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 15)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 15)).WrapText = True
+                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 13
+                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 12)).WrapText = True
+
+                xSt.Range(xSt.Cells(2, 19), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
+                xSt.Range(xSt.Cells(2, 19), xSt.Cells(rowMax, 24)).WrapText = True
+
 
             ElseIf strPeriod = "Estimate" Then
 
@@ -992,11 +997,11 @@ Public Class frmBG0420
 
             Case "Original"
 
-                intUnitPriceStart = 16
-                intUnitPriceEnd = 16
+                intUnitPriceStart = 24
+                intUnitPriceEnd = 24
 
-                intAuthorizeStart = 13
-                intAuthorizeEnd = 14
+                intAuthorizeStart = 21
+                intAuthorizeEnd = 22
 
                 intImageIndex = 905
 
@@ -1127,6 +1132,36 @@ Public Class frmBG0420
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "FIRST_HALF_SUM"
         dRow("Column_Title") = "Total 1st Half'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "M7"
+        dRow("Column_Title") = "Jul'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "M8"
+        dRow("Column_Title") = "Aug'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "M9"
+        dRow("Column_Title") = "Sept'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "M10"
+        dRow("Column_Title") = "Oct'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "M11"
+        dRow("Column_Title") = "May'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "M12"
+        dRow("Column_Title") = "Jun'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
