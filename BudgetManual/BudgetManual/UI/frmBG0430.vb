@@ -758,6 +758,9 @@ Public Class frmBG0430
             ws.Range(ws.Cells(colStartIndex - 1, 14), ws.Cells(colStartIndex - 1, 19)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 14), ws.Cells(colStartIndex - 1, 19)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
+           
+
+
             '//Setup Data
             For rowIndex As Integer = 0 To dsData.Tables(intSheetCount).Rows.Count - 1
 
@@ -897,6 +900,20 @@ Public Class frmBG0430
             ws.Range(ws.Cells(colStartIndex, 17), ws.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
+
+            ws.Range(ws.Cells(2, 7), ws.Cells(rowMax, 12)).Columns.ColumnWidth = 12
+            ws.Range(ws.Cells(2, 14), ws.Cells(rowMax, 19)).Columns.ColumnWidth = 12
+
+
+            ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 6)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 6)).WrapText = True
+
+            ws.Range(ws.Cells(2, 13), ws.Cells(rowMax, 13)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 13), ws.Cells(rowMax, 13)).WrapText = True
+
+            ws.Range(ws.Cells(2, 20), ws.Cells(rowMax, 25)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 20), ws.Cells(rowMax, 25)).WrapText = True
+
 
         Next
 

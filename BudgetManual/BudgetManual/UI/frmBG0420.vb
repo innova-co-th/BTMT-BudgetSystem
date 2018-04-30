@@ -697,7 +697,7 @@ Public Class frmBG0420
             If strPeriod = "Original" Then
 
                 arrCols = New Integer() {1, 4, 5, 12, 19, 20, 21, 22, 23, 24}
-                SetupOriginalColumnsCells(xSt, colStartIndex, 2, 3, "Person in Charge Section", arrCols, 6, 11, strYear)
+                SetupOriginalColumnsCells(xSt, colStartIndex, 2, 3, "Person in Charge Section", arrCols, 6, 11, strYear, True, True, 13, 18)
 
             ElseIf strPeriod = "Estimate" Then
 

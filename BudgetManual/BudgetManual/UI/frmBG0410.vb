@@ -1340,7 +1340,7 @@ Public Class frmBG0410
             If strPeriod = "Original" Then
 
                 arrCols = New Integer() {3, 4, 5, 6, 13, 20, 21, 22, 23, 24, 25}
-                SetupOriginalColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", arrCols, 7, 12, strYear)
+                SetupOriginalColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", arrCols, 7, 12, strYear, True, True, 14, 19)
 
             ElseIf strPeriod = "Estimate" Then
 
