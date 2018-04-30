@@ -3355,6 +3355,21 @@ Public Class frmBG0440
             ws.Range(ws.Cells(colStartIndex, 9), ws.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
             ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
             ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
+
+
+            ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 10)).Columns.ColumnWidth = 12
+            ws.Range(ws.Cells(2, 12), ws.Cells(rowMax, 17)).Columns.ColumnWidth = 12
+
+            ws.Range(ws.Cells(2, 3), ws.Cells(rowMax, 4)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 3), ws.Cells(rowMax, 4)).WrapText = True
+
+            ws.Range(ws.Cells(2, 11), ws.Cells(rowMax, 11)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 11), ws.Cells(rowMax, 11)).WrapText = True
+
+            ws.Range(ws.Cells(2, 18), ws.Cells(rowMax, 23)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 18), ws.Cells(rowMax, 23)).WrapText = True
+
+
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
 

@@ -360,6 +360,44 @@ Public Class frmBG0450
         row("Column_Title") = "Total 1st Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
+        'SUM(ISNULL(MASTER_DATA.M1, 0)) AS M1,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M7"
+        row("Column_Title") = "Jul'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        ' SUM(ISNULL(MASTER_DATA.M2, 0)) AS M2,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M8"
+        row("Column_Title") = "Aug'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        ' SUM(ISNULL(MASTER_DATA.M3, 0)) AS M3, 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M9"
+        row("Column_Title") = "Sept'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+
+        'SUM(ISNULL(MASTER_DATA.M4, 0)) AS M4,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M10"
+        row("Column_Title") = "Oct'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        ' SUM(ISNULL(MASTER_DATA.M5, 0)) AS M5, 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M11"
+        row("Column_Title") = "Nov'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+
+        'SUM(ISNULL(MASTER_DATA.M6, 0)) AS M6,
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M12"
+        row("Column_Title") = "Dec'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
         'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS TOTAL_2ND_HALF,
         row = dtColumns.NewRow()
         row("Column_Name") = "TOTAL_2ND_HALF"
@@ -391,6 +429,8 @@ Public Class frmBG0450
         row("Column_Name") = "DIFFERENCE"
         row("Column_Title") = "Diff vs Year'" & CInt(strYear) - 1
         dtColumns.Rows.Add(row)
+
+ 
 
 
         Return True
@@ -596,13 +636,15 @@ Public Class frmBG0450
             MergeColumnsCells(ws, 1, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 3, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 4, colStartIndex - 1, colStartIndex)
+
             MergeColumnsCells(ws, 11, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 12, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 15, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 16, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 17, colStartIndex - 1, colStartIndex)
+
+            MergeColumnsCells(ws, 18, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 19, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 20, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 21, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 22, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 23, colStartIndex - 1, colStartIndex)
 
             '//Setup Item
             ws.Cells(colStartIndex - 1, 1) = "Item"
@@ -615,6 +657,12 @@ Public Class frmBG0450
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).MergeCells = True
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+
+            '//Setup Original Title
+            ws.Cells(colStartIndex - 1, 12) = "2nd Half'" & Me.numYear.Text.ToString().Substring(2, 2)
+            ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).MergeCells = True
+            ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).Font.Bold = True
+            ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
             '//Setup Data
             For rowIndex As Integer = 0 To dsData.Tables(intSheetCount).Rows.Count - 1
@@ -678,7 +726,7 @@ Public Class frmBG0450
 
             Dim rowMax As Integer = dsData.Tables(intSheetCount).Rows.Count + colStartIndex
             Dim colMax As Integer = dtColumns.Rows.Count
-            Dim intAuthorizeStart As Integer = 15
+            Dim intAuthorizeStart As Integer = 23
             'Dim intAuthorizeEnd As Integer
 
             '//Setup Cost title
@@ -745,6 +793,18 @@ Public Class frmBG0450
             ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 12), ws.Cells(rowMax, 13)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 14), ws.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+
+            ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 10)).Columns.ColumnWidth = 12
+            ws.Range(ws.Cells(2, 12), ws.Cells(rowMax, 17)).Columns.ColumnWidth = 12
+
+            ws.Range(ws.Cells(2, 3), ws.Cells(rowMax, 4)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 3), ws.Cells(rowMax, 4)).WrapText = True
+
+            ws.Range(ws.Cells(2, 11), ws.Cells(rowMax, 11)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 11), ws.Cells(rowMax, 11)).WrapText = True
+
+            ws.Range(ws.Cells(2, 18), ws.Cells(rowMax, 23)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 18), ws.Cells(rowMax, 23)).WrapText = True
 
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
