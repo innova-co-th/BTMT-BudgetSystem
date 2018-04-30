@@ -360,6 +360,36 @@ Public Class frmBG0440
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
+        row("Column_Name") = "M7"
+        row("Column_Title") = "Jul'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M8"
+        row("Column_Title") = "Aug'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M9"
+        row("Column_Title") = "Sept'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M10"
+        row("Column_Title") = "Oct'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M11"
+        row("Column_Title") = "Nov'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "M12"
+        row("Column_Title") = "Dec'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
         row("Column_Name") = "TOTAL_2ND_HALF"
         row("Column_Title") = "Total 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
@@ -702,6 +732,20 @@ Public Class frmBG0440
                 Case "MTP_RRT1"
                     drInvestments("DIFF_MTP") = Convert.ToDecimal(Nz(drInvestments("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("MTP_RRT1"), 0.0))
 
+
+                Case "INVESTMENT_M7"
+                    drInvestments("M7") = returnValue
+                Case "INVESTMENT_M8"
+                    drInvestments("M8") = returnValue
+                Case "INVESTMENT_M9"
+                    drInvestments("M9") = returnValue
+                Case "INVESTMENT_M10"
+                    drInvestments("M10") = returnValue
+                Case "INVESTMENT_M11"
+                    drInvestments("M11") = returnValue
+                Case "INVESTMENT_M12"
+                    drInvestments("M12") = returnValue
+
             End Select
 
         Next
@@ -811,6 +855,19 @@ Public Class frmBG0440
                     '{@INVEST_TOTAL_YEAR} - {@INVEST_TOTAL_LAST_YEAR}
                     drManufacturingCost("DIFFERENCE") = Convert.ToDecimal(Nz(drManufacturingCost("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drManufacturingCost("TOTAL_LAST_YEAR"), 0.0))
 
+                Case "FC_M7"
+                    drManufacturingCost("M7") = returnValue
+                Case "FC_M8"
+                    drManufacturingCost("M8") = returnValue
+                Case "FC_M9"
+                    drManufacturingCost("M9") = returnValue
+                Case "FC_M10"
+                    drManufacturingCost("M10") = returnValue
+                Case "FC_M11"
+                    drManufacturingCost("M11") = returnValue
+                Case "FC_M12"
+                    drManufacturingCost("M12") = returnValue
+
             End Select
 
         Next
@@ -870,6 +927,18 @@ Public Class frmBG0440
                     '{@INVEST_TOTAL_YEAR} - {@INVEST_TOTAL_LAST_YEAR}
                     drAdministrationCost("DIFFERENCE") = Convert.ToDecimal(Nz(drAdministrationCost("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drAdministrationCost("TOTAL_LAST_YEAR"), 0.0))
 
+                Case "ADMIN_M7"
+                    drAdministrationCost("M7") = returnValue
+                Case "ADMIN_M8"
+                    drAdministrationCost("M8") = returnValue
+                Case "ADMIN_M9"
+                    drAdministrationCost("M9") = returnValue
+                Case "ADMIN_M10"
+                    drAdministrationCost("M10") = returnValue
+                Case "ADMIN_M11"
+                    drAdministrationCost("M11") = returnValue
+                Case "ADMIN_M12"
+                    drAdministrationCost("M12") = returnValue
             End Select
 
         Next
@@ -939,6 +1008,19 @@ Public Class frmBG0440
 
                     'drWorkingBudget("DIFF_MTP") = Convert.ToDecimal(Nz(drWorkingBudget("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("WB_MTP_RRT1"), 0.0))
                     drWorkingBudget("DIFF_MTP") = Convert.ToDecimal(Nz(drWorkingBudget("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("MTP_RRT1"), 0.0))
+
+                Case "WB_M7"
+                    drWorkingBudget("M7") = returnValue
+                Case "WB_M8"
+                    drWorkingBudget("M8") = returnValue
+                Case "WB_M9"
+                    drWorkingBudget("M9") = returnValue
+                Case "WB_M10"
+                    drWorkingBudget("M10") = returnValue
+                Case "WB_M11"
+                    drWorkingBudget("M11") = returnValue
+                Case "WB_M12"
+                    drWorkingBudget("M12") = returnValue
             End Select
 
         Next
@@ -997,12 +1079,13 @@ Public Class frmBG0440
             MergeColumnsCells(ws, 3, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 4, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 11, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 12, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 15, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 16, colStartIndex - 1, colStartIndex)
-            MergeColumnsCells(ws, 17, colStartIndex - 1, colStartIndex)
+           
+            MergeColumnsCells(ws, 18, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 19, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 20, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 21, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 22, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 23, colStartIndex - 1, colStartIndex)
 
             '//Setup Item
             ws.Cells(colStartIndex - 1, 1) = "Item"
@@ -1015,6 +1098,12 @@ Public Class frmBG0440
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).MergeCells = True
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+
+            '//Setup Revise & Estimate Title
+            ws.Cells(colStartIndex - 1, 12) = "2nd Half'" & Me.numYear.Text.ToString.Substring(2, 2)
+            ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).MergeCells = True
+            ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).Font.Bold = True
+            ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
             '//Setup Data
             For rowIndex As Integer = 0 To dsData.Tables(intSheetCount).Rows.Count - 1
@@ -1076,7 +1165,7 @@ Public Class frmBG0440
 
             Dim rowMax As Integer = dsData.Tables(intSheetCount).Rows.Count + colStartIndex
             Dim colMax As Integer = dtColumns.Rows.Count
-            Dim intAuthorizeStart As Integer = 15
+            Dim intAuthorizeStart As Integer = 23
 
             '//Setup Investments Line
             ws.Range(ws.Cells(rowStartIndex, 1), ws.Cells(rowStartIndex, 2)).ClearContents()
