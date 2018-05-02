@@ -2622,6 +2622,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@YEAR", Me.BudgetYear)
             strSQL = strSQL.Replace("@PERIOD", Me.PeriodType)
             strSQL = strSQL.Replace("@PROJECTNO", Me.ProjectNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
@@ -2778,6 +2779,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@PERIOD", Me.PeriodType)
             strSQL = strSQL.Replace("@PROJECTNO", Me.ProjectNo)
             strSQL = strSQL.Replace("@REVNO", Me.RevNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
