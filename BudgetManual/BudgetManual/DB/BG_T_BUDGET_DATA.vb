@@ -4229,6 +4229,8 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@RefRBProjectNo", Me.RefRBProjectNo)
             strSQL = strSQL.Replace("@RefRBRevNo", Me.RefRBRevNo)
 
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
+
             da = New SqlDataAdapter(strSQL, conn)
             DS = New DataSet
 
@@ -4286,6 +4288,8 @@ Public Class BG_T_BUDGET_DATA
 
             strSQL = strSQL.Replace("@RefRBProjectNo", Me.RefRBProjectNo)
             strSQL = strSQL.Replace("@RefRBRevNo", Me.RefRBRevNo)
+
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             da = New SqlDataAdapter(strSQL, conn)
             DS = New DataSet

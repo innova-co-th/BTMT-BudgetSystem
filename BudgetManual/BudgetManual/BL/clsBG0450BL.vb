@@ -297,6 +297,7 @@ Public Class clsBG0450BL
                     End If
 
                 Case enumPeriodType.MTPBudget
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     clsBG_T_BUDGET_DATA.TableName = "MTPApplicant"
                     clsBG_T_BUDGET_DATA.Status = CStr(enumBudgetStatus.Approve)
                     clsBG_T_BUDGET_DATA.BudgetType = "E"
@@ -333,6 +334,7 @@ Public Class clsBG0450BL
                     End If
 
                 Case enumPeriodType.MTPBudget
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     clsBG_T_BUDGET_DATA.TableName = "MTPApplicant"
                     clsBG_T_BUDGET_DATA.Status = CStr(enumBudgetStatus.Approve)
                     clsBG_T_BUDGET_DATA.BudgetType = "E"
