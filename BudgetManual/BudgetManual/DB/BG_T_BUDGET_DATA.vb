@@ -42,6 +42,8 @@ Public Class BG_T_BUDGET_DATA
     Private myRefEstRevNo As String = String.Empty
     Private myRefRBProjectNo As String = String.Empty
     Private myRefRBRevNo As String = String.Empty
+    Private myOBProjectNo As String = String.Empty
+    Private myOBRevNo As String = String.Empty
 
 #End Region
 
@@ -165,6 +167,28 @@ Public Class BG_T_BUDGET_DATA
         End Get
         Set(ByVal value As String)
             myMtpRevNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "OBProjectNo"
+    Property OBProjectNo() As String
+        Get
+            Return myOBProjectNo
+        End Get
+        Set(ByVal value As String)
+            myOBProjectNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "OBRevNo"
+    Property OBRevNo() As String
+        Get
+            Return myOBRevNo
+        End Get
+        Set(ByVal value As String)
+            myOBRevNo = value
         End Set
     End Property
 #End Region
@@ -368,17 +392,6 @@ Public Class BG_T_BUDGET_DATA
     End Property
 #End Region
 
-#Region "RefPeriodType"
-    Property RefPeriodType() As String
-        Get
-            Return myRefPeriodType
-        End Get
-        Set(ByVal value As String)
-            myRefPeriodType = value
-        End Set
-    End Property
-#End Region
-
 #Region "RefProjectNo"
     Property RefProjectNo() As String
         Get
@@ -441,6 +454,17 @@ Public Class BG_T_BUDGET_DATA
         End Get
         Set(ByVal value As String)
             myRefRBRevNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "RefPeriodType"
+    Property RefPeriodType() As String
+        Get
+            Return myRefPeriodType
+        End Get
+        Set(ByVal value As String)
+            myRefPeriodType = value
         End Set
     End Property
 #End Region
@@ -762,6 +786,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@YEAR", Me.BudgetYear)
             strSQL = strSQL.Replace("@PERIOD", Me.PeriodType)
             strSQL = strSQL.Replace("@PROJECTNO", Me.ProjectNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             If Me.UserPIC = "0" Then
                 strSQL = strSQL.Replace("@PICCONDITION", " ")
@@ -1134,6 +1159,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@PERIOD", Me.PeriodType)
             strSQL = strSQL.Replace("@PROJECTNO", Me.ProjectNo)
             strSQL = strSQL.Replace("@REVNO", Me.RevNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             If Me.UserPIC = "0" Then
                 strSQL = strSQL.Replace("@PICCONDITION", " ")
