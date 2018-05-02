@@ -3979,6 +3979,8 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@RefRBProjectNo", Me.RefRBProjectNo)
             strSQL = strSQL.Replace("@RefRBRevNo", Me.RefRBRevNo)
 
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
+
             If Me.AccountNo.Equals(String.Empty) OrElse _
                 String.Equals(Me.AccountNo.Trim.ToUpper, STRING_ALL.ToUpper) Then
                 strSQL = strSQL.Replace("@AccountNo", "")
@@ -4045,6 +4047,8 @@ Public Class BG_T_BUDGET_DATA
 
             strSQL = strSQL.Replace("@RefRBProjectNo", Me.RefRBProjectNo)
             strSQL = strSQL.Replace("@RefRBRevNo", Me.RefRBRevNo)
+
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             If Me.AccountNo.Equals(String.Empty) OrElse _
                 String.Equals(Me.AccountNo.Trim.ToUpper, STRING_ALL.ToUpper) Then
