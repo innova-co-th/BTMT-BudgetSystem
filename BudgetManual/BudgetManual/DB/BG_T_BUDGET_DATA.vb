@@ -1942,6 +1942,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ReviseBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             da = New SqlDataAdapter(strSQL, conn)
             ds = New DataSet
@@ -1995,6 +1996,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             da = New SqlDataAdapter(strSQL, conn)
             ds = New DataSet

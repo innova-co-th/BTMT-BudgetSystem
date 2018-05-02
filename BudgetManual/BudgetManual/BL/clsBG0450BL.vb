@@ -283,6 +283,7 @@ Public Class clsBG0450BL
                     End If
 
                 Case enumPeriodType.EstimateBudget
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.ReviseBudget)
                     clsBG_T_BUDGET_DATA.TableName = "EstimateApplicant"
                     If clsBG_T_BUDGET_DATA.Select010_2() = False Then
                         Return False
@@ -318,6 +319,7 @@ Public Class clsBG0450BL
                     End If
 
                 Case enumPeriodType.EstimateBudget
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.ReviseBudget)
                     clsBG_T_BUDGET_DATA.TableName = "EstimateApplicant"
                     If clsBG_T_BUDGET_DATA.Select010() = False Then
                         Return False
