@@ -913,6 +913,8 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@RefRBProjectNo", Me.RefRBProjectNo)
             strSQL = strSQL.Replace("@RefRBRevNo", Me.RefRBRevNo)
 
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
+
             'If Me.MTPChecked = True Then
             '    Dim strMTPSql As String = " OR ISNULL(MASTER_DATA.RRT1, 0)<> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0 OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0"
             '    Dim intLen As Integer = strSQL.LastIndexOf(")")
@@ -1286,6 +1288,8 @@ Public Class BG_T_BUDGET_DATA
 
             strSQL = strSQL.Replace("@RefRBProjectNo", Me.RefRBProjectNo)
             strSQL = strSQL.Replace("@RefRBRevNo", Me.RefRBRevNo)
+
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             'If Me.MTPChecked = True Then
             '    Dim strMTPSql As String = " OR ISNULL(MASTER_DATA.RRT1, 0)<> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0 OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0"
