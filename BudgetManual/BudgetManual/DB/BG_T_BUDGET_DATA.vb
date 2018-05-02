@@ -1555,6 +1555,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ReviseBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+            strSQL = strSQL.Replace("@REFPeriod", Me.PeriodType)
 
             'If Not String.Equals(Me.AccountNo.Trim.ToUpper, STRING_ALL.ToUpper) Then
             '    strAccountNo = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT007_2")
@@ -1623,6 +1624,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@REFPeriod", Me.PeriodType)
 
             If String.Equals(Me.AccountNo.Trim.ToUpper, STRING_ALL.ToUpper) Then
                 strSQL = strSQL.Replace("@AccountNo", " ")
