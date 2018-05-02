@@ -2232,6 +2232,8 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PICCONDITION", "AND BUDGET_ORDER.PERSON_IN_CHARGE_NO = '@PIC'")
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
+
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
@@ -2394,6 +2396,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@PERIOD", Me.PeriodType)
             strSQL = strSQL.Replace("@PROJECT_NO", Me.ProjectNo)
             strSQL = strSQL.Replace("@REV_NO", Me.RevNo)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             If Me.UserPIC = "0" Then
                 strSQL = strSQL.Replace("@PICCONDITION", " ")
