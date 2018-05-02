@@ -312,7 +312,7 @@ Public Class clsBG0410BL
                     clsBG_T_BUDGET_DATA.dtResult.TableName = "BUDGET_DATA"
                     Exit Select
                 Case CStr(enumPeriodType.EstimateBudget)
-                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.ReviseBudget)
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     If clsBG_T_BUDGET_DATA.Select004_10() = False Then
                         Return False
                     End If
@@ -350,7 +350,7 @@ Public Class clsBG0410BL
                     clsBG_T_BUDGET_DATA.dtResult.TableName = "BUDGET_DATA"
                     Exit Select
                 Case CStr(enumPeriodType.EstimateBudget)
-                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.ReviseBudget)
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     If clsBG_T_BUDGET_DATA.Select004_2() = False Then
                         Return False
                     End If
