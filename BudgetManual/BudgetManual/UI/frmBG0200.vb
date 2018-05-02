@@ -5263,15 +5263,21 @@ Public Class frmBG0200
 
     Private Sub grvBudget1_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget1.CellDoubleClick
         'If Not Me.IsGridPreviewOnly Then
-        If e.RowIndex >= 0 Then
-            'If grvBudget2.Columns(e.ColumnIndex).Name = "g2col22" Then
-            p_frmBG0201 = New frmBG0201
-            If p_frmBG0201.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
-                'grvBudget2.Item(e.ColumnIndex, e.RowIndex).Value = p_frmBG0201.Remark
+
+        If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+            If e.RowIndex >= 0 Then
+                'If grvBudget2.Columns(e.ColumnIndex).Name = "g2col22" Then
+                p_frmBG0201 = New frmBG0201
+                If p_frmBG0201.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
+                    'grvBudget2.Item(e.ColumnIndex, e.RowIndex).Value = p_frmBG0201.Remark
+                End If
+                p_frmBG0201.Dispose()
+                'End If
             End If
-            p_frmBG0201.Dispose()
-            'End If
         End If
+        
+
+
         'End If
     End Sub
     '  Public Delegate Sub InvokeDelegate()
