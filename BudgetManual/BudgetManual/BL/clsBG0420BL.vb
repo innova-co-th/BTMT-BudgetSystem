@@ -315,6 +315,7 @@ Public Class clsBG0420BL
                 Case CStr(enumPeriodType.MTPBudget)
                     'clsBG_T_BUDGET_DATA.PrevProjectNo = Me.PrevProjectNo
                     'clsBG_T_BUDGET_DATA.PrevMTPRevNo = Me.PrevRevNo
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     If clsBG_T_BUDGET_DATA.Select004_8() = False Then
                         Return False
                     End If
@@ -352,6 +353,7 @@ Public Class clsBG0420BL
 
                 Case CStr(enumPeriodType.MTPBudget)
                     'clsBG_T_BUDGET_DATA.PrevProjectNo = Me.PrevProjectNo
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     If clsBG_T_BUDGET_DATA.Select004_7() = False Then
                         Return False
                     End If

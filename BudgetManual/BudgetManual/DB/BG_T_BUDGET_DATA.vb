@@ -981,6 +981,8 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
 
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
+
             'If Me.MTPChecked = True Then
             '    Dim strMTPSql As String = " OR ISNULL(MASTER_DATA.RRT1, 0)<> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0 OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0"
             '    Dim intLen As Integer = strSQL.LastIndexOf(")")
@@ -1048,6 +1050,8 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PICCONDITION", "AND BO.PERSON_IN_CHARGE_NO = '@PIC'")
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
+
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             'If Me.MTPChecked = True Then
             '    Dim strMTPSql As String = " OR ISNULL(MASTER_DATA.RRT1, 0)<> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0 OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0"
