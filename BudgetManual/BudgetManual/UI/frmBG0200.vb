@@ -1094,27 +1094,28 @@ Public Class frmBG0200
                     '//-- End Add 2012-11-01
                 End If
 
-                '// Hide Jul - Dec
-                If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                    'For i = 1 To 6
-                    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = False
-                    'Next
-                    ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
-                    grvBudget1.Columns("g1colex1").DataPropertyName = "Total2H"
-                    grvBudget1.Columns("g1col15").DataPropertyName = "M7"
-                Else
-                    'For i = 1 To 6
-                    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = True
-                    'Next
-                    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
-                    ''grvBudget1.Columns("g1col15").DataPropertyName = ""
-                    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
-                End If
+                ''Anat
+                'If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
+                '    'For i = 1 To 6
+                '    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = False
+                '    'Next
+                '    ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
+                '    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
+                '    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
+                'Else
+                '    'For i = 1 To 6
+                '    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = True
+                '    'Next
 
-                '// Hide MTP Budget
-                For i = 19 To 23
-                    grvBudget1.Columns("g1col" & CStr(i)).Visible = False
-                Next
+                '    ''grvBudget1.Columns("g1col15").DataPropertyName = ""
+                '    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
+                '    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
+                'End If
+
+                ''// Hide MTP Budget
+                'For i = 19 To 23
+                '    grvBudget1.Columns("g1col" & CStr(i)).Visible = False
+                'Next
 
                 '// Show/Hide WK Column
                 If Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput Then
@@ -3051,6 +3052,12 @@ Public Class frmBG0200
             intColumnIndex = grvBudget1.Columns("g1col11").Index Or _
             intColumnIndex = grvBudget1.Columns("g1col12").Index Or _
             intColumnIndex = grvBudget1.Columns("g1col13").Index Or _
+            intColumnIndex = grvBudget1.Columns("g1colex1").Index Or _
+            intColumnIndex = grvBudget1.Columns("g1colex2").Index Or _
+            intColumnIndex = grvBudget1.Columns("g1colex3").Index Or _
+            intColumnIndex = grvBudget1.Columns("g1colex4").Index Or _
+            intColumnIndex = grvBudget1.Columns("g1colex5").Index Or _
+            intColumnIndex = grvBudget1.Columns("g1colex6").Index Or _
             intColumnIndex = grvBudget1.Columns("g1col15").Index))) Or _
             ((CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_ASSET And _
             (intColumnIndex = grvBudget1.Columns("g1col6").Index Or _
@@ -3398,19 +3405,17 @@ Public Class frmBG0200
             grvBudget1.Item("g1col14", intRowIndex).Value = dblTotal
         End If
 
-        '// Calc Total 2nd Half (Investment)
-        If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_ASSET Then
-            dblTotal = CDbl(Nz(grvBudget1.Item("g1colex1", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex2", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex3", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex4", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex5", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex6", intRowIndex).Value, 0))
-            If dblTotal = 0 Then
-                grvBudget1.Item("g1col15", intRowIndex).Value = DBNull.Value
-            Else
-                grvBudget1.Item("g1col15", intRowIndex).Value = dblTotal
-            End If
+        '// Calc Total 2nd Half
+        dblTotal = CDbl(Nz(grvBudget1.Item("g1colex1", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex2", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex3", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex4", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex5", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex6", intRowIndex).Value, 0))
+        If dblTotal = 0 Then
+            grvBudget1.Item("g1col15", intRowIndex).Value = DBNull.Value
+        Else
+            grvBudget1.Item("g1col15", intRowIndex).Value = dblTotal
         End If
 
         '// Calc Total Year
@@ -3478,19 +3483,17 @@ Public Class frmBG0200
             grvBudget1.Item("g1col14", intRowIndex).Value = dblTotal
         End If
 
-        '// Calc Total 2nd Half (Investment)
-        If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_ASSET Then
-            dblTotal = CDbl(Nz(grvBudget1.Item("g1colex1", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex2", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex3", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex4", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex5", intRowIndex).Value, 0)) + _
-                        CDbl(Nz(grvBudget1.Item("g1colex6", intRowIndex).Value, 0))
-            If dblTotal = 0 Then
-                grvBudget1.Item("g1col15", intRowIndex).Value = DBNull.Value
-            Else
-                grvBudget1.Item("g1col15", intRowIndex).Value = dblTotal
-            End If
+        '// Calc Total 2nd Half
+        dblTotal = CDbl(Nz(grvBudget1.Item("g1colex1", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex2", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex3", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex4", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex5", intRowIndex).Value, 0)) + _
+                    CDbl(Nz(grvBudget1.Item("g1colex6", intRowIndex).Value, 0))
+        If dblTotal = 0 Then
+            grvBudget1.Item("g1col15", intRowIndex).Value = DBNull.Value
+        Else
+            grvBudget1.Item("g1col15", intRowIndex).Value = dblTotal
         End If
 
         '// Calc Total Year
@@ -4448,16 +4451,12 @@ Public Class frmBG0200
                         grvBudget1.Item("g1Col12", i).Value = ((CDbl(Nz(dr(0).Item("M5"), 0)) / 100) * dblWK1).ToString("#,##0.00")
                         grvBudget1.Item("g1Col13", i).Value = ((CDbl(Nz(dr(0).Item("M6"), 0)) / 100) * dblWK1).ToString("#,##0.00")
 
-                        If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                            grvBudget1.Item("g1Col15", i).Value = ((CDbl(Nz(dr(0).Item("M7"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                        Else
-                            grvBudget1.Item("g1Colex1", i).Value = ((CDbl(Nz(dr(0).Item("M7"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex2", i).Value = ((CDbl(Nz(dr(0).Item("M8"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex3", i).Value = ((CDbl(Nz(dr(0).Item("M9"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex4", i).Value = ((CDbl(Nz(dr(0).Item("M10"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex5", i).Value = ((CDbl(Nz(dr(0).Item("M11"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex6", i).Value = ((CDbl(Nz(dr(0).Item("M12"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                        End If
+                        grvBudget1.Item("g1Colex1", i).Value = ((CDbl(Nz(dr(0).Item("M7"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex2", i).Value = ((CDbl(Nz(dr(0).Item("M8"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex3", i).Value = ((CDbl(Nz(dr(0).Item("M9"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex4", i).Value = ((CDbl(Nz(dr(0).Item("M10"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex5", i).Value = ((CDbl(Nz(dr(0).Item("M11"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex6", i).Value = ((CDbl(Nz(dr(0).Item("M12"), 0)) / 100) * dblWK2).ToString("#,##0.00")
 
                     Else
                         dr = dtRefData.Select("BUDGET_ORDER_NO = '" & strOrderNo & "'")
@@ -4559,16 +4558,14 @@ Public Class frmBG0200
                     grvBudget1.Item("g1Col11", i).Style.BackColor = Color.OrangeRed
                     grvBudget1.Item("g1Col12", i).Style.BackColor = Color.OrangeRed
                     grvBudget1.Item("g1Col13", i).Style.BackColor = Color.OrangeRed
-                    If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                        grvBudget1.Item("g1Col15", i).Style.BackColor = Color.OrangeRed
-                    Else
-                        grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.OrangeRed
-                        grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.OrangeRed
-                        grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.OrangeRed
-                        grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.OrangeRed
-                        grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.OrangeRed
-                        grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.OrangeRed
-                    End If
+
+                    grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.OrangeRed
+                    grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.OrangeRed
+                    grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.OrangeRed
+                    grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.OrangeRed
+                    grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.OrangeRed
+                    grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.OrangeRed
+
                 Else
                     If i Mod 2 = 0 Then
                         grvBudget1.Item("g1Col8", i).Style.BackColor = grvBudget1.Columns("g1Col8").DefaultCellStyle.BackColor
@@ -4577,16 +4574,14 @@ Public Class frmBG0200
                         grvBudget1.Item("g1Col11", i).Style.BackColor = grvBudget1.Columns("g1Col11").DefaultCellStyle.BackColor
                         grvBudget1.Item("g1Col12", i).Style.BackColor = grvBudget1.Columns("g1Col12").DefaultCellStyle.BackColor
                         grvBudget1.Item("g1Col13", i).Style.BackColor = grvBudget1.Columns("g1Col13").DefaultCellStyle.BackColor
-                        If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                            grvBudget1.Item("g1Col15", i).Style.BackColor = grvBudget1.Columns("g1Col15").DefaultCellStyle.BackColor
-                        Else
-                            grvBudget1.Item("g1Colex1", i).Style.BackColor = grvBudget1.Columns("g1Colex1").DefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex2", i).Style.BackColor = grvBudget1.Columns("g1Colex2").DefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex3", i).Style.BackColor = grvBudget1.Columns("g1Colex3").DefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex4", i).Style.BackColor = grvBudget1.Columns("g1Colex4").DefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex5", i).Style.BackColor = grvBudget1.Columns("g1Colex5").DefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex6", i).Style.BackColor = grvBudget1.Columns("g1Colex5").DefaultCellStyle.BackColor
-                        End If
+
+                        grvBudget1.Item("g1Colex1", i).Style.BackColor = grvBudget1.Columns("g1Colex1").DefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex2", i).Style.BackColor = grvBudget1.Columns("g1Colex2").DefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex3", i).Style.BackColor = grvBudget1.Columns("g1Colex3").DefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex4", i).Style.BackColor = grvBudget1.Columns("g1Colex4").DefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex5", i).Style.BackColor = grvBudget1.Columns("g1Colex5").DefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex6", i).Style.BackColor = grvBudget1.Columns("g1Colex5").DefaultCellStyle.BackColor
+
                     Else
                         grvBudget1.Item("g1Col8", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
                         grvBudget1.Item("g1Col9", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
@@ -4594,16 +4589,14 @@ Public Class frmBG0200
                         grvBudget1.Item("g1Col11", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
                         grvBudget1.Item("g1Col12", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
                         grvBudget1.Item("g1Col13", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                            grvBudget1.Item("g1Col15", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        Else
-                            grvBudget1.Item("g1Colex1", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex2", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex3", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex4", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex5", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                            grvBudget1.Item("g1Colex6", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        End If
+
+                        grvBudget1.Item("g1Colex1", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex2", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex3", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex4", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex5", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
+                        grvBudget1.Item("g1Colex6", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
+
                     End If
                 End If
             Next
@@ -4687,7 +4680,6 @@ Public Class frmBG0200
         '// Highlight Budget Order
         If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then      '// Original Budget
             For i = 0 To grvBudget1.RowCount - 1
-
                 strOrderNo = CStr(grvBudget1.Item("OrderNo1", i).Value)
                 dr = myClsBG0200BL.TransferList.Select("FROM_ORDER_NO = '" & strOrderNo & "'")
                 If dr.Count > 0 Then
@@ -4698,16 +4690,13 @@ Public Class frmBG0200
                     grvBudget1.Item("g1Col11", i).Style.BackColor = Color.LightSalmon
                     grvBudget1.Item("g1Col12", i).Style.BackColor = Color.LightSalmon
                     grvBudget1.Item("g1Col13", i).Style.BackColor = Color.LightSalmon
-                    If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                        grvBudget1.Item("g1Col15", i).Style.BackColor = Color.LightSalmon
-                    Else
-                        grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.LightSalmon
-                        grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.LightSalmon
-                        grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.LightSalmon
-                        grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.LightSalmon
-                        grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.LightSalmon
-                        grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.LightSalmon
-                    End If
+
+                    grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.LightSalmon
+                    grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.LightSalmon
+                    grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.LightSalmon
+                    grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.LightSalmon
+                    grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.LightSalmon
+                    grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.LightSalmon
                 Else
                     dr = myClsBG0200BL.TransferList.Select("TO_ORDER_NO = '" & strOrderNo & "'")
                     If dr.Count > 0 Then
@@ -4718,16 +4707,13 @@ Public Class frmBG0200
                         grvBudget1.Item("g1Col11", i).Style.BackColor = Color.LightGreen
                         grvBudget1.Item("g1Col12", i).Style.BackColor = Color.LightGreen
                         grvBudget1.Item("g1Col13", i).Style.BackColor = Color.LightGreen
-                        If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                            grvBudget1.Item("g1Col15", i).Style.BackColor = Color.LightGreen
-                        Else
-                            grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.LightGreen
-                            grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.LightGreen
-                            grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.LightGreen
-                            grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.LightGreen
-                            grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.LightGreen
-                            grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.LightGreen
-                        End If
+
+                        grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.LightGreen
+                        grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.LightGreen
+                        grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.LightGreen
+                        grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.LightGreen
+                        grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.LightGreen
+                        grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.LightGreen
                     End If
                 End If
             Next
