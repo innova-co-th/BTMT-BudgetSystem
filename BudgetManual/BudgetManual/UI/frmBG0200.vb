@@ -40,6 +40,8 @@ Public Class frmBG0200
 
     Private blnReInputByOrder As Boolean = False
 
+
+
 #End Region
 
 #Region "Property"
@@ -5250,10 +5252,56 @@ Public Class frmBG0200
     Private Sub grvBudget1_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget1.CellDoubleClick
         'If Not Me.IsGridPreviewOnly Then
 
+        Dim intMonth As Integer
+        Dim ColumnName As String
+
+        ColumnName = CStr(grvBudget1.Columns(e.ColumnIndex).Name) 'Me.grvBudget1.Columns[0].Name
+
+        Select Case ColumnName
+            Case "g1col8"
+                intMonth = 1
+            Case "g1col9"
+                intMonth = 2
+            Case "g1col10"
+                intMonth = 3
+            Case "g1col11"
+                intMonth = 4
+            Case "g1col12"
+                intMonth = 5
+            Case "g1col13"
+                intMonth = 6
+            Case "g1colex1"
+                intMonth = 7
+            Case "g1colex2"
+                intMonth = 8
+            Case "g1colex3"
+                intMonth = 9
+            Case "g1colex4"
+                intMonth = 10
+            Case "g1colex5"
+                intMonth = 11
+            Case "g1colex6"
+                intMonth = 12
+        End Select
+
+        Dim budgetOrderNo As String = String.Empty
+        Dim budgetOderSub() As String
         If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
             If e.RowIndex >= 0 Then
                 'If grvBudget2.Columns(e.ColumnIndex).Name = "g2col22" Then
                 p_frmBG0201 = New frmBG0201
+
+                p_frmBG0201.BudgetYear = Me.GetBudgetYear()
+                p_frmBG0201.PeriodType = Me.GetPeriodType()
+                budgetOderSub = grvBudget1.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                If Not budgetOderSub Is Nothing AndAlso budgetOderSub.Length > 0 Then
+                    budgetOrderNo = budgetOderSub(0).ToString
+                End If
+                p_frmBG0201.BudgetOrderNo = budgetOrderNo
+                p_frmBG0201.RevNo = Me.CurrRevNo
+                p_frmBG0201.ProjectNo = Me.GetProjectNo()
+                p_frmBG0201.MonthNo = CStr(intMonth)
+
                 If p_frmBG0201.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
                     'grvBudget2.Item(e.ColumnIndex, e.RowIndex).Value = p_frmBG0201.Remark
                 End If
@@ -5261,7 +5309,6 @@ Public Class frmBG0200
                 'End If
             End If
         End If
-        
 
 
         'End If

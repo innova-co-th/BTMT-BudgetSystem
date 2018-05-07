@@ -12113,4 +12113,33 @@
 
   </BG_T_BUDGET_DATA_REINPUT>
 
+  <!--// Table: BG_T_BUDGET_COMMENT -->
+  <BG_T_BUDGET_COMMENT>
+    <SELECT001>
+    SELECT * FROM  dbo.BG_T_BUDGET_COMMENT
+    WHERE BUDGET_YEAR = @BudgetYear
+    AND  PERIOD_TYPE =@PeriodType
+    AND BUDGET_ORDER_NO ='@BudgetOrderNo'
+    AND REV_NO =@RevNo
+    AND PROJECT_NO =@ProjectNo
+    </SELECT001>
+
+    <INSERT001>
+      INSERT INTO BG_T_BUDGET_COMMENT (BUDGET_YEAR, PERIOD_TYPE, BUDGET_ORDER_NO, REV_NO, PROJECT_NO, CREATE_USER_ID, CREATE_DATE, UPDATE_USER_ID, UPDATE_DATE, @Condition)
+      VALUES (@BudgetYear, @PeriodType, '@BudgetOrderNo', @RevNo, @ProjectNo,  '@UserId', GetDate(), '@UserId', GetDate(), '@Value')
+    </INSERT001>
+
+    <UPDATE001>
+      UPDATE BG_T_BUDGET_COMMENT SET @comment, UPDATE_USER_ID = '@UserId', UPDATE_DATE = GetDate()
+      WHERE BUDGET_YEAR = @BudgetYear
+      AND  PERIOD_TYPE =@PeriodType
+      AND BUDGET_ORDER_NO ='@BudgetOrderNo'
+      AND REV_NO =@RevNo
+      AND PROJECT_NO =@ProjectNo
+    </UPDATE001>
+    
+  </BG_T_BUDGET_COMMENT>
+
+ 
+
 </SqlCmd>

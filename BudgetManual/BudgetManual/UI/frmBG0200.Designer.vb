@@ -436,6 +436,7 @@ Partial Class frmBG0200
         Me.g4ex04 = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.g4ex05 = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.g4col19 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.BudgetOrderNo = New System.Windows.Forms.DataGridViewTextBoxColumn
         CType(Me.grvBudget1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grvBudget2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grvBudget3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2879,7 +2880,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle102.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.grvBudget4.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle102
         Me.grvBudget4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.grvBudget4.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.g4Wk, Me.OrderNo4, Me.g4col1, Me.g4col2, Me.g4col3, Me.g4col4, Me.g4col5, Me.g4Pic, Me.g4col6, Me.g4col7, Me.g4col8, Me.g4col9, Me.g4col10, Me.g4colDiff1, Me.g4col11, Me.g4col12, Me.g4colDiff2, Me.g4col13, Me.g4col14, Me.g4col15, Me.g4col16, Me.g4col17, Me.g4ex01, Me.g4ex02, Me.g4ex03, Me.g4ex04, Me.g4ex05, Me.g4col19})
+        Me.grvBudget4.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.g4Wk, Me.OrderNo4, Me.g4col1, Me.g4col2, Me.g4col3, Me.g4col4, Me.g4col5, Me.g4Pic, Me.g4col6, Me.g4col7, Me.g4col8, Me.g4col9, Me.g4col10, Me.g4colDiff1, Me.g4col11, Me.g4col12, Me.g4colDiff2, Me.g4col13, Me.g4col14, Me.g4col15, Me.g4col16, Me.g4col17, Me.g4ex01, Me.g4ex02, Me.g4ex03, Me.g4ex04, Me.g4ex05, Me.g4col19, Me.BudgetOrderNo})
         DataGridViewCellStyle124.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle124.BackColor = System.Drawing.Color.Azure
         DataGridViewCellStyle124.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
@@ -3758,6 +3759,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle104.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle104.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.g4col2.DefaultCellStyle = DataGridViewCellStyle104
+        Me.g4col2.Frozen = True
         Me.g4col2.HeaderText = "Account"
         Me.g4col2.MinimumWidth = 50
         Me.g4col2.Name = "g4col2"
@@ -3771,6 +3773,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle105.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle105.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.g4col3.DefaultCellStyle = DataGridViewCellStyle105
+        Me.g4col3.Frozen = True
         Me.g4col3.HeaderText = "Cost Type"
         Me.g4col3.MinimumWidth = 50
         Me.g4col3.Name = "g4col3"
@@ -3784,6 +3787,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle106.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle106.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.g4col4.DefaultCellStyle = DataGridViewCellStyle106
+        Me.g4col4.Frozen = True
         Me.g4col4.HeaderText = "Cost"
         Me.g4col4.MinimumWidth = 50
         Me.g4col4.Name = "g4col4"
@@ -3797,6 +3801,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle107.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle107.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.g4col5.DefaultCellStyle = DataGridViewCellStyle107
+        Me.g4col5.Frozen = True
         Me.g4col5.HeaderText = "Dept."
         Me.g4col5.MinimumWidth = 50
         Me.g4col5.Name = "g4col5"
@@ -3810,6 +3815,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle108.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle108.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.g4Pic.DefaultCellStyle = DataGridViewCellStyle108
+        Me.g4Pic.Frozen = True
         Me.g4Pic.HeaderText = "PIC"
         Me.g4Pic.Name = "g4Pic"
         Me.g4Pic.ReadOnly = True
@@ -3822,6 +3828,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle109.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle109.Format = "N2"
         Me.g4col6.DefaultCellStyle = DataGridViewCellStyle109
+        Me.g4col6.Frozen = True
         Me.g4col6.HeaderText = "Original Year"
         Me.g4col6.MinimumWidth = 30
         Me.g4col6.Name = "g4col6"
@@ -3832,6 +3839,7 @@ Partial Class frmBG0200
         '
         Me.g4col7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g4col7.DataPropertyName = "PrevRRT1"
+        Me.g4col7.Frozen = True
         Me.g4col7.HeaderText = "MTP@1 Year"
         Me.g4col7.MinimumWidth = 30
         Me.g4col7.Name = "g4col7"
@@ -3846,6 +3854,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle110.Format = "N2"
         DataGridViewCellStyle110.NullValue = "-"
         Me.g4col8.DefaultCellStyle = DataGridViewCellStyle110
+        Me.g4col8.Frozen = True
         Me.g4col8.HeaderText = "Diff Year"
         Me.g4col8.MinimumWidth = 30
         Me.g4col8.Name = "g4col8"
@@ -3862,6 +3871,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle111.Format = "N2"
         DataGridViewCellStyle111.NullValue = "-"
         Me.g4col9.DefaultCellStyle = DataGridViewCellStyle111
+        Me.g4col9.Frozen = True
         Me.g4col9.HeaderText = "MTP@1 Year"
         Me.g4col9.MaxInputLength = 30
         Me.g4col9.MinimumWidth = 40
@@ -3872,6 +3882,7 @@ Partial Class frmBG0200
         '
         Me.g4col10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g4col10.DataPropertyName = "PrevRRT2"
+        Me.g4col10.Frozen = True
         Me.g4col10.HeaderText = "MTP@1 Year"
         Me.g4col10.MaxInputLength = 30
         Me.g4col10.MinimumWidth = 30
@@ -3886,6 +3897,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle112.Format = "N2"
         DataGridViewCellStyle112.NullValue = Nothing
         Me.g4colDiff1.DefaultCellStyle = DataGridViewCellStyle112
+        Me.g4colDiff1.Frozen = True
         Me.g4colDiff1.HeaderText = "diff year "
         Me.g4colDiff1.MinimumWidth = 50
         Me.g4colDiff1.Name = "g4colDiff1"
@@ -3901,6 +3913,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle113.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle113.Format = "N2"
         Me.g4col11.DefaultCellStyle = DataGridViewCellStyle113
+        Me.g4col11.Frozen = True
         Me.g4col11.HeaderText = "MTP@1 Year"
         Me.g4col11.MaxInputLength = 30
         Me.g4col11.MinimumWidth = 40
@@ -3911,6 +3924,7 @@ Partial Class frmBG0200
         '
         Me.g4col12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g4col12.DataPropertyName = "PrevRRT3"
+        Me.g4col12.Frozen = True
         Me.g4col12.HeaderText = "MTP@1 Year"
         Me.g4col12.MaxInputLength = 30
         Me.g4col12.MinimumWidth = 30
@@ -3924,6 +3938,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle114.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle114.NullValue = Nothing
         Me.g4colDiff2.DefaultCellStyle = DataGridViewCellStyle114
+        Me.g4colDiff2.Frozen = True
         Me.g4colDiff2.HeaderText = "diff year "
         Me.g4colDiff2.MinimumWidth = 50
         Me.g4colDiff2.Name = "g4colDiff2"
@@ -3939,6 +3954,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle115.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle115.Format = "N2"
         Me.g4col13.DefaultCellStyle = DataGridViewCellStyle115
+        Me.g4col13.Frozen = True
         Me.g4col13.HeaderText = "MTP@1 Year"
         Me.g4col13.MaxInputLength = 30
         Me.g4col13.MinimumWidth = 40
@@ -3950,6 +3966,7 @@ Partial Class frmBG0200
         '
         Me.g4col14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g4col14.DataPropertyName = "PrevRRT4"
+        Me.g4col14.Frozen = True
         Me.g4col14.HeaderText = "MTP@1 Year"
         Me.g4col14.MaxInputLength = 30
         Me.g4col14.MinimumWidth = 30
@@ -3967,6 +3984,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle116.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle116.Format = "N2"
         Me.g4col15.DefaultCellStyle = DataGridViewCellStyle116
+        Me.g4col15.Frozen = True
         Me.g4col15.HeaderText = "MTP@1 Year"
         Me.g4col15.MaxInputLength = 30
         Me.g4col15.MinimumWidth = 40
@@ -3978,6 +3996,7 @@ Partial Class frmBG0200
         '
         Me.g4col16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g4col16.DataPropertyName = "PrevRRT5"
+        Me.g4col16.Frozen = True
         Me.g4col16.HeaderText = "MTP@1 Year"
         Me.g4col16.MaxInputLength = 30
         Me.g4col16.MinimumWidth = 30
@@ -3995,6 +4014,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle117.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle117.Format = "N2"
         Me.g4col17.DefaultCellStyle = DataGridViewCellStyle117
+        Me.g4col17.Frozen = True
         Me.g4col17.HeaderText = "MTP@1 Year"
         Me.g4col17.MaxInputLength = 30
         Me.g4col17.MinimumWidth = 40
@@ -4009,6 +4029,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle118.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle118.Format = "N2"
         Me.g4ex01.DefaultCellStyle = DataGridViewCellStyle118
+        Me.g4ex01.Frozen = True
         Me.g4ex01.HeaderText = "MTP Calc1"
         Me.g4ex01.MinimumWidth = 30
         Me.g4ex01.Name = "g4ex01"
@@ -4022,6 +4043,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle119.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle119.Format = "N2"
         Me.g4ex02.DefaultCellStyle = DataGridViewCellStyle119
+        Me.g4ex02.Frozen = True
         Me.g4ex02.HeaderText = "MTP Calc2"
         Me.g4ex02.MinimumWidth = 30
         Me.g4ex02.Name = "g4ex02"
@@ -4035,6 +4057,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle120.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle120.Format = "N2"
         Me.g4ex03.DefaultCellStyle = DataGridViewCellStyle120
+        Me.g4ex03.Frozen = True
         Me.g4ex03.HeaderText = "MTP Calc3"
         Me.g4ex03.MinimumWidth = 30
         Me.g4ex03.Name = "g4ex03"
@@ -4049,6 +4072,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle121.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle121.Format = "N2"
         Me.g4ex04.DefaultCellStyle = DataGridViewCellStyle121
+        Me.g4ex04.Frozen = True
         Me.g4ex04.HeaderText = "MTP Calc4"
         Me.g4ex04.MinimumWidth = 30
         Me.g4ex04.Name = "g4ex04"
@@ -4063,6 +4087,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle122.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle122.Format = "N2"
         Me.g4ex05.DefaultCellStyle = DataGridViewCellStyle122
+        Me.g4ex05.Frozen = True
         Me.g4ex05.HeaderText = "MTP Calc5"
         Me.g4ex05.MinimumWidth = 30
         Me.g4ex05.Name = "g4ex05"
@@ -4078,10 +4103,20 @@ Partial Class frmBG0200
         DataGridViewCellStyle123.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
         DataGridViewCellStyle123.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g4col19.DefaultCellStyle = DataGridViewCellStyle123
+        Me.g4col19.Frozen = True
         Me.g4col19.HeaderText = "Remarks"
         Me.g4col19.MaxInputLength = 500
         Me.g4col19.MinimumWidth = 100
         Me.g4col19.Name = "g4col19"
+        '
+        'BudgetOrderNo
+        '
+        Me.BudgetOrderNo.DataPropertyName = "BUDGET_ORDER_NO"
+        Me.BudgetOrderNo.Frozen = True
+        Me.BudgetOrderNo.HeaderText = "BudgetOrderNo"
+        Me.BudgetOrderNo.Name = "BudgetOrderNo"
+        Me.BudgetOrderNo.Visible = False
+        Me.BudgetOrderNo.Width = 106
         '
         'frmBG0200
         '
@@ -4463,4 +4498,5 @@ Partial Class frmBG0200
     Friend WithEvents g4ex04 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents g4ex05 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents g4col19 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents BudgetOrderNo As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

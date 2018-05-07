@@ -3,6 +3,351 @@ Imports BudgetManual.BGConstant
 Imports BudgetManual.BGCommon
 Public Class BG_T_BUDGET_COMMENT
 
+#Region "Variable"
+
+    Private myComment As String
+    Private myBudgetYear As String
+    Private myPeriodType As String
+    Private myBudgetOrderNo As String
+    Private myRevNo As String
+    Private myProjectNo As String
+    Private myMonthNo As String
+    Private myRRTNo As String
+
+    Private myCommentList As DataTable
+    Private myCreateUserId As String
+
+
+#End Region
+
+#Region "Property"
+
+#Region "Comment"
+    Public Property Comment() As String
+        Get
+            Return myComment
+        End Get
+        Set(ByVal value As String)
+            myComment = value
+        End Set
+    End Property
+#End Region
+
+#Region "BudgetYear"
+    Public Property BudgetYear() As String
+        Get
+            Return myBudgetYear
+        End Get
+        Set(ByVal value As String)
+            myBudgetYear = value
+        End Set
+    End Property
+#End Region
+
+#Region "PeriodType"
+    Public Property PeriodType() As String
+        Get
+            Return myPeriodType
+        End Get
+        Set(ByVal value As String)
+            myPeriodType = value
+        End Set
+    End Property
+#End Region
+
+#Region "BudgetOrderNo"
+    Public Property BudgetOrderNo() As String
+        Get
+            Return myBudgetOrderNo
+        End Get
+        Set(ByVal value As String)
+            myBudgetOrderNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "RevNo"
+    Public Property RevNo() As String
+        Get
+            Return myRevNo
+        End Get
+        Set(ByVal value As String)
+            myRevNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "ProjectNo"
+    Public Property ProjectNo() As String
+        Get
+            Return myProjectNo
+        End Get
+        Set(ByVal value As String)
+            myProjectNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "CommentList"
+    Property CommentList() As DataTable
+        Get
+            Return myCommentList
+        End Get
+        Set(ByVal value As DataTable)
+            myCommentList = value
+        End Set
+    End Property
+#End Region
+
+#Region "MonthNo"
+    Public Property MonthNo() As String
+        Get
+            Return myMonthNo
+        End Get
+        Set(ByVal value As String)
+            myMonthNo = value
+        End Set
+    End Property
+#End Region
+
+#Region "RRTNo"
+    Public Property RRTNo() As String
+        Get
+            Return myRRTNo
+        End Get
+        Set(ByVal value As String)
+            myRRTNo = value
+        End Set
+    End Property
+#End Region
+
+    Public Property CreateUserId() As String
+        Get
+            Return myCreateUserId
+        End Get
+        Set(ByVal value As String)
+            myCreateUserId = value
+        End Set
+    End Property
+
+
+
+
+#End Region
+
+#Region "Function"
+
+    Public Function Select001() As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim da As SqlDataAdapter
+        Dim dt As DataTable
+        Dim strSQL As String
+
+        Try
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "SELECT001")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@BudgetOrderNo", Me.BudgetOrderNo)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+
+            da = New SqlDataAdapter(strSQL, conn)
+            dt = New DataTable
+            da.Fill(dt)
+
+            Me.CommentList = dt
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return True
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_COMMENT.Select001] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return False
+
+        End Try
+    End Function
+
+#Region "Update001"
+    ''' <summary>
+    ''' Update001
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Update001() As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim cmd As SqlCommand
+        Dim strSQL As String
+        Dim intRtn As Integer
+
+        Dim strCondition As String = String.Empty
+        Try
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "UPDATE001")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@BudgetOrderNo", Me.BudgetOrderNo)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+
+            Select Case Me.MonthNo
+                Case "1"
+                    strCondition = " M1 = '" & Me.Comment & "'"
+                Case "2"
+                    strCondition = " M2 = '" & Me.Comment & "'"
+                Case "3"
+                    strCondition = " M3 = '" & Me.Comment & "'"
+                Case "4"
+                    strCondition = " M4 = '" & Me.Comment & "'"
+                Case "5"
+                    strCondition = " M5 = '" & Me.Comment & "'"
+                Case "6"
+                    strCondition = " M6 = '" & Me.Comment & "'"
+                Case "7"
+                    strCondition = " M7 = '" & Me.Comment & "'"
+                Case "8"
+                    strCondition = " M8 = '" & Me.Comment & "'"
+                Case "9"
+                    strCondition = " M9 = '" & Me.Comment & "'"
+                Case "10"
+                    strCondition = " M10 = '" & Me.Comment & "'"
+                Case "11"
+                    strCondition = " M11 = '" & Me.Comment & "'"
+                Case "12"
+                    strCondition = " M12 = '" & Me.Comment & "'"
+            End Select
+
+            strSQL = strSQL.Replace("@comment", strCondition)
+            strSQL = strSQL.Replace("@UserId", Me.CreateUserId)
+
+
+            cmd = New SqlCommand(strSQL, conn)
+            intRtn = cmd.ExecuteNonQuery()
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            If intRtn > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_COMMENT.Update001] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return False
+
+        End Try
+    End Function
+#End Region
+
+#Region "Insert001"
+    ''' <summary>
+    ''' Insert001
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Insert001(Optional ByVal pConn As SqlConnection = Nothing, _
+                              Optional ByVal pTrans As SqlTransaction = Nothing) As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim cmd As SqlCommand
+        Dim strSQL As String
+        Dim intRtn As Integer
+        Dim strCondition As String = String.Empty
+
+        Try
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                conn = New SqlConnection(My.Settings.ConnStr)
+                conn.Open()
+            End If
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "INSERT001")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@BudgetOrderNo", Me.BudgetOrderNo)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+
+            Select Case Me.MonthNo
+                Case "1"
+                    strCondition = "M1"
+                Case "2"
+                    strCondition = "M2"
+                Case "3"
+                    strCondition = "M3"
+                Case "4"
+                    strCondition = "M4"
+                Case "5"
+                    strCondition = "M5"
+                Case "6"
+                    strCondition = "M6"
+                Case "7"
+                    strCondition = "M7"
+                Case "8"
+                    strCondition = "M8"
+                Case "9"
+                    strCondition = "M9"
+                Case "10"
+                    strCondition = "M10"
+                Case "11"
+                    strCondition = "M11"
+                Case "12"
+                    strCondition = "M12"
+            End Select
+
+            strSQL = strSQL.Replace("@Condition", strCondition)
+            strSQL = strSQL.Replace("@Value", Me.Comment)
+            strSQL = strSQL.Replace("@UserId", Me.CreateUserId)
+
+            cmd = New SqlCommand(strSQL, conn)
+            intRtn = cmd.ExecuteNonQuery()
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            If intRtn > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_M_USER.Insert001] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
+            End If
+
+            Return False
+
+        End Try
+    End Function
+#End Region
+
+#End Region
 
 
 End Class
