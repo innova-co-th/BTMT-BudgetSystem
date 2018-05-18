@@ -194,6 +194,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DS008.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DS008.vb">
+      <DependentUpon>DS008.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\RPT005-5_5Y.vb">
       <DependentUpon>RPT005-5_5Y.rpt</DependentUpon>
       <AutoGen>True</AutoGen>

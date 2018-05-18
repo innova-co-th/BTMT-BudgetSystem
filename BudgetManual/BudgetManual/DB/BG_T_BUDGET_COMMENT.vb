@@ -4,6 +4,7 @@ Imports BudgetManual.BGCommon
 Public Class BG_T_BUDGET_COMMENT
 
 #Region "Variable"
+    Private Const STRING_ALL As String = "All"
 
     Private myComment As String
     Private myBudgetYear As String
@@ -16,6 +17,10 @@ Public Class BG_T_BUDGET_COMMENT
 
     Private myCommentList As DataTable
     Private myCreateUserId As String
+
+    Private myDtResult As DataTable
+    Private myBudgetType As String = String.Empty
+    Private myUserPIC As String = String.Empty
 
 
 #End Region
@@ -130,7 +135,38 @@ Public Class BG_T_BUDGET_COMMENT
         End Set
     End Property
 
+#Region "dtResult"
+    Property dtResult() As DataTable
+        Get
+            Return myDtResult
+        End Get
+        Set(ByVal value As DataTable)
+            myDtResult = value
+        End Set
+    End Property
+#End Region
 
+#Region "BudgetType"
+    Property BudgetType() As String
+        Get
+            Return myBudgetType
+        End Get
+        Set(ByVal value As String)
+            myBudgetType = value
+        End Set
+    End Property
+#End Region
+
+#Region "UserPIC"
+    Property UserPIC() As String
+        Get
+            Return myUserPIC
+        End Get
+        Set(ByVal value As String)
+            myUserPIC = value
+        End Set
+    End Property
+#End Region
 
 
 #End Region
@@ -168,6 +204,62 @@ Public Class BG_T_BUDGET_COMMENT
 
         Catch ex As Exception
             MessageBox.Show("[BG_T_BUDGET_COMMENT.Select001] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return False
+
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Select Comment data list for Report008 All
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Select002() As Boolean
+
+        Dim conn As SqlConnection = Nothing
+        Dim da As SqlDataAdapter
+        Dim dt As DataTable
+        Dim strSQL As String
+
+        Try
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "SELECT002")
+            strSQL = strSQL.Replace("@YEAR", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PERIOD", Me.PeriodType)
+            strSQL = strSQL.Replace("@PROJECTNO", Me.ProjectNo)
+            strSQL = strSQL.Replace("@BUDGETTYPE", Me.BudgetType)
+            strSQL = strSQL.Replace("@REVNOCONDITION", "AND BC.REV_NO = @REVNO")
+            strSQL = strSQL.Replace("@REVNO", Me.RevNo)
+
+            If Me.UserPIC = "0" Then
+                strSQL = strSQL.Replace("@PICCONDITION", " ")
+            Else
+                strSQL = strSQL.Replace("@PICCONDITION", "AND BO.PERSON_IN_CHARGE_NO = '@PIC'")
+                strSQL = strSQL.Replace("@PIC", Me.UserPIC)
+            End If
+
+            da = New SqlDataAdapter(strSQL, conn)
+            dt = New DataTable
+            da.Fill(dt)
+
+            Me.dtResult = dt
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return True
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_COMMENT.Select002] Error: " & ex.Message, My.Settings.ProgramTitle, _
                             MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then

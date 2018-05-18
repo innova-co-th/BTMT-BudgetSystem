@@ -8,6 +8,7 @@ Imports System.Drawing.Printing
 Public Class frmBG0480
 
 #Region "Variable"
+    Private myClsBG0480BL As New clsBG0480BL
     Private myClsBG0410BL As New clsBG0410BL
     Private myClsBG0310BL As New clsBG0310BL
     Private clsBG0400 As frmBG0400
@@ -284,57 +285,60 @@ Public Class frmBG0480
                 clsBG0400.Dispose()
             End If
             clsBG0400 = New frmBG0400()
-            myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
-            myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
-            myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
-            myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
-            myClsBG0410BL.ProjectNo = Me.numProjectNo.Value.ToString
-            myClsBG0410BL.UserLevelId = p_intUserLevelId
+            myClsBG0480BL.BudgetYear = Me.numYear.Value.ToString
+            myClsBG0480BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
+            myClsBG0480BL.PIC = Me.cboUserPIC.SelectedValue.ToString
+            myClsBG0480BL.ProjectNo = Me.numProjectNo.Value.ToString
+            myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
+            myClsBG0480BL.BudgetType = "E"
+            myClsBG0480BL.UserLevelId = p_intUserLevelId
+
             If Me.cboRevNo.DataSource IsNot Nothing Then
-                myClsBG0410BL.RevNo = Me.cboRevNo.SelectedValue.ToString
+                myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
             End If
 
-            myClsBG0410BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
+            myClsBG0480BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
             If Me.cboPrevRevno.DataSource IsNot Nothing AndAlso _
                 Me.cboPrevRevno.SelectedValue IsNot Nothing Then
-                myClsBG0410BL.PrevRevNo = Me.cboPrevRevno.SelectedValue.ToString
+                myClsBG0480BL.PrevRevNo = Me.cboPrevRevno.SelectedValue.ToString
             Else
-                myClsBG0410BL.PrevRevNo = String.Empty
+                myClsBG0480BL.PrevRevNo = String.Empty
             End If
 
-            If myClsBG0410BL.GetBudgetData() = False Then
+            If myClsBG0480BL.GetCommentData() = False Then
                 clsBG0400.DS = Nothing
             Else
-                clsBG0400.DS = myClsBG0410BL.BudgetData
+                clsBG0400.DS = myClsBG0480BL.BudgetData
                 If clsBG0400.DS Is Nothing Or clsBG0400.DS.Tables(0).Rows.Count = 0 Then
-                    MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Me.Cursor = Cursors.Default
                     Return
                 End If
             End If
 
-            myClsBG0410BL.GetBudgetStatus()
+            myClsBG0480BL.GetBudgetStatus()
 
             Dim strPeriod As String = String.Empty
+            clsBG0400.ReportName = "RPT008.rpt"
             Select Case CInt(Me.cboPeriodType.SelectedValue)
                 Case CType(enumPeriodType.OriginalBudget, Integer)
-                    clsBG0400.ReportName = "RPT001-1.rpt"
+                    'clsBG0400.ReportName = "RPT001-1.rpt"
                     strPeriod = "Original"
                     Exit Select
                 Case CType(enumPeriodType.EstimateBudget, Integer)
-                    clsBG0400.ReportName = "RPT001-2.rpt"
+                    'clsBG0400.ReportName = "RPT001-2.rpt"
                     strPeriod = "Estimate"
                     Exit Select
                 Case CType(enumPeriodType.ReviseBudget, Integer)
-                    If Me.chkShowMTP.Checked = True Then
-                        clsBG0400.ReportName = "RPT001-4.rpt"
-                    Else
-                        clsBG0400.ReportName = "RPT001-3.rpt"
-                    End If
+                    'If Me.chkShowMTP.Checked = True Then
+                    '    clsBG0400.ReportName = "RPT001-4.rpt"
+                    'Else
+                    '    clsBG0400.ReportName = "RPT001-3.rpt"
+                    'End If
                     strPeriod = "Revise"
                     Exit Select
                 Case CType(enumPeriodType.MTPBudget, Integer)
-                    clsBG0400.ReportName = "RPT001-5.rpt"
+                    'clsBG0400.ReportName = "RPT001-5.rpt"
                     strPeriod = "MTP"
                     Exit Select
             End Select
@@ -344,8 +348,8 @@ Public Class frmBG0480
             clsBG0400.BudgetYear = Me.numYear.Value.ToString
             'clsBG0400.ParamPersonInCharge = True
             clsBG0400.Period = strPeriod
-            clsBG0400.ReportType = "DetailByPersonInCharge"
-            clsBG0400.BudgetStatus = myClsBG0410BL.BudgetStatus
+            clsBG0400.ReportType = "CommentByPersonInCharge"
+            clsBG0400.BudgetStatus = myClsBG0480BL.BudgetStatus
             clsBG0400.ProjectNo = Me.numProjectNo.Value.ToString
 
             clsBG0400.MdiParent = p_frmBG0010
@@ -358,7 +362,7 @@ Public Class frmBG0480
             Me.Cursor = Cursors.Default
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show(ex.Message, "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Me.Cursor = Cursors.Default
             Return
         End Try
