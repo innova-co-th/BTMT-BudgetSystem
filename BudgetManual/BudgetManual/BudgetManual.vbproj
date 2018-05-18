@@ -188,6 +188,11 @@
     <Compile Include="Reports\DS001.vb">
       <DependentUpon>DS001.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DS008.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DS008.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\RPT005-5_5Y.vb">
       <DependentUpon>RPT005-5_5Y.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -571,6 +576,12 @@
       <DependentUpon>RPT006-4.rpt</DependentUpon>
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\RPT008.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RPT008.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\frmBG0201.Designer.vb">
       <DependentUpon>frmBG0201.vb</DependentUpon>
@@ -1100,6 +1111,10 @@
       <LastGenOutput>RPT005-5_5Y.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Reports\RPT008.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RPT008.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\frmBG0201.resx">
       <DependentUpon>frmBG0201.vb</DependentUpon>
     </EmbeddedResource>
@@ -1349,6 +1364,17 @@
     </None>
     <None Include="Reports\DS007.xss">
       <DependentUpon>DS007.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS008.xsc">
+      <DependentUpon>DS008.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\DS008.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS008.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\DS008.xss">
+      <DependentUpon>DS008.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

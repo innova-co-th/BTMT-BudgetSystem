@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS008" targetNamespace="http://tempuri.org/DS008.xsd" xmlns:mstns="http://tempuri.org/DS008.xsd" xmlns="http://tempuri.org/DS008.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS008" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS008" msprop:Generator_UserDSName="DS008" msprop:EnableTableAdapterManager="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BG_M_SETTINGS" msprop:Generator_UserTableName="BG_M_SETTINGS" msprop:Generator_RowDeletedName="BG_M_SETTINGSRowDeleted" msprop:Generator_TableClassName="BG_M_SETTINGSDataTable" msprop:Generator_RowChangedName="BG_M_SETTINGSRowChanged" msprop:Generator_RowClassName="BG_M_SETTINGSRow" msprop:Generator_RowChangingName="BG_M_SETTINGSRowChanging" msprop:Generator_RowEvArgName="BG_M_SETTINGSRowChangeEvent" msprop:Generator_RowEvHandlerName="BG_M_SETTINGSRowChangeEventHandler" msprop:Generator_TablePropName="BG_M_SETTINGS" msprop:Generator_TableVarName="tableBG_M_SETTINGS" msprop:Generator_RowDeletingName="BG_M_SETTINGSRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AUTH1_IMAGE" msprop:Generator_UserColumnName="AUTH1_IMAGE" msprop:Generator_ColumnPropNameInRow="AUTH1_IMAGE" msprop:Generator_ColumnVarNameInTable="columnAUTH1_IMAGE" msprop:Generator_ColumnPropNameInTable="AUTH1_IMAGEColumn" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="AUTH2_IMAGE" msprop:Generator_UserColumnName="AUTH2_IMAGE" msprop:Generator_ColumnPropNameInRow="AUTH2_IMAGE" msprop:Generator_ColumnVarNameInTable="columnAUTH2_IMAGE" msprop:Generator_ColumnPropNameInTable="AUTH2_IMAGEColumn" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="COMMENT_BY_PIC" msprop:Generator_UserTableName="COMMENT_BY_PIC" msprop:Generator_RowDeletedName="COMMENT_BY_PICRowDeleted" msprop:Generator_TableClassName="COMMENT_BY_PICDataTable" msprop:Generator_RowChangedName="COMMENT_BY_PICRowChanged" msprop:Generator_RowClassName="COMMENT_BY_PICRow" msprop:Generator_RowChangingName="COMMENT_BY_PICRowChanging" msprop:Generator_RowEvArgName="COMMENT_BY_PICRowChangeEvent" msprop:Generator_RowEvHandlerName="COMMENT_BY_PICRowChangeEventHandler" msprop:Generator_TablePropName="COMMENT_BY_PIC" msprop:Generator_TableVarName="tableCOMMENT_BY_PIC" msprop:Generator_RowDeletingName="COMMENT_BY_PICRowDeleting">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BUDGET_YEAR" msdata:ReadOnly="true" msprop:Generator_UserColumnName="BUDGET_YEAR" msprop:Generator_ColumnPropNameInRow="BUDGET_YEAR" msprop:Generator_ColumnVarNameInTable="columnBUDGET_YEAR" msprop:Generator_ColumnPropNameInTable="BUDGET_YEARColumn" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BUDGET_ORDER_NO" msdata:ReadOnly="true" msprop:Generator_UserColumnName="BUDGET_ORDER_NO" msprop:Generator_ColumnPropNameInRow="BUDGET_ORDER_NO" msprop:Generator_ColumnVarNameInTable="columnBUDGET_ORDER_NO" msprop:Generator_ColumnPropNameInTable="BUDGET_ORDER_NOColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="13" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="BUDGET_ORDER_NAME" msprop:Generator_UserColumnName="BUDGET_ORDER_NAME" msprop:Generator_ColumnPropNameInRow="BUDGET_ORDER_NAME" msprop:Generator_ColumnVarNameInTable="columnBUDGET_ORDER_NAME" msprop:Generator_ColumnPropNameInTable="BUDGET_ORDER_NAMEColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ACCOUNT_NO" msprop:Generator_UserColumnName="ACCOUNT_NO" msprop:Generator_ColumnPropNameInRow="ACCOUNT_NO" msprop:Generator_ColumnVarNameInTable="columnACCOUNT_NO" msprop:Generator_ColumnPropNameInTable="ACCOUNT_NOColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="6" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ACCOUNT_NAME" msprop:Generator_UserColumnName="ACCOUNT_NAME" msprop:Generator_ColumnPropNameInRow="ACCOUNT_NAME" msprop:Generator_ColumnVarNameInTable="columnACCOUNT_NAME" msprop:Generator_ColumnPropNameInTable="ACCOUNT_NAMEColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="COST_TYPE" msprop:Generator_UserColumnName="COST_TYPE" msprop:Generator_ColumnPropNameInRow="COST_TYPE" msprop:Generator_ColumnVarNameInTable="columnCOST_TYPE" msprop:Generator_ColumnPropNameInTable="COST_TYPEColumn" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="COST" msprop:Generator_UserColumnName="COST" msprop:Generator_ColumnPropNameInRow="COST" msprop:Generator_ColumnVarNameInTable="columnCOST" msprop:Generator_ColumnPropNameInTable="COSTColumn" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="DEPT_NO" msprop:Generator_UserColumnName="DEPT_NO" msprop:Generator_ColumnPropNameInRow="DEPT_NO" msprop:Generator_ColumnVarNameInTable="columnDEPT_NO" msprop:Generator_ColumnPropNameInTable="DEPT_NOColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PERSON_IN_CHARGE" msprop:Generator_UserColumnName="PERSON_IN_CHARGE" msprop:Generator_ColumnPropNameInRow="PERSON_IN_CHARGE" msprop:Generator_ColumnVarNameInTable="columnPERSON_IN_CHARGE" msprop:Generator_ColumnPropNameInTable="PERSON_IN_CHARGEColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="PERSON_IN_CHARGE_NAME" msprop:Generator_UserColumnName="PERSON_IN_CHARGE_NAME" msprop:Generator_ColumnPropNameInRow="PERSON_IN_CHARGE_NAME" msprop:Generator_ColumnVarNameInTable="columnPERSON_IN_CHARGE_NAME" msprop:Generator_ColumnPropNameInTable="PERSON_IN_CHARGE_NAMEColumn">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="OB_M1" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M1" msprop:Generator_ColumnPropNameInRow="OB_M1" msprop:Generator_ColumnVarNameInTable="columnOB_M1" msprop:Generator_ColumnPropNameInTable="OB_M1Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M2" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M2" msprop:Generator_ColumnPropNameInRow="OB_M2" msprop:Generator_ColumnVarNameInTable="columnOB_M2" msprop:Generator_ColumnPropNameInTable="OB_M2Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M3" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M3" msprop:Generator_ColumnPropNameInRow="OB_M3" msprop:Generator_ColumnVarNameInTable="columnOB_M3" msprop:Generator_ColumnPropNameInTable="OB_M3Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M4" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M4" msprop:Generator_ColumnPropNameInRow="OB_M4" msprop:Generator_ColumnVarNameInTable="columnOB_M4" msprop:Generator_ColumnPropNameInTable="OB_M4Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M5" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M5" msprop:Generator_ColumnPropNameInRow="OB_M5" msprop:Generator_ColumnVarNameInTable="columnOB_M5" msprop:Generator_ColumnPropNameInTable="OB_M5Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M6" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M6" msprop:Generator_ColumnPropNameInRow="OB_M6" msprop:Generator_ColumnVarNameInTable="columnOB_M6" msprop:Generator_ColumnPropNameInTable="OB_M6Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M7" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M7" msprop:Generator_ColumnPropNameInRow="OB_M7" msprop:Generator_ColumnVarNameInTable="columnOB_M7" msprop:Generator_ColumnPropNameInTable="OB_M7Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M8" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M8" msprop:Generator_ColumnPropNameInRow="OB_M8" msprop:Generator_ColumnVarNameInTable="columnOB_M8" msprop:Generator_ColumnPropNameInTable="OB_M8Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M9" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M9" msprop:Generator_ColumnPropNameInRow="OB_M9" msprop:Generator_ColumnVarNameInTable="columnOB_M9" msprop:Generator_ColumnPropNameInTable="OB_M9Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M10" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M10" msprop:Generator_ColumnPropNameInRow="OB_M10" msprop:Generator_ColumnVarNameInTable="columnOB_M10" msprop:Generator_ColumnPropNameInTable="OB_M10Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M11" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M11" msprop:Generator_ColumnPropNameInRow="OB_M11" msprop:Generator_ColumnVarNameInTable="columnOB_M11" msprop:Generator_ColumnPropNameInTable="OB_M11Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="OB_M12" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OB_M12" msprop:Generator_ColumnPropNameInRow="OB_M12" msprop:Generator_ColumnVarNameInTable="columnOB_M12" msprop:Generator_ColumnPropNameInTable="OB_M12Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M1" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M1" msprop:Generator_ColumnPropNameInRow="AC_M1" msprop:Generator_ColumnVarNameInTable="columnAC_M1" msprop:Generator_ColumnPropNameInTable="AC_M1Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M2" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M2" msprop:Generator_ColumnPropNameInRow="AC_M2" msprop:Generator_ColumnVarNameInTable="columnAC_M2" msprop:Generator_ColumnPropNameInTable="AC_M2Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M3" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M3" msprop:Generator_ColumnPropNameInRow="AC_M3" msprop:Generator_ColumnVarNameInTable="columnAC_M3" msprop:Generator_ColumnPropNameInTable="AC_M3Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M4" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M4" msprop:Generator_ColumnPropNameInRow="AC_M4" msprop:Generator_ColumnVarNameInTable="columnAC_M4" msprop:Generator_ColumnPropNameInTable="AC_M4Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M5" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M5" msprop:Generator_ColumnPropNameInRow="AC_M5" msprop:Generator_ColumnVarNameInTable="columnAC_M5" msprop:Generator_ColumnPropNameInTable="AC_M5Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M6" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M6" msprop:Generator_ColumnPropNameInRow="AC_M6" msprop:Generator_ColumnVarNameInTable="columnAC_M6" msprop:Generator_ColumnPropNameInTable="AC_M6Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M7" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M7" msprop:Generator_ColumnPropNameInRow="AC_M7" msprop:Generator_ColumnVarNameInTable="columnAC_M7" msprop:Generator_ColumnPropNameInTable="AC_M7Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M8" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M8" msprop:Generator_ColumnPropNameInRow="AC_M8" msprop:Generator_ColumnVarNameInTable="columnAC_M8" msprop:Generator_ColumnPropNameInTable="AC_M8Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M9" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M9" msprop:Generator_ColumnPropNameInRow="AC_M9" msprop:Generator_ColumnVarNameInTable="columnAC_M9" msprop:Generator_ColumnPropNameInTable="AC_M9Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M10" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M10" msprop:Generator_ColumnPropNameInRow="AC_M10" msprop:Generator_ColumnVarNameInTable="columnAC_M10" msprop:Generator_ColumnPropNameInTable="AC_M10Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M11" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M11" msprop:Generator_ColumnPropNameInRow="AC_M11" msprop:Generator_ColumnVarNameInTable="columnAC_M11" msprop:Generator_ColumnPropNameInTable="AC_M11Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AC_M12" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AC_M12" msprop:Generator_ColumnPropNameInRow="AC_M12" msprop:Generator_ColumnVarNameInTable="columnAC_M12" msprop:Generator_ColumnPropNameInTable="AC_M12Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M1" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M1" msprop:Generator_ColumnPropNameInRow="ACC_OB_M1" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M1" msprop:Generator_ColumnPropNameInTable="ACC_OB_M1Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M2" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M2" msprop:Generator_ColumnPropNameInRow="ACC_OB_M2" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M2" msprop:Generator_ColumnPropNameInTable="ACC_OB_M2Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M3" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M3" msprop:Generator_ColumnPropNameInRow="ACC_OB_M3" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M3" msprop:Generator_ColumnPropNameInTable="ACC_OB_M3Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M4" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M4" msprop:Generator_ColumnPropNameInRow="ACC_OB_M4" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M4" msprop:Generator_ColumnPropNameInTable="ACC_OB_M4Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M5" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M5" msprop:Generator_ColumnPropNameInRow="ACC_OB_M5" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M5" msprop:Generator_ColumnPropNameInTable="ACC_OB_M5Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M6" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M6" msprop:Generator_ColumnPropNameInRow="ACC_OB_M6" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M6" msprop:Generator_ColumnPropNameInTable="ACC_OB_M6Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M7" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M7" msprop:Generator_ColumnPropNameInRow="ACC_OB_M7" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M7" msprop:Generator_ColumnPropNameInTable="ACC_OB_M7Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M8" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M8" msprop:Generator_ColumnPropNameInRow="ACC_OB_M8" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M8" msprop:Generator_ColumnPropNameInTable="ACC_OB_M8Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M9" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M9" msprop:Generator_ColumnPropNameInRow="ACC_OB_M9" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M9" msprop:Generator_ColumnPropNameInTable="ACC_OB_M9Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M10" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M10" msprop:Generator_ColumnPropNameInRow="ACC_OB_M10" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M10" msprop:Generator_ColumnPropNameInTable="ACC_OB_M10Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M11" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M11" msprop:Generator_ColumnPropNameInRow="ACC_OB_M11" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M11" msprop:Generator_ColumnPropNameInTable="ACC_OB_M11Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_OB_M12" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_OB_M12" msprop:Generator_ColumnPropNameInRow="ACC_OB_M12" msprop:Generator_ColumnVarNameInTable="columnACC_OB_M12" msprop:Generator_ColumnPropNameInTable="ACC_OB_M12Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M1" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M1" msprop:Generator_ColumnPropNameInRow="ACC_AC_M1" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M1" msprop:Generator_ColumnPropNameInTable="ACC_AC_M1Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M2" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M2" msprop:Generator_ColumnPropNameInRow="ACC_AC_M2" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M2" msprop:Generator_ColumnPropNameInTable="ACC_AC_M2Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M3" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M3" msprop:Generator_ColumnPropNameInRow="ACC_AC_M3" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M3" msprop:Generator_ColumnPropNameInTable="ACC_AC_M3Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M4" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M4" msprop:Generator_ColumnPropNameInRow="ACC_AC_M4" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M4" msprop:Generator_ColumnPropNameInTable="ACC_AC_M4Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M5" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M5" msprop:Generator_ColumnPropNameInRow="ACC_AC_M5" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M5" msprop:Generator_ColumnPropNameInTable="ACC_AC_M5Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M6" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M6" msprop:Generator_ColumnPropNameInRow="ACC_AC_M6" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M6" msprop:Generator_ColumnPropNameInTable="ACC_AC_M6Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M7" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M7" msprop:Generator_ColumnPropNameInRow="ACC_AC_M7" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M7" msprop:Generator_ColumnPropNameInTable="ACC_AC_M7Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M8" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M8" msprop:Generator_ColumnPropNameInRow="ACC_AC_M8" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M8" msprop:Generator_ColumnPropNameInTable="ACC_AC_M8Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M9" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M9" msprop:Generator_ColumnPropNameInRow="ACC_AC_M9" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M9" msprop:Generator_ColumnPropNameInTable="ACC_AC_M9Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M10" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M10" msprop:Generator_ColumnPropNameInRow="ACC_AC_M10" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M10" msprop:Generator_ColumnPropNameInTable="ACC_AC_M10Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M11" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M11" msprop:Generator_ColumnPropNameInRow="ACC_AC_M11" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M11" msprop:Generator_ColumnPropNameInTable="ACC_AC_M11Column" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ACC_AC_M12" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ACC_AC_M12" msprop:Generator_ColumnPropNameInRow="ACC_AC_M12" msprop:Generator_ColumnVarNameInTable="columnACC_AC_M12" msprop:Generator_ColumnPropNameInTable="ACC_AC_M12Column" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
