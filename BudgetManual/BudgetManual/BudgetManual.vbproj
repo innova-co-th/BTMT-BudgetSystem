@@ -181,7 +181,6 @@
     <Compile Include="DB\BG_T_BUDGET_DATA_REINPUT.vb" />
     <Compile Include="DB\BG_T_BUDGET_HEADER.vb" />
     <Compile Include="DB\BG_T_BUDGET_PERIOD.vb" />
-    <Compile Include="DB\BG_T_COMMENT_DATA.vb" />
     <Compile Include="DB\BG_T_INFORMATION.vb" />
     <Compile Include="DB\BG_T_UPLOAD_DATA.vb" />
     <Compile Include="DB\BG_T_TRANS_LOG.vb" />
