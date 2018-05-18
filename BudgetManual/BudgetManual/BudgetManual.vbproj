@@ -586,6 +586,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RPT008.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="UI\frmBG0201.Designer.vb">
       <DependentUpon>frmBG0201.vb</DependentUpon>
@@ -1115,10 +1116,11 @@
       <LastGenOutput>RPT005-5_5Y.vb</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Reports\RPT008.rpt">
+    <Content Include="Reports\RPT008.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>RPT008.vb</LastGenOutput>
-    </EmbeddedResource>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="UI\frmBG0201.resx">
       <DependentUpon>frmBG0201.vb</DependentUpon>
     </EmbeddedResource>

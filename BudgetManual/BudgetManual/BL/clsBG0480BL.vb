@@ -443,10 +443,35 @@ Public Class clsBG0480BL
 
     Private Function RearrangeDatatable(ByVal dt As DataTable) As DataTable
         Dim dtNew As New DataTable
-        'Add Column
-        dtNew = AddReportColumnData(dtNew)
+        Dim row As DataRow
 
+        Try
+            'Add Column
+            dtNew = AddReportColumnData(dtNew)
 
+            For Each dr As DataRow In dt.Rows
+                For i As Integer = 6 To 22
+                    If Not IsDBNull(dr(i)) Then
+                        row = dtNew.NewRow()
+
+                        row("BUDGET_YEAR") = dr(0).ToString()
+                        row("BUDGET_ORDER_NO") = dr(2).ToString()
+                        row("BUDGET_ORDER_NAME") = dr(3).ToString()
+                        row("PERSON_IN_CHARGE") = dr(4).ToString()
+                        row("PERSON_IN_CHARGE_NAME") = dr(5).ToString()
+                        row("MONTH") = GetMonth(dt.Columns(i).ColumnName)
+                        row("COMMENT") = dr(i).ToString()
+
+                        dtNew.Rows.Add(row)
+                    End If
+                Next
+
+            Next
+        Catch ex As Exception
+            dtNew = New DataTable
+            'Add Column
+            dtNew = AddReportColumnData(dtNew)
+        End Try
 
         Return dtNew
     End Function
@@ -462,6 +487,51 @@ Public Class clsBG0480BL
         dt.Columns.Add("COMMENT", GetType(String))
 
         Return dt
+    End Function
+
+    Private Function GetMonth(ByVal colName As String) As String
+
+        Dim result As String
+
+        Select Case colName
+            Case "M1"
+                result = "Jan"
+            Case "M2"
+                result = "Feb"
+            Case "M3"
+                result = "Mar"
+            Case "M4"
+                result = "Apr"
+            Case "M5"
+                result = "May"
+            Case "M6"
+                result = "Jun"
+            Case "M7"
+                result = "Jul"
+            Case "M8"
+                result = "Aug"
+            Case "M9"
+                result = "Sep"
+            Case "M10"
+                result = "Oct"
+            Case "M11"
+                result = "Nov"
+            Case "M12"
+                result = "Dec"
+            Case "RRT1"
+                result = "RRT1"
+            Case "RRT2"
+                result = "RRT2"
+            Case "RRT3"
+                result = "RRT3"
+            Case "RRT4"
+                result = "RRT4"
+            Case "RRT5"
+                result = "RRT5"
+            Case Else
+                result = " "
+        End Select
+        Return result
     End Function
 
 #End Region
