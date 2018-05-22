@@ -4745,9 +4745,12 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@UserId", Me.UserId)
             strSQL = strSQL.Replace("@RRT1", (CDbl(Me.DataList(0)) / 1000).ToString)
             strSQL = strSQL.Replace("@RRT2", (CDbl(Me.DataList(1)) / 1000).ToString)
-            strSQL = strSQL.Replace("@RRT3", (CDbl(Me.DataList(2)) / 1000).ToString)
-            strSQL = strSQL.Replace("@RRT4", (CDbl(Me.DataList(3)) / 1000).ToString)
-            strSQL = strSQL.Replace("@RRT5", (CDbl(Me.DataList(4)) / 1000).ToString)
+            'strSQL = strSQL.Replace("@RRT3", (CDbl(Me.DataList(2)) / 1000).ToString)
+            'strSQL = strSQL.Replace("@RRT4", (CDbl(Me.DataList(3)) / 1000).ToString)
+            'strSQL = strSQL.Replace("@RRT5", (CDbl(Me.DataList(4)) / 1000).ToString)
+            strSQL = strSQL.Replace("@RRT3", "null")
+            strSQL = strSQL.Replace("@RRT4", "null")
+            strSQL = strSQL.Replace("@RRT5", "null")
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
             If pConn IsNot Nothing And pTrans IsNot Nothing Then
@@ -5315,9 +5318,12 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@UserId", Me.UserId)
             strSQL = strSQL.Replace("@RRT1", (CDbl(Me.DataList(0)) / 1000).ToString)
             strSQL = strSQL.Replace("@RRT2", (CDbl(Me.DataList(1)) / 1000).ToString)
-            strSQL = strSQL.Replace("@RRT3", (CDbl(Me.DataList(2)) / 1000).ToString)
-            strSQL = strSQL.Replace("@RRT4", (CDbl(Me.DataList(3)) / 1000).ToString)
-            strSQL = strSQL.Replace("@RRT5", (CDbl(Me.DataList(4)) / 1000).ToString)
+            'strSQL = strSQL.Replace("@RRT3", (CDbl(Me.DataList(2)) / 1000).ToString)
+            'strSQL = strSQL.Replace("@RRT4", (CDbl(Me.DataList(3)) / 1000).ToString)
+            'strSQL = strSQL.Replace("@RRT5", (CDbl(Me.DataList(4)) / 1000).ToString)
+            strSQL = strSQL.Replace("@RRT3", "null")
+            strSQL = strSQL.Replace("@RRT4", "null")
+            strSQL = strSQL.Replace("@RRT5", "null")
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
             If pConn IsNot Nothing And pTrans IsNot Nothing Then

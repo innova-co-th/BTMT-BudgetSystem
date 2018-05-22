@@ -3063,8 +3063,7 @@ Public Class frmBG0200
             intColumnIndex = grvBudget1.Columns("g1colex3").Index Or _
             intColumnIndex = grvBudget1.Columns("g1colex4").Index Or _
             intColumnIndex = grvBudget1.Columns("g1colex5").Index Or _
-            intColumnIndex = grvBudget1.Columns("g1colex6").Index Or _
-            intColumnIndex = grvBudget1.Columns("g1col15").Index))) Or _
+            intColumnIndex = grvBudget1.Columns("g1colex6").Index))) Or _
             ((CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_ASSET And _
             (intColumnIndex = grvBudget1.Columns("g1col6").Index Or _
             intColumnIndex = grvBudget1.Columns("g1col7").Index Or _
@@ -4479,7 +4478,14 @@ Public Class frmBG0200
                         grvBudget1.Item("g1Col11", i).Value = CDbl(Nz(dr(0).Item("M4"), 0)).ToString("#,##0.00")
                         grvBudget1.Item("g1Col12", i).Value = CDbl(Nz(dr(0).Item("M5"), 0)).ToString("#,##0.00")
                         grvBudget1.Item("g1Col13", i).Value = CDbl(Nz(dr(0).Item("M6"), 0)).ToString("#,##0.00")
-                        grvBudget1.Item("g1Col15", i).Value = CDbl(Nz(dr(0).Item("M7"), 0)).ToString("#,##0.00")
+                        'grvBudget1.Item("g1Col15", i).Value = CDbl(Nz(dr(0).Item("M7"), 0)).ToString("#,##0.00")
+
+                        grvBudget1.Item("g1Colex1", i).Value = CDbl(Nz(dr(0).Item("M7"), 0)).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex2", i).Value = CDbl(Nz(dr(0).Item("M8"), 0)).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex3", i).Value = CDbl(Nz(dr(0).Item("M9"), 0)).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex4", i).Value = CDbl(Nz(dr(0).Item("M10"), 0)).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex5", i).Value = CDbl(Nz(dr(0).Item("M11"), 0)).ToString("#,##0.00")
+                        grvBudget1.Item("g1Colex6", i).Value = CDbl(Nz(dr(0).Item("M12"), 0)).ToString("#,##0.00")
                     End If
                 End If
             Next

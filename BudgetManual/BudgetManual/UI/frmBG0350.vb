@@ -307,7 +307,7 @@ Public Class frmBG0350
                     myClsBG0350BL.DataList = DataList
                     myClsBG0350BL.ImportData()
 
-                    If arrDataList.Length >= FIRST_MTP_DATA_COL + 5 Then
+                    If arrDataList.Length >= FIRST_MTP_DATA_COL + 2 Then
                         '// Import MTP Data
                         '// --Set parameters
                         myClsBG0350BL.BudgetYear = strTmpYear
@@ -321,12 +321,12 @@ Public Class frmBG0350
                         DataList.Add(arrDataList(n)) '// RRT1
                         n += 1
                         DataList.Add(arrDataList(n)) '// RRT2
-                        n += 1
-                        DataList.Add(arrDataList(n)) '// RRT3
-                        n += 1
-                        DataList.Add(arrDataList(n)) '// RRT4
-                        n += 1
-                        DataList.Add(arrDataList(n)) '// RRT5
+                        'n += 1
+                        'DataList.Add(arrDataList(n)) '// RRT3
+                        'n += 1
+                        'DataList.Add(arrDataList(n)) '// RRT4
+                        'n += 1
+                        'DataList.Add(arrDataList(n)) '// RRT5
 
                         '// --Import data to database
                         myClsBG0350BL.DataList = DataList
