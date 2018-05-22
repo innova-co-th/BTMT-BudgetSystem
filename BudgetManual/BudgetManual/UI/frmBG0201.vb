@@ -152,35 +152,45 @@ Public Class frmBG0201
 
     Private Sub BindDatagrid(ByVal pSource As DataTable)
         Try
-           
             Me.Comment = ""
-            If Not pSource Is Nothing AndAlso pSource.Rows.Count > 0 Then
-                Select Case Me.MonthNo
-                    Case "1"
-                        Me.Comment = pSource.Rows(0).Item("M1").ToString
-                    Case "2"
-                        Me.Comment = pSource.Rows(0).Item("M2").ToString
-                    Case "3"
-                        Me.Comment = pSource.Rows(0).Item("M3").ToString
-                    Case "4"
-                        Me.Comment = pSource.Rows(0).Item("M4").ToString
-                    Case "5"
-                        Me.Comment = pSource.Rows(0).Item("M5").ToString
-                    Case "6"
-                        Me.Comment = pSource.Rows(0).Item("M6").ToString
-                    Case "7"
-                        Me.Comment = pSource.Rows(0).Item("M7").ToString
-                    Case "8"
-                        Me.Comment = pSource.Rows(0).Item("M8").ToString
-                    Case "9"
-                        Me.Comment = pSource.Rows(0).Item("M9").ToString
-                    Case "10"
-                        Me.Comment = pSource.Rows(0).Item("M10").ToString
-                    Case "11"
-                        Me.Comment = pSource.Rows(0).Item("M11").ToString
-                    Case "12"
-                        Me.Comment = pSource.Rows(0).Item("M12").ToString
-                End Select
+            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                If Not pSource Is Nothing AndAlso pSource.Rows.Count > 0 Then
+                    Select Case Me.RRTNo
+                        Case "1"
+                            Me.Comment = pSource.Rows(0).Item("RRT1").ToString
+                        Case "2"
+                            Me.Comment = pSource.Rows(0).Item("RRT2").ToString
+                    End Select
+                End If
+            Else
+                If Not pSource Is Nothing AndAlso pSource.Rows.Count > 0 Then
+                    Select Case Me.MonthNo
+                        Case "1"
+                            Me.Comment = pSource.Rows(0).Item("M1").ToString
+                        Case "2"
+                            Me.Comment = pSource.Rows(0).Item("M2").ToString
+                        Case "3"
+                            Me.Comment = pSource.Rows(0).Item("M3").ToString
+                        Case "4"
+                            Me.Comment = pSource.Rows(0).Item("M4").ToString
+                        Case "5"
+                            Me.Comment = pSource.Rows(0).Item("M5").ToString
+                        Case "6"
+                            Me.Comment = pSource.Rows(0).Item("M6").ToString
+                        Case "7"
+                            Me.Comment = pSource.Rows(0).Item("M7").ToString
+                        Case "8"
+                            Me.Comment = pSource.Rows(0).Item("M8").ToString
+                        Case "9"
+                            Me.Comment = pSource.Rows(0).Item("M9").ToString
+                        Case "10"
+                            Me.Comment = pSource.Rows(0).Item("M10").ToString
+                        Case "11"
+                            Me.Comment = pSource.Rows(0).Item("M11").ToString
+                        Case "12"
+                            Me.Comment = pSource.Rows(0).Item("M12").ToString
+                    End Select
+                End If
             End If
 
             txtComment.Text = Me.Comment
@@ -197,9 +207,14 @@ Public Class frmBG0201
         myClsBG0201BL.BudgetOrderNo = Me.BudgetOrderNo
         myClsBG0201BL.RevNo = Me.RevNo
         myClsBG0201BL.ProjectNo = Me.ProjectNo
-        myClsBG0201BL.RRTNo = Me.RRTNo
 
-        myClsBG0201BL.MonthNo = Me.MonthNo
+        If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            myClsBG0201BL.RRTNo = Me.RRTNo
+        Else
+            myClsBG0201BL.MonthNo = Me.MonthNo
+        End If
+
+
         myClsBG0201BL.Comment = txtComment.Text.Trim
 
         If myClsBG0201BL.SearchComment AndAlso myClsBG0201BL.CommentList.Rows.Count > 0 Then

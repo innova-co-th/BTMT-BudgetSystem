@@ -172,8 +172,12 @@ Public Class clsBG0201BL
         clsBG_T_BUDGET_COMMENT.BudgetOrderNo = Me.BudgetOrderNo
         clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
         clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
-        clsBG_T_BUDGET_COMMENT.MonthNo = Me.MonthNo
-        clsBG_T_BUDGET_COMMENT.RRTNo = Me.RRTNo
+        If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            clsBG_T_BUDGET_COMMENT.RRTNo = Me.RRTNo
+        Else
+            clsBG_T_BUDGET_COMMENT.MonthNo = Me.MonthNo
+        End If
+
         clsBG_T_BUDGET_COMMENT.Comment = Me.Comment
         clsBG_T_BUDGET_COMMENT.CreateUserId = p_strUserId
 
@@ -196,8 +200,12 @@ Public Class clsBG0201BL
         clsBG_T_BUDGET_COMMENT.BudgetOrderNo = Me.BudgetOrderNo
         clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
         clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
-        clsBG_T_BUDGET_COMMENT.MonthNo = Me.MonthNo
-        clsBG_T_BUDGET_COMMENT.RRTNo = Me.RRTNo
+        If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            clsBG_T_BUDGET_COMMENT.RRTNo = Me.RRTNo
+        Else
+            clsBG_T_BUDGET_COMMENT.MonthNo = Me.MonthNo
+        End If
+
         clsBG_T_BUDGET_COMMENT.Comment = Me.Comment
         clsBG_T_BUDGET_COMMENT.CreateUserId = p_strUserId
 

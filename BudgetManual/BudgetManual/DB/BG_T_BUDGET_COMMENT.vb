@@ -346,32 +346,41 @@ Public Class BG_T_BUDGET_COMMENT
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
-            Select Case Me.MonthNo
-                Case "1"
-                    strCondition = " M1 = '" & Me.Comment & "'"
-                Case "2"
-                    strCondition = " M2 = '" & Me.Comment & "'"
-                Case "3"
-                    strCondition = " M3 = '" & Me.Comment & "'"
-                Case "4"
-                    strCondition = " M4 = '" & Me.Comment & "'"
-                Case "5"
-                    strCondition = " M5 = '" & Me.Comment & "'"
-                Case "6"
-                    strCondition = " M6 = '" & Me.Comment & "'"
-                Case "7"
-                    strCondition = " M7 = '" & Me.Comment & "'"
-                Case "8"
-                    strCondition = " M8 = '" & Me.Comment & "'"
-                Case "9"
-                    strCondition = " M9 = '" & Me.Comment & "'"
-                Case "10"
-                    strCondition = " M10 = '" & Me.Comment & "'"
-                Case "11"
-                    strCondition = " M11 = '" & Me.Comment & "'"
-                Case "12"
-                    strCondition = " M12 = '" & Me.Comment & "'"
-            End Select
+            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                Select Case Me.RRTNo
+                    Case "1"
+                        strCondition = " RRT1 = '" & Me.Comment & "'"
+                    Case "2"
+                        strCondition = " RRT2 = '" & Me.Comment & "'"
+                End Select
+            Else
+                Select Case Me.MonthNo
+                    Case "1"
+                        strCondition = " M1 = '" & Me.Comment & "'"
+                    Case "2"
+                        strCondition = " M2 = '" & Me.Comment & "'"
+                    Case "3"
+                        strCondition = " M3 = '" & Me.Comment & "'"
+                    Case "4"
+                        strCondition = " M4 = '" & Me.Comment & "'"
+                    Case "5"
+                        strCondition = " M5 = '" & Me.Comment & "'"
+                    Case "6"
+                        strCondition = " M6 = '" & Me.Comment & "'"
+                    Case "7"
+                        strCondition = " M7 = '" & Me.Comment & "'"
+                    Case "8"
+                        strCondition = " M8 = '" & Me.Comment & "'"
+                    Case "9"
+                        strCondition = " M9 = '" & Me.Comment & "'"
+                    Case "10"
+                        strCondition = " M10 = '" & Me.Comment & "'"
+                    Case "11"
+                        strCondition = " M11 = '" & Me.Comment & "'"
+                    Case "12"
+                        strCondition = " M12 = '" & Me.Comment & "'"
+                End Select
+            End If
 
             strSQL = strSQL.Replace("@comment", strCondition)
             strSQL = strSQL.Replace("@UserId", Me.CreateUserId)
@@ -430,32 +439,42 @@ Public Class BG_T_BUDGET_COMMENT
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
-            Select Case Me.MonthNo
-                Case "1"
-                    strCondition = "M1"
-                Case "2"
-                    strCondition = "M2"
-                Case "3"
-                    strCondition = "M3"
-                Case "4"
-                    strCondition = "M4"
-                Case "5"
-                    strCondition = "M5"
-                Case "6"
-                    strCondition = "M6"
-                Case "7"
-                    strCondition = "M7"
-                Case "8"
-                    strCondition = "M8"
-                Case "9"
-                    strCondition = "M9"
-                Case "10"
-                    strCondition = "M10"
-                Case "11"
-                    strCondition = "M11"
-                Case "12"
-                    strCondition = "M12"
-            End Select
+            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                Select Case Me.RRTNo
+                    Case "1"
+                        strCondition = "RRT1"
+                    Case "2"
+                        strCondition = "RRT2"
+                End Select
+            Else
+                Select Case Me.MonthNo
+                    Case "1"
+                        strCondition = "M1"
+                    Case "2"
+                        strCondition = "M2"
+                    Case "3"
+                        strCondition = "M3"
+                    Case "4"
+                        strCondition = "M4"
+                    Case "5"
+                        strCondition = "M5"
+                    Case "6"
+                        strCondition = "M6"
+                    Case "7"
+                        strCondition = "M7"
+                    Case "8"
+                        strCondition = "M8"
+                    Case "9"
+                        strCondition = "M9"
+                    Case "10"
+                        strCondition = "M10"
+                    Case "11"
+                        strCondition = "M11"
+                    Case "12"
+                        strCondition = "M12"
+                End Select
+            End If
+           
 
             strSQL = strSQL.Replace("@Condition", strCondition)
             strSQL = strSQL.Replace("@Value", Me.Comment)
