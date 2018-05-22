@@ -266,12 +266,10 @@ Public Class frmBG0200
                 HighlightMTPValueAllNew()
             End If
 
+            HighlightWorkingBGAndComment()
+
         End If
 
-        HighlightWorkingBGAndComment()
-        '//Highlight for comment
-        'grvBudget1.Item("g1Col8", 0).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242) 'Color.Yellow
-        'grvBudget1.Item("g1Col8", 3).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
 
         myDataLoadingFlg = False
         myForceCloseFlg = False
@@ -4682,192 +4680,6 @@ Public Class frmBG0200
         Debug.Print(Now.ToString() & ": End HighlightWorkingBG")
     End Sub
 
-    Private Function GetComment() As DataTable
-        Dim result As DataTable = Nothing
-
-        Try
-            myClsBG0201BL.BudgetYear = Me.GetBudgetYear()
-            myClsBG0201BL.PeriodType = Me.GetPeriodType()
-            myClsBG0201BL.BudgetOrderNo = Me.GetBudgetType()
-            myClsBG0201BL.RevNo = Me.CurrRevNo
-            myClsBG0201BL.ProjectNo = Me.GetProjectNo()
-
-            If myClsBG0201BL.SearchComment AndAlso myClsBG0201BL.CommentList.Rows.Count > 0 Then
-                result = myClsBG0201BL.CommentList
-            End If
-        Catch ex As Exception
-            Throw ex
-        End Try
-
-        Return result
-    End Function
-
-
-    Private Sub HighlightWorkingBGAndComment()
-        Dim dtComment As DataTable
-        Dim c1 As String = String.Empty
-        Dim c2 As String = String.Empty
-        Dim c3 As String = String.Empty
-        Dim c4 As String = String.Empty
-        Dim c5 As String = String.Empty
-        Dim c6 As String = String.Empty
-        Dim c7 As String = String.Empty
-        Dim c8 As String = String.Empty
-        Dim c9 As String = String.Empty
-        Dim c10 As String = String.Empty
-        Dim c11 As String = String.Empty
-        Dim c12 As String = String.Empty
-        Debug.Print(Now.ToString() & ": Begin HighlightWorkingBG")
-
-        If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then  '//Original Budget
-
-            For i = 0 To grvBudget1.RowCount - 1
-
-                dtComment = GetComment()
-
-                If Not dtComment Is Nothing AndAlso dtComment.Rows.Count > 0 Then
-                    c1 = dtComment.Rows(0).Item("M1").ToString
-                    c2 = dtComment.Rows(0).Item("M2").ToString
-                    c3 = dtComment.Rows(0).Item("M3").ToString
-                    c4 = dtComment.Rows(0).Item("M4").ToString
-                    c5 = dtComment.Rows(0).Item("M5").ToString
-                    c6 = dtComment.Rows(0).Item("M6").ToString
-                    c7 = dtComment.Rows(0).Item("M7").ToString
-                    c8 = dtComment.Rows(0).Item("M8").ToString
-                    c9 = dtComment.Rows(0).Item("M9").ToString
-                    c10 = dtComment.Rows(0).Item("M10").ToString
-                    c11 = dtComment.Rows(0).Item("M11").ToString
-                    c12 = dtComment.Rows(0).Item("M12").ToString
-
-                End If
-
-                If CBool(grvBudget1.Item("g1Wk", i).Value) = True Then
-                    If c1 <> "" Then
-                        grvBudget1.Item("g1Col8", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6)
-                    End If
-                    If c2 <> "" Then
-                        grvBudget1.Item("g1Col9", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6)
-                    End If
-                    If c3 <> "" Then
-                        grvBudget1.Item("g1Col10", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6)
-                    End If
-                    If c4 <> "" Then
-                        grvBudget1.Item("g1Col11", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6)
-                    End If
-                    If c5 <> "" Then
-                        grvBudget1.Item("g1Col12", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6)
-                    End If
-                    If c6 <> "" Then
-                        grvBudget1.Item("g1Col13", i).Style.BackColor = Color.OrangeRed
-                    End If
-
-                    'grvBudget1.Item("g1Colex1", i).Style.BackColor = Color.OrangeRed
-                    'grvBudget1.Item("g1Colex2", i).Style.BackColor = Color.OrangeRed
-                    'grvBudget1.Item("g1Colex3", i).Style.BackColor = Color.OrangeRed
-                    'grvBudget1.Item("g1Colex4", i).Style.BackColor = Color.OrangeRed
-                    'grvBudget1.Item("g1Colex5", i).Style.BackColor = Color.OrangeRed
-                    'grvBudget1.Item("g1Colex6", i).Style.BackColor = Color.OrangeRed
-
-                Else
-                    If i Mod 2 = 0 Then
-                        grvBudget1.Item("g1Col8", i).Style.BackColor = grvBudget1.Columns("g1Col8").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col9", i).Style.BackColor = grvBudget1.Columns("g1Col9").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col10", i).Style.BackColor = grvBudget1.Columns("g1Col10").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col11", i).Style.BackColor = grvBudget1.Columns("g1Col11").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col12", i).Style.BackColor = grvBudget1.Columns("g1Col12").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col13", i).Style.BackColor = grvBudget1.Columns("g1Col13").DefaultCellStyle.BackColor
-
-                        grvBudget1.Item("g1Colex1", i).Style.BackColor = grvBudget1.Columns("g1Colex1").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex2", i).Style.BackColor = grvBudget1.Columns("g1Colex2").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex3", i).Style.BackColor = grvBudget1.Columns("g1Colex3").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex4", i).Style.BackColor = grvBudget1.Columns("g1Colex4").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex5", i).Style.BackColor = grvBudget1.Columns("g1Colex5").DefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex6", i).Style.BackColor = grvBudget1.Columns("g1Colex5").DefaultCellStyle.BackColor
-
-                    Else
-                        grvBudget1.Item("g1Col8", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col9", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col10", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col11", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col12", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Col13", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-
-                        grvBudget1.Item("g1Colex1", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex2", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex3", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex4", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex5", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget1.Item("g1Colex6", i).Style.BackColor = grvBudget1.AlternatingRowsDefaultCellStyle.BackColor
-
-                    End If
-                End If
-            Next
-
-        ElseIf Me.GetPeriodType() = CStr(enumPeriodType.EstimateBudget) Then  '// Estimate Budget
-
-            For i = 0 To grvBudget2.RowCount - 1
-                If CBool(grvBudget2.Item("g2Wk", i).Value) = True Then
-                    grvBudget2.Item("g2Col11", i).Style.BackColor = Color.OrangeRed
-                    grvBudget2.Item("g2Col12", i).Style.BackColor = Color.OrangeRed
-                    grvBudget2.Item("g2Col13", i).Style.BackColor = Color.OrangeRed
-                Else
-                    If i Mod 2 = 0 Then
-                        grvBudget2.Item("g2Col11", i).Style.BackColor = grvBudget2.Columns("g2Col11").DefaultCellStyle.BackColor
-                        grvBudget2.Item("g2Col12", i).Style.BackColor = grvBudget2.Columns("g2Col12").DefaultCellStyle.BackColor
-                        grvBudget2.Item("g2Col13", i).Style.BackColor = grvBudget2.Columns("g2Col13").DefaultCellStyle.BackColor
-                    Else
-                        grvBudget2.Item("g2Col11", i).Style.BackColor = grvBudget2.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget2.Item("g2Col12", i).Style.BackColor = grvBudget2.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget2.Item("g2Col13", i).Style.BackColor = grvBudget2.AlternatingRowsDefaultCellStyle.BackColor
-                    End If
-                End If
-            Next
-
-        ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) Then    '// Revise Budget
-
-            For i = 0 To grvBudget3.RowCount - 1
-                If CBool(grvBudget3.Item("g3Wk", i).Value) = True Then
-                    grvBudget3.Item("g3Col10", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col11", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col12", i).Style.BackColor = Color.OrangeRed
-
-                    grvBudget3.Item("g3Col16", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col17", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col18", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col19", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col20", i).Style.BackColor = Color.OrangeRed
-                    grvBudget3.Item("g3Col21", i).Style.BackColor = Color.OrangeRed
-                Else
-                    If i Mod 2 = 0 Then
-                        grvBudget3.Item("g3Col10", i).Style.BackColor = grvBudget3.Columns("g3Col10").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col11", i).Style.BackColor = grvBudget3.Columns("g3Col11").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col12", i).Style.BackColor = grvBudget3.Columns("g3Col12").DefaultCellStyle.BackColor
-
-                        grvBudget3.Item("g3Col16", i).Style.BackColor = grvBudget3.Columns("g3Col16").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col17", i).Style.BackColor = grvBudget3.Columns("g3Col17").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col18", i).Style.BackColor = grvBudget3.Columns("g3Col18").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col19", i).Style.BackColor = grvBudget3.Columns("g3Col19").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col20", i).Style.BackColor = grvBudget3.Columns("g3Col20").DefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col21", i).Style.BackColor = grvBudget3.Columns("g3Col21").DefaultCellStyle.BackColor
-                    Else
-                        grvBudget3.Item("g3Col10", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col11", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col12", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-
-                        grvBudget3.Item("g3Col16", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col17", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col18", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col19", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col20", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                        grvBudget3.Item("g3Col21", i).Style.BackColor = grvBudget3.AlternatingRowsDefaultCellStyle.BackColor
-                    End If
-                End If
-            Next
-        End If
-
-        Debug.Print(Now.ToString() & ": End HighlightWorkingBG")
-    End Sub
-
     Private Sub HighlightTransferCost()
         Dim strOrderNo As String
         Dim dr As DataRow()
@@ -7782,43 +7594,58 @@ Public Class frmBG0200
         'Original Budget
         Dim intMonth As Integer
         Dim ColumnName As String
+        Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget1.Columns(e.ColumnIndex).Name) 
         Select Case ColumnName
             Case "g1col8"
                 intMonth = 1
+                blnFound = True
             Case "g1col9"
                 intMonth = 2
+                blnFound = True
             Case "g1col10"
                 intMonth = 3
+                blnFound = True
             Case "g1col11"
                 intMonth = 4
+                blnFound = True
             Case "g1col12"
                 intMonth = 5
+                blnFound = True
             Case "g1col13"
                 intMonth = 6
+                blnFound = True
             Case "g1colex1"
                 intMonth = 7
+                blnFound = True
             Case "g1colex2"
                 intMonth = 8
+                blnFound = True
             Case "g1colex3"
                 intMonth = 9
+                blnFound = True
             Case "g1colex4"
                 intMonth = 10
+                blnFound = True
             Case "g1colex5"
                 intMonth = 11
+                blnFound = True
             Case "g1colex6"
                 intMonth = 12
+                blnFound = True
         End Select
 
-        Dim budgetOderSub() As String
-
-        If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-            If e.RowIndex >= 0 Then
-                budgetOderSub = grvBudget1.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                ShowCommentPopup(intMonth, budgetOderSub)
+        If blnFound = True Then
+            Dim budgetOderSub() As String
+            If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+                If e.RowIndex >= 0 Then
+                    budgetOderSub = grvBudget1.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                    ShowCommentPopup(intMonth, budgetOderSub)
+                End If
             End If
         End If
+        
 
     End Sub
 
@@ -7826,86 +7653,371 @@ Public Class frmBG0200
         'Estimate Budget
         Dim intMonth As Integer
         Dim ColumnName As String
+        Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget2.Columns(e.ColumnIndex).Name)
         Select Case ColumnName
-            Case "g2Col11"
+            Case "g2col11"
                 intMonth = 10
-            Case "g2Col12"
+                blnFound = True
+            Case "g2col12"
                 intMonth = 11
-            Case "g2Col13"
+                blnFound = True
+            Case "g2col13"
                 intMonth = 12
+                blnFound = True
         End Select
 
-        Dim budgetOderSub() As String
+        If blnFound = True Then
+            Dim budgetOderSub() As String
 
-        If grvBudget2.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-            If e.RowIndex >= 0 Then
-                budgetOderSub = grvBudget2.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                ShowCommentPopup(intMonth, budgetOderSub)
+            If grvBudget2.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+                If e.RowIndex >= 0 Then
+                    budgetOderSub = grvBudget2.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                    ShowCommentPopup(intMonth, budgetOderSub)
+                End If
             End If
         End If
+       
     End Sub
 
     Private Sub grvBudget3_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget3.CellDoubleClick
         'Revise Budget
         Dim intMonth As Integer
         Dim ColumnName As String
+        Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget3.Columns(e.ColumnIndex).Name)
         Select Case ColumnName
-            Case "g3Col10"
+            Case "g3col10"
                 intMonth = 4
-            Case "g3Col11"
+                blnFound = True
+            Case "g3col11"
                 intMonth = 5
-            Case "g3Col12"
+                blnFound = True
+            Case "g3col12"
                 intMonth = 6
-
-            Case "g3Col16"
+                blnFound = True
+            Case "g3col16"
                 intMonth = 7
-            Case "g3Col17"
+                blnFound = True
+            Case "g3col17"
                 intMonth = 8
-            Case "g3Col18"
+                blnFound = True
+            Case "g3col18"
                 intMonth = 9
-
-            Case "g3Col19"
+                blnFound = True
+            Case "g3col19"
                 intMonth = 10
-            Case "g3Col20"
+                blnFound = True
+            Case "g3col20"
                 intMonth = 11
-            Case "g3Col21"
+                blnFound = True
+            Case "g3col21"
                 intMonth = 12
+                blnFound = True
         End Select
 
-        Dim budgetOderSub() As String
+        If blnFound = True Then
+            Dim budgetOderSub() As String
 
-        If grvBudget3.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-            If e.RowIndex >= 0 Then
-                budgetOderSub = grvBudget3.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                ShowCommentPopup(intMonth, budgetOderSub)
+            If grvBudget3.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+                If e.RowIndex >= 0 Then
+                    budgetOderSub = grvBudget3.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                    ShowCommentPopup(intMonth, budgetOderSub)
+                End If
             End If
         End If
+     
     End Sub
 
     Private Sub grvBudget4_CellDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget4.CellDoubleClick
         Dim intRRT As Integer
         Dim ColumnName As String
+        Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget4.Columns(e.ColumnIndex).Name)
         Select Case ColumnName
             Case "g4col9"
                 intRRT = 1
+                blnFound = True
             Case "g4col11"
                 intRRT = 2
+                blnFound = True
         End Select
 
-        Dim budgetOderSub() As String
+        If blnFound = True Then
+            Dim budgetOderSub() As String
 
-        If grvBudget4.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-            If e.RowIndex >= 0 Then
-                budgetOderSub = grvBudget4.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                ShowCommentPopup(intRRT, budgetOderSub)
+            If grvBudget4.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+                If e.RowIndex >= 0 Then
+                    budgetOderSub = grvBudget4.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                    ShowCommentPopup(intRRT, budgetOderSub)
+                End If
             End If
         End If
+       
+    End Sub
+
+    Private Function GetComment(ByVal strOrderNo As String) As DataTable
+        Dim result As DataTable = Nothing
+
+        Try
+            myClsBG0201BL.BudgetYear = Me.GetBudgetYear()
+            myClsBG0201BL.PeriodType = Me.GetPeriodType()
+            myClsBG0201BL.BudgetOrderNo = strOrderNo
+            myClsBG0201BL.RevNo = Me.CurrRevNo
+            myClsBG0201BL.ProjectNo = Me.GetProjectNo()
+
+            If myClsBG0201BL.SearchComment AndAlso myClsBG0201BL.CommentList.Rows.Count > 0 Then
+                result = myClsBG0201BL.CommentList
+            End If
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        Return result
+    End Function
+
+    Private Sub HighlightWorkingBGAndComment()
+        Debug.Print(Now.ToString() & ": Begin HighlightWorkingBGAndComment")
+        Dim dt As DataTable = Nothing
+
+        Dim strOrderNo As String
+        '' // Hightlight Comment
+        If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then '// Original Budget
+            For i = 0 To grvBudget1.RowCount - 1
+                strOrderNo = CStr(grvBudget1.Item("OrderNo1", i).Value)
+                dt = GetComment(strOrderNo)
+
+                If Not dt Is Nothing AndAlso dt.Rows.Count > 0 Then
+
+                    If i Mod 2 = 0 Then
+                        If dt.Rows(0).Item("M1").ToString <> "" Then
+                            grvBudget1.Item("g1col8", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M2").ToString <> "" Then
+                            grvBudget1.Item("g1col9", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M3").ToString <> "" Then
+                            grvBudget1.Item("g1col10", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M4").ToString <> "" Then
+                            grvBudget1.Item("g1col11", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M5").ToString <> "" Then
+                            grvBudget1.Item("g1col12", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M6").ToString <> "" Then
+                            grvBudget1.Item("g1col13", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M7").ToString <> "" Then
+                            grvBudget1.Item("g1colex1", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M8").ToString <> "" Then
+                            grvBudget1.Item("g1colex2", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M9").ToString <> "" Then
+                            grvBudget1.Item("g1colex3", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M10").ToString <> "" Then
+                            grvBudget1.Item("g1colex4", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M11").ToString <> "" Then
+                            grvBudget1.Item("g1colex5", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                        If dt.Rows(0).Item("M12").ToString <> "" Then
+                            grvBudget1.Item("g1colex6", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+
+                    Else
+
+                        If dt.Rows(0).Item("M1").ToString <> "" Then
+                            grvBudget1.Item("g1col8", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M2").ToString <> "" Then
+                            grvBudget1.Item("g1col9", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M3").ToString <> "" Then
+                            grvBudget1.Item("g1col10", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M4").ToString <> "" Then
+                            grvBudget1.Item("g1col11", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M5").ToString <> "" Then
+                            grvBudget1.Item("g1col12", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M6").ToString <> "" Then
+                            grvBudget1.Item("g1col13", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M7").ToString <> "" Then
+                            grvBudget1.Item("g1colex1", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M8").ToString <> "" Then
+                            grvBudget1.Item("g1colex2", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M9").ToString <> "" Then
+                            grvBudget1.Item("g1colex3", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M10").ToString <> "" Then
+                            grvBudget1.Item("g1colex4", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M11").ToString <> "" Then
+                            grvBudget1.Item("g1colex5", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                        If dt.Rows(0).Item("M12").ToString <> "" Then
+                            grvBudget1.Item("g1colex6", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+
+                    End If
+                End If
+
+            Next
+
+        ElseIf Me.GetPeriodType() = CStr(enumPeriodType.EstimateBudget) Then '// EstimateBudget
+
+            For i = 0 To grvBudget2.RowCount - 1
+                strOrderNo = CStr(grvBudget2.Item("OrderNo2", i).Value)
+                dt = GetComment(strOrderNo)
+                If Not dt Is Nothing AndAlso dt.Rows.Count > 0 Then
+                    If i Mod 2 = 0 Then
+                        If dt.Rows(0).Item("M10").ToString <> "" Then
+                            grvBudget2.Item("g2col11", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M11").ToString <> "" Then
+                            grvBudget2.Item("g2col12", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M12").ToString <> "" Then
+                            grvBudget2.Item("g2col13", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                    Else
+                        If dt.Rows(0).Item("M10").ToString <> "" Then
+                            grvBudget2.Item("g2col11", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M11").ToString <> "" Then
+                            grvBudget2.Item("g2col12", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M12").ToString <> "" Then
+                            grvBudget2.Item("g2col13", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                    End If
+                End If
+
+            Next
+
+        ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) Then    '// Revise Budget
+
+            For i = 0 To grvBudget3.RowCount - 1
+                strOrderNo = CStr(grvBudget3.Item("OrderNo3", i).Value)
+                dt = GetComment(strOrderNo)
+                If Not dt Is Nothing AndAlso dt.Rows.Count > 0 Then
+                    If i Mod 2 = 0 Then
+                        If dt.Rows(0).Item("M4").ToString <> "" Then
+                            grvBudget3.Item("g3col10", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M5").ToString <> "" Then
+                            grvBudget3.Item("g3col11", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M6").ToString <> "" Then
+                            grvBudget3.Item("g3col12", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M7").ToString <> "" Then
+                            grvBudget3.Item("g3col16", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M8").ToString <> "" Then
+                            grvBudget3.Item("g3col17", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M9").ToString <> "" Then
+                            grvBudget3.Item("g3col18", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M10").ToString <> "" Then
+                            grvBudget3.Item("g3col19", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M11").ToString <> "" Then
+                            grvBudget3.Item("g3col20", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("M12").ToString <> "" Then
+                            grvBudget3.Item("g3col21", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                    Else
+                        If dt.Rows(0).Item("M4").ToString <> "" Then
+                            grvBudget3.Item("g3col10", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M5").ToString <> "" Then
+                            grvBudget3.Item("g3col11", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M6").ToString <> "" Then
+                            grvBudget3.Item("g3col12", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M7").ToString <> "" Then
+                            grvBudget3.Item("g3col16", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M8").ToString <> "" Then
+                            grvBudget3.Item("g3col17", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M9").ToString <> "" Then
+                            grvBudget3.Item("g3col18", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M10").ToString <> "" Then
+                            grvBudget3.Item("g3col19", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M11").ToString <> "" Then
+                            grvBudget3.Item("g3col20", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("M12").ToString <> "" Then
+                            grvBudget3.Item("g3col21", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                    End If
+                End If
+            Next
+
+        ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then    '// MTP Budget
+            For i = 0 To grvBudget4.RowCount - 1
+                strOrderNo = CStr(grvBudget4.Item("OrderNo4", i).Value)
+                dt = GetComment(strOrderNo)
+                If Not dt Is Nothing AndAlso dt.Rows.Count > 0 Then
+                    If i Mod 2 = 0 Then
+                        If dt.Rows(0).Item("RRT1").ToString <> "" Then
+                            grvBudget4.Item("g4col9", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                        If dt.Rows(0).Item("RRT2").ToString <> "" Then
+                            grvBudget4.Item("g4col11", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
+                        End If
+                    Else
+                        If dt.Rows(0).Item("RRT1").ToString <> "" Then
+                            grvBudget4.Item("g4col9", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                        If dt.Rows(0).Item("RRT2").ToString <> "" Then
+                            grvBudget4.Item("g4col11", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
+                        End If
+                    End If
+                End If
+            Next
+        End If
+
+        Debug.Print(Now.ToString() & ": End HighlightWorkingBGAndComment")
     End Sub
 
 End Class
