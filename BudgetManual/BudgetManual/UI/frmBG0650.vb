@@ -8,6 +8,23 @@ Public Class frmBG0650
 #Region "Variable"
     Private myClsBG0650BL As New clsBG0650BL
     Private isInsert As Boolean = False
+
+    Private myOldPICNo As String = String.Empty
+#End Region
+
+#Region "Property"
+
+#Region "Budget Key"
+    Property OldPICNo() As String
+        Get
+            Return myOldPICNo
+        End Get
+        Set(ByVal value As String)
+            myOldPICNo = value
+        End Set
+    End Property
+#End Region
+
 #End Region
 
 #Region "Overrides Function"
@@ -75,8 +92,9 @@ Public Class frmBG0650
 
     Public Sub setText(ByVal intRow As Integer)
         isInsert = False
+        Me.OldPICNo = CStr(Me.grvMaster.Rows(intRow).Cells("PERSON_IN_CHARGE_NO").Value)
         Me.txtPicNo.Enabled = True
-        Me.txtPicNo.Text = CStr(Me.grvMaster.Rows(intRow).Cells("PERSON_IN_CHARGE_NO").Value)
+        Me.txtPicNo.Text = Me.OldPICNo
         Me.txtPicName.Text = CStr(Me.grvMaster.Rows(intRow).Cells("PERSON_IN_CHARGE_NAME").Value)
     End Sub
 
@@ -158,11 +176,7 @@ Public Class frmBG0650
             Dim dt As DataTable = CType(Me.grvMaster.DataSource, DataTable)
             dt.PrimaryKey = New DataColumn() {dt.Columns(0)}
 
-            myClsBG0650BL.PersonNo = Me.txtPicNo.Text
-            myClsBG0650BL.PersonName = Me.txtPicName.Text
-            myClsBG0650BL.UpdateUserId = p_strUserId
-
-            If myClsBG0650BL.UpdateOneData() = True Then
+            If UpdatePIC(Me.OldPICNo, Me.txtPicNo.Text, Me.txtPicName.Text, p_strUserId) = True Then
                 MessageBox.Show("Person in charge was updated", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 '// Write Transaction Log
@@ -189,6 +203,39 @@ Public Class frmBG0650
 
 
     End Sub
+
+    Private Function UpdatePIC(ByVal pOldPicNo As String, ByVal pPicNo As String, ByVal pPicName As String, ByVal pUpdateUserId As String) As Boolean
+        Dim result As Boolean = False
+
+        Try
+            If pOldPicNo = pPicNo Then
+                myClsBG0650BL.PersonNo = pPicNo
+                myClsBG0650BL.PersonName = pPicName
+                myClsBG0650BL.UpdateUserId = pUpdateUserId
+
+                result = myClsBG0650BL.UpdateOneData()
+            Else
+                'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_M_BUDGET_ORDER]
+
+                'SELECT [PIC_PARENT_NO],[PIC_CHILD_NO] FROM [BG_M_CHILD_PIC]
+
+                'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_T_ACCOUNT_REOPEN]
+
+                'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_T_BUDGET_HEADER]
+
+                'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_T_TRANS_LOG]
+
+                'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_T_USER_LOGIN]
+
+                result = True
+            End If
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        Return result
+    End Function
+
 
     Private Sub grvMaster_RowEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvMaster.RowEnter
         If Not Me.grvMaster Is Nothing Then
