@@ -454,17 +454,19 @@ Public Class clsBG0480BL
             For Each dr As DataRow In dt.Rows
                 For i As Integer = 6 To 22
                     If Not IsDBNull(dr(i)) Then
-                        row = dtNew.NewRow()
 
-                        row("BUDGET_YEAR") = dr(0).ToString()
-                        row("BUDGET_ORDER_NO") = dr(2).ToString()
-                        row("BUDGET_ORDER_NAME") = dr(3).ToString()
-                        row("PERSON_IN_CHARGE") = dr(4).ToString()
-                        row("PERSON_IN_CHARGE_NAME") = dr(5).ToString()
-                        row("MONTH") = GetMonth(dt.Columns(i).ColumnName)
-                        row("COMMENT") = dr(i).ToString()
+                        If Not String.IsNullOrEmpty(dr(i).ToString().Trim()) Then
+                            row = dtNew.NewRow()
+                            row("BUDGET_YEAR") = dr(0).ToString()
+                            row("BUDGET_ORDER_NO") = dr(2).ToString()
+                            row("BUDGET_ORDER_NAME") = dr(3).ToString()
+                            row("PERSON_IN_CHARGE") = dr(4).ToString()
+                            row("PERSON_IN_CHARGE_NAME") = dr(5).ToString()
+                            row("MONTH") = GetMonth(dt.Columns(i).ColumnName)
+                            row("COMMENT") = dr(i).ToString()
 
-                        dtNew.Rows.Add(row)
+                            dtNew.Rows.Add(row)
+                        End If
                     End If
                 Next
 

@@ -162,6 +162,7 @@ Partial Class frmBG0480
         Me.chkShowMTP.TabIndex = 5
         Me.chkShowMTP.Text = "2nd Half Only"
         Me.chkShowMTP.UseVisualStyleBackColor = True
+        Me.chkShowMTP.Visible = False
         '
         'cmdExcel
         '

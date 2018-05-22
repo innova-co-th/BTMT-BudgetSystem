@@ -469,6 +469,7 @@ Public Class frmBG0480
                 If Me.cboRevNo.DataSource IsNot Nothing Then
                     myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
                 End If
+                myClsBG0480BL.BudgetType = "E"
 
                 myClsBG0480BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
                 If Me.cboPrevRevno.DataSource IsNot Nothing AndAlso _
@@ -596,6 +597,7 @@ Public Class frmBG0480
         If Me.cboRevNo.DataSource IsNot Nothing Then
             myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
         End If
+        myClsBG0480BL.BudgetType = "E"
 
         myClsBG0480BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
         If Me.cboPrevRevno.DataSource IsNot Nothing AndAlso _
@@ -643,10 +645,10 @@ Public Class frmBG0480
 
             Case CType(enumPeriodType.OriginalBudget, Integer) '//Original
 
-                InsertOriginalColumnData(dtColumns, strYear)
+                InsertCommentColumnData(dtColumns, strYear)
 
                 '//Create group data
-                Dim dsGroups As DataSet = SetupGroupbyData(dsData, "PERSON_IN_CHARGE", "PERSON_IN_CHARGE_NAME", 10, True)
+                Dim dsGroups As DataSet = SetupCommentGroupbyData(dsData, "PERSON_IN_CHARGE", "PERSON_IN_CHARGE_NAME", 5)
 
                 '//Create Output Excel
                 OutputExcel(dsGroups, dtColumns, False, strSubTitle, strYear, True, strPeriod)
@@ -695,7 +697,7 @@ Public Class frmBG0480
 
     End Sub
 
-    Private Function InsertOriginalColumnData(ByRef dtColumns As DataTable, ByVal strYear As String) As Boolean
+    Private Function InsertCommentColumnData(ByRef dtColumns As DataTable, ByVal strYear As String) As Boolean
 
         Dim dRow As DataRow
 
@@ -1201,11 +1203,13 @@ Public Class frmBG0480
         Dim xBk As Excel.Workbook = Nothing
         Dim xSt As Excel.Worksheet = Nothing
 
-        Dim strHalfYear = strYear.Substring(2, 2)
         xBk = excelApp.Workbooks.Add(System.Reflection.Missing.Value)
         If xBk.Worksheets.Count > 1 Then
-            CType(xBk.Worksheets(1), Excel.Worksheet).Delete()
-            CType(xBk.Worksheets(2), Excel.Worksheet).Delete()
+            For i As Integer = 1 To xBk.Worksheets.Count - 1
+                CType(xBk.Worksheets(i), Excel.Worksheet).Delete()
+                'CType(xBk.Worksheets(2), Excel.Worksheet).Delete()
+            Next
+
         End If
 
         '//Set Style Value < 0 please fill color "Red"
@@ -1213,14 +1217,18 @@ Public Class frmBG0480
         'style.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red)
         style.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red)
 
+        ''//Set Style Value Group fill Backgroud color "Gray"
+        'Dim BGstyle As Excel.Style = excelApp.ActiveWorkbook.Styles.Add("NewStyle")
+        'BGstyle.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray)
+
         For intSheetCount As Integer = 0 To dsData.Tables.Count - 1
 
             If intSheetCount <> 0 Then
                 xBk.Sheets.Add()
             End If
 
-            rowStartIndex = 10
-            colStartIndex = 9
+            rowStartIndex = 9
+            colStartIndex = 8
 
             xSt = CType(xBk.ActiveSheet, Excel.Worksheet)
             Dim strTableName As String = dsData.Tables(intSheetCount).TableName
@@ -1231,35 +1239,12 @@ Public Class frmBG0480
             For i As Integer = 0 To dtColumns.Rows.Count - 1
                 xSt.Cells(colStartIndex, i + 1) = dtColumns.Rows(i)("Column_Title").ToString
                 xSt.Range(xSt.Cells(colStartIndex, i + 1), xSt.Cells(colStartIndex, i + 1)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+
+                If strPeriod = "MTP" Then
+                    xSt.Cells(colStartIndex, 1) = "Year"
+                End If
             Next
 
-            Dim arrCols() As Integer
-
-            If strPeriod = "Original" Then
-
-                arrCols = New Integer() {3, 4, 5, 6, 13, 14, 15, 16, 17, 18, 19}
-                SetupOriginalColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", arrCols, 7, 12, strYear)
-
-            ElseIf strPeriod = "Estimate" Then
-
-                arrCols = New Integer() {3, 4, 5, 6, 13, 14, 15}
-                SetupEstimateColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", arrCols, 7, 9, 10, 12)
-
-            ElseIf strPeriod = "Revise" Then
-                arrCols = New Integer() {3, 4, 5, 12, 13, 14, 21, 22, 23, 24} '// Two Row Merge Col
-
-                If bMTPCheck = True Then
-                    arrCols = New Integer() {3, 4, 5, 12, 13, 14, 15} '// Two Row Merge Col
-                End If
-
-                SetupReviseColumnsCells(xSt, colStartIndex, bMTPCheck, 1, 2, "Budget Order Number & Budget Name", _
-                                        arrCols, 6, 8, 9, 11, 15, 20, 6, 11, 25, 29)
-
-            ElseIf strPeriod = "MTP" Then
-                arrCols = New Integer() {3, 4, 5, 6, 7} '// Two Row Merge Col
-                SetupMTPColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", _
-                                        arrCols, 8, 16)
-            End If
 
             '//Setup Data
             For rowIndex As Integer = 0 To dsData.Tables(intSheetCount).Rows.Count - 1
@@ -1270,6 +1255,22 @@ Public Class frmBG0480
 
                     Dim strColumnName As String = dtColumns.Rows(colIndex)("Column_Name").ToString
                     Dim col As DataColumn = dsData.Tables(intSheetCount).Columns(strColumnName)
+
+                    'Set BudgetOrder Style
+                    If strColumnName = "COMMENT" Then
+                        If String.IsNullOrEmpty(row("BUDGET_YEAR").ToString().Trim) Then
+                            xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Font.Bold = True
+                            xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).MergeCells = True
+                            xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
+                            xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray)
+                            Continue For
+                        End If
+                    End If
+
+                    'Not output COMMENT EMPTY 
+                    If (Not String.IsNullOrEmpty(row("BUDGET_YEAR").ToString().Trim)) And String.IsNullOrEmpty(row("COMMENT").ToString().Trim) Then
+                        Continue For
+                    End If
 
                     If col.DataType Is System.Type.GetType("System.DateTime") Then
 
@@ -1308,6 +1309,16 @@ Public Class frmBG0480
                     Else
                         xSt.Cells(rowIndex + rowStartIndex, colIndex + 1) = row(col.ColumnName).ToString()
                     End If
+
+                    ''Set Group Header 
+                    'If strColumnName = "COMMENT" Then
+                    '    If String.IsNullOrEmpty(row(col.ColumnName).ToString().Trim) Then
+                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
+                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Font.Bold = True
+                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray)
+                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).MergeCells = True
+                    '    End If
+                    'End If
                 Next
             Next
 
@@ -1327,6 +1338,8 @@ Public Class frmBG0480
             End If
             SetupExcelTitle(xSt, strSubTitle, strYear, bMTPCheck, intUnitPriceStart, intUnitPriceEnd, _
                             intAuthorizeStart, intAuthorizeEnd, intImageIndex, bShowGroupName, strGroupName, bAuthorizeTwoCols)
+            'Clear Unit
+            xSt.Range(xSt.Cells(6, intUnitPriceStart), xSt.Cells(6, intUnitPriceEnd)).ClearContents()
 
             Dim rowMax As Integer = dsData.Tables(intSheetCount).Rows.Count + colStartIndex
             Dim colMax As Integer = dtColumns.Rows.Count
@@ -1335,74 +1348,74 @@ Public Class frmBG0480
             xSt.Range(xSt.Cells(rowStartIndex, 2), xSt.Cells(rowMax, 2)).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
 
             '//Setup Total Lines
-            SetupTotalLines(xSt, rowMax - 3, "Total", "Center", 1, 1, 4, rowMax - 2, rowMax - 1, rowMax, colMax, bMTPCheck)
+            'SetupTotalLines(xSt, rowMax - 3, "Total", "Center", 1, 1, 4, rowMax - 2, rowMax - 1, rowMax, colMax, bMTPCheck)
 
             '//Setup sheet properly width
             xSt.Range(xSt.Cells(2, 1), xSt.Cells(rowMax, colMax)).Columns.AutoFit()
 
             '//Setup Wrap text for columns title
-            If strPeriod = "Original" Then
+            'If strPeriod = "Original" Then
 
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
+            '    xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 16)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 16)).WrapText = True
 
-            ElseIf strPeriod = "Estimate" Then
+            'ElseIf strPeriod = "Estimate" Then
 
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
+            '    xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).WrapText = True
-            ElseIf strPeriod = "Revise" Then
+            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).WrapText = True
+            'ElseIf strPeriod = "Revise" Then
 
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 6), xSt.Cells(rowMax, 11)).Columns.ColumnWidth = 12
+            '    xSt.Range(xSt.Cells(2, 6), xSt.Cells(rowMax, 11)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 15), xSt.Cells(rowMax, 20)).Columns.ColumnWidth = 12
+            '    xSt.Range(xSt.Cells(2, 15), xSt.Cells(rowMax, 20)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).WrapText = True
 
-                'If chkShowMTP.Checked = True Then
-                '    xSt.Range(xSt.Cells(2, 25), xSt.Cells(rowMax, 29)).Columns.ColumnWidth = 12
-                'End If
+            '    'If chkShowMTP.Checked = True Then
+            '    '    xSt.Range(xSt.Cells(2, 25), xSt.Cells(rowMax, 29)).Columns.ColumnWidth = 12
+            '    'End If
 
-            ElseIf strPeriod = "MTP" Then
+            'ElseIf strPeriod = "MTP" Then
 
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-                xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
+            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 7)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 7)).WrapText = True
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 7)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 7)).WrapText = True
 
-                xSt.Range(xSt.Cells(2, 8), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 8), xSt.Cells(rowMax, 16)).WrapText = True
-            End If
+            '    xSt.Range(xSt.Cells(2, 8), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
+            '    xSt.Range(xSt.Cells(2, 8), xSt.Cells(rowMax, 16)).WrapText = True
+            'End If
 
-            colStartIndex = colStartIndex - 1
+            'colStartIndex = colStartIndex - 1
             '//Setup Column Font 
-            xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(colStartIndex + 1, colMax)).Font.Bold = True
+            xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(colStartIndex, colMax)).Font.Bold = True
             xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(rowMax, colMax)).Font.Name = "Tahoma"
             xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(rowMax, colMax)).Font.Size = 10
 
@@ -1414,71 +1427,71 @@ Public Class frmBG0480
             xSt.Range(xSt.Cells(rowMax, 1), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlThin
 
 
-            '//Insert empty column
-            If strPeriod = "MTP" AndAlso bMTPCheck = True Then
-                '   SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
-            ElseIf bMTPCheck = True Then
-                'SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
-            End If
+            ''//Insert empty column
+            'If strPeriod = "MTP" AndAlso bMTPCheck = True Then
+            '    '   SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
+            'ElseIf bMTPCheck = True Then
+            '    'SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
+            'End If
 
             '//-- Add by Max 26/09/2012
             '//Set Frame All
-            xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders.LineStyle = 1
-            xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeLeft).Weight = Excel.XlBorderWeight.xlMedium
-            xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeTop).Weight = Excel.XlBorderWeight.xlMedium
-            xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlMedium
+            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders.LineStyle = 1
+            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeLeft).Weight = Excel.XlBorderWeight.xlMedium
+            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeTop).Weight = Excel.XlBorderWeight.xlMedium
+            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlMedium
 
-            '//Set Frame
-            If strPeriod = "Original" Then
+            ''//Set Frame
+            'If strPeriod = "Original" Then
 
-                xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 17), xSt.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 17), xSt.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
-            ElseIf strPeriod = "Estimate" Then
+            'ElseIf strPeriod = "Estimate" Then
 
-                xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
-            ElseIf strPeriod = "Revise" Then
+            'ElseIf strPeriod = "Revise" Then
 
-                xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                If bMTPCheck = False Then
-                    xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 8)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                End If
-                xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    If bMTPCheck = False Then
+            '        xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 8)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    End If
+            '    xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
-                If bMTPCheck = False Then
-                    xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 20)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                    xSt.Range(xSt.Cells(colStartIndex, 21), xSt.Cells(rowMax, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-                End If
+            '    If bMTPCheck = False Then
+            '        xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 20)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '        xSt.Range(xSt.Cells(colStartIndex, 21), xSt.Cells(rowMax, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            '    End If
 
-                '//Merge empty line
-                If bMTPCheck = True Then
-                    xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).ClearContents()
-                    xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).MergeCells = True
-                End If
+            '    '//Merge empty line
+            '    If bMTPCheck = True Then
+            '        xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).ClearContents()
+            '        xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).MergeCells = True
+            '    End If
 
-            ElseIf strPeriod = "MTP" Then
+            'ElseIf strPeriod = "MTP" Then
 
-                xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            '    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
-                '//Set font color
-                xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 11), xSt.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
+            '    '//Set font color
+            '    xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
+            '    xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
+            '    xSt.Range(xSt.Cells(colStartIndex, 11), xSt.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
+            '    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
+            '    xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
 
-            End If
+            'End If
             '//-- Edit Add by Max 26/09/2012
 
         Next
@@ -1563,6 +1576,109 @@ Public Class frmBG0480
 
     End Function
 
+    Private Function SetupCommentGroupbyData(ByVal dsData As DataSet, _
+                                           ByVal strGroupColumnName As String, _
+                                           ByVal strGroupColumnTitle As String, _
+                                           ByVal intDataColumnIndex As Integer) As DataSet
+
+        Dim dsResult As DataSet = New DataSet
+
+        Dim drEmpty As DataRow
+        Dim strExpression As String
+        Dim strFilter As String = String.Empty
+        Dim returnValue As Object
+
+        Dim strScript As String = strGroupColumnName
+
+        Dim dtGroups As DataTable = dsData.Tables(0).DefaultView.ToTable(True, strScript)
+        Dim intGroupCount As Integer = dtGroups.Rows.Count
+
+        For i As Integer = 0 To intGroupCount - 1
+
+            Dim dtResult As DataTable = dsData.Tables(0).Clone
+
+            Dim drCost As DataRow = dtResult.NewRow
+            Dim drTotalCost As DataRow = dtResult.NewRow
+            Dim intGroupTotalIndex As Integer = 0
+
+            strScript = strGroupColumnName + " = '" + dtGroups.Rows(i)(0).ToString & "'"
+            Dim arrRows As DataRow() = dsData.Tables(0).Select(strScript)
+
+            Dim strGroupColumnName2 As String = "BUDGET_ORDER_NO"
+            '//Seperate dataset data into several datatables according to group no
+            strScript = strGroupColumnName2
+            Dim dtGroups2 As DataTable = dsData.Tables(0).DefaultView.ToTable(True, strScript)
+            Dim intGroupCount2 As Integer = dtGroups2.Rows.Count
+
+            For n As Integer = 0 To intGroupCount2 - 1
+
+                Dim drTotalExpenses As DataRow = dtResult.NewRow
+
+                strScript = strGroupColumnName + " = '" + dtGroups.Rows(i)(0).ToString
+                strScript &= "' AND "
+                strScript &= strGroupColumnName2 + " = '" + dtGroups2.Rows(n)(0).ToString + "'"
+                Dim arrRows2 As DataRow() = dsData.Tables(0).Select(strScript)
+
+                If arrRows2.Length > 0 Then
+                    For j As Integer = 0 To arrRows2.Length - 1
+                        Dim drow(dtResult.Columns.Count - 1) As Object
+                        arrRows2(j).ItemArray.CopyTo(drow, 0)
+                        dtResult.Rows.Add(drow)
+                    Next
+
+                    '//Setup Group header
+                    drTotalExpenses("MONTH") = arrRows2(0)(strGroupColumnName2).ToString + " " + arrRows2(0)("BUDGET_ORDER_NAME").ToString
+
+                    '//Add total cost
+                    dtResult.Rows.InsertAt(drTotalExpenses, intGroupTotalIndex)
+
+                    ''//Add one empty row
+                    'drEmpty = dtResult.NewRow
+                    'dtResult.Rows.Add(drEmpty)
+
+                    'intGroupTotalIndex = intGroupTotalIndex + dtResult.Rows.Count
+                    intGroupTotalIndex = intGroupTotalIndex + CInt(arrRows2.Length) + 1
+                End If
+
+
+
+            Next
+
+            ''//Calculate Total cost
+            'For l As Integer = intDataColumnIndex To dtResult.Columns.Count - 1
+            '    Dim strColumnName As String = dtResult.Columns(l).ColumnName
+
+            '    strExpression = "Sum(" + strColumnName + ")"
+            '    strFilter = strGroupColumnName + " = " + dtGroups.Rows(i)(0).ToString
+            '    returnValue = dtResult.Compute(strExpression, strFilter)
+            '    drTotalCost(dtResult.Columns(l).ColumnName) = returnValue
+
+            'Next
+            'drTotalCost("ACCOUNT_NO") = "Total Cost"
+
+            ''//Add one empty row
+            'drEmpty = dtResult.NewRow
+            'dtResult.Rows.Add(drEmpty)
+
+            ''//Add total cost
+            'dtResult.Rows.Add(drTotalCost)
+
+            ''//Add on empty row at index 0
+            'drEmpty = dtResult.NewRow
+            'dtResult.Rows.InsertAt(drEmpty, 0)
+
+            dtResult.TableName = arrRows(0)(strGroupColumnName).ToString & " " & arrRows(0)(strGroupColumnTitle).ToString
+            'dtResult.TableName = BGCommon.GetGroupCostTitle(arrRows(0)(strGroupColumnName).ToString)
+
+            ''//Return data table
+            dsResult.Tables.Add(dtResult)
+
+        Next
+
+        Return dsResult
+
+    End Function
+
     Private Sub cboPeriodType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPeriodType.SelectedIndexChanged
 
         If CInt(cboPeriodType.SelectedValue) = CType(enumPeriodType.ReviseBudget, Integer) Then
@@ -1608,6 +1724,8 @@ Public Class frmBG0480
     Private Sub numPrevProjectNo_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numPrevProjectNo.ValueChanged
         'LoadPrevRevNo()
     End Sub
+
+
 
 #End Region
 
