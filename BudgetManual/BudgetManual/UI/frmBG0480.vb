@@ -289,7 +289,11 @@ Public Class frmBG0480
             myClsBG0480BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
             myClsBG0480BL.PIC = Me.cboUserPIC.SelectedValue.ToString
             myClsBG0480BL.ProjectNo = Me.numProjectNo.Value.ToString
-            myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
+            If Me.cboRevNo.SelectedValue IsNot Nothing Then
+                myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
+            Else
+                myClsBG0480BL.RevNo = "1"
+            End If
             myClsBG0480BL.BudgetType = "E"
             myClsBG0480BL.UserLevelId = p_intUserLevelId
 
@@ -307,6 +311,10 @@ Public Class frmBG0480
 
             If myClsBG0480BL.GetCommentData() = False Then
                 clsBG0400.DS = Nothing
+                'Add
+                MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Me.Cursor = Cursors.Default
+                Return
             Else
                 clsBG0400.DS = myClsBG0480BL.BudgetData
                 If clsBG0400.DS Is Nothing Or clsBG0400.DS.Tables(0).Rows.Count = 0 Then
@@ -315,6 +323,7 @@ Public Class frmBG0480
                     Return
                 End If
             End If
+
 
             myClsBG0480BL.GetBudgetStatus()
 
@@ -375,7 +384,7 @@ Public Class frmBG0480
 
             If fncCheckRevNo() = False Then
 
-                MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Exit Sub
             End If
 
@@ -427,70 +436,74 @@ Public Class frmBG0480
                 Me.Cursor = Cursors.WaitCursor
                 Dim m_Report As ReportDocument = New ReportDocument()
                 Dim reportPath As String = String.Empty
-                Select Case CInt(Me.cboPeriodType.SelectedValue)
-                    Case CType(enumPeriodType.OriginalBudget, Integer)
-                        reportPath = p_strAppPath & "\Reports\RPT001-1.rpt"
-                        Exit Select
-                    Case CType(enumPeriodType.EstimateBudget, Integer)
-                        reportPath = p_strAppPath & "\Reports\RPT001-2.rpt"
-                        Exit Select
-                    Case CType(enumPeriodType.ReviseBudget, Integer)
-                        If Me.chkShowMTP.Checked = True Then
-                            reportPath = p_strAppPath & "\Reports\RPT001-4.rpt"
-                        Else
-                            reportPath = p_strAppPath & "\Reports\RPT001-3.rpt"
-                        End If
-                        Exit Select
-                    Case CType(enumPeriodType.MTPBudget, Integer)
-                        reportPath = p_strAppPath & "\Reports\RPT001-5.rpt"
-                        Exit Select
-                    Case Else
-                        reportPath = p_strAppPath & "\Reports\RPT001-1.rpt"
-                        Exit Select
-                End Select
-
+                'Select Case CInt(Me.cboPeriodType.SelectedValue)
+                '    Case CType(enumPeriodType.OriginalBudget, Integer)
+                '        reportPath = p_strAppPath & "\Reports\RPT001-1.rpt"
+                '        Exit Select
+                '    Case CType(enumPeriodType.EstimateBudget, Integer)
+                '        reportPath = p_strAppPath & "\Reports\RPT001-2.rpt"
+                '        Exit Select
+                '    Case CType(enumPeriodType.ReviseBudget, Integer)
+                '        If Me.chkShowMTP.Checked = True Then
+                '            reportPath = p_strAppPath & "\Reports\RPT001-4.rpt"
+                '        Else
+                '            reportPath = p_strAppPath & "\Reports\RPT001-3.rpt"
+                '        End If
+                '        Exit Select
+                '    Case CType(enumPeriodType.MTPBudget, Integer)
+                '        reportPath = p_strAppPath & "\Reports\RPT001-5.rpt"
+                '        Exit Select
+                '    Case Else
+                '        reportPath = p_strAppPath & "\Reports\RPT001-1.rpt"
+                '        Exit Select
+                'End Select
+                reportPath = p_strAppPath & "\Reports\RPT008.rpt"
                 m_Report.Load(reportPath)
 
-                myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
-                myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
-                myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
-                myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
-                myClsBG0410BL.ProjectNo = Me.numProjectNo.Value.ToString
-                myClsBG0410BL.UserLevelId = p_intUserLevelId
+                myClsBG0480BL.BudgetYear = Me.numYear.Value.ToString
+                myClsBG0480BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
+                myClsBG0480BL.PIC = Me.cboUserPIC.SelectedValue.ToString
+                'myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
+                myClsBG0480BL.ProjectNo = Me.numProjectNo.Value.ToString
+                myClsBG0480BL.UserLevelId = p_intUserLevelId
                 If Me.cboRevNo.DataSource IsNot Nothing Then
-                    myClsBG0410BL.RevNo = Me.cboRevNo.SelectedValue.ToString
+                    myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
                 End If
 
-                myClsBG0410BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
+                myClsBG0480BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
                 If Me.cboPrevRevno.DataSource IsNot Nothing AndAlso _
                     Me.cboPrevRevno.SelectedValue IsNot Nothing Then
-                    myClsBG0410BL.PrevRevNo = Me.cboPrevRevno.SelectedValue.ToString
+                    myClsBG0480BL.PrevRevNo = Me.cboPrevRevno.SelectedValue.ToString
                 Else
-                    myClsBG0410BL.PrevRevNo = String.Empty
+                    myClsBG0480BL.PrevRevNo = String.Empty
                 End If
 
                 Dim ds As DataSet
-                If myClsBG0410BL.GetBudgetData() = False Then
+                If myClsBG0480BL.GetCommentData() = False Then
                     ds = Nothing
+                    'Add
+                    MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.Cursor = Cursors.Default
+                    Return
                 Else
-                    ds = myClsBG0410BL.BudgetData
+                    ds = myClsBG0480BL.BudgetData
                     If ds Is Nothing Or ds.Tables(0).Rows.Count = 0 Then
-                        MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         Me.Cursor = Cursors.Default
                         Return
                     End If
                 End If
                 m_Report.SetDataSource(ds)
 
-                myClsBG0410BL.GetBudgetStatus()
+                myClsBG0480BL.GetBudgetStatus()
 
-                If myClsBG0410BL.BudgetStatus >= 5 Then
+                If myClsBG0480BL.BudgetStatus >= 5 Then
                     m_Report.ReportDefinition.ReportObjects("picAuth10").ObjectFormat.EnableSuppress = False
                 Else
                     m_Report.ReportDefinition.ReportObjects("picAuth10").ObjectFormat.EnableSuppress = True
                 End If
 
-                If myClsBG0410BL.BudgetStatus >= 6 Then
+                If myClsBG0480BL.BudgetStatus >= 6 Then
                     m_Report.ReportDefinition.ReportObjects("picAuth3").ObjectFormat.EnableSuppress = False
                 Else
                     m_Report.ReportDefinition.ReportObjects("picAuth3").ObjectFormat.EnableSuppress = True
@@ -508,11 +521,11 @@ Public Class frmBG0480
                         strPeriod = "MTP"
                 End Select
 
-                m_Report.SetParameterValue("PERSON_IN_CHARGE_NM", Me.cboUserPIC.Text.ToString)
+                'm_Report.SetParameterValue("PERSON_IN_CHARGE_NM", Me.cboUserPIC.Text.ToString)
                 m_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
-                m_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString.Substring(2, 2))
+                'm_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString.Substring(2, 2))
                 m_Report.SetParameterValue("PERIOD", strPeriod)
-                m_Report.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString)
+                'm_Report.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString)
 
                 m_Report.PrintOptions.PrinterName = PrintDialog1.PrinterSettings.PrinterName
 
@@ -528,7 +541,7 @@ Public Class frmBG0480
             End If
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show(ex.Message, "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Me.Cursor = Cursors.Default
             Return
         End Try
@@ -561,7 +574,7 @@ Public Class frmBG0480
 
         If fncCheckRevNo() = False Then
 
-            MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Exit Sub
         End If
 
@@ -574,42 +587,42 @@ Public Class frmBG0480
 
         '//Get Export Data
         Dim dsData As DataSet
-        myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
-        myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
-        myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
-        myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
-        myClsBG0410BL.ProjectNo = Me.numProjectNo.Value.ToString
-        myClsBG0410BL.UserLevelId = p_intUserLevelId
+        myClsBG0480BL.BudgetYear = Me.numYear.Value.ToString
+        myClsBG0480BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
+        myClsBG0480BL.PIC = Me.cboUserPIC.SelectedValue.ToString
+        'myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
+        myClsBG0480BL.ProjectNo = Me.numProjectNo.Value.ToString
+        myClsBG0480BL.UserLevelId = p_intUserLevelId
         If Me.cboRevNo.DataSource IsNot Nothing Then
-            myClsBG0410BL.RevNo = Me.cboRevNo.SelectedValue.ToString
+            myClsBG0480BL.RevNo = Me.cboRevNo.SelectedValue.ToString
         End If
 
-        myClsBG0410BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
+        myClsBG0480BL.PrevProjectNo = Me.numPrevProjectNo.Value.ToString
         If Me.cboPrevRevno.DataSource IsNot Nothing AndAlso _
             Me.cboPrevRevno.SelectedValue IsNot Nothing Then
-            myClsBG0410BL.PrevRevNo = Me.cboPrevRevno.SelectedValue.ToString
+            myClsBG0480BL.PrevRevNo = Me.cboPrevRevno.SelectedValue.ToString
         Else
-            myClsBG0410BL.PrevRevNo = String.Empty
+            myClsBG0480BL.PrevRevNo = String.Empty
         End If
 
         Dim strPeriod As String = cboPeriodType.Text
         strPeriod = strPeriod.Substring(0, strPeriod.IndexOf("Budget") - 1)
 
-        If myClsBG0410BL.GetBudgetData() = False Then
+        If myClsBG0480BL.GetCommentData() = False Then
             dsData = Nothing
-            MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Cursor = Cursors.Default
             Return
         Else
-            dsData = myClsBG0410BL.BudgetData
+            dsData = myClsBG0480BL.BudgetData
             If dsData Is Nothing Or dsData.Tables(0).Rows.Count = 0 Then
-                MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("No budget data found, please try it again.", "RPT008", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Me.Cursor = Cursors.Default
                 Return
             End If
         End If
 
-        Dim dtAuthorizeImages As DataTable = myClsBG0410BL.BudgetData.Tables(1)
+        Dim dtAuthorizeImages As DataTable = myClsBG0480BL.BudgetData.Tables(1)
         Dim strYear As String = Me.numYear.Value.ToString
         Dim dtColumns As DataTable = CreateTableTemplate()
 
@@ -618,11 +631,13 @@ Public Class frmBG0480
 
         Dim strSubTitle As String = String.Empty
 
-        If strProjectNo <> "1" Then
-            strSubTitle = "Detail by Person In Charge : " + strPeriodType + " " + strYear + " (Project No. " + strProjectNo + ")"
-        Else
-            strSubTitle = "Detail by Person In Charge : " + strPeriodType + " " + strYear
-        End If
+        'If strProjectNo <> "1" Then
+        '    strSubTitle = "Detail by Person In Charge : " + strPeriodType + " " + strYear + " (Project No. " + strProjectNo + ")"
+        'Else
+        '    strSubTitle = "Detail by Person In Charge : " + strPeriodType + " " + strYear
+        'End If
+
+        strSubTitle = "Comment by Person In Charge : " + strPeriodType + " " + strYear
 
         Select Case CInt(Me.cboPeriodType.SelectedValue)
 
@@ -683,106 +698,15 @@ Public Class frmBG0480
     Private Function InsertOriginalColumnData(ByRef dtColumns As DataTable, ByVal strYear As String) As Boolean
 
         Dim dRow As DataRow
-        Dim strHalfYear As String = strYear.Substring(2, 2)
-
-        Dim intYear As Integer = CInt(strYear)
-        Dim strLastYear As String = CStr(intYear - 1)
-
-        Dim strHalfLastYear As String = CStr(intYear - 1).Substring(2, 2)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "BUDGET_ORDER_NO"
-        dRow("Column_Title") = "Budget Order Number & "
+        dRow("Column_Name") = "MONTH"
+        dRow("Column_Title") = "Month"
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "BUDGET_ORDER_NAME"
-        dRow("Column_Title") = "Budget Name"
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "DEPT_NO"
-        dRow("Column_Title") = "Dept."
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "PERSON_IN_CHARGE"
-        dRow("Column_Title") = "Person in Charge"
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "ACTUAL_FIRST_HALF"
-        dRow("Column_Title") = "Actual 1st Half'" & strHalfLastYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_SECOND_HALF"
-        dRow("Column_Title") = "Estimate 2nd Half'" & strHalfLastYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "M1"
-        dRow("Column_Title") = "Jan'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "M2"
-        dRow("Column_Title") = "Feb'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "M3"
-        dRow("Column_Title") = "Mar'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "M4"
-        dRow("Column_Title") = "Apr'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "M5"
-        dRow("Column_Title") = "May'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "M6"
-        dRow("Column_Title") = "Jun'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "FIRST_HALF_SUM"
-        dRow("Column_Title") = "Total 1st Half'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "SECOND_HALF_SUM"
-        dRow("Column_Title") = "Total 2nd Half'" & strHalfYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "YEAR_SUM"
-        dRow("Column_Title") = "Total Year'" & strYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow()
-        dRow("Column_Name") = "MTP_RRT1"
-        dRow("Column_Title") = "MTP " & CInt(strYear) - 1 & " Year'" & strYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow()
-        dRow("Column_Name") = "DIFF_MTP"
-        dRow("Column_Title") = "Diff vs MTP" & CInt(strYear) - 1
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "LAST_YEAR_SUM"
-        dRow("Column_Title") = "Total Year'" & strLastYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "DIFF_YEAR"
-        dRow("Column_Title") = "Diff vs Year'" & CInt(strYear) - 1
+        dRow("Column_Name") = "COMMENT"
+        dRow("Column_Title") = "Comment"
         dtColumns.Rows.Add(dRow)
 
         Return True

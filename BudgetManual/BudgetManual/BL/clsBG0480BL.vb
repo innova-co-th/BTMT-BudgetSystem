@@ -155,6 +155,7 @@ Public Class clsBG0480BL
         BG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
         BG_T_BUDGET_COMMENT.BudgetType = Me.BudgetType
 
+        
         '// Get Reference Budget
         'clsBG_T_BUDGET_DATA.RefBudgetYear = "1"
         'clsBG_T_BUDGET_DATA.RefPeriodType = "1"
@@ -299,12 +300,13 @@ Public Class clsBG0480BL
         'End If
 
 
+
         If Me.UserLevelId = enumUserLevel.SystemAdministrator Then
 
             '// Admin user.
             BG_T_BUDGET_COMMENT.RevNo = Me.RevNo
 
-            If BG_T_BUDGET_COMMENT.Select002() = False Then
+            If BG_T_BUDGET_COMMENT.Select002_1() = False Then
                 Return False
             End If
 
@@ -348,7 +350,7 @@ Public Class clsBG0480BL
             'End Select
 
         Else
-            If BG_T_BUDGET_COMMENT.Select002() = False Then
+            If BG_T_BUDGET_COMMENT.Select002_2() = False Then
                 Return False
             End If
 
@@ -492,6 +494,8 @@ Public Class clsBG0480BL
     Private Function GetMonth(ByVal colName As String) As String
 
         Dim result As String
+        Dim number As Integer
+        Dim hasYear As Boolean = Int32.TryParse(Me.BudgetYear, number)
 
         Select Case colName
             Case "M1"
@@ -519,15 +523,35 @@ Public Class clsBG0480BL
             Case "M12"
                 result = "Dec"
             Case "RRT1"
-                result = "RRT1"
+                If (hasYear) Then
+                    result = (number + 1).ToString
+                Else
+                    result = " "
+                End If
             Case "RRT2"
-                result = "RRT2"
+                If (hasYear) Then
+                    result = (number + 2).ToString
+                Else
+                    result = " "
+                End If
             Case "RRT3"
-                result = "RRT3"
+                If (hasYear) Then
+                    result = (number + 3).ToString
+                Else
+                    result = " "
+                End If
             Case "RRT4"
-                result = "RRT4"
+                If (hasYear) Then
+                    result = (number + 4).ToString
+                Else
+                    result = " "
+                End If
             Case "RRT5"
-                result = "RRT5"
+                If (hasYear) Then
+                    result = (number + 5).ToString
+                Else
+                    result = " "
+                End If
             Case Else
                 result = " "
         End Select

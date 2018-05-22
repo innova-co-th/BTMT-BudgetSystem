@@ -375,9 +375,9 @@ Public Class frmBG0400
     End Sub
 
     Public Sub SetupCommentByPICReportParameter()
-        'm_Report.SetParameterValue("PERIOD", Me.Period)
+        m_Report.SetParameterValue("PERIOD", Me.Period)
         ''m_Report.SetParameterValue("MONTH", Me.Month)
-        'm_Report.SetParameterValue("BUDGET_YEAR", Me.BudgetYear)
+        m_Report.SetParameterValue("BUDGET_YEAR", Me.BudgetYear)
         'm_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.BudgetYear.Substring(2, 2))
         'm_Report.SetParameterValue("PROJECT_NO", Me.ProjectNo)
     End Sub
