@@ -331,23 +331,15 @@ Public Class frmBG0480
             clsBG0400.ReportName = "RPT008.rpt"
             Select Case CInt(Me.cboPeriodType.SelectedValue)
                 Case CType(enumPeriodType.OriginalBudget, Integer)
-                    'clsBG0400.ReportName = "RPT001-1.rpt"
                     strPeriod = "Original"
                     Exit Select
                 Case CType(enumPeriodType.EstimateBudget, Integer)
-                    'clsBG0400.ReportName = "RPT001-2.rpt"
                     strPeriod = "Estimate"
                     Exit Select
                 Case CType(enumPeriodType.ReviseBudget, Integer)
-                    'If Me.chkShowMTP.Checked = True Then
-                    '    clsBG0400.ReportName = "RPT001-4.rpt"
-                    'Else
-                    '    clsBG0400.ReportName = "RPT001-3.rpt"
-                    'End If
                     strPeriod = "Revise"
                     Exit Select
                 Case CType(enumPeriodType.MTPBudget, Integer)
-                    'clsBG0400.ReportName = "RPT001-5.rpt"
                     strPeriod = "MTP"
                     Exit Select
             End Select
@@ -436,34 +428,13 @@ Public Class frmBG0480
                 Me.Cursor = Cursors.WaitCursor
                 Dim m_Report As ReportDocument = New ReportDocument()
                 Dim reportPath As String = String.Empty
-                'Select Case CInt(Me.cboPeriodType.SelectedValue)
-                '    Case CType(enumPeriodType.OriginalBudget, Integer)
-                '        reportPath = p_strAppPath & "\Reports\RPT001-1.rpt"
-                '        Exit Select
-                '    Case CType(enumPeriodType.EstimateBudget, Integer)
-                '        reportPath = p_strAppPath & "\Reports\RPT001-2.rpt"
-                '        Exit Select
-                '    Case CType(enumPeriodType.ReviseBudget, Integer)
-                '        If Me.chkShowMTP.Checked = True Then
-                '            reportPath = p_strAppPath & "\Reports\RPT001-4.rpt"
-                '        Else
-                '            reportPath = p_strAppPath & "\Reports\RPT001-3.rpt"
-                '        End If
-                '        Exit Select
-                '    Case CType(enumPeriodType.MTPBudget, Integer)
-                '        reportPath = p_strAppPath & "\Reports\RPT001-5.rpt"
-                '        Exit Select
-                '    Case Else
-                '        reportPath = p_strAppPath & "\Reports\RPT001-1.rpt"
-                '        Exit Select
-                'End Select
+
                 reportPath = p_strAppPath & "\Reports\RPT008.rpt"
                 m_Report.Load(reportPath)
 
                 myClsBG0480BL.BudgetYear = Me.numYear.Value.ToString
                 myClsBG0480BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
                 myClsBG0480BL.PIC = Me.cboUserPIC.SelectedValue.ToString
-                'myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
                 myClsBG0480BL.ProjectNo = Me.numProjectNo.Value.ToString
                 myClsBG0480BL.UserLevelId = p_intUserLevelId
                 If Me.cboRevNo.DataSource IsNot Nothing Then
@@ -522,11 +493,9 @@ Public Class frmBG0480
                         strPeriod = "MTP"
                 End Select
 
-                'm_Report.SetParameterValue("PERSON_IN_CHARGE_NM", Me.cboUserPIC.Text.ToString)
                 m_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
-                'm_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString.Substring(2, 2))
                 m_Report.SetParameterValue("PERIOD", strPeriod)
-                'm_Report.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString)
+
 
                 m_Report.PrintOptions.PrinterName = PrintDialog1.PrinterSettings.PrinterName
 
@@ -591,7 +560,6 @@ Public Class frmBG0480
         myClsBG0480BL.BudgetYear = Me.numYear.Value.ToString
         myClsBG0480BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
         myClsBG0480BL.PIC = Me.cboUserPIC.SelectedValue.ToString
-        'myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
         myClsBG0480BL.ProjectNo = Me.numProjectNo.Value.ToString
         myClsBG0480BL.UserLevelId = p_intUserLevelId
         If Me.cboRevNo.DataSource IsNot Nothing Then
@@ -633,65 +601,16 @@ Public Class frmBG0480
 
         Dim strSubTitle As String = String.Empty
 
-        'If strProjectNo <> "1" Then
-        '    strSubTitle = "Detail by Person In Charge : " + strPeriodType + " " + strYear + " (Project No. " + strProjectNo + ")"
-        'Else
-        '    strSubTitle = "Detail by Person In Charge : " + strPeriodType + " " + strYear
-        'End If
-
         strSubTitle = "Comment by Person In Charge : " + strPeriodType + " " + strYear
 
-        Select Case CInt(Me.cboPeriodType.SelectedValue)
+        '//Insert Column
+        InsertCommentColumnData(dtColumns, strYear)
 
-            Case CType(enumPeriodType.OriginalBudget, Integer) '//Original
+        '//Create group data
+        Dim dsGroups As DataSet = SetupCommentGroupbyData(dsData, "PERSON_IN_CHARGE", "PERSON_IN_CHARGE_NAME", 5)
 
-                InsertCommentColumnData(dtColumns, strYear)
-
-                '//Create group data
-                Dim dsGroups As DataSet = SetupCommentGroupbyData(dsData, "PERSON_IN_CHARGE", "PERSON_IN_CHARGE_NAME", 5)
-
-                '//Create Output Excel
-                OutputExcel(dsGroups, dtColumns, False, strSubTitle, strYear, True, strPeriod)
-
-            Case CType(enumPeriodType.EstimateBudget, Integer) '//Estimate
-
-                InsertEstimateColumnData(dtColumns, strYear)
-
-                '//Create group data
-                Dim dsGroups As DataSet = SetupGroupbyData(dsData, "PERSON_IN_CHARGE_NO", "PERSON_IN_CHARGE_NAME", 10, True)
-
-                '//Create Output Excel
-                OutputExcel(dsGroups, dtColumns, False, strSubTitle, strYear, True, strPeriod)
-
-            Case CType(enumPeriodType.ReviseBudget, Integer) '//Revise
-
-                '//Create output columns
-                If Me.chkShowMTP.Checked = True Then
-                    InsertMTPColumnData(dtColumns, strYear)
-                Else
-                    InsertReviseColumnData(dtColumns, strYear)
-                End If
-
-                '//Create group data
-                Dim dsGroups As DataSet = SetupGroupbyData(dsData, "PERSON_IN_CHARGE_NO", "PERSON_IN_CHARGE_NAME", 10, True)
-
-                Dim bMTPCheck As Boolean = chkShowMTP.Checked
-                '//Create Output Excel
-                OutputExcel(dsGroups, dtColumns, bMTPCheck, strSubTitle, strYear, True, strPeriod)
-
-            Case CType(enumPeriodType.MTPBudget, Integer) '//MTP
-
-                InsertMTPColumnDataNew(dtColumns, strYear)
-
-                '//Create group data
-                Dim dsGroups As DataSet = SetupGroupbyData(dsData, "PERSON_IN_CHARGE_NO", "PERSON_IN_CHARGE_NAME", 11, True)
-
-                '  Dim bMTPCheck As Boolean = chkShowMTP.Checked
-                '//Create Output Excel
-                OutputExcel(dsGroups, dtColumns, False, strSubTitle, strYear, True, strPeriod)
-
-
-        End Select
+        '//Create Output Excel
+        OutputExcel(dsGroups, dtColumns, False, strSubTitle, strYear, True, strPeriod)
 
         Me.Cursor = Cursors.Default
 
@@ -1207,7 +1126,6 @@ Public Class frmBG0480
         If xBk.Worksheets.Count > 1 Then
             For i As Integer = 1 To xBk.Worksheets.Count - 1
                 CType(xBk.Worksheets(i), Excel.Worksheet).Delete()
-                'CType(xBk.Worksheets(2), Excel.Worksheet).Delete()
             Next
 
         End If
@@ -1216,10 +1134,6 @@ Public Class frmBG0480
         Dim style As Excel.Style = excelApp.ActiveWorkbook.Styles.Add("NewStyle")
         'style.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red)
         style.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red)
-
-        ''//Set Style Value Group fill Backgroud color "Gray"
-        'Dim BGstyle As Excel.Style = excelApp.ActiveWorkbook.Styles.Add("NewStyle")
-        'BGstyle.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray)
 
         For intSheetCount As Integer = 0 To dsData.Tables.Count - 1
 
@@ -1281,6 +1195,7 @@ Public Class frmBG0480
 
                         xSt.Cells(rowIndex + rowStartIndex, colIndex + 1) = "'" + row(col.ColumnName).ToString()
                         xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex + 1), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).HorizontalAlignment = Excel.XlVAlign.xlVAlignCenter
+                        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex + 1), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).VerticalAlignment = Excel.XlVAlign.xlVAlignTop
 
                     ElseIf col.DataType Is System.Type.GetType("System.Decimal") Then
 
@@ -1309,16 +1224,6 @@ Public Class frmBG0480
                     Else
                         xSt.Cells(rowIndex + rowStartIndex, colIndex + 1) = row(col.ColumnName).ToString()
                     End If
-
-                    ''Set Group Header 
-                    'If strColumnName = "COMMENT" Then
-                    '    If String.IsNullOrEmpty(row(col.ColumnName).ToString().Trim) Then
-                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
-                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Font.Bold = True
-                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray)
-                    '        xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).MergeCells = True
-                    '    End If
-                    'End If
                 Next
             Next
 
@@ -1347,73 +1252,9 @@ Public Class frmBG0480
             '//Setup budget order name column to be left align
             xSt.Range(xSt.Cells(rowStartIndex, 2), xSt.Cells(rowMax, 2)).HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
 
-            '//Setup Total Lines
-            'SetupTotalLines(xSt, rowMax - 3, "Total", "Center", 1, 1, 4, rowMax - 2, rowMax - 1, rowMax, colMax, bMTPCheck)
+            xSt.Range(xSt.Cells(2, 1), xSt.Cells(rowMax, 1)).Columns.ColumnWidth = 15
+            xSt.Range(xSt.Cells(2, 2), xSt.Cells(rowMax, 2)).Columns.ColumnWidth = 100
 
-            '//Setup sheet properly width
-            xSt.Range(xSt.Cells(2, 1), xSt.Cells(rowMax, colMax)).Columns.AutoFit()
-
-            '//Setup Wrap text for columns title
-            'If strPeriod = "Original" Then
-
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
-
-            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 16)).WrapText = True
-
-            'ElseIf strPeriod = "Estimate" Then
-
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 6)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
-
-            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).WrapText = True
-            'ElseIf strPeriod = "Revise" Then
-
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 5)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 6), xSt.Cells(rowMax, 11)).Columns.ColumnWidth = 12
-
-            '    xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 15), xSt.Cells(rowMax, 20)).Columns.ColumnWidth = 12
-
-            '    xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).WrapText = True
-
-            '    'If chkShowMTP.Checked = True Then
-            '    '    xSt.Range(xSt.Cells(2, 25), xSt.Cells(rowMax, 29)).Columns.ColumnWidth = 12
-            '    'End If
-
-            'ElseIf strPeriod = "MTP" Then
-
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
-            '    xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 7)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 5), xSt.Cells(rowMax, 7)).WrapText = True
-
-            '    xSt.Range(xSt.Cells(2, 8), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
-            '    xSt.Range(xSt.Cells(2, 8), xSt.Cells(rowMax, 16)).WrapText = True
-            'End If
-
-            'colStartIndex = colStartIndex - 1
             '//Setup Column Font 
             xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(colStartIndex, colMax)).Font.Bold = True
             xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(rowMax, colMax)).Font.Name = "Tahoma"
@@ -1425,74 +1266,6 @@ Public Class frmBG0480
             xSt.Range(xSt.Cells(colStartIndex, 1), xSt.Cells(colStartIndex, colMax)).Borders(Excel.XlBordersIndex.xlEdgeTop).Weight = Excel.XlBorderWeight.xlThin
             xSt.Range(xSt.Cells(colStartIndex, colMax), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlThin
             xSt.Range(xSt.Cells(rowMax, 1), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlThin
-
-
-            ''//Insert empty column
-            'If strPeriod = "MTP" AndAlso bMTPCheck = True Then
-            '    '   SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
-            'ElseIf bMTPCheck = True Then
-            '    'SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
-            'End If
-
-            '//-- Add by Max 26/09/2012
-            '//Set Frame All
-            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders.LineStyle = 1
-            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeLeft).Weight = Excel.XlBorderWeight.xlMedium
-            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeTop).Weight = Excel.XlBorderWeight.xlMedium
-            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            'xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, colMax)).Borders(Excel.XlBordersIndex.xlEdgeBottom).Weight = Excel.XlBorderWeight.xlMedium
-
-            ''//Set Frame
-            'If strPeriod = "Original" Then
-
-            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 17), xSt.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-
-            'ElseIf strPeriod = "Estimate" Then
-
-            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-
-            'ElseIf strPeriod = "Revise" Then
-
-            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    If bMTPCheck = False Then
-            '        xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 8)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    End If
-            '    xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-
-            '    If bMTPCheck = False Then
-            '        xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 20)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '        xSt.Range(xSt.Cells(colStartIndex, 21), xSt.Cells(rowMax, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-            '    End If
-
-            '    '//Merge empty line
-            '    If bMTPCheck = True Then
-            '        xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).ClearContents()
-            '        xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).MergeCells = True
-            '    End If
-
-            'ElseIf strPeriod = "MTP" Then
-
-            '    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            '    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-
-            '    '//Set font color
-            '    xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
-            '    xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
-            '    xSt.Range(xSt.Cells(colStartIndex, 11), xSt.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
-            '    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
-            '    xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
-
-            'End If
-            '//-- Edit Add by Max 26/09/2012
 
         Next
 
@@ -1582,11 +1355,8 @@ Public Class frmBG0480
                                            ByVal intDataColumnIndex As Integer) As DataSet
 
         Dim dsResult As DataSet = New DataSet
-
-        Dim drEmpty As DataRow
-        Dim strExpression As String
         Dim strFilter As String = String.Empty
-        Dim returnValue As Object
+
 
         Dim strScript As String = strGroupColumnName
 
@@ -1597,9 +1367,8 @@ Public Class frmBG0480
 
             Dim dtResult As DataTable = dsData.Tables(0).Clone
 
-            Dim drCost As DataRow = dtResult.NewRow
-            Dim drTotalCost As DataRow = dtResult.NewRow
-            Dim intGroupTotalIndex As Integer = 0
+            ' Dim drCost As DataRow = dtResult.NewRow
+            Dim intGroupIndex As Integer = 0
 
             strScript = strGroupColumnName + " = '" + dtGroups.Rows(i)(0).ToString & "'"
             Dim arrRows As DataRow() = dsData.Tables(0).Select(strScript)
@@ -1612,7 +1381,7 @@ Public Class frmBG0480
 
             For n As Integer = 0 To intGroupCount2 - 1
 
-                Dim drTotalExpenses As DataRow = dtResult.NewRow
+                Dim drBudgetOrderGroup As DataRow = dtResult.NewRow
 
                 strScript = strGroupColumnName + " = '" + dtGroups.Rows(i)(0).ToString
                 strScript &= "' AND "
@@ -1627,48 +1396,20 @@ Public Class frmBG0480
                     Next
 
                     '//Setup Group header
-                    drTotalExpenses("MONTH") = arrRows2(0)(strGroupColumnName2).ToString + " " + arrRows2(0)("BUDGET_ORDER_NAME").ToString
+                    drBudgetOrderGroup("MONTH") = arrRows2(0)(strGroupColumnName2).ToString + " " + arrRows2(0)("BUDGET_ORDER_NAME").ToString
 
                     '//Add total cost
-                    dtResult.Rows.InsertAt(drTotalExpenses, intGroupTotalIndex)
-
-                    ''//Add one empty row
-                    'drEmpty = dtResult.NewRow
-                    'dtResult.Rows.Add(drEmpty)
+                    dtResult.Rows.InsertAt(drBudgetOrderGroup, intGroupIndex)
 
                     'intGroupTotalIndex = intGroupTotalIndex + dtResult.Rows.Count
-                    intGroupTotalIndex = intGroupTotalIndex + CInt(arrRows2.Length) + 1
+                    intGroupIndex = intGroupIndex + CInt(arrRows2.Length) + 1
                 End If
 
 
 
             Next
 
-            ''//Calculate Total cost
-            'For l As Integer = intDataColumnIndex To dtResult.Columns.Count - 1
-            '    Dim strColumnName As String = dtResult.Columns(l).ColumnName
-
-            '    strExpression = "Sum(" + strColumnName + ")"
-            '    strFilter = strGroupColumnName + " = " + dtGroups.Rows(i)(0).ToString
-            '    returnValue = dtResult.Compute(strExpression, strFilter)
-            '    drTotalCost(dtResult.Columns(l).ColumnName) = returnValue
-
-            'Next
-            'drTotalCost("ACCOUNT_NO") = "Total Cost"
-
-            ''//Add one empty row
-            'drEmpty = dtResult.NewRow
-            'dtResult.Rows.Add(drEmpty)
-
-            ''//Add total cost
-            'dtResult.Rows.Add(drTotalCost)
-
-            ''//Add on empty row at index 0
-            'drEmpty = dtResult.NewRow
-            'dtResult.Rows.InsertAt(drEmpty, 0)
-
             dtResult.TableName = arrRows(0)(strGroupColumnName).ToString & " " & arrRows(0)(strGroupColumnTitle).ToString
-            'dtResult.TableName = BGCommon.GetGroupCostTitle(arrRows(0)(strGroupColumnName).ToString)
 
             ''//Return data table
             dsResult.Tables.Add(dtResult)
