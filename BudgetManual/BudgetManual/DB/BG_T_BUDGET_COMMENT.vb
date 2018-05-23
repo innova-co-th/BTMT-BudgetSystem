@@ -22,6 +22,8 @@ Public Class BG_T_BUDGET_COMMENT
     Private myBudgetType As String = String.Empty
     Private myUserPIC As String = String.Empty
 
+    Private myBudgetComment As DataRow
+
 
 #End Region
 
@@ -126,6 +128,7 @@ Public Class BG_T_BUDGET_COMMENT
     End Property
 #End Region
 
+#Region "CreateUserId"
     Public Property CreateUserId() As String
         Get
             Return myCreateUserId
@@ -134,6 +137,7 @@ Public Class BG_T_BUDGET_COMMENT
             myCreateUserId = value
         End Set
     End Property
+#End Region
 
 #Region "dtResult"
     Property dtResult() As DataTable
@@ -164,6 +168,17 @@ Public Class BG_T_BUDGET_COMMENT
         End Get
         Set(ByVal value As String)
             myUserPIC = value
+        End Set
+    End Property
+#End Region
+
+#Region "BudgetComment"
+    Property BudgetComment() As DataRow
+        Get
+            Return myBudgetComment
+        End Get
+        Set(ByVal value As DataRow)
+            myBudgetComment = value
         End Set
     End Property
 #End Region
@@ -215,11 +230,6 @@ Public Class BG_T_BUDGET_COMMENT
         End Try
     End Function
 
-    ''' <summary>
-    ''' Select Comment data list for Report008 All
-    ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Function Select002_1() As Boolean
 
         Dim conn As SqlConnection = Nothing
@@ -413,6 +423,8 @@ Public Class BG_T_BUDGET_COMMENT
     End Function
 #End Region
 
+
+
 #Region "Insert001"
     ''' <summary>
     ''' Insert001
@@ -495,6 +507,158 @@ Public Class BG_T_BUDGET_COMMENT
 
         Catch ex As Exception
             MessageBox.Show("[BG_M_USER.Insert001] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
+            End If
+
+            Return False
+
+        End Try
+    End Function
+#End Region
+
+#Region "Insert002"
+    ''' <summary>
+    ''' Insert002
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Insert002(Optional ByVal pConn As SqlConnection = Nothing, _
+                              Optional ByVal pTrans As SqlTransaction = Nothing) As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim cmd As SqlCommand
+        Dim strSQL As String
+        Dim intRtn As Integer
+
+        Try
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                conn = New SqlConnection(My.Settings.ConnStr)
+                conn.Open()
+            End If
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "INSERT002")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@BudgetOrderNo", Me.BudgetOrderNo)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@UserId", Me.CreateUserId)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+
+            Dim dr As DataRow
+            dr = Me.BudgetComment
+
+            If Not dr Is Nothing Then
+                strSQL = strSQL.Replace("@M1", dr.Item("M1").ToString)
+                strSQL = strSQL.Replace("@M2", dr.Item("M2").ToString)
+                strSQL = strSQL.Replace("@M3", dr.Item("M3").ToString)
+                strSQL = strSQL.Replace("@M4", dr.Item("M4").ToString)
+                strSQL = strSQL.Replace("@M5", dr.Item("M5").ToString)
+                strSQL = strSQL.Replace("@M6", dr.Item("M6").ToString)
+                strSQL = strSQL.Replace("@M7", dr.Item("M7").ToString)
+                strSQL = strSQL.Replace("@M8", dr.Item("M8").ToString)
+                strSQL = strSQL.Replace("@M9", dr.Item("M9").ToString)
+                strSQL = strSQL.Replace("@M10", dr.Item("M10").ToString)
+                strSQL = strSQL.Replace("@M11", dr.Item("M11").ToString)
+                strSQL = strSQL.Replace("@M12", dr.Item("M12").ToString)
+
+                strSQL = strSQL.Replace("@RRT1", dr.Item("RRT1").ToString)
+                strSQL = strSQL.Replace("@RRT2", dr.Item("RRT2").ToString)
+                strSQL = strSQL.Replace("@RRT3", dr.Item("RRT3").ToString)
+                strSQL = strSQL.Replace("@RRT4", dr.Item("RRT4").ToString)
+                strSQL = strSQL.Replace("@RRT5", dr.Item("RRT5").ToString)
+            End If
+
+
+            If pConn IsNot Nothing And pTrans IsNot Nothing Then
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                intRtn = cmd.ExecuteNonQuery()
+
+            Else
+                cmd = New SqlCommand(strSQL, conn)
+                intRtn = cmd.ExecuteNonQuery()
+
+                If conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
+
+            End If
+
+            If intRtn > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_COMMENT.Insert002] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
+            End If
+
+            Return False
+
+        End Try
+    End Function
+#End Region
+
+#Region "Delete001"
+    ''' <summary>
+    ''' Delete Rev
+    ''' </summary>
+    ''' <param name="pConn">Connection</param>
+    ''' <param name="pTrans">Transaction</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Delete001(Optional ByVal pConn As SqlConnection = Nothing, _
+                              Optional ByVal pTrans As SqlTransaction = Nothing) As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim cmd As SqlCommand
+        Dim strSQL As String
+        Dim intRtn As Integer
+
+        Try
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                conn = New SqlConnection(My.Settings.ConnStr)
+                conn.Open()
+            End If
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "DELETE001")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+
+            If pConn IsNot Nothing And pTrans IsNot Nothing Then
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                intRtn = cmd.ExecuteNonQuery()
+
+            Else
+                cmd = New SqlCommand(strSQL, conn)
+                intRtn = cmd.ExecuteNonQuery()
+
+                If conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
+
+            End If
+
+            If intRtn > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_COMMENT.Delete001] Error: " & ex.Message, My.Settings.ProgramTitle, _
                             MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             If pConn Is Nothing Or pTrans Is Nothing Then

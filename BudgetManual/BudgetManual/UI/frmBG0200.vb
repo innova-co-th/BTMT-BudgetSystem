@@ -4879,6 +4879,8 @@ Public Class frmBG0200
         myClsBG0200BL.ProjectNo = Me.GetProjectNo()
 
         Return myClsBG0200BL.DeleteRevision()
+
+        HighlightWorkingBGAndComment()
     End Function
 
     Private Function DeleteBudgetData(ByVal UserPic As String, ByVal RevNo As String) As Boolean
@@ -7586,10 +7588,18 @@ Public Class frmBG0200
             p_frmBG0201.MonthNo = CStr(intNum)
         End If
 
+        p_frmBG0201.OperationCd = CStr(Me.OperationCd)
+
         If p_frmBG0201.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
         End If
-        HighlightWorkingBGAndComment()
+
+        If Me.OperationCd = enumOperationCd.InputBudget Or _
+                 (Me.OperationCd = enumOperationCd.AdjustBudget And CInt(Me.CurrRevNo) > 1) Or _
+                 (Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput And CInt(Me.CurrRevNo) > 1) Then
+            HighlightWorkingBGAndComment()
+        End If
+
         p_frmBG0201.Dispose()
     End Sub
 
@@ -7600,6 +7610,7 @@ Public Class frmBG0200
         Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget1.Columns(e.ColumnIndex).Name)
+
         Select Case ColumnName
             Case "g1col8"
                 intMonth = 1
@@ -7641,12 +7652,12 @@ Public Class frmBG0200
 
         If blnFound = True Then
             Dim budgetOderSub() As String
-            If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-                If e.RowIndex >= 0 Then
-                    budgetOderSub = grvBudget1.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                    ShowCommentPopup(intMonth, budgetOderSub)
-                End If
+            'If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+            If e.RowIndex >= 0 Then
+                budgetOderSub = grvBudget1.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                ShowCommentPopup(intMonth, budgetOderSub)
             End If
+            'End If
         End If
 
 
@@ -7659,6 +7670,7 @@ Public Class frmBG0200
         Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget2.Columns(e.ColumnIndex).Name)
+
         Select Case ColumnName
             Case "g2col11"
                 intMonth = 10
@@ -7674,12 +7686,12 @@ Public Class frmBG0200
         If blnFound = True Then
             Dim budgetOderSub() As String
 
-            If grvBudget2.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-                If e.RowIndex >= 0 Then
-                    budgetOderSub = grvBudget2.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                    ShowCommentPopup(intMonth, budgetOderSub)
-                End If
+            'If grvBudget2.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+            If e.RowIndex >= 0 Then
+                budgetOderSub = grvBudget2.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                ShowCommentPopup(intMonth, budgetOderSub)
             End If
+            'End If
         End If
 
     End Sub
@@ -7691,6 +7703,7 @@ Public Class frmBG0200
         Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget3.Columns(e.ColumnIndex).Name)
+
         Select Case ColumnName
             Case "g3col10"
                 intMonth = 4
@@ -7724,12 +7737,12 @@ Public Class frmBG0200
         If blnFound = True Then
             Dim budgetOderSub() As String
 
-            If grvBudget3.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-                If e.RowIndex >= 0 Then
-                    budgetOderSub = grvBudget3.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                    ShowCommentPopup(intMonth, budgetOderSub)
-                End If
+            'If grvBudget3.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+            If e.RowIndex >= 0 Then
+                budgetOderSub = grvBudget3.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                ShowCommentPopup(intMonth, budgetOderSub)
             End If
+            'End If
         End If
 
     End Sub
@@ -7740,6 +7753,7 @@ Public Class frmBG0200
         Dim blnFound As Boolean = False
 
         ColumnName = CStr(grvBudget4.Columns(e.ColumnIndex).Name)
+
         Select Case ColumnName
             Case "g4col9"
                 intRRT = 1
@@ -7752,12 +7766,12 @@ Public Class frmBG0200
         If blnFound = True Then
             Dim budgetOderSub() As String
 
-            If grvBudget4.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
-                If e.RowIndex >= 0 Then
-                    budgetOderSub = grvBudget4.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
-                    ShowCommentPopup(intRRT, budgetOderSub)
-                End If
+            'If grvBudget4.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
+            If e.RowIndex >= 0 Then
+                budgetOderSub = grvBudget4.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
+                ShowCommentPopup(intRRT, budgetOderSub)
             End If
+            'End If
         End If
 
     End Sub

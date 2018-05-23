@@ -1356,6 +1356,7 @@ Public Class clsBG0200BL
         Dim clsBG_T_BUDGET_DATA As New BG_T_BUDGET_DATA
         Dim clsBG_T_BUDGET_ADJUST As New BG_T_BUDGET_ADJUST
         Dim clsBG_T_BUDGET_REFERENCE As New BG_T_BUDGET_REFERENCE
+        Dim clsBG_T_BUDGET_COMMENT As New BG_T_BUDGET_COMMENT
         ''Dim conn As SqlConnection
         ''Dim trans As SqlTransaction
 
@@ -1410,6 +1411,7 @@ Public Class clsBG0200BL
             End If
         End If
 
+        Dim dtComment As DataTable
         For Each dr As DataRow In Me.OrderList.Rows
             '// Add Budget Data Detail
             '// Set Parameters
@@ -1425,7 +1427,36 @@ Public Class clsBG0200BL
                 ''Throw New Exception("Can not insert budget data!")
                 Return False
             End If
+
+
+            '//Add Budget Comment
+
+            clsBG_T_BUDGET_COMMENT.BudgetYear = Me.BudgetYear
+            clsBG_T_BUDGET_COMMENT.PeriodType = Me.PeriodType
+            clsBG_T_BUDGET_COMMENT.BudgetOrderNo = CStr(dr("BUDGET_ORDER_NO"))
+            clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo2
+            clsBG_T_BUDGET_COMMENT.CreateUserId = Me.UserId
+            clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
+
+            If clsBG_T_BUDGET_COMMENT.Select001 Then
+                If Not clsBG_T_BUDGET_COMMENT.CommentList Is Nothing AndAlso clsBG_T_BUDGET_COMMENT.CommentList.Rows.Count > 0 Then
+                    dtComment = clsBG_T_BUDGET_COMMENT.CommentList
+
+                    clsBG_T_BUDGET_COMMENT.BudgetComment = dtComment.Rows(0)
+                    clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
+
+                    '// Call Function
+                    If clsBG_T_BUDGET_COMMENT.Insert002(Conn, Trans) = False Then
+                        ''Throw New Exception("Can not insert budget data!")
+                        Return False
+                    End If
+
+                End If
+            End If
+
+
         Next
+
 
         Dim dtPreDat As DataTable = Nothing
 
@@ -2530,6 +2561,7 @@ Public Class clsBG0200BL
         Dim clsBG_T_BUDGET_DATA As New BG_T_BUDGET_DATA
         Dim clsBG_T_BUDGET_ADJUST As New BG_T_BUDGET_ADJUST
         Dim clsBG_T_BUDGET_DATA_REINPUT As New BG_T_BUDGET_DATA_REINPUT
+        Dim clsBG_T_BUDGET_COMMENT As New BG_T_BUDGET_COMMENT
         Dim conn As SqlConnection
         Dim trans As SqlTransaction
 
@@ -2556,6 +2588,15 @@ Public Class clsBG0200BL
             clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
             clsBG_T_BUDGET_DATA.Delete001(conn, trans)
+
+            '//Delete BUDGET_COMMENT 
+            clsBG_T_BUDGET_COMMENT.BudgetYear = Me.BudgetYear
+            clsBG_T_BUDGET_COMMENT.PeriodType = Me.PeriodType
+            clsBG_T_BUDGET_COMMENT.BudgetType = Me.BudgetType
+            clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
+            clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
+            clsBG_T_BUDGET_COMMENT.Delete001(conn, trans)
+
 
             clsBG_T_BUDGET_ADJUST.BudgetYear = Me.BudgetYear
             clsBG_T_BUDGET_ADJUST.PeriodType = Me.PeriodType
@@ -2664,6 +2705,7 @@ Public Class clsBG0200BL
     Public Function UpRevision() As Boolean
         Dim clsBG_T_BUDGET_HEADER As New BG_T_BUDGET_HEADER
         Dim clsBG_T_BUDGET_DATA As New BG_T_BUDGET_DATA
+        Dim clsBG_T_BUDGET_COMMENT As New BG_T_BUDGET_COMMENT
         Dim conn As SqlConnection
         Dim trans As SqlTransaction
         Dim dtRawDat As DataTable = Nothing
@@ -2720,7 +2762,9 @@ Public Class clsBG0200BL
                 If clsBG_T_BUDGET_DATA.Update001(conn, trans) = False Then
                     Throw New Exception("Can not update Budget data")
                 End If
+
             Next
+
 
             '// Commit Transaction
             trans.Commit()

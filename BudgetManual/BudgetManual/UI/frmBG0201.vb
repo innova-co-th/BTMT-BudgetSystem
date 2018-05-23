@@ -18,6 +18,8 @@ Public Class frmBG0201
     Private myMonthNo As String
     Private myRRTNo As String
 
+    Private myOperationCd As String
+
 
 #End Region
 
@@ -112,6 +114,17 @@ Public Class frmBG0201
     End Property
 #End Region
 
+#Region "OperationCd"
+    Public Property OperationCd() As String
+        Get
+            Return myOperationCd
+        End Get
+        Set(ByVal value As String)
+            myOperationCd = value
+        End Set
+    End Property
+#End Region
+
 #End Region
 
 #Region "Control Event"
@@ -120,6 +133,14 @@ Public Class frmBG0201
         Try
             'Initial all Controls
             'InitialControls()
+
+            If Me.OperationCd = CStr(enumOperationCd.InputBudget) Or _
+            (Me.OperationCd = CStr(enumOperationCd.AdjustBudget) And CInt(Me.RevNo) > 1) Or _
+            (Me.OperationCd = CStr(enumOperationCd.AdjustBudgetDirectInput) And CInt(Me.RevNo) > 1) Then
+                Me.cmdOK.Visible = True
+            Else
+                Me.cmdOK.Visible = False
+            End If
 
             dtSource = GetComment()
             BindDatagrid(dtSource)
