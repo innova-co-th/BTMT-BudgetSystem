@@ -20,6 +20,8 @@ Public Class BG_M_PERSON_IN_CHARGE
     Private myUpdateDate As String = String.Empty
     Private myUserPIC As String = String.Empty
     Private myAccountNo As String = String.Empty
+
+    Private myOldPersonNo As String = String.Empty
 #End Region
 
 #Region "Property"
@@ -141,6 +143,15 @@ Public Class BG_M_PERSON_IN_CHARGE
         End Get
         Set(ByVal value As String)
             myAccountNo = value
+        End Set
+    End Property
+
+    Public Property OldPersonNo() As String
+        Get
+            Return myOldPersonNo
+        End Get
+        Set(ByVal value As String)
+            myOldPersonNo = value
         End Set
     End Property
 #End Region
@@ -981,6 +992,136 @@ Public Class BG_M_PERSON_IN_CHARGE
                 If conn.State <> ConnectionState.Closed Then
                     conn.Close()
                 End If
+
+            End If
+
+            If intRtn > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_M_PERSON_IN_CHARGE.Update001] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
+            End If
+
+            Return False
+
+        End Try
+    End Function
+#End Region
+
+#Region "Update002"
+    ''' <summary>
+    ''' Update002
+    ''' </summary>
+    ''' <param name="pConn">Connection</param>
+    ''' <param name="pTrans">Transaction</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Update002(Optional ByVal pConn As SqlConnection = Nothing, _
+                              Optional ByVal pTrans As SqlTransaction = Nothing) As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim cmd As SqlCommand
+        Dim strSQL As String
+        Dim intRtn As Integer
+
+        Try
+            If pConn Is Nothing Or pTrans Is Nothing Then
+                conn = New SqlConnection(My.Settings.ConnStr)
+                conn.Open()
+            End If
+
+            
+
+            If pConn IsNot Nothing And pTrans IsNot Nothing Then
+                'UPDATE002_1 --BG_M_BUDGET_ORDER
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_1")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_2 --BG_M_CHILD_PIC update PIC_PARENT_NO
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_2")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_3 --BG_M_CHILD_PIC update PIC_CHILD_NO
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_3")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_4 --BG_T_ACCOUNT_REOPEN
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_4")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_5 --BG_T_BUDGET_HEADER
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_5")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_6 --BG_T_TRANS_LOG
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_6")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_7 --BG_M_USER
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_7")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                'strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_8 --BG_T_USER_LOGIN
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_8")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                'strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                cmd.ExecuteNonQuery()
+
+                'UPDATE002_9 --BG_M_PERSON_IN_CHARGE
+                strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_PERSON_IN_CHARGE", "UPDATE002_9")
+                strSQL = strSQL.Replace("@OldNo", Me.OldPersonNo)
+                strSQL = strSQL.Replace("@NewNo", Me.PersonNo)
+                strSQL = strSQL.Replace("@Name", Me.PersonName.Replace("'", "''"))
+                strSQL = strSQL.Replace("@UserId", Me.UpdateUserId)
+
+                cmd = New SqlCommand(strSQL, pConn, pTrans)
+                intRtn = cmd.ExecuteNonQuery()
 
             End If
 

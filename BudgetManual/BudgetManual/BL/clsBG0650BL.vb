@@ -12,6 +12,8 @@ Public Class clsBG0650BL
     Private myPersonNameFilter As String = String.Empty
     Private myCreateUserId As String = String.Empty
     Private myUpdateUserId As String = String.Empty
+
+    Private myOldPersonNo As String = String.Empty
 #End Region
 
 #Region "Property"
@@ -69,6 +71,15 @@ Public Class clsBG0650BL
         End Get
         Set(ByVal value As String)
             myPersonNameFilter = value
+        End Set
+    End Property
+
+    Public Property OldPersonNo() As String
+        Get
+            Return myOldPersonNo
+        End Get
+        Set(ByVal value As String)
+            myOldPersonNo = value
         End Set
     End Property
 #End Region
@@ -140,19 +151,41 @@ Public Class clsBG0650BL
 
     End Function
 
-    Public Function UpdateOneData() As Boolean
+    Public Function UpdateOneData(ByVal pConn As SqlConnection, ByVal pTrans As SqlTransaction) As Boolean
         Dim clsBG_M_PERSON_IN_CHARGE As New BG_M_PERSON_IN_CHARGE
 
         clsBG_M_PERSON_IN_CHARGE.PersonNo = Me.PersonNo
         clsBG_M_PERSON_IN_CHARGE.PersonName = Me.PersonName
         clsBG_M_PERSON_IN_CHARGE.UpdateUserId = Me.UpdateUserId
 
-        If clsBG_M_PERSON_IN_CHARGE.Update001 = True Then
+        If clsBG_M_PERSON_IN_CHARGE.Update001(pConn, pTrans) = True Then
             Return True
         Else
             Return False
         End If
 
+    End Function
+
+    Public Function UpdatePicNoOneData(ByVal pConn As SqlConnection, ByVal pTrans As SqlTransaction) As Boolean
+
+        Dim clsBG_M_PERSON_IN_CHARGE As New BG_M_PERSON_IN_CHARGE
+
+        Try
+            clsBG_M_PERSON_IN_CHARGE.OldPersonNo = Me.OldPersonNo
+
+            clsBG_M_PERSON_IN_CHARGE.PersonNo = Me.PersonNo
+            clsBG_M_PERSON_IN_CHARGE.PersonName = Me.PersonName
+            clsBG_M_PERSON_IN_CHARGE.UpdateUserId = Me.UpdateUserId
+
+            If clsBG_M_PERSON_IN_CHARGE.Update002(pConn, pTrans) = True Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            Throw ex
+        End Try
+        
     End Function
 
     Public Function UpdateExcelData(ByVal pConn As SqlConnection, _

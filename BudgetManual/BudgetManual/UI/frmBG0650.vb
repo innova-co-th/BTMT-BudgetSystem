@@ -176,16 +176,37 @@ Public Class frmBG0650
             Dim dt As DataTable = CType(Me.grvMaster.DataSource, DataTable)
             dt.PrimaryKey = New DataColumn() {dt.Columns(0)}
 
-            If UpdatePIC(Me.OldPICNo, Me.txtPicNo.Text, Me.txtPicName.Text, p_strUserId) = True Then
-                MessageBox.Show("Person in charge was updated", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Dim conn As SqlConnection = Nothing
+            Dim trans As SqlTransaction
+            Dim success As Boolean = False
 
-                '// Write Transaction Log
-                WriteTransactionLog(CStr(enumOperationCd.EditPersonInChargeMaster), "", "", "", "", "", "")
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+            trans = conn.BeginTransaction()
 
-                SearchDataGrid()
-            Else
+            Try
+                
+                If UpdatePIC(conn, trans, Me.OldPICNo, Me.txtPicNo.Text, Me.txtPicName.Text, p_strUserId) = True Then
+
+                    trans.Commit()
+
+                    MessageBox.Show("Person in charge was updated", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    '// Write Transaction Log
+                    WriteTransactionLog(CStr(enumOperationCd.EditPersonInChargeMaster), "", "", "", "", "", "")
+
+                    SearchDataGrid()
+                Else
+                    trans.Rollback()
+
+                    MessageBox.Show("There are error between save Person in charge", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Catch ex As Exception
                 MessageBox.Show("There are error between save Person in charge", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
+                trans.Rollback()
+            Finally
+                conn.Close()
+            End Try
         End If
 
         '// Select edited row
@@ -204,7 +225,7 @@ Public Class frmBG0650
 
     End Sub
 
-    Private Function UpdatePIC(ByVal pOldPicNo As String, ByVal pPicNo As String, ByVal pPicName As String, ByVal pUpdateUserId As String) As Boolean
+    Private Function UpdatePIC(ByVal pConn As SqlConnection, ByVal pTrans As SqlTransaction, ByVal pOldPicNo As String, ByVal pPicNo As String, ByVal pPicName As String, ByVal pUpdateUserId As String) As Boolean
         Dim result As Boolean = False
 
         Try
@@ -213,7 +234,7 @@ Public Class frmBG0650
                 myClsBG0650BL.PersonName = pPicName
                 myClsBG0650BL.UpdateUserId = pUpdateUserId
 
-                result = myClsBG0650BL.UpdateOneData()
+                result = myClsBG0650BL.UpdateOneData(pConn, pTrans)
             Else
                 'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_M_BUDGET_ORDER]
 
@@ -226,6 +247,13 @@ Public Class frmBG0650
                 'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_T_TRANS_LOG]
 
                 'SELECT [PERSON_IN_CHARGE_NO] FROM [BG_T_USER_LOGIN]
+
+                myClsBG0650BL.OldPersonNo = pOldPicNo
+                myClsBG0650BL.PersonNo = pPicNo
+                myClsBG0650BL.PersonName = pPicName
+                myClsBG0650BL.UpdateUserId = pUpdateUserId
+
+                result = myClsBG0650BL.UpdatePicNoOneData(pConn, pTrans)
 
                 result = True
             End If
