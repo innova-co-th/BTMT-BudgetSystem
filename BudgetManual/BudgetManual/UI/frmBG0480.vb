@@ -1360,7 +1360,10 @@ Public Class frmBG0480
 
         Dim strScript As String = strGroupColumnName
 
+        dsData.Tables(0).DefaultView.Sort = strGroupColumnName + " ASC"
+
         Dim dtGroups As DataTable = dsData.Tables(0).DefaultView.ToTable(True, strScript)
+
         Dim intGroupCount As Integer = dtGroups.Rows.Count
 
         For i As Integer = 0 To intGroupCount - 1
@@ -1376,6 +1379,7 @@ Public Class frmBG0480
             Dim strGroupColumnName2 As String = "BUDGET_ORDER_NO"
             '//Seperate dataset data into several datatables according to group no
             strScript = strGroupColumnName2
+            dsData.Tables(0).DefaultView.Sort = strGroupColumnName2 + " ASC"
             Dim dtGroups2 As DataTable = dsData.Tables(0).DefaultView.ToTable(True, strScript)
             Dim intGroupCount2 As Integer = dtGroups2.Rows.Count
 
