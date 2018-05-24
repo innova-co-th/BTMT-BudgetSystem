@@ -137,8 +137,10 @@ Public Class frmBG0201
             If Me.OperationCd = CStr(enumOperationCd.InputBudget) Or _
             (Me.OperationCd = CStr(enumOperationCd.AdjustBudget) And CInt(Me.RevNo) > 1) Or _
             (Me.OperationCd = CStr(enumOperationCd.AdjustBudgetDirectInput) And CInt(Me.RevNo) > 1) Then
+                Me.txtComment.Enabled = True
                 Me.cmdOK.Visible = True
             Else
+                Me.txtComment.Enabled = False
                 Me.cmdOK.Visible = False
             End If
 
