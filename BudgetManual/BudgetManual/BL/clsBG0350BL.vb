@@ -186,12 +186,12 @@ Public Class clsBG0350BL
 
                     If clsBG_M_BUDGET_ORDER.Select016 AndAlso clsBG_M_BUDGET_ORDER.dtResult.Rows.Count > 0 Then
                         If CStr(clsBG_M_BUDGET_ORDER.dtResult.Rows(0)![BUDGET_TYPE]) = P_BUDGET_TYPE_EXPENSE Then
-                            Me.DataList(6) = CDbl(Me.DataList(6)) + CDbl(Me.DataList(7)) + CDbl(Me.DataList(8)) + CDbl(Me.DataList(9)) + CDbl(Me.DataList(10)) + CDbl(Me.DataList(11))
-                            Me.DataList(7) = 0
-                            Me.DataList(8) = 0
-                            Me.DataList(9) = 0
-                            Me.DataList(10) = 0
-                            Me.DataList(11) = 0
+                            Me.DataList(6) = CDbl(Me.DataList(6))
+                            Me.DataList(7) = CDbl(Me.DataList(7))
+                            Me.DataList(8) = CDbl(Me.DataList(8))
+                            Me.DataList(9) = CDbl(Me.DataList(9))
+                            Me.DataList(10) = CDbl(Me.DataList(10))
+                            Me.DataList(11) = CDbl(Me.DataList(11))
                         End If
                     End If
                     '//-- End Add 2011/04/29

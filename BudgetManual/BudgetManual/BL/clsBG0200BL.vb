@@ -761,6 +761,7 @@ Public Class clsBG0200BL
 
         End If
     End Function
+
     Public Function GetBudgetData() As Boolean
         Dim clsBG_T_BUDGET_DATA As New BG_T_BUDGET_DATA
         Dim clsBG_T_BUDGET_REFERENCE As New BG_T_BUDGET_REFERENCE
@@ -775,9 +776,6 @@ Public Class clsBG0200BL
         clsBG_T_BUDGET_DATA.RevNo = Me.RevNo
         clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
-        'clsBG_T_BUDGET_DATA.MtpProjectNo = Me.MtpProjectNo
-        'clsBG_T_BUDGET_DATA.MtpRevNo = Me.MtpRevNo
-
         '// Get Reference Budget
         clsBG_T_BUDGET_DATA.RefBudgetYear = "1"
         clsBG_T_BUDGET_DATA.RefPeriodType = "1"
@@ -791,7 +789,6 @@ Public Class clsBG0200BL
         clsBG_T_BUDGET_DATA.MtpRevNo = "1"
 
         If Me.BudgetType <> BGConstant.P_BUDGET_TYPE_ASSET Then
-
 
             If Me.PeriodType = CStr(enumPeriodType.OriginalBudget) Then
 
@@ -910,19 +907,6 @@ Public Class clsBG0200BL
             clsBG_T_BUDGET_DATA.Status = CStr(enumBudgetStatus.Approve)
 
             If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
-
-                'If Me.GetReviseMaxRevNo Then
-                '    clsBG_T_BUDGET_DATA.ReviseRevNo = Me.ReviseRevNo
-                'Else
-                '    clsBG_T_BUDGET_DATA.ReviseRevNo = "1"
-                'End If
-
-                'If Me.GetPrevMTPMaxRevNo Then
-                '    clsBG_T_BUDGET_DATA.PrevMTPRevNo = Me.PrevMTPRevNo
-                'Else
-                '    clsBG_T_BUDGET_DATA.PrevMTPRevNo = "1"
-                'End If
-
                 If Me.UserPIC = "0000" Then
                     blnRtn = clsBG_T_BUDGET_DATA.Select027()
                 Else
@@ -940,19 +924,6 @@ Public Class clsBG0200BL
         ElseIf Me.OperationCd = enumOperationCd.ViewBudget Then
 
             If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
-
-                'If Me.GetReviseMaxRevNo Then
-                '    clsBG_T_BUDGET_DATA.ReviseRevNo = Me.ReviseRevNo
-                'Else
-                '    clsBG_T_BUDGET_DATA.ReviseRevNo = "1"
-                'End If
-
-                'If Me.GetPrevMTPMaxRevNo Then
-                '    clsBG_T_BUDGET_DATA.PrevMTPRevNo = Me.PrevMTPRevNo
-                'Else
-                '    clsBG_T_BUDGET_DATA.PrevMTPRevNo = "1"
-                'End If
-
                 If Me.UserPIC = "0000" Then
                     blnRtn = clsBG_T_BUDGET_DATA.Select026()
                 Else
@@ -970,19 +941,6 @@ Public Class clsBG0200BL
         Else
 
             If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
-
-                'If Me.GetReviseMaxRevNo Then
-                '    clsBG_T_BUDGET_DATA.ReviseRevNo = Me.ReviseRevNo
-                'Else
-                '    clsBG_T_BUDGET_DATA.ReviseRevNo = "1"
-                'End If
-
-                'If Me.GetPrevMTPMaxRevNo Then
-                '    clsBG_T_BUDGET_DATA.PrevMTPRevNo = Me.PrevMTPRevNo
-                'Else
-                '    clsBG_T_BUDGET_DATA.PrevMTPRevNo = "1"
-                'End If
-
                 If Me.UserPIC = "0000" Then
                     blnRtn = clsBG_T_BUDGET_DATA.Select024()
                 Else
@@ -1233,35 +1191,7 @@ Public Class clsBG0200BL
                     Throw New Exception("Can not insert budget reference!")
                 End If
 
-                'ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.ReviseBudget Then
-                '    '// Add OB (Same year)
-                '    clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
-                '    clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
-                '    clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-                '    clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-                '    clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.OriginalBudget)
-                '    clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 1)
-                '    clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
-                '    clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
-                '    clsBG_T_BUDGET_REFERENCE.CreateUserID = Me.UserId
-
-                '    '// Check data exist
-                '    If clsBG_T_BUDGET_REFERENCE.Select001() = True Then
-
-                '        If clsBG_T_BUDGET_REFERENCE.dtResult.Rows.Count = 0 Then
-                '            '// Add new record
-                '            If clsBG_T_BUDGET_REFERENCE.Insert001(conn, trans) = False Then
-                '                Throw New Exception("Can not insert budget reference!")
-                '            End If
-                '        End If
-                '    Else
-                '        Throw New Exception("Can not insert budget reference!")
-                '    End If
-
             End If
-
-            '//-- Insert Budget Reference (Added by Kate 2013/04/30) ------------(-)
-
 
             '// Commit Transaction
             trans.Commit()
@@ -1365,15 +1295,6 @@ Public Class clsBG0200BL
             Return False
         End If
 
-        ' ''// Create Connection
-        ''conn = New SqlConnection(My.Settings.ConnStr)
-        ''conn.Open()
-
-        ' ''// Begin Transaction
-        ''trans = conn.BeginTransaction()
-
-        ''Try
-
         '// Add Budget Data Header
         If Me.UserPIC = "0000" Then
             For i = 1 To Me.PicList.Rows.Count - 1 '// Skip "0000"
@@ -1430,7 +1351,6 @@ Public Class clsBG0200BL
 
 
             '//Add Budget Comment
-
             clsBG_T_BUDGET_COMMENT.BudgetYear = Me.BudgetYear
             clsBG_T_BUDGET_COMMENT.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_COMMENT.BudgetOrderNo = CStr(dr("BUDGET_ORDER_NO"))
@@ -1507,8 +1427,6 @@ Public Class clsBG0200BL
             End If
         End If
 
-        '//-- Insert Budget Reference (Added by Kate 2013/04/30) ------------(+)
-
         If CInt(Me.PeriodType) = BGConstant.enumPeriodType.OriginalBudget Then
             '// Add Estimate 2nd half(Previous year)
             clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
@@ -1535,7 +1453,6 @@ Public Class clsBG0200BL
                 'Throw New Exception("Can not insert budget reference!")
                 Return False
             End If
-
 
             '// Add MTP(Previous year)
             clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
@@ -1617,61 +1534,10 @@ Public Class clsBG0200BL
                 Return False
             End If
 
-            'ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.ReviseBudget Then
-            '    '// Add OB (Same year)
-            '    clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
-            '    clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
-            '    clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-            '    clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-            '    clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.OriginalBudget)
-            '    clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 1)
-            '    clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
-            '    clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
-            '    clsBG_T_BUDGET_REFERENCE.CreateUserID = Me.UserId
-
-            '    '// Check data exist
-            '    If clsBG_T_BUDGET_REFERENCE.Select001() = True Then
-
-            '        If clsBG_T_BUDGET_REFERENCE.dtResult.Rows.Count = 0 Then
-            '            '// Add new record
-            '            If clsBG_T_BUDGET_REFERENCE.Insert001(Conn, Trans) = False Then
-            '                'Throw New Exception("Can not insert budget reference!")
-            '                Return False
-            '            End If
-            '        End If
-            '    Else
-            '        'Throw New Exception("Can not insert budget reference!")
-            '        Return False
-            '    End If
-
         End If
 
-        '//-- Insert Budget Reference (Added by Kate 2013/04/30) ------------(-)
-
-        ' ''// Commit Transaction
-        ''trans.Commit()
-
-        ' ''// Close Connection
-        ''If conn.State <> ConnectionState.Closed Then
-        ''    conn.Close()
-        ''End If
-
+       
         Return True
-
-        ''Catch ex As Exception
-
-        ''    ' ''// Rollback Transaction
-        ''    ''trans.Rollback()
-
-        ''    ' ''// Close Connection
-        ''    ''If conn.State <> ConnectionState.Closed Then
-        ''    ''    conn.Close()
-        ''    ''End If
-
-        ''    ''MessageBox.Show("Error: " & ex.Message, My.Settings.ProgramTitle, MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-        ''    Return False
-        ''End Try
     End Function
 
     Public Function SaveBudgetData() As Boolean
@@ -2248,23 +2114,6 @@ Public Class clsBG0200BL
 
             Return blnS
         End If
-    
-        'If clsBG_T_BUDGET_ADJUST.Select006() = True AndAlso clsBG_T_BUDGET_ADJUST.dtResult.Rows.Count > 0 Then
-        '    If clsBG_T_BUDGET_ADJUST.Update003() = True Then
-
-        '        Return True
-        '    Else
-        '        Return False
-        '    End If
-
-        'Else
-        '    If clsBG_T_BUDGET_ADJUST.Insert002() = True Then
-
-        '        Return True
-        '    Else
-        '        Return False
-        '    End If
-        'End If
     End Function
 
     Public Function GetRevNoList() As Boolean
@@ -2301,7 +2150,6 @@ Public Class clsBG0200BL
             Return False
         Else
             Return True
-
         End If
     End Function
 
@@ -2765,7 +2613,6 @@ Public Class clsBG0200BL
 
             Next
 
-
             '// Commit Transaction
             trans.Commit()
 
@@ -3026,7 +2873,6 @@ Public Class clsBG0200BL
             Me.TransferList = New DataTable
 
             Return False
-
         End If
     End Function
 
@@ -3149,7 +2995,6 @@ Public Class clsBG0200BL
             Return True
         Else
             Return False
-
         End If
     End Function
 
@@ -3164,7 +3009,6 @@ Public Class clsBG0200BL
         End If
 
         Return dt
-
     End Function
 
     Private Function GetAuth1Mail(ByVal UserPic As String) As DataTable
@@ -3178,7 +3022,6 @@ Public Class clsBG0200BL
         End If
 
         Return dt
-
     End Function
 
     Private Function GetAuth2Mail(ByVal UserPic As String) As DataTable
@@ -3192,7 +3035,6 @@ Public Class clsBG0200BL
         End If
 
         Return dt
-
     End Function
 
     Private Function GetApproverMail(ByVal UserPic As String) As DataTable
@@ -3212,7 +3054,6 @@ Public Class clsBG0200BL
         End If
 
         Return dt
-
     End Function
 
     Private Function GetSubmitterMail(ByVal UserPic As String) As DataTable
@@ -3230,7 +3071,6 @@ Public Class clsBG0200BL
         End If
 
         Return dt
-
     End Function
 
     Private Function UpdateTransferCost(ByVal IncreaseFlag As Boolean, _
@@ -3275,7 +3115,6 @@ Public Class clsBG0200BL
         End If
 
         Return dt
-
     End Function
 
     ''' <summary>
@@ -3291,21 +3130,15 @@ Public Class clsBG0200BL
 
         Me.UserId = p_strUserId
 
-        '// Set Rev No
-        'If GetMaxRevNo() = False OrElse Me.RevNo = "1" Then
-        '    Return False
-        'End If
         If GetMaxRevNo() = False Then
             Return False
         End If
 
-        '// Added by Kate ------------- 2015/04/09 --------- (+)
-        '// Rev No.1 no need to update Transfer Cost.
+      
         If Me.RevNo = "1" Then
             Return False
         End If
-        '// Added by Kate ------------- 2015/04/09 --------- (-)
-
+       
         '// Get Transfer Data
         If GetTransferCost2(Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.ProjectNo) = False Then
             Return False
@@ -3325,18 +3158,6 @@ Public Class clsBG0200BL
                     ReDim dblTransValue(11)
 
                     For idx = 0 To drData.Length - 1
-
-                        ''// Update "From Order"
-                        'If arrFromOrders.Contains(CStr(dr("FROM_ORDER_NO"))) = False Then
-                        '    dtRawDat = GetRawdata(Me.BudgetYear, Me.PeriodType, "1", CStr(dr("FROM_ORDER_NO")))
-                        '    arrFromOrders.Add(CStr(dr("FROM_ORDER_NO")))
-                        '    '  intTempRev = 1
-                        'Else
-                        '    dtRawDat = GetRawdata(Me.BudgetYear, Me.PeriodType, Me.RevNo, CStr(dr("FROM_ORDER_NO")))
-                        '    '  intTempRev = CInt(Me.RevNo)
-                        'End If
-
-                        '  If dtRawDat.Rows.Count > 0 Then
                         If Me.PeriodType = CStr(enumPeriodType.ReviseBudget) Then '// Revise Budget transfer cost on Apr - Dec only.
                             For i = 3 To 11
                                 dblTransValue(i) = dblTransValue(i) - _
@@ -3354,8 +3175,6 @@ Public Class clsBG0200BL
 
                             System.Diagnostics.Debug.Print("Rev." & RevNo & "Main No." & drData(idx).Item("MAIN_BUDGET_ORDER_NO").ToString & " FromNo." & CStr(drData(idx).Item("FROM_ORDER_NO")) & "M11 : " & dblTransValue(10).ToString & " : " & drData(idx).Item("M11").ToString)
 
-                            '   UpdateTransferCost(False, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("FROM_ORDER_NO")), dblTransValue)
-
                         ElseIf Me.PeriodType = CStr(enumPeriodType.OriginalBudget) Then '// Original Budget transfer cost on all month.
                             For i = 0 To 11
                                 dblTransValue(i) = dblTransValue(i) - _
@@ -3368,55 +3187,9 @@ Public Class clsBG0200BL
                                                     (CDbl(Nz(drData(idx).Item("RRT" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))
                             Next
                         End If
-                        '   End If
-
-
-
                     Next
 
                     UpdateTransferCost(False, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("FROM_ORDER_NO")), dblTransValue, Me.ProjectNo)
-                    ''// Update "From Order"
-                    'If arrFromOrders.Contains(CStr(dr("FROM_ORDER_NO"))) = False Then
-                    '    dtRawDat = GetRawdata(Me.BudgetYear, Me.PeriodType, "1", CStr(dr("FROM_ORDER_NO")))
-                    '    arrFromOrders.Add(CStr(dr("FROM_ORDER_NO")))
-                    '    '  intTempRev = 1
-                    'Else
-                    '    dtRawDat = GetRawdata(Me.BudgetYear, Me.PeriodType, Me.RevNo, CStr(dr("FROM_ORDER_NO")))
-                    '    '  intTempRev = CInt(Me.RevNo)
-                    'End If
-
-                    'If dtRawDat.Rows.Count > 0 Then
-                    '    If Me.PeriodType = CStr(enumPeriodType.ReviseBudget) Then '// Revise Budget transfer cost on May - Dec only.
-                    '        For i = 4 To 11
-                    '            dblTransValue(i) = CDbl(Nz(dtRawDat.Rows(0).Item("M" & (i + 1)), 0)) - _
-                    '                                (CDbl(Nz(dr("M" & (i + 1)), 0))) / 100 * CDbl(dr("TRANSFER_RATE"))
-                    '        Next
-                    '        UpdateTransferCost(False, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("FROM_ORDER_NO")), dblTransValue)
-
-                    '    ElseIf Me.PeriodType = CStr(enumPeriodType.EstimateBudget) Then '// Estimate Budget transfer cost on Nov - Dec only.
-                    '        For i = 10 To 11
-
-                    '            dblTransValue(i) = CDbl(Nz(dtRawDat.Rows(0).Item("M" & (i + 1)), 0)) - _
-                    '                                                    (CDbl(Nz(dr("M" & (i + 1)), 0))) / 100 * CDbl(dr("TRANSFER_RATE"))
-
-                    '        Next
-
-                    '        System.Diagnostics.Debug.Print("Rev." & RevNo & "Main No." & dr("MAIN_BUDGET_ORDER_NO").ToString & " FromNo." & CStr(dr("FROM_ORDER_NO")) & "M11 : " & dblTransValue(10).ToString & " : " & dr("M11").ToString & " : " & dtRawDat.Rows(0).Item("M11").ToString)
-
-                    '        UpdateTransferCost(False, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("FROM_ORDER_NO")), dblTransValue)
-
-                    '    ElseIf Me.PeriodType = CStr(enumPeriodType.OriginalBudget) Then '// Original Budget transfer cost on all month.
-                    '        For i = 0 To 11
-                    '            dblTransValue(i) = CDbl(Nz(dtRawDat.Rows(0).Item("M" & (i + 1)), 0)) - _
-                    '                                (CDbl(Nz(dr("M" & (i + 1)), 0))) / 100 * CDbl(dr("TRANSFER_RATE"))
-                    '        Next
-                    '        UpdateTransferCost(False, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("FROM_ORDER_NO")), dblTransValue)
-                    '    End If
-                    'End If
-
-
-
-
                 End If
 
                 ' Update Flag
@@ -3425,49 +3198,11 @@ Public Class clsBG0200BL
                     drData(i).Item("CAL_FROM_FLG") = 1
 
                 Next
-
             End If
-
-            ''// Update "To Order"
-            'If arrToOrders.Contains(CStr(dr("TO_ORDER_NO"))) = False Then
-            '    dtRawDat = GetRawdata(Me.BudgetYear, Me.PeriodType, "1", CStr(dr("TO_ORDER_NO")))
-            '    arrToOrders.Add(CStr(dr("TO_ORDER_NO")))
-            'Else
-            '    dtRawDat = GetRawdata(Me.BudgetYear, Me.PeriodType, Me.RevNo, CStr(dr("TO_ORDER_NO")))
-            'End If
-
-            'If dtRawDat.Rows.Count > 0 Then
-            '    If Me.PeriodType = CStr(enumPeriodType.ReviseBudget) Then '// Revise Budget transfer cost on May - Dec only.
-            '        For i = 4 To 11
-            '            dblTransValue(i) = CDbl(Nz(dtRawDat.Rows(0).Item("M" & (i + 1)), 0)) + _
-            '                                (CDbl(Nz(dr("M" & (i + 1)), 0))) / 100 * CDbl(dr("TRANSFER_RATE"))
-            '        Next
-            '        UpdateTransferCost(True, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("TO_ORDER_NO")), dblTransValue)
-
-            '    ElseIf Me.PeriodType = CStr(enumPeriodType.EstimateBudget) Then '// Estimate Budget transfer cost on Nov - Dec only.
-            '        For i = 10 To 11
-            '            dblTransValue(i) = CDbl(Nz(dtRawDat.Rows(0).Item("M" & (i + 1)), 0)) + _
-            '                                (CDbl(Nz(dr("M" & (i + 1)), 0))) / 100 * CDbl(dr("TRANSFER_RATE"))
-            '        Next
-            '        UpdateTransferCost(True, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("TO_ORDER_NO")), dblTransValue)
-
-            '    Else
-            '        For i = 0 To 11
-            '            dblTransValue(i) = CDbl(Nz(dtRawDat.Rows(0).Item("M" & (i + 1)), 0)) + _
-            '                                (CDbl(Nz(dr("M" & (i + 1)), 0))) / 100 * CDbl(dr("TRANSFER_RATE"))
-            '        Next
-            '        UpdateTransferCost(True, Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.UserId, CStr(dr("TO_ORDER_NO")), dblTransValue)
-
-            '    End If
-            'End If
-
         Next
 
-
         For Each dr As DataRow In Me.TransferList.Rows
-
             If CInt(dr("CAL_TO_FLG").ToString) = 0 Then
-
                 drData = TransferList.Select("TO_ORDER_NO ='" & CStr(dr("TO_ORDER_NO")) & "'")
 
                 If drData.Length > 0 Then
@@ -3520,9 +3255,7 @@ Public Class clsBG0200BL
             End If
         Next
 
-
         Return True
-
     End Function
 
     Public Sub WriteTransLog()
@@ -3536,7 +3269,6 @@ Public Class clsBG0200BL
         clsBG_T_BUDGET_DATA_REINPUT.BudgetYear = BudgetYear
         clsBG_T_BUDGET_DATA_REINPUT.PeriodType = PeriodType
         clsBG_T_BUDGET_DATA_REINPUT.BudgetType = BudgetType
-        'clsBG_T_BUDGET_DATA_REINPUT.PersonInChargeNo = UserPIC
         clsBG_T_BUDGET_DATA_REINPUT.UserPIC = UserPIC
         clsBG_T_BUDGET_DATA_REINPUT.RevNo = RevNo
         clsBG_T_BUDGET_DATA_REINPUT.ItemStatus = Status
@@ -3556,9 +3288,7 @@ Public Class clsBG0200BL
             End If
         End If
        
-
         Return dt
-
     End Function
 
     Public Function GetBudGetDataReInputNoStatus() As DataTable
@@ -3586,11 +3316,9 @@ Public Class clsBG0200BL
             End If
         End If
 
-
         Return dt
 
     End Function
-
 #End Region
 
 End Class

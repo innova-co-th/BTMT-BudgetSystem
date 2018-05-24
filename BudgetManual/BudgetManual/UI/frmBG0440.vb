@@ -4048,46 +4048,6 @@ Public Class frmBG0440
         End If
     End Sub
 
-    'Private Sub LoadPrevRevNo()
-    '    If Me.gbPrevYear.Enabled = True AndAlso Me.cboPrevRevno.Visible = True Then
-
-    '        If Me.cboPeriodType.SelectedIndex < 0 OrElse _
-    '            Me.numPrevProjectNo.Value <= 0 OrElse _
-    '            Me.numYear.Value <= 0 Then
-
-    '            Me.cboPrevRevno.DataSource = Nothing
-    '            Exit Sub
-
-    '        End If
-
-    '        Dim strPeroidType As String = String.Empty
-    '        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) Then
-    '            strPeroidType = CStr(enumPeriodType.MTPBudget)
-    '        ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
-    '            strPeroidType = CStr(enumPeriodType.MTPBudget)
-    '        End If
-
-    '        Dim strProjectNo = Me.numPrevProjectNo.Value.ToString
-    '        If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
-
-    '            myClsBG0310BL.BudgetYear = CStr(Me.numYear.Value - 1)
-    '            myClsBG0310BL.PeriodType = strPeroidType
-    '            myClsBG0310BL.ProjectNo = strProjectNo
-    '            myClsBG0310BL.BudgetType = BGConstant.P_BUDGET_TYPE_EXPENSE
-
-    '            If myClsBG0310BL.GetRevNo() = True Then
-    '                Me.cboPrevRevno.DisplayMember = "REV_NO"
-    '                Me.cboPrevRevno.ValueMember = "REV_NO"
-    '                Me.cboPrevRevno.DataSource = myClsBG0310BL.RevNoList
-    '            Else
-    '                Me.cboPrevRevno.DataSource = Nothing
-    '            End If
-    '        Else
-    '            Me.cboPrevRevno.DataSource = Nothing
-    '        End If
-
-    '    End If
-    'End Sub
 
     Private Function fncCheckRevNo() As Boolean
         Dim blnChkResult As Boolean = True
@@ -4103,43 +4063,6 @@ Public Class frmBG0440
 
         Return blnChkResult
     End Function
-
-    'Private Function fncCheckPrevRevNo() As Boolean
-    '    Dim blnChkResult As Boolean = True
-
-    '    If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) AndAlso _
-    '       Me.gbPrevYear.Enabled = True AndAlso Me.cboPrevRevno.Visible = True Then
-
-    '        If p_intUserLevelId = enumUserLevel.SystemAdministrator Then
-
-    '            If Me.cboPrevRevno.DataSource Is Nothing OrElse _
-    '                Me.cboPrevRevno.SelectedIndex < 0 Then
-    '                blnChkResult = False
-    '            End If
-
-    '        End If
-
-    '    End If
-
-    '    Return blnChkResult
-    'End Function
-
-    'Private Sub EnablePrev()
-
-    '    Me.gbPrevYear.Enabled = True
-    '    Me.numPrevProjectNo.Enabled = True
-    '    LoadPrevRevNo()
-
-    'End Sub
-
-    'Private Sub DisablePrev()
-
-    '    Me.numPrevProjectNo.Value = 1
-    '    Me.numPrevProjectNo.Enabled = False
-    '    Me.cboPrevRevno.SelectedIndex = -1
-    '    Me.gbPrevYear.Enabled = False
-
-    'End Sub
 
 #End Region
 

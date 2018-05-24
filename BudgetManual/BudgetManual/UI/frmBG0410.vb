@@ -160,86 +160,6 @@ Public Class frmBG0410
         Return blnChkResult
     End Function
 
-    'Private Sub LoadPrevRevNo()
-
-
-    '    If Me.gbPrevYear.Enabled = True AndAlso Me.cboPrevRevno.Visible = True Then
-
-    '        If Me.cboPeriodType.SelectedIndex < 0 OrElse _
-    '            Me.numPrevProjectNo.Value <= 0 OrElse _
-    '            Me.numYear.Value <= 0 Then
-
-    '            Me.cboPrevRevno.DataSource = Nothing
-    '            Exit Sub
-
-    '        End If
-
-    '        Dim strPeroidType As String = String.Empty
-    '        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) Then
-    '            strPeroidType = CStr(enumPeriodType.MTPBudget)
-    '        ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
-    '            strPeroidType = CStr(enumPeriodType.MTPBudget)
-    '        End If
-
-    '        Dim strProjectNo = Me.numPrevProjectNo.Value.ToString
-    '        If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
-
-    '            myClsBG0310BL.BudgetYear = CStr(Me.numYear.Value - 1)
-    '            myClsBG0310BL.PeriodType = strPeroidType
-    '            myClsBG0310BL.ProjectNo = strProjectNo
-    '            myClsBG0310BL.BudgetType = BGConstant.P_BUDGET_TYPE_EXPENSE
-
-    '            If myClsBG0310BL.GetRevNo() = True Then
-    '                Me.cboPrevRevno.DisplayMember = "REV_NO"
-    '                Me.cboPrevRevno.ValueMember = "REV_NO"
-    '                Me.cboPrevRevno.DataSource = myClsBG0310BL.RevNoList
-    '            Else
-    '                Me.cboPrevRevno.DataSource = Nothing
-    '            End If
-    '        Else
-    '            Me.cboPrevRevno.DataSource = Nothing
-    '        End If
-
-    '    End If
-    'End Sub
-
-    'Private Function fncCheckPrevRevNo() As Boolean
-    '    Dim blnChkResult As Boolean = True
-
-    '    If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) AndAlso _
-    '        Me.gbPrevYear.Enabled = True AndAlso Me.cboPrevRevno.Visible = True Then
-
-    '        If p_intUserLevelId = enumUserLevel.SystemAdministrator Then
-
-    '            If Me.cboPrevRevno.DataSource Is Nothing OrElse _
-    '                Me.cboPrevRevno.SelectedIndex < 0 Then
-    '                blnChkResult = False
-    '            End If
-
-    '        End If
-
-    '    End If
-
-    '    Return blnChkResult
-    'End Function
-
-    'Private Sub EnablePrev()
-
-    '    Me.gbPrevYear.Enabled = True
-    '    Me.numPrevProjectNo.Enabled = True
-    '    LoadPrevRevNo()
-
-    'End Sub
-
-    'Private Sub DisablePrev()
-
-    '    Me.numPrevProjectNo.Value = 1
-    '    Me.numPrevProjectNo.Enabled = False
-    '    Me.cboPrevRevno.SelectedIndex = -1
-    '    Me.gbPrevYear.Enabled = False
-
-    'End Sub
-
 #End Region
 
 #Region "Control Event"
@@ -375,46 +295,6 @@ Public Class frmBG0410
                 Exit Sub
             End If
 
-            'If fncCheckPrevRevNo() = False Then
-            '    MessageBox.Show("No previous budget data found, please try it again.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '    Exit Sub
-            'End If
-
-            'Dim document As New Printing.PrintDocument ' This is the document to print
-            'Dim pageDialog2 As New PageSetupDialog ' This Dialog can set the paper size or kind
-            'Dim printDialog1 As New PrintDialog ' This is the dialog to setting the printer options
-            'Dim psize As Printing.PaperSize = Nothing
-
-            '' The parameter of Item method is any kind of paper size avaliable on the printer
-
-            'For i = 0 To document.PrinterSettings.PaperSizes.Count - 1
-
-            '    If document.PrinterSettings.PaperSizes.Item(i).Kind = PaperKind.A4 Then
-
-            '        psize = document.PrinterSettings.PaperSizes.Item(i)
-
-            '        Exit For
-
-            '    End If
-
-            'Next
-
-            'If psize Is Nothing Then
-            '    psize = document.PrinterSettings.PaperSizes.Item(0)
-            'End If
-
-            '' psize = document.PrinterSettings.PaperSizes.Item(6)
-
-            '' This line set the Page size of the document
-            'document.DefaultPageSettings.PaperSize = psize
-            'document.DefaultPageSettings.Landscape = True
-
-            '' This is for setting the page size on the page dialog
-            'pageDialog2.Document = document
-            'pageDialog2.PageSettings.PaperSize = psize
-            'pageDialog2.PageSettings.Landscape = True
-            '' This is for setting the page size on the printDialog
-            'printDialog1.Document = document
             PrintDialog1.AllowSomePages = True
             '     printDialog1.ShowDialog()
 
@@ -531,24 +411,6 @@ Public Class frmBG0410
 
     End Sub
 
-    'Private Sub pd_QueryPageSettings(ByVal sender As Object, ByVal ev As QueryPageSettingsEventArgs)
-
-    '    For i = 0 To ev.PageSettings.PrinterSettings.PaperSizes.Count - 1
-
-    '        If ev.PageSettings.PrinterSettings.PaperSizes.Item(i).Kind = PaperKind.A3 Then
-
-    '            ev.PageSettings.PaperSize = ev.PageSettings.PrinterSettings.PaperSizes.Item(i)
-
-    '            Exit For
-
-    '        End If
-
-    '    Next
-
-    '    ev.PageSettings.Landscape = True
-
-    'End Sub
-
     Private Sub cmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClose.Click
         Me.Close()
     End Sub
@@ -560,11 +422,6 @@ Public Class frmBG0410
             MessageBox.Show("No budget data found, please try it again.", "RPT001", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Exit Sub
         End If
-
-        'If fncCheckPrevRevNo() = False Then
-        '    MessageBox.Show("No previous budget data found, please try it again.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-        '    Exit Sub
-        'End If
 
         Me.Cursor = Cursors.WaitCursor
 
@@ -1063,51 +920,6 @@ Public Class frmBG0410
         dRow("Column_Title") = "Person in Charge"
         dtColumns.Rows.Add(dRow)
 
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "ORIGINAL_FIRST_HALF"
-        'dRow("Column_Title") = "Original 1st Half'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "M1"
-        'dRow("Column_Title") = "Jan'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "M2"
-        'dRow("Column_Title") = "Feb'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "M3"
-        'dRow("Column_Title") = "Mar'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "M4"
-        'dRow("Column_Title") = "Apr'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "M5"
-        'dRow("Column_Title") = "May'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "M6"
-        'dRow("Column_Title") = "Jun'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "ESTIMATE_FIRST_HALF"
-        'dRow("Column_Title") = "Estimate 1st Half'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "DIFF_FIRST_HALF"
-        'dRow("Column_Title") = "Diff 1st Half'" & strHalfYear
-        'dtColumns.Rows.Add(dRow)
-
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "ORIGINAL_SECOND_HALF"
         dRow("Column_Title") = "Original 2nd Half'" & strHalfYear
@@ -1162,31 +974,6 @@ Public Class frmBG0410
         dRow("Column_Name") = "DIFF_TOTAL_YEAR"
         dRow("Column_Title") = "Diff Year'" & strYear
         dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "RRT1"
-        'dRow("Column_Title") = "Y" & CStr(intYear + 1)
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "RRT2"
-        'dRow("Column_Title") = "Y" & CStr(intYear + 2)
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "RRT3"
-        'dRow("Column_Title") = "Y" & CStr(intYear + 3)
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "RRT4"
-        'dRow("Column_Title") = "Y" & CStr(intYear + 4)
-        'dtColumns.Rows.Add(dRow)
-
-        'dRow = dtColumns.NewRow
-        'dRow("Column_Name") = "RRT5"
-        'dRow("Column_Title") = "Y" & CStr(intYear + 5)
-        'dtColumns.Rows.Add(dRow)
 
         Return True
 
@@ -1389,15 +1176,6 @@ Public Class frmBG0410
                             row(col.ColumnName) = "0.00"
                         End If
 
-                        'If CDbl(row(col.ColumnName).ToString) = 0 Then
-                        '    xSt.Cells(rowIndex + rowStartIndex, colIndex + 1) = "-"
-                        '    xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex + 1), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).HorizontalAlignment = Excel.XlHAlign.xlHAlignRight
-                        'Else
-                        '    xSt.Cells(rowIndex + rowStartIndex, colIndex + 1) = row(col.ColumnName)
-                        '    xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex + 1), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).NumberFormat = "#,##0.00"
-                        'End If
-
-                        '//Add by Max 01/10/2012
                         '//Set Style Value < 0 please fill color "Red"
                         If CDec(row(col.ColumnName)) < 0 Then
                             xSt.Range(xSt.Cells(rowIndex + rowStartIndex, colIndex + 1), xSt.Cells(rowIndex + rowStartIndex, colIndex + 1)).Style = style
@@ -1490,10 +1268,6 @@ Public Class frmBG0410
 
                 xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
                 xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).WrapText = True
-
-                'If chkShowMTP.Checked = True Then
-                '    xSt.Range(xSt.Cells(2, 25), xSt.Cells(rowMax, 29)).Columns.ColumnWidth = 12
-                'End If
 
             ElseIf strPeriod = "MTP" Then
 
@@ -1687,22 +1461,11 @@ Public Class frmBG0410
 
         End If
 
-        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) OrElse _
-        '    CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
-        '    EnablePrev()
-        'Else
-        '    DisablePrev()
-        'End If
-
         LoadRevNo()
-
     End Sub
 
     Private Sub numYear_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numYear.ValueChanged
-
         LoadRevNo()
-        'LoadPrevRevNo()
-
     End Sub
 
     Private Sub numProjectNo_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numProjectNo.ValueChanged
@@ -1713,7 +1476,7 @@ Public Class frmBG0410
 
 
     Private Sub numPrevProjectNo_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numPrevProjectNo.ValueChanged
-        'LoadPrevRevNo()
+
     End Sub
 
 #End Region

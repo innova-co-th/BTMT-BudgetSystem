@@ -41,9 +41,6 @@ Public Class frmBG0200
     Private mydtBG4View As DataTable = Nothing
 
     Private blnReInputByOrder As Boolean = False
-
-
-
 #End Region
 
 #Region "Property"
@@ -115,9 +112,7 @@ Public Class frmBG0200
 #Region "Function"
 
     Private Function GetBudgetYear() As String
-
         Return Me.BudgetKey.Substring(0, 4)
-
     End Function
 
     Private Function GetPeriodType() As String
@@ -131,19 +126,16 @@ Public Class frmBG0200
         End If
 
         Return strPeriod
-
     End Function
 
     Private Function GetBudgetType() As String
 
         Return Me.BudgetKey.Substring(6, 1)
-
     End Function
 
     Private Function GetProjectNo() As String
 
         Return Me.BudgetKey.Substring(7, Me.BudgetKey.Length - 7)
-
     End Function
 
     Private Function GetMtpProjectNo() As String
@@ -153,7 +145,6 @@ Public Class frmBG0200
         strMtpProjectNo = Me.numMtpProjectNo.Value.ToString()
 
         Return strMtpProjectNo
-
     End Function
 
     Private Function GetMtpRevNo() As String
@@ -166,7 +157,6 @@ Public Class frmBG0200
         End If
 
         Return strMtpRevNo
-
     End Function
 
     Private Sub ShowBudgetData()
@@ -199,8 +189,6 @@ Public Class frmBG0200
 
             '// Remember datagrid for check MTP 
             If Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) Then
-                '//-- Begin Edit by S.Watcharapong 2011-05-27
-                ''m_dtCheckMTP = CType(grvBudget3.DataSource, DataTable).Copy
                 m_dtCheckMTP = CType(grvBudget3.DataSource, DataTable).DefaultView.Table.Copy
                 '//-- End Edit 2011-05-27
             End If
@@ -255,21 +243,13 @@ Public Class frmBG0200
                 HighlightTransferCost()
             End If
 
-            '// Highlight Over MTP value
-            'If Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) And _
-            'Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-            '    HighlightMTPValueAll()
-            'End If
-
             If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) And _
                 Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
                 HighlightMTPValueAllNew()
             End If
 
             HighlightWorkingBGAndComment()
-
         End If
-
 
         myDataLoadingFlg = False
         myForceCloseFlg = False
@@ -317,9 +297,6 @@ Public Class frmBG0200
             pnlSummary.Visible = True
             pnlSummaryMTP.Visible = False
 
-            'fraWBMTP.Visible = False
-            'pnlMTPInvestment.Visible = False
-
             If grvBudget1.Top <> GRIDVIEW_TOP2 Then
                 grvBudget1.Top = GRIDVIEW_TOP2
             End If
@@ -334,9 +311,6 @@ Public Class frmBG0200
             pnlSummary.Visible = True
             pnlSummaryMTP.Visible = False
 
-            'fraWBMTP.Visible = False
-            'pnlMTPInvestment.Visible = False
-
             If grvBudget2.Top <> GRIDVIEW_TOP2 Then
                 grvBudget2.Top = GRIDVIEW_TOP2
             End If
@@ -350,23 +324,11 @@ Public Class frmBG0200
             pnlSummary.Visible = True
             pnlSummaryMTP.Visible = False
 
-            '   fraMTP.Visible = False
-
-            '// Comment by Ko
-            'If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-            '    fraMTP.Visible = True
-            '    If grvBudget3.Top <> GRIDVIEW_TOP1 Then
-            '        grvBudget3.Top = GRIDVIEW_TOP1
-            '        grvBudget3.Height = grvBudget3.Height - (GRIDVIEW_TOP1 - GRIDVIEW_TOP2)
-            '    End If
-            'Else
             fraMTP.Visible = False
-            'fraWBMTP.Visible = False
-            'pnlMTPInvestment.Visible = False
+
             If grvBudget3.Top <> GRIDVIEW_TOP2 Then
                 grvBudget3.Top = GRIDVIEW_TOP2
             End If
-            '  End If
 
         ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
             grvBudget1.Visible = False
@@ -379,9 +341,7 @@ Public Class frmBG0200
 
             If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
                 fraMTP.Visible = True
-                'fraWBMTP.Visible = True
-                'pnlMTPInvestment.Visible = True
-                'pnlWKH.Visible = False
+
                 If grvBudget4.Top <> GRIDVIEW_TOP1 Then
                     grvBudget4.Top = GRIDVIEW_TOP1
                     grvBudget4.Height = grvBudget4.Height - (GRIDVIEW_TOP1 - GRIDVIEW_TOP2)
@@ -395,8 +355,7 @@ Public Class frmBG0200
                 End If
             Else
                 fraMTP.Visible = False
-                'fraWBMTP.Visible = False
-                'pnlMTPInvestment.Visible = False
+
                 If grvBudget4.Top <> GRIDVIEW_TOP2 Then
                     grvBudget4.Top = GRIDVIEW_TOP2
                 End If
@@ -434,8 +393,6 @@ Public Class frmBG0200
                 grvBudget4.AutoGenerateColumns = False
                 grvBudget4.DataSource = dt
             End If
-
-
         End If
     End Sub
 
@@ -521,7 +478,6 @@ Public Class frmBG0200
             If blnInputHeader = True Then
                 blnResult = myClsBG0200BL.GetBudgetData()
             Else
-                'blnResult = myClsBG0200BL.GetBudgetData()
                 '---change to reinputbyorder
                 blnResult = myClsBG0200BL.GetBudgetData()
                 If Not myClsBG0200BL.BudgetList Is Nothing AndAlso myClsBG0200BL.BudgetList.Rows.Count > 0 Then
@@ -586,7 +542,6 @@ Public Class frmBG0200
                 If blnInputHeader = True Then
                     blnResult = myClsBG0200BL.GetBudgetData()
                 Else
-                    'blnResult = myClsBG0200BL.GetBudgetData()
                     '---change to reinputbyorder
                     blnResult = myClsBG0200BL.GetBudgetData()
                     If Not myClsBG0200BL.BudgetList Is Nothing AndAlso myClsBG0200BL.BudgetList.Rows.Count > 0 Then
@@ -594,17 +549,7 @@ Public Class frmBG0200
                         dtClone = DtGetFromHeader.Clone
                         Dim drSel() As DataRow
                         Dim drC As DataRow
-                        '--Get data FROM BG_T_BUDGET_DATA_REINPUT
 
-                        'myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
-                        'myClsBG0200BL.PeriodType = Me.GetPeriodType()
-                        'myClsBG0200BL.BudgetType = Me.GetBudgetType()
-                        'myClsBG0200BL.UserPIC = CStr(cboPIC.SelectedValue)
-                        'myClsBG0200BL.RevNo = Me.CurrRevNo
-                        'myClsBG0200BL.Status = CStr(enumBudgetStatus.Submit)
-                        'myClsBG0200BL.ProjectNo = Me.GetProjectNo()
-
-                        'dtDataReInput = myClsBG0200BL.GetBudGetDataReInput
                         If Not dtDataReInput Is Nothing AndAlso dtDataReInput.Rows.Count > 0 Then
                             For i As Integer = 0 To dtDataReInput.Rows.Count - 1
                                 drSel = Nothing
@@ -803,19 +748,6 @@ Public Class frmBG0200
                 dtGrid.Columns.Add(dc)
                 '//-- End Add 2011-05-11
 
-                '// Comment by Ko 2012-04-12
-                'dc = New DataColumn("CALC1", GetType(String))
-                'dtGrid.Columns.Add(dc)
-                'dc = New DataColumn("CALC2", GetType(String))
-                'dtGrid.Columns.Add(dc)
-                'dc = New DataColumn("CALC3", GetType(String))
-                'dtGrid.Columns.Add(dc)
-                'dc = New DataColumn("CALC4", GetType(String))
-                'dtGrid.Columns.Add(dc)
-                'dc = New DataColumn("CALC5", GetType(String))
-                'dtGrid.Columns.Add(dc)
-                '// Comment by Ko 2012-04-12
-
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
 
                 dc = New DataColumn("RevYear", GetType(Double))
@@ -939,7 +871,6 @@ Public Class frmBG0200
 
                     '//-- Edit 2012-09-24 by Hussadin
                     If CDec(Nz(drDat("IMP2"), 0)) <> 0 Then
-                        '//dr("IMP2") = CDbl(drDat("IMP2")).ToString("#,##0.00")
                         dr("IMP2") = CDbl(drDat("IMP2")).ToString("#,##0.0000")
                     End If
                     '//-- End Edit 2012-09-24 by Hussadin
@@ -1015,30 +946,20 @@ Public Class frmBG0200
                     If CDec(Nz(drDat("PrevRRT5"), 0)) <> 0 Then
                         dr("PrevRRT5") = CDbl(drDat("PrevRRT5")).ToString("#,##0.00")
                     End If
-
-                    'If CDec(Nz(drDat("DiffYear"), 0)) <> 0 Then
-                    '    dr("DiffYear") = CDbl(drDat("DiffYear")).ToString("#,##0.00")
-                    'End If
-
                 End If
 
-                ''If CDec(Nz(drDat("RRT1"), 0)) <> 0 Then
                 If Not IsDBNull(drDat("RRT1")) Then
                     dr("RRT1") = CDbl(drDat("RRT1")).ToString("#,##0.00")
                 End If
-                ''If CDec(Nz(drDat("RRT2"), 0)) <> 0 Then
                 If Not IsDBNull(drDat("RRT2")) Then
                     dr("RRT2") = CDbl(drDat("RRT2")).ToString("#,##0.00")
                 End If
-                ''If CDec(Nz(drDat("RRT3"), 0)) <> 0 Then
                 If Not IsDBNull(drDat("RRT3")) Then
                     dr("RRT3") = CDbl(drDat("RRT3")).ToString("#,##0.00")
                 End If
-                ''If CDec(Nz(drDat("RRT4"), 0)) <> 0 Then
                 If Not IsDBNull(drDat("RRT4")) Then
                     dr("RRT4") = CDbl(drDat("RRT4")).ToString("#,##0.00")
                 End If
-                ''If CDec(Nz(drDat("RRT5"), 0)) <> 0 Then
                 If Not IsDBNull(drDat("RRT5")) Then
                     dr("RRT5") = CDbl(drDat("RRT5")).ToString("#,##0.00")
                 End If
@@ -1050,28 +971,6 @@ Public Class frmBG0200
 
             '// Load data into datagrid
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then   '// Original Budget
-                '// Set data binding
-                'If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                '    ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
-                '    grvBudget1.Columns("g1colex1").DataPropertyName = "Total2H"
-                '    grvBudget1.Columns("g1col15").DataPropertyName = "M7"
-                '    grvBudget1.Columns("g1col15").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 1
-                '    '//-- Add 2011-05-11 by S.Watcharapong
-                '    grvBudget1.Columns("g1col16").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 2
-                '    '//-- Add 2012-11-01 by Hussadin
-                '    grvBudget1.Columns("g1col25").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 3
-                '    grvBudget1.Columns("g1col26").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 4
-                '    '//End Add 2012-11-01
-                '    grvBudget1.Columns("g1col17").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 5
-                '    grvBudget1.Columns("g1col18").DisplayIndex = grvBudget1.Columns("g1col14").DisplayIndex + 6
-                '    '//End Add 2011-05-11
-                'Else
-                '    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
-                '    ''grvBudget1.Columns("g1col15").DataPropertyName = ""
-                '    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
-                '    grvBudget1.Columns("g1col15").DefaultCellStyle.BackColor = grvBudget1.DefaultCellStyle.BackColor
-                '    grvBudget1.Columns("g1col15").ReadOnly = True
-                'End If
 
                 '// Bind Datasource
                 grvBudget1.AutoGenerateColumns = False
@@ -1089,37 +988,11 @@ Public Class frmBG0200
                         grvBudget1.Columns("g1colex" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                     Next
                     grvBudget1.Columns("g1col17").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
-                    '//-- Add 2012-11-01 by Hussadin                    
                     grvBudget1.Columns("g1col18").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
-                    ''grvBudget1.Columns("g1col25").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                     grvBudget1.Columns("g1col25").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                     grvBudget1.Columns("g1col25").HeaderText = grvBudget1.Columns("g1col25").HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
                     grvBudget1.Columns("g1col26").HeaderText += (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
-                    '//-- End Add 2012-11-01
                 End If
-
-                ''Anat
-                'If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                '    'For i = 1 To 6
-                '    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = False
-                '    'Next
-                '    ''grvBudget1.Columns("g1colex1").DataPropertyName = ""
-                '    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
-                '    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
-                'Else
-                '    'For i = 1 To 6
-                '    '    grvBudget1.Columns("g1colex" & CStr(i)).Visible = True
-                '    'Next
-
-                '    ''grvBudget1.Columns("g1col15").DataPropertyName = ""
-                '    grvBudget1.Columns("g1colex1").DataPropertyName = "M7"
-                '    grvBudget1.Columns("g1col15").DataPropertyName = "Total2H"
-                'End If
-
-                ''// Hide MTP Budget
-                'For i = 19 To 23
-                '    grvBudget1.Columns("g1col" & CStr(i)).Visible = False
-                'Next
 
                 '// Show/Hide WK Column
                 If Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput Then
@@ -1170,34 +1043,11 @@ Public Class frmBG0200
                     For i = 6 To 25
                         grvBudget3.Columns("g3col" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                     Next
-                    'If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                    '    For i = 26 To 30
-                    '        grvBudget3.Columns("g3col" & CStr(i)).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i - 25)).ToString("00")
-                    '    Next
-                    'End If
                 End If
 
-                '// COmment by Ko
-                'If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
-                '    '// Show MTP Budget
-                '    For i = 26 To 30
-                '        grvBudget3.Columns("g3col" & CStr(i)).Visible = True
-                '        grvBudget3.Columns("g3ex0" & CStr(i - 25)).Visible = True
-                '    Next
-                '    '// Show RRT Header
-                '    txtRRT0.Text = myClsBG0200BL.RRT(0)
-                '    txtRRT1.Text = myClsBG0200BL.RRT(1)
-                '    txtRRT2.Text = myClsBG0200BL.RRT(2)
-                '    txtRRT3.Text = myClsBG0200BL.RRT(3)
-                '    txtRRT4.Text = myClsBG0200BL.RRT(4)
-                '    txtRRT5.Text = myClsBG0200BL.RRT(5)
-                'Else
-                '    '// Hide MTP Budget
                 For i = 26 To 30
                     grvBudget3.Columns("g3col" & CStr(i)).Visible = False
-                    '  grvBudget3.Columns("g3ex0" & CStr(i - 25)).Visible = False
                 Next
-                'End If
 
                 '// Show/Hide WK Column
                 If Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput Then
@@ -1232,7 +1082,6 @@ Public Class frmBG0200
                             '// Current Year
                             grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
                             grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Replace("@1", CInt(Mid(Me.BudgetKey, 3, 2)).ToString("00"))
-
                         Next
 
                         grvBudget4.Columns("g4colDiff1").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (1)).ToString("00")
@@ -1243,8 +1092,6 @@ Public Class frmBG0200
                             grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
                             grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
                         Next
-
-
                     End If
                 End If
 
@@ -1380,7 +1227,6 @@ Public Class frmBG0200
         Debug.Print(Now.ToString() & ": End ShowDatagrid")
 
         ShowDatagrid = True
-
     End Function
 
     Private Sub SetFilterCombo()
@@ -1521,7 +1367,6 @@ Public Class frmBG0200
                     drNew.ItemArray = dr.ItemArray
                     mydtBG4.Rows.Add(drNew)
                 Next
-                'mydtBG4 = CType(grvBudget4.DataSource, DataTable).Copy
                 mydtBG4View = CType(grvBudget4.DataSource, DataTable).DefaultView.Table.Copy
             End If
 
@@ -1532,7 +1377,6 @@ Public Class frmBG0200
 
         End If
 
-        ''//-- Add by Max 26/09/2012
         For Each row As DataRow In dtTemp.Rows
             For intcolumn As Integer = 0 To row.ItemArray.Length - 1
                 If row(intcolumn).ToString().Equals("0.00") Then
@@ -1540,7 +1384,6 @@ Public Class frmBG0200
                 End If
             Next
         Next
-        ''//-- End Add by Max 26/09/2012
 
         Dim dvTemp As DataView = New DataView(dtTemp)
         Dim strFilterAccount As String = ""
@@ -1560,12 +1403,6 @@ Public Class frmBG0200
 
             If cboAccount.SelectedIndex = 0 And cboCostType.SelectedIndex = 0 And _
             cboCost.SelectedIndex = 0 And cboDept.SelectedIndex = 0 Then
-
-                'For i = 0 To grvTemp.Rows.Count - 1
-                '    grvTemp.Rows(i).Visible = True
-                '    intCounter += 1
-                'Next
-
                 dvTemp.RowFilter = Nothing
                 grvTemp.DataSource = dvTemp.ToTable
 
@@ -1626,71 +1463,6 @@ Public Class frmBG0200
 
                 Dim returnvalue As Object
 
-                'lblSum1.Text = "Actual 1st Half'" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                'lblSum2.Text = "Estimate 2nd Half'" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                'lblSum3.Text = "Total 1st Half'" & Me.GetBudgetYear()
-                'lblSum4.Text = "Total 2nd Half'" & Me.GetBudgetYear()
-                'lblSum5.Text = "Total Year'" & Me.GetBudgetYear()
-                'lblSum6.Text = "Total Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                'lblSum7.Text = "Diff"
-                'lblSum8.Text = ""
-
-                'returnvalue = dtTemp1.Compute("sum(IMP1)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum1Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum1Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(IMP2)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum2Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum2Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Total1H)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum3Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum3Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Total2H)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum4Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum4Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(TotalY1)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum5Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum5Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(TotalY2)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum6Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum6Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Diff)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum7Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum7Val.Text = "0.00"
-                'End If
-
                 lblSum1.Text = "Total 1st Half'" & Me.GetBudgetYear()
                 lblSum2.Text = "Actual 1st Half'" & CStr(CInt(Me.GetBudgetYear()) - 1)
                 lblSum3.Text = "Total 2nd Half'" & Me.GetBudgetYear()
@@ -1698,7 +1470,6 @@ Public Class frmBG0200
                 lblSum5.Text = "Diff 1st Half"
                 lblSum6.Text = "Diff 2st Half"
                 lblSum7.Text = "Total Year'" & Me.GetBudgetYear()
-                'lblSum8.Text = "Total Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
                 lblSum9.Text = "MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00") & "Y" & Me.GetBudgetYear()
                 lblSum10.Text = "Diff vs MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
                 lblSum11.Text = "Total Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
@@ -1707,7 +1478,6 @@ Public Class frmBG0200
                 lblSum1Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                 lblSum3Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                 lblSum7Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
-                'lblSum9Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                 lblSum8.Visible = False
                 lblSum8Val.Visible = False
 
@@ -1762,15 +1532,6 @@ Public Class frmBG0200
                 Else
                     lblSum7Val.Text = "0.00"
                 End If
-
-                'returnvalue = dtTemp1.Compute("sum(TotalY2)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum8Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum8Val.Text = "0.00"
-                'End If
-
                 returnvalue = dtTemp1.Compute("sum(MTP_RRT1)", strFilter)
 
                 If returnvalue.ToString <> "" Then
@@ -1865,79 +1626,6 @@ Public Class frmBG0200
 
                 Dim returnvalue As Object
 
-                'lblSum1.Text = "Original 1st Half'" & Me.GetBudgetYear()
-                'lblSum2.Text = "Estimate 1st Half'" & Me.GetBudgetYear()
-                'lblSum3.Text = "Diff 1st Half'" & Me.GetBudgetYear()
-                'lblSum4.Text = "Original 2nd Half'" & Me.GetBudgetYear()
-                'lblSum5.Text = "Revise 2nd Half'" & Me.GetBudgetYear()
-                'lblSum6.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
-                'lblSum7.Text = "Revise Year'" & Me.GetBudgetYear()
-                'lblSum8.Text = "Diff Year'" & Me.GetBudgetYear()
-
-                'returnvalue = dtTemp1.Compute("sum(IMP1)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum1Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum1Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Est1H)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum2Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum2Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Diff1H)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum3Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum3Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(IMP2)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum4Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum4Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Rev2H)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum5Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum5Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(Diff2H)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum6Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum6Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(RevYear)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum7Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum7Val.Text = "0.00"
-                'End If
-
-                'returnvalue = dtTemp1.Compute("sum(DiffYear)", strFilter)
-
-                'If returnvalue.ToString <> "" Then
-                '    lblSum8Val.Text = CDbl(returnvalue).ToString("#,##0.00")
-                'Else
-                '    lblSum8Val.Text = "0.00"
-                'End If
-
                 lblSum1.Text = "Estimate 1st Half'" & Me.GetBudgetYear()
                 lblSum2.Text = "Original 1st Half'" & Me.GetBudgetYear()
                 lblSum3.Text = "Revise 2nd Half'" & Me.GetBudgetYear()
@@ -2026,15 +1714,6 @@ Public Class frmBG0200
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
 
                 Dim returnvalue As Object
-
-                'lblSum1.Text = "Revise Year'" & Me.GetBudgetYear()
-                'lblSum2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1) & " Year'" & Me.GetBudgetYear()
-                'lblSum3.Text = "Diff Year'" & Me.GetBudgetYear()
-                'lblSum4.Text = ""
-                'lblSum5.Text = ""
-                'lblSum6.Text = ""
-                'lblSum7.Text = ""
-                'lblSum8.Text = ""
 
                 lblSumMTP1.Text = "MTP" & Me.GetBudgetYear()
                 lblSumMTP2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
@@ -2152,10 +1831,7 @@ Public Class frmBG0200
 
             End If
 
-            '// Show Record Num
-            '  lblRecNum.Text = intCounter.ToString("#,##0") & " Record(s)"
             lblRecNum.Text = dvTemp.Count.ToString("#,##0") & " Record(s)"
-
         End If
 
         Me.Cursor = Cursors.Default
@@ -2534,11 +2210,6 @@ Public Class frmBG0200
 
         End If
 
-        '// Show Record Num
-        '  lblRecNum.Text = intCounter.ToString("#,##0") & " Record(s)"
-        '   lblRecNum.Text = dvTemp.Count.ToString("#,##0") & " Record(s)"
-
-
         Me.Cursor = Cursors.Default
 
         Debug.Print(Now.ToString() & ": End CalSum")
@@ -2798,11 +2469,7 @@ Public Class frmBG0200
             Debug.Print(Now.ToString() & ": Begin ShowUploadData " & myClsBG0200BL.UpDataList.Rows.Count & " record(s)")
 
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then '// Original Budget
-
-                '//-- Begin Edit by S.Watcharapong 2011-05-27
-                ''dtGridData = CType(grvBudget1.DataSource, DataTable).Copy
                 dtGridData = CType(grvBudget1.DataSource, DataTable).DefaultView.Table.Copy
-                '//-- End Edit 2011-05-27
 
                 If dtGridData IsNot Nothing Then
                     For i = 0 To dtGridData.Rows.Count - 1
@@ -2822,18 +2489,6 @@ Public Class frmBG0200
 
                             blnGridChanged = True
                         End If
-
-                        ''// Revise 2nd Half
-                        'If drBudgetData.Count > 0 Then
-                        '    If CDbl(Nz(drBudgetData(0).Item("H2"), 0)) = 0 Then
-                        '        dtGridData.Rows(i).Item("IMP2") = DBNull.Value
-                        '    Else
-                        '        dtGridData.Rows(i).Item("IMP2") = drBudgetData(0).Item("H2")
-                        '    End If
-
-                        '    blnGridChanged = True
-                        'End If
-
                     Next
                 End If
 
@@ -2844,10 +2499,7 @@ Public Class frmBG0200
 
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.EstimateBudget) Then '// Estimate Budget
 
-                '//-- Begin Edit by S.Watcharapong 2011-05-27
-                ''dtGridData = CType(grvBudget2.DataSource, DataTable).Copy
                 dtGridData = CType(grvBudget2.DataSource, DataTable).DefaultView.Table.Copy
-                '//-- End Edit 2011-05-27
 
                 If dtGridData IsNot Nothing Then
                     For i = 0 To dtGridData.Rows.Count - 1
@@ -2921,11 +2573,7 @@ Public Class frmBG0200
                 End If
 
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) Then    '// Revise Budget
-
-                '//-- Begin Edit by S.Watcharapong 2011-05-27
-                ''dtGridData = CType(grvBudget3.DataSource, DataTable).Copy
                 dtGridData = CType(grvBudget3.DataSource, DataTable).DefaultView.Table.Copy
-                '//-- End Edit 2011-05-27
 
                 If dtGridData IsNot Nothing Then
                     For i = 0 To dtGridData.Rows.Count - 1
@@ -2967,13 +2615,6 @@ Public Class frmBG0200
                             For j = 10 To 12
                                 If IsDBNull(drBudgetList(0).Item("M" & CStr(j - 6))) Then
 
-                                    '// Bug fixed by Kate 2015/06/24
-                                    'If CDbl(Nz(drBudgetData(0).Item("M" & CStr(j - 6)), 0)) = 0 Then
-                                    '    dtGridData.Rows(i).Item("M" & CStr(j - 6)) = DBNull.Value
-                                    'Else
-                                    '    dtGridData.Rows(i).Item("M" & CStr(j - 6)) = drBudgetData(0).Item("M" & CStr(j - 6))
-                                    'End If
-
                                     If CDbl(Nz(drBudgetList(0).Item("M" & CStr(j - 6)), 0)) = 0 Then
                                         dtGridData.Rows(i).Item("M" & CStr(j - 6)) = DBNull.Value
                                     Else
@@ -2996,20 +2637,12 @@ Public Class frmBG0200
                             blnGridChanged = True
                         End If
 
-                        '//-- Begin Add 2011-05-09 By S.Watcharapong
                         '// Revise Jul - Dec
                         If drBudgetData.Count > 0 Then
                             drBudgetList = myClsBG0200BL.BudgetList.Select("BUDGET_ORDER_NO = '" & strOrderNo & "'")
 
                             For j = 16 To 21
                                 If IsDBNull(drBudgetList(0).Item("M" & CStr(j - 9))) Then
-
-                                    '// Bug fixed by Kate 2015/06/24
-                                    'If CDbl(Nz(drBudgetData(0).Item("M" & CStr(j - 9)), 0)) = 0 Then
-                                    '    dtGridData.Rows(i).Item("M" & CStr(j - 9)) = DBNull.Value
-                                    'Else
-                                    '    dtGridData.Rows(i).Item("M" & CStr(j - 9)) = drBudgetData(0).Item("M" & CStr(j - 9))
-                                    'End If
 
                                     If CDbl(Nz(drBudgetList(0).Item("M" & CStr(j - 9)), 0)) = 0 Then
                                         dtGridData.Rows(i).Item("M" & CStr(j - 9)) = DBNull.Value
@@ -3021,8 +2654,6 @@ Public Class frmBG0200
                                 End If
                             Next
                         End If
-                        '//-- End Add 2011-05-09
-
                     Next
                 End If
 
@@ -3254,12 +2885,6 @@ Public Class frmBG0200
                 grvBudget4.Item(intColumnIndex, intRowIndex).Value = CDbl(objVal).ToString("#,##0.00")
             End If
             mySetGridValue = False
-
-            ''// Calc MTP Budget
-            'If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-            '    CalcMTPBudgetNew(intRowIndex)
-            'End If
-
         End If
     End Sub
 
@@ -3270,69 +2895,7 @@ Public Class frmBG0200
 
         Me.Cursor = Cursors.WaitCursor
 
-        '//-- Edit 2011-05-11 by S.Watcharapong
-        ' ''// Auto Calculation
-        ''For intRowIndex As Integer = 0 To grvBudget1.RowCount - 1
-
-        ''    '// Calc Total 1st Half
-        ''    dblTotal = CDbl(Nz(grvBudget1.Item("g1col8", intRowIndex).Value, 0)) + _
-        ''               CDbl(Nz(grvBudget1.Item("g1col9", intRowIndex).Value, 0)) + _
-        ''               CDbl(Nz(grvBudget1.Item("g1col10", intRowIndex).Value, 0)) + _
-        ''               CDbl(Nz(grvBudget1.Item("g1col11", intRowIndex).Value, 0)) + _
-        ''               CDbl(Nz(grvBudget1.Item("g1col12", intRowIndex).Value, 0)) + _
-        ''               CDbl(Nz(grvBudget1.Item("g1col13", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget1.Item("g1col14", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget1.Item("g1col14", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Total 2nd Half (Investment)
-        ''    If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_ASSET Then
-        ''        dblTotal = CDbl(Nz(grvBudget1.Item("g1colex1", intRowIndex).Value, 0)) + _
-        ''                    CDbl(Nz(grvBudget1.Item("g1colex2", intRowIndex).Value, 0)) + _
-        ''                    CDbl(Nz(grvBudget1.Item("g1colex3", intRowIndex).Value, 0)) + _
-        ''                    CDbl(Nz(grvBudget1.Item("g1colex4", intRowIndex).Value, 0)) + _
-        ''                    CDbl(Nz(grvBudget1.Item("g1colex5", intRowIndex).Value, 0)) + _
-        ''                    CDbl(Nz(grvBudget1.Item("g1colex6", intRowIndex).Value, 0))
-        ''        If dblTotal = 0 Then
-        ''            grvBudget1.Item("g1col15", intRowIndex).Value = DBNull.Value
-        ''        Else
-        ''            grvBudget1.Item("g1col15", intRowIndex).Value = dblTotal
-        ''        End If
-        ''    End If
-
-        ''    '// Calc Total Year
-        ''    dblTotal = CDbl(Nz(grvBudget1.Item("g1col14", intRowIndex).Value, 0)) + _
-        ''               CDbl(Nz(grvBudget1.Item("g1col15", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget1.Item("g1col16", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget1.Item("g1col16", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Total last Year
-        ''    dblTotal = CDbl(Nz(grvBudget1.Item("g1col6", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget1.Item("g1col7", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget1.Item("g1col17", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget1.Item("g1col17", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Difference
-        ''    dblTotal = CDbl(Nz(grvBudget1.Item("g1col16", intRowIndex).Value, 0)) - _
-        ''                CDbl(Nz(grvBudget1.Item("g1col17", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget1.Item("g1col18", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget1.Item("g1col18", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''Next
-
         '//-- Begin Edit by S.Watcharapong 2011-05-27
-        ''Dim dtDat As DataTable = CType(grvBudget1.DataSource, DataTable).Copy
         Dim dtDat As DataTable = CType(grvBudget1.DataSource, DataTable).DefaultView.Table.Copy
         '//-- End Edit 2011-05-27
 
@@ -3364,14 +2927,7 @@ Public Class frmBG0200
             Else
                 dtDat.Rows(intRowIndex)![DiffMTP_RRT1] = dblTotal
             End If
-
-            ' dblSumIMP1 = dblSumIMP1 + CDbl(Nz(dtDat.Rows(intRowIndex)![IMP1], 0))
-            '    dblSumIMP2 = dblSumIMP2 + CDbl(Nz(dtDat.Rows(intRowIndex)![IMP2], 0))
-
-
         Next
-
-        '   MessageBox.Show("[IMP1]:" & dblSumIMP1 & "[IMP2]" & dblSumIMP2)
 
         grvBudget1.DataSource = dtDat
         '//-- Edit Add 2011-05-11
@@ -3546,48 +3102,8 @@ Public Class frmBG0200
         Debug.Print(Now.ToString & ": Begin CalcEstimateBudget")
 
         Me.Cursor = Cursors.WaitCursor
-
-        '//-- Edit 2011-05-11 by S.Watcharapong
-        ' ''// Auto Calculation
-        ''For intRowIndex As Integer = 0 To grvBudget2.RowCount - 1
-
-        ''    '// Calc Estimate 2nd Half
-        ''    dblTotal = CDbl(Nz(grvBudget2.Item("g2col8", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget2.Item("g2col9", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget2.Item("g2col10", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget2.Item("g2col11", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget2.Item("g2col12", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget2.Item("g2col13", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget2.Item("g2col14", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget2.Item("g2col14", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Diff 2nd Half
-        ''    dblTotal = CDbl(Nz(grvBudget2.Item("g2col14", intRowIndex).Value, 0)) - _
-        ''                CDbl(Nz(grvBudget2.Item("g2col7", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget2.Item("g2col15", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget2.Item("g2col15", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Estimate Total Year
-        ''    dblTotal = CDbl(Nz(grvBudget2.Item("g2col6", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget2.Item("g2col14", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget2.Item("g2col16", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget2.Item("g2col16", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''Next
-
-        '//-- Begin Edit by S.Watcharapong 2011-05-27
-        ''Dim dtDat As DataTable = CType(grvBudget2.DataSource, DataTable).Copy
         Dim dtDat As DataTable = CType(grvBudget2.DataSource, DataTable).DefaultView.Table.Copy
-        '//-- End Edit 2011-05-27
+
 
         '// Auto Calculation
         For intRowIndex As Integer = 0 To dtDat.Rows.Count - 1
@@ -3624,9 +3140,7 @@ Public Class frmBG0200
         Next
 
         grvBudget2.DataSource = dtDat
-        '//-- Edit Add 2011-05-11
-
-        '// Test by Ko
+        
         FilterGridView()
 
         Me.Cursor = Cursors.Default
@@ -3725,81 +3239,6 @@ Public Class frmBG0200
 
         Me.Cursor = Cursors.WaitCursor
 
-        '// Edit 2011-05-11 by S.Watcharapong
-        ' ''// Auto Calculation
-        ''For intRowIndex As Integer = 0 To grvBudget3.RowCount - 1
-
-        ''    '// Calc Estimate 1st Half
-        ''    dblTotal = CDbl(Nz(grvBudget3.Item("g3col7", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col8", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col9", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col10", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col11", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col12", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget3.Item("g3col13", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget3.Item("g3col13", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Diff 1st Half
-        ''    dblTotal = CDbl(Nz(grvBudget3.Item("g3col13", intRowIndex).Value, 0)) - _
-        ''                                                    CDbl(Nz(grvBudget3.Item("g3col6", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget3.Item("g3col14", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget3.Item("g3col14", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Estimate 2nd Half
-        ''    dblTotal = CDbl(Nz(grvBudget3.Item("g3col16", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col17", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col18", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col19", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col20", intRowIndex).Value, 0)) + _
-        ''                CDbl(Nz(grvBudget3.Item("g3col21", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget3.Item("g3col22", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget3.Item("g3col22", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Diff 2nd Half
-        ''    dblTotal = CDbl(Nz(grvBudget3.Item("g3col22", intRowIndex).Value, 0)) - _
-        ''                                                    CDbl(Nz(grvBudget3.Item("g3col15", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget3.Item("g3col23", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget3.Item("g3col23", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Revise Year
-        ''    dblTotal = CDbl(Nz(grvBudget3.Item("g3col13", intRowIndex).Value, 0)) + _
-        ''                                                    CDbl(Nz(grvBudget3.Item("g3col22", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget3.Item("g3col24", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget3.Item("g3col24", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc Diff Year
-        ''    dblTotal = CDbl(Nz(grvBudget3.Item("g3col14", intRowIndex).Value, 0)) + _
-        ''                                                    CDbl(Nz(grvBudget3.Item("g3col23", intRowIndex).Value, 0))
-        ''    If dblTotal = 0 Then
-        ''        grvBudget3.Item("g3col25", intRowIndex).Value = DBNull.Value
-        ''    Else
-        ''        grvBudget3.Item("g3col25", intRowIndex).Value = dblTotal
-        ''    End If
-
-        ''    '// Calc MTP Budget
-        ''    If blnCalcMTP = True And Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-        ''        CalcMTPBudget(intRowIndex)
-        ''    End If
-
-        ''Next
-
-        '//-- Begin Edit by S.Watcharapong 2011-05-27
-        ''Dim dtDat As DataTable = CType(grvBudget3.DataSource, DataTable).Copy
         Dim dtDat As DataTable = CType(grvBudget3.DataSource, DataTable).DefaultView.Table.Copy
         '//-- End Edit 2011-05-27
 
@@ -3868,14 +3307,6 @@ Public Class frmBG0200
 
         grvBudget3.DataSource = dtDat
 
-        '// Calc MTP Budget
-        'If blnCalcMTP = True And Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-        '    For intRowIndex As Integer = 0 To dtDat.Rows.Count - 1
-        '        CalcMTPBudget(intRowIndex)
-        '    Next
-        'End If
-        '//-- End Edit 2011-05-11
-        '// Test by Ko
         FilterGridView()
 
         Me.Cursor = Cursors.Default
@@ -3953,171 +3384,11 @@ Public Class frmBG0200
             grvBudget3.Item("g3col25", intRowIndex).Value = dblTotal
         End If
 
-        '// Calc MTP Budget
-        'If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-        '    CalcMTPBudget(intRowIndex)
-        'End If
 
         Me.Cursor = Cursors.Default
 
         Debug.Print(Now.ToString & ": Begin CalcReviseBudget2")
     End Sub
-
-    'Private Sub CalcMTPBudget(ByVal intRow As Integer)
-    '    Dim dblReviseYear As Double
-    '    Dim strRRT(5) As String
-    '    Dim intRRT As Integer
-    '    Dim strOrderNo As String
-
-    '    Debug.Print(Now.ToString & ": Begin CalcMTPBudget")
-
-    '    strRRT(1) = lblRRT1p.Text.Replace("%", "")
-    '    strRRT(2) = lblRRT2p.Text.Replace("%", "")
-    '    strRRT(3) = lblRRT3p.Text.Replace("%", "")
-    '    strRRT(4) = lblRRT4p.Text.Replace("%", "")
-    '    strRRT(5) = lblRRT5p.Text.Replace("%", "")
-
-    '    If IsNumeric(strRRT(1)) Or IsNumeric(strRRT(2)) Or IsNumeric(strRRT(3)) Or IsNumeric(strRRT(4)) Or IsNumeric(strRRT(5)) Then
-    '        '// get [Revise Year] value
-    '        dblReviseYear = CDbl(Nz(grvBudget3.Item("g3col24", intRow).Value, 0))
-    '        strOrderNo = CStr(grvBudget3.Item("OrderNo3", intRow).Value)
-
-    '        If dblReviseYear = 0 Then
-    '            If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
-    '                grvBudget3.Item("g3col26", intRow).Value = 0
-    '            End If
-    '            grvBudget3.Item("g3ex01", intRow).Value = 0
-
-    '            If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
-    '                grvBudget3.Item("g3col27", intRow).Value = 0
-    '            End If
-    '            grvBudget3.Item("g3ex02", intRow).Value = 0
-
-    '            If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
-    '                grvBudget3.Item("g3col28", intRow).Value = 0
-    '            End If
-    '            grvBudget3.Item("g3ex03", intRow).Value = 0
-
-    '            If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
-    '                grvBudget3.Item("g3col29", intRow).Value = 0
-    '            End If
-    '            grvBudget3.Item("g3ex04", intRow).Value = 0
-
-    '            If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
-    '                grvBudget3.Item("g3col30", intRow).Value = 0
-    '            End If
-    '            grvBudget3.Item("g3ex05", intRow).Value = 0
-
-    '        Else
-    '            If CStr(Nz(grvBudget3.Item("g3col3", intRow).Value)) = "Fixed Cost" Then
-    '                If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
-    '                    grvBudget3.Item("g3col26", intRow).Value = dblReviseYear
-    '                End If
-    '                grvBudget3.Item("g3ex01", intRow).Value = dblReviseYear
-
-    '                If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
-    '                    grvBudget3.Item("g3col27", intRow).Value = dblReviseYear
-    '                End If
-    '                grvBudget3.Item("g3ex02", intRow).Value = dblReviseYear
-
-    '                If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
-    '                    grvBudget3.Item("g3col28", intRow).Value = dblReviseYear
-    '                End If
-    '                grvBudget3.Item("g3ex03", intRow).Value = dblReviseYear
-
-    '                If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
-    '                    grvBudget3.Item("g3col29", intRow).Value = dblReviseYear
-    '                End If
-    '                grvBudget3.Item("g3ex04", intRow).Value = dblReviseYear
-
-    '                If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
-    '                    grvBudget3.Item("g3col30", intRow).Value = dblReviseYear
-    '                End If
-    '                grvBudget3.Item("g3ex05", intRow).Value = dblReviseYear
-
-    '            Else
-    '                If IsNumeric(strRRT(1)) Then
-    '                    intRRT = CInt(strRRT(1))
-    '                    If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                    IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
-    '                        grvBudget3.Item("g3col26", intRow).Value = dblReviseYear / 100 * intRRT
-    '                    End If
-    '                    grvBudget3.Item("g3ex01", intRow).Value = dblReviseYear / 100 * intRRT
-    '                Else
-    '                    grvBudget3.Item("g3ex01", intRow).Value = 0
-    '                End If
-
-    '                If IsNumeric(strRRT(2)) Then
-    '                    intRRT = CInt(strRRT(2))
-    '                    If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                    IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
-    '                        grvBudget3.Item("g3col27", intRow).Value = dblReviseYear / 100 * intRRT
-    '                    End If
-    '                    grvBudget3.Item("g3ex02", intRow).Value = dblReviseYear / 100 * intRRT
-    '                Else
-    '                    grvBudget3.Item("g3ex02", intRow).Value = 0
-    '                End If
-
-    '                If IsNumeric(strRRT(3)) Then
-    '                    intRRT = CInt(strRRT(3))
-    '                    If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                    IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
-    '                        grvBudget3.Item("g3col28", intRow).Value = dblReviseYear / 100 * intRRT
-    '                    End If
-    '                    grvBudget3.Item("g3ex03", intRow).Value = dblReviseYear / 100 * intRRT
-    '                Else
-    '                    grvBudget3.Item("g3ex03", intRow).Value = 0
-    '                End If
-
-    '                If IsNumeric(strRRT(4)) Then
-    '                    intRRT = CInt(strRRT(4))
-    '                    If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                    IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
-    '                        grvBudget3.Item("g3col29", intRow).Value = dblReviseYear / 100 * intRRT
-    '                    End If
-    '                    grvBudget3.Item("g3ex04", intRow).Value = dblReviseYear / 100 * intRRT
-    '                Else
-    '                    grvBudget3.Item("g3ex04", intRow).Value = 0
-    '                End If
-
-    '                If IsNumeric(strRRT(5)) Then
-    '                    intRRT = CInt(strRRT(5))
-    '                    If (Me.OperationCd = enumOperationCd.InputBudget Or Me.OperationCd = enumOperationCd.AdjustBudget) And _
-    '                    IsDBNull(m_dtCheckMTP.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
-    '                        grvBudget3.Item("g3col30", intRow).Value = dblReviseYear / 100 * intRRT
-    '                    End If
-    '                    grvBudget3.Item("g3ex05", intRow).Value = dblReviseYear / 100 * intRRT
-    '                Else
-    '                    grvBudget3.Item("g3ex05", intRow).Value = 0
-    '                End If
-
-    '            End If
-    '        End If
-
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3col26").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3col27").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3col28").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3col29").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3col30").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3ex01").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3ex02").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3ex03").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3ex04").Index, intRow)
-    '        CheckValidateReviseBudget(grvBudget3.Columns("g3ex05").Index, intRow)
-    '    End If
-
-    '    Debug.Print(Now.ToString & ": End CalcMTPBudget")
-    'End Sub
 
     Private Sub CalcMTPBudgetNew(ByVal intRow As Integer)
         Dim dblReviseYear As Double
@@ -4271,7 +3542,7 @@ Public Class frmBG0200
             CheckValidateMTPBudget(grvBudget4.Columns("g4ex04").Index, intRow)
             CheckValidateMTPBudget(grvBudget4.Columns("g4ex05").Index, intRow)
         End If
-        mySetGridValue = False 'Add by Max
+        mySetGridValue = False
         Debug.Print(Now.ToString & ": End CalcMTPBudget")
     End Sub
 
@@ -4803,7 +4074,7 @@ Public Class frmBG0200
         newTable = New DataTable
 
         For Each field As String In FieldNames
-            newTable.Columns.Add(field, GetType(String)) 'SourceTable.Columns(field).DataType)
+            newTable.Columns.Add(field, GetType(String))
         Next
 
         For Each Row As DataRow In SourceTable.Select("", String.Join(", ", FieldNames))
@@ -4982,11 +4253,6 @@ Public Class frmBG0200
     Private Sub frmBG0200_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         myFormLoadedFlg = False
 
-        ''// Show scrollbar
-        'Me.HorizontalScroll.Visible = True
-        'Me.HorizontalScroll.Enabled = True
-        'Me.AutoScroll = True
-
         '// Load Config
         myClsBG0200BL.GetConfig()
 
@@ -5083,7 +4349,6 @@ Public Class frmBG0200
                     Me.pnlMTP_SUM.Visible = False
                 Else
                     Me.pnlWKH.Visible = False
-                    'Me.pnlMTP_SUM.Visible = True    '//
                     Me.pnlMTP_SUM.Visible = False
                 End If
 
@@ -5104,7 +4369,7 @@ Public Class frmBG0200
             Case enumOperationCd.AdjustBudgetDirectInput
                 Me.lblFormTitle.Text = "Adjust Budget Journal (Direct Input)"
                 Me.cmdApprove.Visible = False
-                Me.cmdReject.Visible = False 'False
+                Me.cmdReject.Visible = False
                 Me.cmdSubmit.Visible = False
                 Me.cmdSave.Visible = True
                 Me.cmdAuth1.Visible = False
@@ -5122,7 +4387,6 @@ Public Class frmBG0200
                     Me.pnlMTP_SUM.Visible = False
                 Else
                     Me.pnlWKH.Visible = False
-                    'Me.pnlMTP_SUM.Visible = True    '//
                     Me.pnlMTP_SUM.Visible = False
                 End If
 
@@ -5143,7 +4407,7 @@ Public Class frmBG0200
             Case enumOperationCd.Authorize1
                 Me.lblFormTitle.Text = "Authorize Budget Journal (AD)"
                 Me.cmdApprove.Visible = False
-                Me.cmdReject.Visible = True 'False
+                Me.cmdReject.Visible = True
                 Me.cmdSubmit.Visible = False
                 Me.cmdSave.Visible = False
                 Me.cmdAuth1.Visible = True
@@ -5166,7 +4430,7 @@ Public Class frmBG0200
             Case enumOperationCd.Authorize2
                 Me.lblFormTitle.Text = "Authorize Budget Journal (MD)"
                 Me.cmdApprove.Visible = False
-                Me.cmdReject.Visible = True 'False
+                Me.cmdReject.Visible = True
                 Me.cmdSubmit.Visible = False
                 Me.cmdSave.Visible = False
                 Me.cmdAuth1.Visible = False
@@ -5191,10 +4455,6 @@ Public Class frmBG0200
 
         If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) AndAlso _
             Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-
-            'Me.gbOB_MTP.Visible = True
-            'LoadMtpRevNo()
-
         Else
             Me.gbOB_MTP.Visible = False
         End If
@@ -5202,49 +4462,6 @@ Public Class frmBG0200
         If Me.cboRevNo.Visible = True Then
             LoadRevNoList()
         End If
-
-
-        '  If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then
-
-        'If Me.fraWk.Visible = True Then
-
-        '    pnlSummary.Top = fraWk.Top - 7
-        '    pnlSummary.Left = fraWk.Left + 120
-
-        'ElseIf Me.pnlWKH.Visible = True Then
-
-        '    pnlSummary.Top = pnlWKH.Top - 7
-        '    pnlSummary.Left = pnlWKH.Left + 120
-
-        'ElseIf Me.pnlMTP_SUM.Visible = True Then
-
-        '    pnlSummary.Top = pnlMTP_SUM.Top - 7
-        '    pnlSummary.Left = pnlMTP_SUM.Left + 240
-
-        'Else
-
-        '    pnlSummary.Top = cboDept.Top - 7
-        '    pnlSummary.Left = cboDept.Left + 80
-
-        'End If
-
-        'pnlSummary.Top = cboDept.Top - 5
-        'pnlSummary.Left = cboDept.Left + 80
-
-        'ElseIf Me.GetPeriodType() = CStr(enumPeriodType.EstimateBudget) Then
-
-        'pnlSummary.Top = cboDept.Top - 5
-        'pnlSummary.Left = cboDept.Left + 80
-
-
-        'ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) Then
-
-        'pnlSummary.Top = fraWk.Top - 5
-        'pnlSummary.Left = fraWk.Left + 120
-
-        'ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
-
-        'End If
 
         myFormLoadedFlg = True
 
@@ -5263,8 +4480,6 @@ Public Class frmBG0200
         End If
     End Sub
 
-    
-    '  Public Delegate Sub InvokeDelegate()
 
     Private Sub grvBudget1_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget1.CellValueChanged
         If e.RowIndex >= 0 And mySetGridValue = False Then
@@ -5272,7 +4487,6 @@ Public Class frmBG0200
                 '// Validate input data
                 CheckValidateOriginalBudget(e.ColumnIndex, e.RowIndex)
 
-                '       Me.grvBudget1.BeginInvoke(New InvokeDelegate(AddressOf FilterGridView))
                 CalSum()
             End If
         End If
@@ -5299,11 +4513,6 @@ Public Class frmBG0200
                 '// Validate input data
                 CheckValidateReviseBudget(e.ColumnIndex, e.RowIndex)
 
-                '// Highlight Over MTP value
-                '// Comment by Ko
-                'If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-                '    HighlightMTPValue(e.ColumnIndex, e.RowIndex)
-                'End If
                 CalSum()
             End If
         End If
@@ -5347,7 +4556,6 @@ Public Class frmBG0200
                                 If Not oCell.ReadOnly Then
                                     If oCell.Value.ToString() <> sCells(i) Then
                                         oCell.Value = Convert.ChangeType(sCells(i), oCell.ValueType)
-                                        ' oCell.Style.BackColor = Color.Tomato
                                     End If
                                 Else
                                     iFail = iFail + 1
@@ -5425,7 +4633,6 @@ Public Class frmBG0200
                                 If Not oCell.ReadOnly Then
                                     If oCell.Value.ToString() <> sCells(i) Then
                                         oCell.Value = Convert.ChangeType(sCells(i), oCell.ValueType)
-                                        ' oCell.Style.BackColor = Color.Tomato
                                     End If
                                 Else
                                     iFail = iFail + 1
@@ -5457,9 +4664,6 @@ Public Class frmBG0200
         Debug.Print(Now.ToString() & ": Begin grvBudget2_Sorted")
 
         myDataLoadingFlg = True
-
-        ' ''// Calculate Total/Diff
-        ''CalcEstimateBudget()
 
         If CDbl(Me.myCurrRevNo) > 1 And _
         (Me.OperationCd = enumOperationCd.AdjustBudget Or _
@@ -5498,12 +4702,10 @@ Public Class frmBG0200
                         Dim sCells() As String = line.Split(New String() {vbTab}, StringSplitOptions.None)
                         For i = 0 To sCells.GetLength(0) - 1
                             If iCol + i < Me.grvBudget3.ColumnCount Then
-                                '    MessageBox.Show(grvBudget3.Columns(iCol + i).Name)
                                 oCell = grvBudget3(iCol + i, iRow)
                                 If Not oCell.ReadOnly Then
                                     If oCell.Value.ToString() <> sCells(i) Then
                                         oCell.Value = Convert.ChangeType(sCells(i), oCell.ValueType)
-                                        ' oCell.Style.BackColor = Color.Tomato
                                     End If
                                 Else
                                     iFail = iFail + 1
@@ -5550,12 +4752,6 @@ Public Class frmBG0200
             '// Highlight Transfer Cost
             HighlightTransferCost()
         End If
-
-        '// Highlight Over MTP value
-        '// Comment by Ko
-        'If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-        '    HighlightMTPValueAll()
-        'End If
 
         myDataLoadingFlg = False
 
@@ -5661,10 +4857,6 @@ Public Class frmBG0200
     End Sub
 
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
-        ''If lblStatus.Text <> "Approved" Then
-        ''    MessageBox.Show("You can save budget journal when status is approved only.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-        ''    Exit Sub
-        ''End If
 
         If MessageBox.Show("Are you sure to save this budget journal?", Me.Text, MessageBoxButtons.YesNo, _
                              MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = Windows.Forms.DialogResult.No Then
@@ -5805,7 +4997,6 @@ Public Class frmBG0200
 
         If Me.CurrRevNo = "1" And Me.OperationCd = enumOperationCd.AdjustBudget Then
 
-            '// Added by Kate 2015/06/25 ------------------------------------------(+)
             Dim strDispRevNo As String
             strDispRevNo = Me.CurrRevNo
 
@@ -5819,10 +5010,6 @@ Public Class frmBG0200
                 MessageBox.Show("Can not save Budget journal", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
-            '// Added by Kate 2015/06/25 ------------------------------------------(-)
-
-            '// Up Revision
-            'If myClsBG0200BL.UpRevision() = True Then
 
             '// Transfer Cost
             myClsBG0200BL.AdjustTransferCost()
@@ -5880,10 +5067,6 @@ Public Class frmBG0200
             myClsBG0200BL.WriteTransLog()
 
             MessageBox.Show("Budget journal was saved", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-            'Else
-            '    MessageBox.Show("Can not save Budget journal", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
-            'End If
-
         Else
             '// Save Data
             Dim blnSave As Boolean = False
@@ -6177,9 +5360,7 @@ Public Class frmBG0200
 
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then   '// Original Budget
                 'grvBudget1
-                'myClsBG0200BL.BudgetList = CType(grvBudget1.DataSource, DataTable)
                 For Each row As DataGridViewRow In grvBudget1.Rows
-                    'Dim isSelected As Boolean = Convert.ToBoolean(row.Cells("g1Wk").Value)
                     Dim isChecked As Boolean = DirectCast(grvBudget1(0, row.Index).Value, Boolean)
 
                     drS = dtSave.NewRow
@@ -6307,9 +5488,8 @@ Public Class frmBG0200
         myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
         myClsBG0200BL.PeriodType = Me.GetPeriodType()
         myClsBG0200BL.BudgetType = Me.GetBudgetType()
-        myClsBG0200BL.UserPIC = "0000" 'CStr(cboPIC.SelectedValue)
+        myClsBG0200BL.UserPIC = "0000"
         myClsBG0200BL.RevNo = Me.CurrRevNo
-        'myClsBG0200BL.Status = CStr(enumBudgetStatus.Submit)
         myClsBG0200BL.ProjectNo = Me.GetProjectNo()
 
         dtDataReInput = myClsBG0200BL.GetBudGetDataReInputNoStatus
@@ -6544,13 +5724,6 @@ Public Class frmBG0200
         '// Highlight Transfer Cost
         HighlightTransferCost()
 
-        '// Highlight Over MTP value
-        '// Comment by Ko
-        'If Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) And _
-        'Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
-        '    HighlightMTPValueAll()
-        'End If
-
         myDataLoadingFlg = False
 
         Me.Cursor = Cursors.Default
@@ -6565,7 +5738,6 @@ Public Class frmBG0200
         myClsBG0200BL.BudgetType = Me.GetBudgetType()
         myClsBG0200BL.UserPIC = "0000"
         myClsBG0200BL.RevNo = Me.CurrRevNo
-        'myClsBG0200BL.Status = CStr(enumBudgetStatus.Submit)
         myClsBG0200BL.ProjectNo = Me.GetProjectNo()
 
         dtDataReInput = myClsBG0200BL.GetBudGetDataReInputNoStatus
@@ -6805,10 +5977,8 @@ Public Class frmBG0200
             dtSave.Columns.Add("Status", GetType(String))
 
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then   '// Original Budget
-                'grvBudget1
-                'myClsBG0200BL.BudgetList = CType(grvBudget1.DataSource, DataTable)
+               
                 For Each row As DataGridViewRow In grvBudget1.Rows
-                    'Dim isSelected As Boolean = Convert.ToBoolean(row.Cells("g1Wk").Value)
                     Dim isChecked As Boolean = DirectCast(grvBudget1(0, row.Index).Value, Boolean)
 
                     drS = dtSave.NewRow
@@ -6939,8 +6109,6 @@ Public Class frmBG0200
                     '// Set Parameters
                     myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
                     myClsBG0200BL.PeriodType = Me.GetPeriodType()
-                    '// Modified by Kate 2015/06/26
-                    'myClsBG0200BL.RevNo = Me.CurrRevNo()
                     myClsBG0200BL.RevNo = "1"
                     myClsBG0200BL.BudgetType = Me.GetBudgetType()
                     myClsBG0200BL.UserPIC = CStr(cboPIC.SelectedValue)
@@ -7048,7 +6216,7 @@ Public Class frmBG0200
                 If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
                     HighlightMTPValueNew(e.ColumnIndex, e.RowIndex)
                 End If
-                CalSum() 'Add by Max
+                CalSum()
             End If
         End If
         myBudgetDataChanged = True
@@ -7076,12 +6244,10 @@ Public Class frmBG0200
                         Dim sCells() As String = line.Split(New String() {vbTab}, StringSplitOptions.None)
                         For i = 0 To sCells.GetLength(0) - 1
                             If iCol + i < Me.grvBudget4.ColumnCount Then
-                                oCell = grvBudget4(iCol + i, iRow) '  (iCol + i, iRow)
-                                '   MessageBox.Show(grvBudget4.Columns(iCol + i).Name)
+                                oCell = grvBudget4(iCol + i, iRow) 
                                 If Not oCell.ReadOnly Then
                                     If oCell.Value.ToString() <> sCells(i) Then
                                         oCell.Value = Convert.ChangeType(sCells(i), oCell.ValueType)
-                                        ' oCell.Style.BackColor = Color.Tomato
                                     End If
                                 Else
                                     iFail = iFail + 1
@@ -7122,11 +6288,6 @@ Public Class frmBG0200
          Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput Or _
          Me.OperationCd = enumOperationCd.Authorize1 Or _
          Me.OperationCd = enumOperationCd.Authorize2) Then
-            '// Highlight Working Budget
-            '  HighlightWorkingBG()
-
-            '// Highlight Transfer Cost
-            ' HighlightTransferCost()
         End If
 
         '// Highlight Over MTP value
@@ -7238,19 +6399,7 @@ Public Class frmBG0200
     End Sub
 
     Private Sub LoadMtpRevNo()
-        'If myFormLoadedFlg = True Then
-
         If Me.BudgetKey <> "" AndAlso Me.gbOB_MTP.Enabled = True AndAlso Me.cboMtpRevno.Visible = True Then
-
-            'If Me.cboPeriodType.SelectedIndex < 0 OrElse _
-            '    Me.numPrevProjectNo.Value <= 0 OrElse _
-            '    Me.numYear.Value <= 0 Then
-
-            '    Me.cboMtpRevno.DataSource = Nothing
-            '    Exit Sub
-
-            'End If
-
             Dim strProjectNo = Me.numMtpProjectNo.Value.ToString
             If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
 
@@ -7269,10 +6418,7 @@ Public Class frmBG0200
             Else
                 Me.cboMtpRevno.DataSource = Nothing
             End If
-
         End If
-
-        'End If
     End Sub
 
     Private Sub numMtpProjectNo_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numMtpProjectNo.ValueChanged
@@ -7375,59 +6521,26 @@ Public Class frmBG0200
 
         Dim CountSel As Integer = 0
         If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then   '// Original Budget
-            'grvBudget1
-            'myClsBG0200BL.BudgetList = CType(grvBudget1.DataSource, DataTable)
             For Each row As DataGridViewRow In grvBudget1.Rows
-                'Dim isSelected As Boolean = Convert.ToBoolean(row.Cells("g1Wk").Value)
                 Dim isChecked As Boolean = DirectCast(grvBudget1(0, row.Index).Value, Boolean)
                 If isChecked Then
-                    'CountSel = CountSel + 1
-                    'SaveBudgetDataReInput
-                    'myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
-                    'myClsBG0200BL.PeriodType = Me.GetPeriodType()
-                    'myClsBG0200BL.RevNo = Me.CurrRevNo
-                    'myClsBG0200BL.ProjectNo = Me.GetProjectNo()
-                    'myClsBG0200BL.BudgetOrder = CStr(row.Cells("OrderNo1").Value)
-                    'myClsBG0200BL.Status = CStr(enumBudgetStatus.NewRecord)
-
                     drS = dtSave.NewRow
                     drS("BudgetYear") = Me.GetBudgetYear()
                     drS("PeriodType") = Me.GetPeriodType()
-                    '// Modified by Kate 2015/06/25
-                    'drS("RevNo") = Me.CurrRevNo
                     drS("RevNo") = "1"
                     drS("ProjectNo") = Me.GetProjectNo()
                     drS("BudgetOrder") = CStr(row.Cells("OrderNo1").Value)
                     drS("Status") = CStr(enumBudgetStatus.NewRecord)
                     dtSave.Rows.Add(drS)
-                    'If myClsBG0200BL.SaveBudgetDataReInput() Then
-                    '    MessageBox.Show("ReInput OK", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    'End If
-
                 End If
             Next
         ElseIf Me.GetPeriodType() = CStr(enumPeriodType.EstimateBudget) Then   '// Estimate Budget
-            'grvBudget2
-            'myClsBG0200BL.BudgetList = CType(grvBudget2.DataSource, DataTable)
             For Each row As DataGridViewRow In grvBudget2.Rows
                 Dim isChecked As Boolean = DirectCast(grvBudget2(0, row.Index).Value, Boolean)
                 If isChecked Then
-                    'CountSel = CountSel + 1
-                    'myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
-                    'myClsBG0200BL.PeriodType = Me.GetPeriodType()
-                    'myClsBG0200BL.RevNo = Me.CurrRevNo
-                    'myClsBG0200BL.ProjectNo = Me.GetProjectNo()
-                    'myClsBG0200BL.BudgetOrder = CStr(row.Cells("OrderNo2").Value)
-                    'myClsBG0200BL.Status = CStr(enumBudgetStatus.NewRecord)
-                    'If myClsBG0200BL.SaveBudgetDataReInput() Then
-                    '    MessageBox.Show("ReInput OK", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    'End If
-
                     drS = dtSave.NewRow
                     drS("BudgetYear") = Me.GetBudgetYear()
                     drS("PeriodType") = Me.GetPeriodType()
-                    '// Modified by Kate 2015/06/25
-                    'drS("RevNo") = Me.CurrRevNo
                     drS("RevNo") = "1"
                     drS("ProjectNo") = Me.GetProjectNo()
                     drS("BudgetOrder") = CStr(row.Cells("OrderNo2").Value)
@@ -7437,28 +6550,13 @@ Public Class frmBG0200
             Next
 
         ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ReviseBudget) Then   '// Revise Budget        
-            'grvBudget3
-            'myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
             For Each row As DataGridViewRow In grvBudget3.Rows
-                'Dim isSelected As Boolean = Convert.ToBoolean(row.Cells("g3Wk").Value)
                 Dim isChecked As Boolean = DirectCast(grvBudget3(0, row.Index).Value, Boolean)
                 If isChecked Then
-                    'CountSel = CountSel + 1
-                    'myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
-                    'myClsBG0200BL.PeriodType = Me.GetPeriodType()
-                    'myClsBG0200BL.RevNo = Me.CurrRevNo
-                    'myClsBG0200BL.ProjectNo = Me.GetProjectNo()
-                    'myClsBG0200BL.BudgetOrder = CStr(row.Cells("OrderNo3").Value)
-                    'myClsBG0200BL.Status = CStr(enumBudgetStatus.NewRecord)
-                    'If myClsBG0200BL.SaveBudgetDataReInput() Then
-                    '    'MessageBox.Show("ReInput OK", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    'End If
 
                     drS = dtSave.NewRow
                     drS("BudgetYear") = Me.GetBudgetYear()
                     drS("PeriodType") = Me.GetPeriodType()
-                    '// Modified by Kate 2015/06/25
-                    'drS("RevNo") = Me.CurrRevNo
                     drS("RevNo") = "1"
                     drS("ProjectNo") = Me.GetProjectNo()
                     drS("BudgetOrder") = CStr(row.Cells("OrderNo3").Value)
@@ -7468,27 +6566,12 @@ Public Class frmBG0200
             Next
 
         ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget        
-            'grvBudget4
-            'myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
             For Each row As DataGridViewRow In grvBudget4.Rows
-                'Dim isSelected As Boolean = Convert.ToBoolean(row.Cells("g4Wk").Value)
                 Dim isChecked As Boolean = DirectCast(grvBudget4(0, row.Index).Value, Boolean)
                 If isChecked Then
-                    'CountSel = CountSel + 1
-                    'myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
-                    'myClsBG0200BL.PeriodType = Me.GetPeriodType()
-                    'myClsBG0200BL.RevNo = Me.CurrRevNo
-                    'myClsBG0200BL.ProjectNo = Me.GetProjectNo()
-                    'myClsBG0200BL.BudgetOrder = CStr(row.Cells("OrderNo4").Value)
-                    'myClsBG0200BL.Status = CStr(enumBudgetStatus.NewRecord)
-                    'If myClsBG0200BL.SaveBudgetDataReInput() Then
-                    '    MessageBox.Show("ReInput OK", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    'End If
                     drS = dtSave.NewRow
                     drS("BudgetYear") = Me.GetBudgetYear()
                     drS("PeriodType") = Me.GetPeriodType()
-                    '// Modified by Kate 2015/06/25
-                    'drS("RevNo") = Me.CurrRevNo
                     drS("RevNo") = "1"
                     drS("ProjectNo") = Me.GetProjectNo()
                     drS("BudgetOrder") = CStr(row.Cells("OrderNo4").Value)
@@ -7496,13 +6579,6 @@ Public Class frmBG0200
                     dtSave.Rows.Add(drS)
                 End If
             Next
-            'If Not dtSave Is Nothing AndAlso dtSave.Rows.Count > 0 Then
-            '    myClsBG0200BL.dtSave = dtSave
-            '    If myClsBG0200BL.SaveBudgetDataReInput() Then
-            '        MessageBox.Show("ReInput OK", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '    End If
-            'End If
-
         End If
 
         Dim conn As SqlConnection = Nothing
@@ -7514,12 +6590,6 @@ Public Class frmBG0200
         trans = conn.BeginTransaction()
 
         Try
-            'If myClsBG0630BL.UpdateExcelData(conn, trans) = True Then
-            '    success = True
-            'Else
-            '    success = False
-            '    Exit For
-            'End If
             myClsBG0200BL.dtSave = dtSave
             If myClsBG0200BL.SaveBudgetDataReInput(conn, trans) = True Then
                 success = True
@@ -7652,12 +6722,10 @@ Public Class frmBG0200
 
         If blnFound = True Then
             Dim budgetOderSub() As String
-            'If grvBudget1.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
             If e.RowIndex >= 0 Then
                 budgetOderSub = grvBudget1.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
                 ShowCommentPopup(intMonth, budgetOderSub)
             End If
-            'End If
         End If
 
 
@@ -7686,12 +6754,10 @@ Public Class frmBG0200
         If blnFound = True Then
             Dim budgetOderSub() As String
 
-            'If grvBudget2.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
             If e.RowIndex >= 0 Then
                 budgetOderSub = grvBudget2.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
                 ShowCommentPopup(intMonth, budgetOderSub)
             End If
-            'End If
         End If
 
     End Sub
@@ -7737,12 +6803,10 @@ Public Class frmBG0200
         If blnFound = True Then
             Dim budgetOderSub() As String
 
-            'If grvBudget3.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
             If e.RowIndex >= 0 Then
                 budgetOderSub = grvBudget3.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
                 ShowCommentPopup(intMonth, budgetOderSub)
             End If
-            'End If
         End If
 
     End Sub
@@ -7766,12 +6830,10 @@ Public Class frmBG0200
         If blnFound = True Then
             Dim budgetOderSub() As String
 
-            'If grvBudget4.Rows(e.RowIndex).Cells(e.ColumnIndex).ReadOnly = False Then
             If e.RowIndex >= 0 Then
                 budgetOderSub = grvBudget4.Rows(e.RowIndex).Cells(2).Value.ToString.Split(CChar(" :"))
                 ShowCommentPopup(intRRT, budgetOderSub)
             End If
-            'End If
         End If
 
     End Sub
