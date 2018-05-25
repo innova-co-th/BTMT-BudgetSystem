@@ -3690,19 +3690,32 @@ Public Class frmBG0200
 
                     If dr.Count > 0 Then
                         If CBool(grvBudget1.Item("g1wk", i).Value) = True Then
-                            grvBudget1.Item("g1Col8", i).Value = ((CDbl(Nz(dr(0).Item("M1"), 0)) / 100) * dblWK1).ToString("#,##0.00")
-                            grvBudget1.Item("g1Col9", i).Value = ((CDbl(Nz(dr(0).Item("M2"), 0)) / 100) * dblWK1).ToString("#,##0.00")
-                            grvBudget1.Item("g1Col10", i).Value = ((CDbl(Nz(dr(0).Item("M3"), 0)) / 100) * dblWK1).ToString("#,##0.00")
-                            grvBudget1.Item("g1Col11", i).Value = ((CDbl(Nz(dr(0).Item("M4"), 0)) / 100) * dblWK1).ToString("#,##0.00")
-                            grvBudget1.Item("g1Col12", i).Value = ((CDbl(Nz(dr(0).Item("M5"), 0)) / 100) * dblWK1).ToString("#,##0.00")
-                            grvBudget1.Item("g1Col13", i).Value = ((CDbl(Nz(dr(0).Item("M6"), 0)) / 100) * dblWK1).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Col8", i).Value = ((CDbl(Nz(dr(0).Item("M1"), 0)) / 100) * dblWK1).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Col9", i).Value = ((CDbl(Nz(dr(0).Item("M2"), 0)) / 100) * dblWK1).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Col10", i).Value = ((CDbl(Nz(dr(0).Item("M3"), 0)) / 100) * dblWK1).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Col11", i).Value = ((CDbl(Nz(dr(0).Item("M4"), 0)) / 100) * dblWK1).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Col12", i).Value = ((CDbl(Nz(dr(0).Item("M5"), 0)) / 100) * dblWK1).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Col13", i).Value = ((CDbl(Nz(dr(0).Item("M6"), 0)) / 100) * dblWK1).ToString("#,##0.00")
 
-                            grvBudget1.Item("g1Colex1", i).Value = ((CDbl(Nz(dr(0).Item("M7"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex2", i).Value = ((CDbl(Nz(dr(0).Item("M8"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex3", i).Value = ((CDbl(Nz(dr(0).Item("M9"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex4", i).Value = ((CDbl(Nz(dr(0).Item("M10"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex5", i).Value = ((CDbl(Nz(dr(0).Item("M11"), 0)) / 100) * dblWK2).ToString("#,##0.00")
-                            grvBudget1.Item("g1Colex6", i).Value = ((CDbl(Nz(dr(0).Item("M12"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Colex1", i).Value = ((CDbl(Nz(dr(0).Item("M7"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Colex2", i).Value = ((CDbl(Nz(dr(0).Item("M8"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Colex3", i).Value = ((CDbl(Nz(dr(0).Item("M9"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Colex4", i).Value = ((CDbl(Nz(dr(0).Item("M10"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Colex5", i).Value = ((CDbl(Nz(dr(0).Item("M11"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            'grvBudget1.Item("g1Colex6", i).Value = ((CDbl(Nz(dr(0).Item("M12"), 0)) / 100) * dblWK2).ToString("#,##0.00")
+                            grvBudget1.Item("g1Col8", i).Value = 100
+                            grvBudget1.Item("g1Col9", i).Value = 100
+                            grvBudget1.Item("g1Col10", i).Value = 100
+                            grvBudget1.Item("g1Col11", i).Value = 100
+                            grvBudget1.Item("g1Col12", i).Value = 100
+                            grvBudget1.Item("g1Col13", i).Value = 100
+
+                            grvBudget1.Item("g1Colex1", i).Value = 100
+                            grvBudget1.Item("g1Colex2", i).Value = 100
+                            grvBudget1.Item("g1Colex3", i).Value = 100
+                            grvBudget1.Item("g1Colex4", i).Value = 100
+                            grvBudget1.Item("g1Colex5", i).Value = 100
+                            grvBudget1.Item("g1Colex6", i).Value = 100
                         Else
                             dr = dtRefData.Select("BUDGET_ORDER_NO = '" & strOrderNo & "'")
                             If dr.Count = 0 Then
@@ -6076,10 +6089,17 @@ Public Class frmBG0200
             Me.grvBudget3.EndEdit()
             Me.grvBudget4.EndEdit()
 
+            'Me.grvBudget1.BeginEdit(True)
+
             Me.Cursor = Cursors.WaitCursor
-            myDataLoadingFlg = True
+            myDataLoadingFlg = False
             '// Adjust Working Budget
             AdjustWorkingBG()
+
+            'Me.grvBudget1.EndEdit()
+            'Me.grvBudget2.EndEdit()
+            'Me.grvBudget3.EndEdit()
+            'Me.grvBudget4.EndEdit()
 
             '// Calculate Total/Diff
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then
