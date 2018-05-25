@@ -528,7 +528,7 @@ Public Class frmBG0420
         Dim xSt As Excel.Worksheet = Nothing
 
         xBk = excelApp.Workbooks.Add(System.Reflection.Missing.Value)
-        If xBk.Worksheets.Count > 1 Then
+        If xBk.Worksheets.Count > 2 Then
             CType(xBk.Worksheets(1), Excel.Worksheet).Delete()
             CType(xBk.Worksheets(2), Excel.Worksheet).Delete()
         End If
@@ -959,12 +959,12 @@ Public Class frmBG0420
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "M11"
-        dRow("Column_Title") = "May'" & strHalfYear
+        dRow("Column_Title") = "Nov'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "M12"
-        dRow("Column_Title") = "Jun'" & strHalfYear
+        dRow("Column_Title") = "Dec'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow

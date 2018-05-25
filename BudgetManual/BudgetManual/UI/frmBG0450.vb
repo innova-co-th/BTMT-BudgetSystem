@@ -605,7 +605,7 @@ Public Class frmBG0450
         wb = excelApp.Workbooks.Add(missing)
 
         '//Delete Worksheets
-        If wb.Worksheets.Count > 1 Then
+        If wb.Worksheets.Count > 2 Then
             CType(wb.Worksheets(1), Excel.Worksheet).Delete()
             CType(wb.Worksheets(2), Excel.Worksheet).Delete()
         End If
