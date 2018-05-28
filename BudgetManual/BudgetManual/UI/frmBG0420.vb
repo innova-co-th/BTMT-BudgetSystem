@@ -659,12 +659,16 @@ Public Class frmBG0420
             'xSt.Range(xSt.Cells(rowStartIndex, 1), xSt.Cells(rowStartIndex, colMax)).Font.Bold = True
 
             Dim intGroup2 As Integer = rowStartIndex + intGroupFirstIndex + 1
-            Dim strGroup2 As String = xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(intGroup2, 1)).Value.ToString
-            xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).ClearContents()
-            xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).MergeCells = True
-            xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).Value = strGroup2
-            xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).Font.Bold = True
-            xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).VerticalAlignment = Excel.XlVAlign.xlVAlignTop
+            Dim ObjGroup2 As Object = xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(intGroup2, 1)).Value
+            If Not IsNothing(ObjGroup2) Then
+                Dim strGroup2 As String = ObjGroup2.ToString
+                xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).ClearContents()
+                xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).MergeCells = True
+                xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).Value = strGroup2
+                xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).Font.Bold = True
+                xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).VerticalAlignment = Excel.XlVAlign.xlVAlignTop
+            End If
+
 
             'xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(intGroup2, colMax)).Font.Bold = True
 
@@ -802,7 +806,7 @@ Public Class frmBG0420
                 xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax - 1, 12)).Font.Color = RGB(128, 128, 128)
                 xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax - 1, 14)).Font.Color = RGB(128, 128, 128)
 
-                End If
+            End If
         Next
 
         '//Show Excel
