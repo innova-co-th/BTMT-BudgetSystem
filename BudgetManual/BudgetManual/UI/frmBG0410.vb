@@ -1036,41 +1036,48 @@ Public Class frmBG0410
         dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
 
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "DIFF_PREV_YEAR"
+        dRow("Column_Title") = "Diff Year'" & " Year'" & CStr(intYear + 1)
+        dtColumns.Rows.Add(dRow)
+
+
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "RRT2"
         dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 2)
         dtColumns.Rows.Add(dRow)
 
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "PrevRRT3"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
-        dtColumns.Rows.Add(dRow)
+        'dRow = dtColumns.NewRow
+        'dRow("Column_Name") = "PrevRRT3"
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
+        'dtColumns.Rows.Add(dRow)
 
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "RRT3"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
-        dtColumns.Rows.Add(dRow)
+        'dRow = dtColumns.NewRow
+        'dRow("Column_Name") = "RRT3"
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
+        'dtColumns.Rows.Add(dRow)
 
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "PrevRRT4"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 3)
-        dtColumns.Rows.Add(dRow)
+        'dRow = dtColumns.NewRow
+        'dRow("Column_Name") = "PrevRRT4"
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 3)
+        'dtColumns.Rows.Add(dRow)
 
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "RRT4"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 4)
-        dtColumns.Rows.Add(dRow)
+        'dRow = dtColumns.NewRow
+        'dRow("Column_Name") = "RRT4"
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 4)
+        'dtColumns.Rows.Add(dRow)
 
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "PrevRRT5"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 4)
-        dtColumns.Rows.Add(dRow)
+        'dRow = dtColumns.NewRow
+        'dRow("Column_Name") = "PrevRRT5"
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 4)
+        'dtColumns.Rows.Add(dRow)
 
 
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "RRT5"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 5)
-        dtColumns.Rows.Add(dRow)
+        'dRow = dtColumns.NewRow
+        'dRow("Column_Name") = "RRT5"
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 5)
+        'dtColumns.Rows.Add(dRow)
 
         Return True
 
@@ -1147,7 +1154,7 @@ Public Class frmBG0410
             ElseIf strPeriod = "MTP" Then
                 arrCols = New Integer() {3, 4, 5, 6, 7} '// Two Row Merge Col
                 SetupMTPColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", _
-                                        arrCols, 8, 16)
+                                        arrCols, 8, 11)
             End If
 
             '//Setup Data
@@ -1428,8 +1435,8 @@ Public Class frmBG0410
 
             Case "MTP"
 
-                intUnitPriceStart = 15
-                intUnitPriceEnd = 16
+                intUnitPriceStart = 10
+                intUnitPriceEnd = 11
 
                 intAuthorizeStart = 1
                 intAuthorizeEnd = 2
