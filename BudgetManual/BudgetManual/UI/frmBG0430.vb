@@ -1974,41 +1974,46 @@ Public Class frmBG0430
         row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "DIFF_PREV_YEAR"
+        row("Column_Title") = "Diff Year'" & " Year'" & CInt(strYear) + 1
+        dtColumns.Rows.Add(row)
+
         row = dtColumns.NewRow
         row("Column_Name") = "RRT2"
         row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT3"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "PrevRRT3"
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "RRT3"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "RRT3"
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT4"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 3
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "PrevRRT4"
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 3
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "RRT4"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 4
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "RRT4"
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 4
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT5"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 4
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "PrevRRT5"
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 4
+        'dtColumns.Rows.Add(row)
 
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "RRT5"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 5
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "RRT5"
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 5
+        'dtColumns.Rows.Add(row)
 
         ''ISNULL(MASTER_DATA.RRT1 ,0) AS RRT1,
         'row = dtColumns.NewRow()
@@ -2586,7 +2591,7 @@ Public Class frmBG0430
         wb = excelApp.Workbooks.Add(missing)
 
         '//Delete Worksheets
-        If wb.Worksheets.Count > 1 Then
+        If wb.Worksheets.Count > 2 Then
             CType(wb.Worksheets(1), Excel.Worksheet).Delete()
             CType(wb.Worksheets(2), Excel.Worksheet).Delete()
         End If
@@ -2654,10 +2659,10 @@ Public Class frmBG0430
             'ws.Range(ws.Cells(colStartIndex - 1, 15), ws.Cells(colStartIndex - 1, 20)).Font.Bold = True
             'ws.Range(ws.Cells(colStartIndex - 1, 15), ws.Cells(colStartIndex - 1, 20)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            ws.Cells(colStartIndex - 1, 15) = "MTP Budget"
-            ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 16)).MergeCells = True
-            ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 16)).Font.Bold = True
-            ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 16)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+            ws.Cells(colStartIndex - 1, 11) = "MTP Budget"
+            ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 11)).MergeCells = True
+            ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 11)).Font.Bold = True
+            ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 11)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
             '//Setup Data
             For rowIndex As Integer = 0 To dsData.Tables(intSheetCount).Rows.Count - 1
@@ -2778,8 +2783,8 @@ Public Class frmBG0430
             ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 7)).Columns.ColumnWidth = 13
             ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 7)).WrapText = True
 
-            ws.Range(ws.Cells(2, 8), ws.Cells(rowMax, 16)).Columns.ColumnWidth = 13
-            ws.Range(ws.Cells(2, 8), ws.Cells(rowMax, 16)).WrapText = True
+            ws.Range(ws.Cells(2, 8), ws.Cells(rowMax, 11)).Columns.ColumnWidth = 13
+            ws.Range(ws.Cells(2, 8), ws.Cells(rowMax, 11)).WrapText = True
 
             '//Revise MTP Budget
             ' If blnMTPBudget = True Then
@@ -2801,7 +2806,7 @@ Public Class frmBG0430
             'excelApp.Range(excelApp.Cells(colStartIndex, 9), excelApp.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = 0
             'excelApp.Range(excelApp.Cells(colStartIndex - 1, 9), excelApp.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeTop).LineStyle = 0
 
-            intAuthorizeStart = 16
+            intAuthorizeStart = 11
             'intAuthorizeStart = 21
             intFontStart = 1
             intFontEnd = 30
@@ -2842,7 +2847,7 @@ Public Class frmBG0430
 
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 7), ws.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 8), ws.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 8), ws.Cells(rowMax, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
             '//Set font color
             ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
