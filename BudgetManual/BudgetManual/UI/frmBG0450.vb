@@ -2160,36 +2160,36 @@ Public Class frmBG0450
         row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT3"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "PrevRRT3"
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "RRT3"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "RRT3"
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT4"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 3
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "PrevRRT4"
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 3
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "RRT4"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 4
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "RRT4"
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 4
+        'dtColumns.Rows.Add(row)
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT5"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 4
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "PrevRRT5"
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 4
+        'dtColumns.Rows.Add(row)
 
 
-        row = dtColumns.NewRow
-        row("Column_Name") = "RRT5"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 5
-        dtColumns.Rows.Add(row)
+        'row = dtColumns.NewRow
+        'row("Column_Name") = "RRT5"
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 5
+        'dtColumns.Rows.Add(row)
 
 
         Return True
@@ -2534,7 +2534,7 @@ Public Class frmBG0450
             rng.EntireColumn.AutoFit()
 
 
-            intAuthorizeStart = 14
+            intAuthorizeStart = 8
             intFontStart = 1
             intFontEnd = colMax
 
@@ -2563,7 +2563,7 @@ Public Class frmBG0450
 
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, 4)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, 8)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
             '//Set font color
             ws.Range(ws.Cells(colStartIndex, 4), ws.Cells(rowMax, 5)).Font.Color = RGB(128, 128, 128)
