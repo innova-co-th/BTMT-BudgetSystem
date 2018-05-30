@@ -2476,7 +2476,7 @@ Public Class frmBG0440
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
-        row("Column_Name") = "DiffYear"
+        row("Column_Name") = "DIFFRRT1"
         row("Column_Title") = "Diff Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
@@ -3358,12 +3358,12 @@ Public Class frmBG0440
 
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, 4)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, 8)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 9), ws.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
             '//Set font color
             ws.Range(ws.Cells(colStartIndex, 4), ws.Cells(rowMax, 5)).Font.Color = RGB(128, 128, 128)
             ws.Range(ws.Cells(colStartIndex, 7), ws.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
-            ws.Range(ws.Cells(colStartIndex, 9), ws.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
+            ws.Range(ws.Cells(colStartIndex, 8), ws.Cells(rowMax, 8)).Font.Color = RGB(128, 128, 128)
             ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
             ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
 
