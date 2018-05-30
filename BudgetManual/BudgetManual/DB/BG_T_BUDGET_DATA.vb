@@ -1632,7 +1632,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
-            strSQL = strSQL.Replace("@REFPeriod", Me.RefPeriodType)
+            strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
 
             If String.Equals(Me.AccountNo.Trim.ToUpper, STRING_ALL.ToUpper) Then
                 strSQL = strSQL.Replace("@AccountNo", " ")
