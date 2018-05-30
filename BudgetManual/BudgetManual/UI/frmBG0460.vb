@@ -589,9 +589,10 @@ Public Class frmBG0460
         Dim xSt As Excel.Worksheet = Nothing
 
         xBk = excelApp.Workbooks.Add(System.Reflection.Missing.Value)
-        If xBk.Worksheets.Count > 2 Then
-            CType(xBk.Worksheets(1), Excel.Worksheet).Delete()
-            CType(xBk.Worksheets(2), Excel.Worksheet).Delete()
+        If xBk.Worksheets.Count > 1 Then
+            For i As Integer = 1 To xBk.Worksheets.Count - 1
+                CType(xBk.Worksheets(i), Excel.Worksheet).Delete()
+            Next
         End If
 
         '//Set Style Value < 0 please fill color "Red"

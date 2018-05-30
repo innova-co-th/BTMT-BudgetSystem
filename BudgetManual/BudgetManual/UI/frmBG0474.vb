@@ -621,8 +621,9 @@ Public Class frmBG0474
 
         xBk = excelApp.Workbooks.Add(System.Reflection.Missing.Value)
         If xBk.Worksheets.Count > 1 Then
-            CType(xBk.Worksheets(1), Excel.Worksheet).Delete()
-            CType(xBk.Worksheets(2), Excel.Worksheet).Delete()
+            For i As Integer = 1 To xBk.Worksheets.Count - 1
+                CType(xBk.Worksheets(i), Excel.Worksheet).Delete()
+            Next
         End If
 
         For intSheetCount As Integer = 0 To dsData.Tables.Count - 1

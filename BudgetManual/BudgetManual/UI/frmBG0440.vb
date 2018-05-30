@@ -1047,9 +1047,10 @@ Public Class frmBG0440
         wb = excelApp.Workbooks.Add(missing)
 
         '//Delete Worksheets
-        If wb.Worksheets.Count > 2 Then
-            CType(wb.Worksheets(1), Excel.Worksheet).Delete()
-            CType(wb.Worksheets(2), Excel.Worksheet).Delete()
+        If wb.Worksheets.Count > 1 Then
+            For i As Integer = 1 To wb.Worksheets.Count - 1
+                CType(wb.Worksheets(i), Excel.Worksheet).Delete()
+            Next
         End If
 
         '//Set Style Value < 0 please fill color "Red"
@@ -1784,8 +1785,9 @@ Public Class frmBG0440
 
         '//Delete Worksheets
         If wb.Worksheets.Count > 1 Then
-            CType(wb.Worksheets(1), Excel.Worksheet).Delete()
-            CType(wb.Worksheets(2), Excel.Worksheet).Delete()
+            For i As Integer = 1 To wb.Worksheets.Count - 1
+                CType(wb.Worksheets(i), Excel.Worksheet).Delete()
+            Next
         End If
 
         '//Set Style Value < 0 please fill color "Red"
@@ -2797,8 +2799,9 @@ Public Class frmBG0440
 
         '//Delete Worksheets
         If wb.Worksheets.Count > 1 Then
-            CType(wb.Worksheets(1), Excel.Worksheet).Delete()
-            CType(wb.Worksheets(2), Excel.Worksheet).Delete()
+            For i As Integer = 1 To wb.Worksheets.Count - 1
+                CType(wb.Worksheets(i), Excel.Worksheet).Delete()
+            Next
         End If
 
         '//Set Style Value < 0 please fill color "Red"
@@ -3110,8 +3113,9 @@ Public Class frmBG0440
 
         '//Delete Worksheets
         If wb.Worksheets.Count > 1 Then
-            CType(wb.Worksheets(1), Excel.Worksheet).Delete()
-            CType(wb.Worksheets(2), Excel.Worksheet).Delete()
+            For i As Integer = 1 To wb.Worksheets.Count - 1
+                CType(wb.Worksheets(i), Excel.Worksheet).Delete()
+            Next
         End If
 
         '//Set Style Value < 0 please fill color "Red"
