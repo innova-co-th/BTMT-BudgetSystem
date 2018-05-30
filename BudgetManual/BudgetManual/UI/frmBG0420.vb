@@ -770,9 +770,11 @@ Public Class frmBG0420
 
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax - 1, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax - 1, 13)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax - 1, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 16), xSt.Cells(rowMax - 1, 17)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                xSt.Range(xSt.Cells(colStartIndex, 11), xSt.Cells(rowMax - 1, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+                xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax - 1, 18)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+                xSt.Range(xSt.Cells(colStartIndex, 18), xSt.Cells(rowMax - 1, 19)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+                'xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax - 1, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                'xSt.Range(xSt.Cells(colStartIndex, 16), xSt.Cells(rowMax - 1, 17)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
             ElseIf strPeriod = "Estimate" Then
 
