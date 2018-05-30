@@ -1039,7 +1039,7 @@ Public Class frmBG0410
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "DIFF_PREV_YEAR"
-        dRow("Column_Title") = "Diff Year'" & " Year'" & CStr(intYear + 1)
+        dRow("Column_Title") = "Diff" & " Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
 
 
@@ -1357,20 +1357,20 @@ Public Class frmBG0410
                     xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).MergeCells = True
                 End If
 
-                ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MTP" Then
 
-                    xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                    xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
-                    '//Set font color
-                    xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
-                    xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
-                    xSt.Range(xSt.Cells(colStartIndex, 11), xSt.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
-                    xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
-                    xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
+                xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+                xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
-                End If
-                '//-- Edit Add by Max 26/09/2012
+                '//Set font color
+                xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
+                xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
+                xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax, 10)).Font.Color = RGB(128, 128, 128)
+                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
+                xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
+
+            End If
 
         Next
 

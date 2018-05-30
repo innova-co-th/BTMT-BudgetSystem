@@ -2475,6 +2475,11 @@ Public Class frmBG0440
         row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "DiffYear"
+        row("Column_Title") = "Diff Year'" & CInt(strYear) + 1
+        dtColumns.Rows.Add(row)
+
         row = dtColumns.NewRow
         row("Column_Name") = "RRT2"
         row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
