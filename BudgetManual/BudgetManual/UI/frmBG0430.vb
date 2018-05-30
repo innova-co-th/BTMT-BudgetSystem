@@ -1978,7 +1978,7 @@ Public Class frmBG0430
 
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_PREV_YEAR"
-        row("Column_Title") = "Diff Year'" & " Year'" & CInt(strYear) + 1
+        row("Column_Title") = "Diff" & " Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
@@ -2856,9 +2856,10 @@ Public Class frmBG0430
             '//Set font color
             ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, 7)).Font.Color = RGB(128, 128, 128)
             ws.Range(ws.Cells(colStartIndex, 9), ws.Cells(rowMax, 9)).Font.Color = RGB(128, 128, 128)
-            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
-            ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
-            ws.Range(ws.Cells(colStartIndex, 15), ws.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
+            ws.Range(ws.Cells(colStartIndex, 10), ws.Cells(rowMax, 10)).Font.Color = RGB(128, 128, 128)
+            'ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 11)).Font.Color = RGB(128, 128, 128)
+            'ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
+            'ws.Range(ws.Cells(colStartIndex, 15), ws.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
 
