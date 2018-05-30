@@ -806,9 +806,9 @@ Public Class frmBG0420
                 '//Set font color
                 xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax - 1, 6)).Font.Color = RGB(128, 128, 128)
                 xSt.Range(xSt.Cells(colStartIndex, 8), xSt.Cells(rowMax - 1, 8)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax - 1, 10)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax - 1, 12)).Font.Color = RGB(128, 128, 128)
-                xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax - 1, 14)).Font.Color = RGB(128, 128, 128)
+                xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax - 1, 9)).Font.Color = RGB(128, 128, 128)
+                'xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax - 1, 12)).Font.Color = RGB(128, 128, 128)
+                'xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax - 1, 14)).Font.Color = RGB(128, 128, 128)
 
             End If
         Next
