@@ -791,9 +791,9 @@ Public Class frmBG0450
 
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, 4)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 10)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 12), ws.Cells(rowMax, 13)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 14), ws.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 10), ws.Cells(rowMax, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 17)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 17), ws.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
 
             ws.Range(ws.Cells(2, 5), ws.Cells(rowMax, 10)).Columns.ColumnWidth = 12
             ws.Range(ws.Cells(2, 12), ws.Cells(rowMax, 17)).Columns.ColumnWidth = 12

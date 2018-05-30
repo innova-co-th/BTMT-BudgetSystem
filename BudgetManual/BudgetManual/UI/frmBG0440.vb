@@ -1258,9 +1258,11 @@ Public Class frmBG0440
 
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, 4)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 10)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 15), ws.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 10), ws.Cells(rowMax, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 17)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 17), ws.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
+            'ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            'ws.Range(ws.Cells(colStartIndex, 15), ws.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
