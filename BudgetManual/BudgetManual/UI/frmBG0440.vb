@@ -3318,7 +3318,7 @@ Public Class frmBG0440
             'excelApp.Range(excelApp.Cells(colStartIndex, 15), excelApp.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = 0
             'excelApp.Range(excelApp.Cells(colStartIndex - 1, 15), excelApp.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlEdgeTop).LineStyle = 0
 
-            intAuthorizeStart = 8
+            intAuthorizeStart = 9
             intFontStart = 1
             intFontEnd = 14
 
