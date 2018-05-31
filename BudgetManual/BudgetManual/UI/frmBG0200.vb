@@ -1104,9 +1104,9 @@ Public Class frmBG0200
                         Next
 
                         '// Show MTP Budget CAL
-                        For i = 1 To 2
-                            grvBudget4.Columns("g4ex0" & CStr(i)).Visible = True
-                        Next
+                        'For i = 1 To 2
+                        '    grvBudget4.Columns("g4ex0" & CStr(i)).Visible = True
+                        'Next
 
                         '// Show RRT Header
                         txtRRT0.Text = CDbl(myClsBG0200BL.RRT(0)).ToString("#,##0")
