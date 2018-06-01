@@ -1370,6 +1370,11 @@ Public Class frmBG0410
                 xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 13)).Font.Color = RGB(128, 128, 128)
                 xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 15)).Font.Color = RGB(128, 128, 128)
 
+                '//Set Format
+                xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+                xSt.Range(xSt.Cells(colStartIndex, 8), xSt.Cells(rowMax, 9)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+                xSt.Range(xSt.Cells(colStartIndex, 11), xSt.Cells(rowMax, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+
             End If
 
         Next

@@ -752,7 +752,8 @@ Public Class frmBG0420
             '//Set NumberFormat = "#,##0.00;[Red]-#,##0.00"
             If strPeriod = "MTP" Then
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, 5)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
-                xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax - 1, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+                xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax - 1, 8)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+                xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax - 1, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
             Else
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
             End If

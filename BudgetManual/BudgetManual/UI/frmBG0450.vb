@@ -2557,7 +2557,8 @@ Public Class frmBG0450
             colStartIndex = colStartIndex - 1
             'ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, 4)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
-            ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+            ws.Range(ws.Cells(colStartIndex, 6), ws.Cells(rowMax, 7)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
+            ws.Range(ws.Cells(colStartIndex, 9), ws.Cells(rowMax, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
 
             '//Set Frame
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, colMax)).Borders.LineStyle = 1
