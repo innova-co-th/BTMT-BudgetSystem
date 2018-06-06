@@ -3900,7 +3900,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle112.NullValue = Nothing
         Me.g4colDiff1.DefaultCellStyle = DataGridViewCellStyle112
         Me.g4colDiff1.Frozen = True
-        Me.g4colDiff1.HeaderText = "diff year "
+        Me.g4colDiff1.HeaderText = "Diff Year "
         Me.g4colDiff1.MinimumWidth = 50
         Me.g4colDiff1.Name = "g4colDiff1"
         Me.g4colDiff1.ReadOnly = True
@@ -3941,7 +3941,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle114.NullValue = Nothing
         Me.g4colDiff2.DefaultCellStyle = DataGridViewCellStyle114
         Me.g4colDiff2.Frozen = True
-        Me.g4colDiff2.HeaderText = "diff year "
+        Me.g4colDiff2.HeaderText = "Diff Year "
         Me.g4colDiff2.MinimumWidth = 50
         Me.g4colDiff2.Name = "g4colDiff2"
         Me.g4colDiff2.ReadOnly = True
