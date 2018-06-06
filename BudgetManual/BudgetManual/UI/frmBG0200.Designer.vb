@@ -3895,9 +3895,10 @@ Partial Class frmBG0200
         'g4colDiff1
         '
         Me.g4colDiff1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.g4colDiff1.DataPropertyName = "DiffYear1"
         DataGridViewCellStyle112.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle112.Format = "N2"
-        DataGridViewCellStyle112.NullValue = Nothing
+        DataGridViewCellStyle112.NullValue = "-"
         Me.g4colDiff1.DefaultCellStyle = DataGridViewCellStyle112
         Me.g4colDiff1.Frozen = True
         Me.g4colDiff1.HeaderText = "Diff Year "
@@ -3937,8 +3938,9 @@ Partial Class frmBG0200
         'g4colDiff2
         '
         Me.g4colDiff2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.g4colDiff2.DataPropertyName = "DiffYear2"
         DataGridViewCellStyle114.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle114.NullValue = Nothing
+        DataGridViewCellStyle114.NullValue = "-"
         Me.g4colDiff2.DefaultCellStyle = DataGridViewCellStyle114
         Me.g4colDiff2.Frozen = True
         Me.g4colDiff2.HeaderText = "Diff Year "

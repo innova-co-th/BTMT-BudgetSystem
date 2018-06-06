@@ -781,6 +781,12 @@ Public Class frmBG0200
                     dc = New DataColumn("DiffYear", GetType(Double))
                     dtGrid.Columns.Add(dc)
 
+                    dc = New DataColumn("DiffYear1", GetType(Double))
+                    dtGrid.Columns.Add(dc)
+
+                    dc = New DataColumn("DiffYear2", GetType(Double))
+                    dtGrid.Columns.Add(dc)
+
                     dc = New DataColumn("CALC1", GetType(String))
                     dtGrid.Columns.Add(dc)
                     dc = New DataColumn("CALC2", GetType(String))
@@ -3161,6 +3167,8 @@ Public Class frmBG0200
 
     Private Sub CalcReviseMTPBudget()
         Dim dblTotal As Double
+        Dim dblTotal1 As Double
+        Dim dblTotal2 As Double
 
         Try
             Debug.Print(Now.ToString & ": Begin CalcReviseMTPBudget")
@@ -3176,6 +3184,23 @@ Public Class frmBG0200
                 Else
                     dtDat.Rows(intRowIndex)![DiffYear] = dblTotal
                 End If
+
+                '// Calc Diff Year 1 
+                dblTotal1 = CDbl(Nz(dtDat.Rows(intRowIndex)![RRT1], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT2], 0))
+                If dblTotal1 = 0 Then
+                    dtDat.Rows(intRowIndex)![DiffYear1] = DBNull.Value
+                Else
+                    dtDat.Rows(intRowIndex)![DiffYear1] = dblTotal1
+                End If
+
+                '// Calc Diff Year 2
+                dblTotal2 = CDbl(Nz(dtDat.Rows(intRowIndex)![RRT2], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT3], 0))
+                If dblTotal2 = 0 Then
+                    dtDat.Rows(intRowIndex)![DiffYear2] = DBNull.Value
+                Else
+                    dtDat.Rows(intRowIndex)![DiffYear2] = dblTotal2
+                End If
+
             Next
             grvBudget4.AutoGenerateColumns = False
             grvBudget4.DataSource = dtDat
