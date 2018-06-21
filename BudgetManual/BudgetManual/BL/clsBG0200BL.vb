@@ -975,6 +975,7 @@ Public Class clsBG0200BL
         Dim clsBG_T_BUDGET_REFERENCE As New BG_T_BUDGET_REFERENCE
         Dim conn As SqlConnection
         Dim trans As SqlTransaction
+        Dim blnHv As Boolean
 
         '// Query Related budget order
         If SearchBudgetOrder() = False OrElse Me.OrderList.Rows.Count = 0 Then
@@ -1025,6 +1026,7 @@ Public Class clsBG0200BL
             End If
 
             For Each dr As DataRow In Me.OrderList.Rows
+                blnHv = False
                 '// Add Budget Data Detail
                 '// Set Parameters
                 clsBG_T_BUDGET_DATA.BudgetYear = Me.BudgetYear
@@ -1034,9 +1036,15 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_DATA.UserId = Me.UserId
                 clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
-                '// Call Function
-                If clsBG_T_BUDGET_DATA.Insert001(conn, trans) = False Then
-                    Throw New Exception("Can not insert budget data!")
+                '//Select 
+                blnHv = clsBG_T_BUDGET_DATA.Select032()
+                If blnHv = True Then
+                    ' Exist : Not Insert 
+                Else
+                    '// Call Function
+                    If clsBG_T_BUDGET_DATA.Insert001(conn, trans) = False Then
+                        Throw New Exception("Can not insert budget data!")
+                    End If
                 End If
             Next
 

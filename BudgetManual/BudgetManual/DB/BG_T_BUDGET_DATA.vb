@@ -4367,6 +4367,56 @@ Public Class BG_T_BUDGET_DATA
     End Function
 #End Region
 
+#Region "Select032"
+    ''' <summary>
+    ''' Select all budget data by Status
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Select032() As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim da As SqlDataAdapter
+        Dim strSQL As String
+        Dim dt As DataTable
+
+        Try
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT032")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@BudgetOrderNo", Me.BudgetOrderNo)
+
+            da = New SqlDataAdapter(strSQL, conn)
+            DS = New DataSet
+            dt = New DataTable
+            da.Fill(dt)
+
+            Me.dtResult = dt
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return True
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_DATA.Select032] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return False
+
+        End Try
+    End Function
+#End Region
+
 #Region "Insert001"
     ''' <summary>
     ''' Insert001

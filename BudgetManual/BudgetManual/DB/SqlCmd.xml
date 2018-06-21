@@ -9042,6 +9042,14 @@
       AND BD.REV_NO = @RevNo
       AND BD.PROJECT_NO = @ProjectNo
     </SELECT031>
+    <SELECT032>
+      SELECT * FROM BG_T_BUDGET_DATA BD 
+      WHERE BD.BUDGET_YEAR = @BudgetYear
+      AND BD.PERIOD_TYPE = @PeriodType
+      AND BD.REV_NO = @RevNo
+      AND BD.PROJECT_NO = @ProjectNo
+      AND BD.BUDGET_ORDER_NO = '@BudgetOrderNo'
+    </SELECT032>
     <INSERT001>
       INSERT INTO BG_T_BUDGET_DATA (BUDGET_YEAR, PERIOD_TYPE, BUDGET_ORDER_NO, REV_NO, CREATE_USER_ID, UPDATE_USER_ID, PROJECT_NO)
       VALUES (@BudgetYear,@PeriodType,'@BudgetOrderNo',@RevNo,'@UserId','@UserId', @ProjectNo)
