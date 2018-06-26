@@ -523,52 +523,7 @@ Public Class clsBG0620BL
 
                         End If
                     End If
-                    
 
-
-                    'clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
-                    'If clsBG_T_BUDGET_HEADER.Select016() Then
-                    '    dtHeader = clsBG_T_BUDGET_HEADER.dtResult
-                    '    If Not dtHeader Is Nothing AndAlso dtHeader.Rows.Count > 0 Then
-                    '        ' Not Insert HEADER
-                    '    Else
-                    '        'Insert Header for OLD data 
-                    '        'Get All OLD Header 
-                    '        clsBG_T_BUDGET_HEADER.UserPIC = strOldPIC
-                    '        If clsBG_T_BUDGET_HEADER.Select017() Then
-                    '            dtAllHDActive = clsBG_T_BUDGET_HEADER.dtResult
-                    '        End If
-
-                    '        If Not dtAllHDActive Is Nothing AndAlso dtAllHDActive.Rows.Count > 0 Then
-
-                    '            For i As Integer = 0 To dtAllHDActive.Rows.Count - 1
-                    '                '// Set Parameters
-                    '                clsBG_T_BUDGET_HEADER.BudgetYear = dtAllHDActive.Rows(i).Item("BUDGET_YEAR").ToString
-                    '                clsBG_T_BUDGET_HEADER.PeriodType = dtAllHDActive.Rows(i).Item("PERIOD_TYPE").ToString
-                    '                clsBG_T_BUDGET_HEADER.BudgetType = dtAllHDActive.Rows(i).Item("BUDGET_TYPE").ToString
-                    '                clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
-                    '                clsBG_T_BUDGET_HEADER.RevNo = dtAllHDActive.Rows(i).Item("REV_NO").ToString
-                    '                clsBG_T_BUDGET_HEADER.Status = CStr(enumBudgetStatus.NewRecord)
-                    '                clsBG_T_BUDGET_HEADER.UserId = Me.CreateUserId
-                    '                clsBG_T_BUDGET_HEADER.ProjectNo = dtAllHDActive.Rows(i).Item("PROJECT_NO").ToString
-                    '                clsBG_T_BUDGET_HEADER.RRT1 = dtAllHDActive.Rows(i).Item("RRT1").ToString
-                    '                clsBG_T_BUDGET_HEADER.RRT2 = dtAllHDActive.Rows(i).Item("RRT2").ToString
-                    '                clsBG_T_BUDGET_HEADER.RRT3 = dtAllHDActive.Rows(i).Item("RRT3").ToString
-                    '                clsBG_T_BUDGET_HEADER.RRT4 = dtAllHDActive.Rows(i).Item("RRT4").ToString
-                    '                clsBG_T_BUDGET_HEADER.RRT5 = dtAllHDActive.Rows(i).Item("RRT5").ToString
-                    '                clsBG_T_BUDGET_HEADER.WorkingBG1 = dtAllHDActive.Rows(i).Item("WorkingBG1").ToString
-                    '                clsBG_T_BUDGET_HEADER.WorkingBG2 = dtAllHDActive.Rows(i).Item("WorkingBG2").ToString
-
-
-                    '                '// Call Function: Insert Budget Header
-                    '                If clsBG_T_BUDGET_HEADER.Insert001(conn, trans) = False Then
-                    '                    Throw New Exception("Can not insert budget header!")
-                    '                End If
-                    '            Next
-
-                    '        End If
-                    '    End If
-                    'End If
                 Else                                '// Add data
                     If clsBG_M_BUDGET_ORDER.Insert001(conn, trans) Then
                         result = True
