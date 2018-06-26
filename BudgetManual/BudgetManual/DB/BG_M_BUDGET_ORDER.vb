@@ -1097,6 +1097,44 @@ Public Class BG_M_BUDGET_ORDER
         End Try
     End Function
 
+    Public Function Select017() As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim da As SqlDataAdapter
+        Dim dt As DataTable
+        Dim strSQL As String
+
+        Try
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_M_BUDGET_ORDER", "SELECT017")
+            strSQL = strSQL.Replace("@P_BG_ORDER_NO", Me.BudgetOrderNo.Trim)
+
+            da = New SqlDataAdapter(strSQL, conn)
+            dt = New DataTable
+            da.Fill(dt)
+
+            Me.dtResult = dt
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return True
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_M_BUDGET_ORDER.Select017] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return False
+
+        End Try
+    End Function
+
     Public Function Update001(Optional ByVal pConn As SqlConnection = Nothing, _
                               Optional ByVal pTrans As SqlTransaction = Nothing) As Boolean
         Dim conn As SqlConnection = Nothing
