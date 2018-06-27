@@ -256,7 +256,7 @@ Public Class clsBG0430BL
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.ReviseBudget)
+            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
 
 
             If Me.RevNo = "" Then

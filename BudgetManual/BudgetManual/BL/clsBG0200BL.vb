@@ -849,7 +849,7 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.ReviseBudget)
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
 
                 blnRtn = clsBG_T_BUDGET_REFERENCE.Select001()
 

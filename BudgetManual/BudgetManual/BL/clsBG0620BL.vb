@@ -472,7 +472,7 @@ Public Class clsBG0620BL
                                     clsBG_T_BUDGET_HEADER.BudgetType = dtAllHDActive.Rows(i).Item("BUDGET_TYPE").ToString
                                     clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
                                     clsBG_T_BUDGET_HEADER.RevNo = dtAllHDActive.Rows(i).Item("REV_NO").ToString
-                                    clsBG_T_BUDGET_HEADER.Status = CStr(enumBudgetStatus.NewRecord)
+                                    clsBG_T_BUDGET_HEADER.Status = dtAllHDActive.Rows(i).Item("STATUS").ToString
                                     clsBG_T_BUDGET_HEADER.UserId = Me.CreateUserId
                                     clsBG_T_BUDGET_HEADER.ProjectNo = dtAllHDActive.Rows(i).Item("PROJECT_NO").ToString
                                     clsBG_T_BUDGET_HEADER.RRT1 = dtAllHDActive.Rows(i).Item("RRT1").ToString
@@ -503,7 +503,7 @@ Public Class clsBG0620BL
                                 clsBG_T_BUDGET_HEADER.BudgetType = dtAllHDActive.Rows(i).Item("BUDGET_TYPE").ToString
                                 clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
                                 clsBG_T_BUDGET_HEADER.RevNo = dtAllHDActive.Rows(i).Item("REV_NO").ToString
-                                clsBG_T_BUDGET_HEADER.Status = CStr(enumBudgetStatus.NewRecord)
+                                clsBG_T_BUDGET_HEADER.Status = dtAllHDActive.Rows(i).Item("STATUS").ToString
                                 clsBG_T_BUDGET_HEADER.UserId = Me.CreateUserId
                                 clsBG_T_BUDGET_HEADER.ProjectNo = dtAllHDActive.Rows(i).Item("PROJECT_NO").ToString
                                 clsBG_T_BUDGET_HEADER.RRT1 = dtAllHDActive.Rows(i).Item("RRT1").ToString
@@ -605,12 +605,21 @@ Public Class clsBG0620BL
     Public Function saveBudgetOrderAll(ByVal conn As SqlConnection, _
                                        ByVal trans As SqlTransaction) As Boolean
         Dim result As Boolean = False
+        Dim dtHeader As DataTable
+        Dim dtAllHDActive As DataTable
+        Dim strOldPIC As String
+
 
         clsBG_M_BUDGET_ORDER = New BG_M_BUDGET_ORDER
+        clsBG_T_BUDGET_HEADER = New BG_T_BUDGET_HEADER
 
         clsBG_M_BUDGET_ORDER.BudgetOrderNo = Me.BudgetOrderNo
-        If clsBG_M_BUDGET_ORDER.Select003 Then
+        If clsBG_M_BUDGET_ORDER.Select017 Then
             Me.DtResult = clsBG_M_BUDGET_ORDER.dtResult
+          
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+            trans = conn.BeginTransaction()
 
             Try
                 clsBG_M_BUDGET_ORDER.BudgetOrderName = Me.BudgetOrderName
@@ -630,17 +639,118 @@ Public Class clsBG0620BL
                 clsBG_M_BUDGET_ORDER.Remarks = Me.Remarks
 
                 If Me.DtResult.Rows.Count = 1 Then  '// Update data
+
+                    strOldPIC = DtResult.Rows(0).Item("PERSON_IN_CHARGE_NO").ToString
+
                     If clsBG_M_BUDGET_ORDER.Update001(conn, trans) Then
                         result = True
                     End If
+
+
+                    'Check Header by PIC 
+                    dtHeader = Nothing
+                    dtAllHDActive = Nothing
+
+
+                    'Get All OLD Header 
+                    clsBG_T_BUDGET_HEADER.UserPIC = strOldPIC
+                    If clsBG_T_BUDGET_HEADER.Select017() Then
+                        dtAllHDActive = clsBG_T_BUDGET_HEADER.dtResult
+                    End If
+
+                    clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
+                    If clsBG_T_BUDGET_HEADER.Select016() Then
+                        dtHeader = clsBG_T_BUDGET_HEADER.dtResult
+                    End If
+
+                    Dim drF() As DataRow
+                    If Not dtHeader Is Nothing AndAlso dtHeader.Rows.Count > 0 Then
+                        If Not dtAllHDActive Is Nothing AndAlso dtAllHDActive.Rows.Count > 0 Then
+                            For i As Integer = 0 To dtAllHDActive.Rows.Count - 1
+                                drF = Nothing
+
+                                drF = dtHeader.Select("BUDGET_YEAR=" & dtAllHDActive.Rows(i).Item("BUDGET_YEAR").ToString & " AND PERIOD_TYPE=" & dtAllHDActive.Rows(i).Item("PERIOD_TYPE").ToString _
+                                      & " AND PERSON_IN_CHARGE_NO='" & Me.PersonInCharge & "' AND BUDGET_TYPE='" & dtAllHDActive.Rows(i).Item("BUDGET_TYPE").ToString _
+                                      & "' AND REV_NO=" & dtAllHDActive.Rows(i).Item("REV_NO").ToString)
+
+                                If Not drF Is Nothing AndAlso drF.Length > 0 Then
+                                    ' Not Insert 
+                                Else
+                                    '// Set Parameters
+                                    clsBG_T_BUDGET_HEADER.BudgetYear = dtAllHDActive.Rows(i).Item("BUDGET_YEAR").ToString
+                                    clsBG_T_BUDGET_HEADER.PeriodType = dtAllHDActive.Rows(i).Item("PERIOD_TYPE").ToString
+                                    clsBG_T_BUDGET_HEADER.BudgetType = dtAllHDActive.Rows(i).Item("BUDGET_TYPE").ToString
+                                    clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
+                                    clsBG_T_BUDGET_HEADER.RevNo = dtAllHDActive.Rows(i).Item("REV_NO").ToString
+                                    clsBG_T_BUDGET_HEADER.Status = dtAllHDActive.Rows(i).Item("STATUS").ToString
+                                    clsBG_T_BUDGET_HEADER.UserId = Me.CreateUserId
+                                    clsBG_T_BUDGET_HEADER.ProjectNo = dtAllHDActive.Rows(i).Item("PROJECT_NO").ToString
+                                    clsBG_T_BUDGET_HEADER.RRT1 = dtAllHDActive.Rows(i).Item("RRT1").ToString
+                                    clsBG_T_BUDGET_HEADER.RRT2 = dtAllHDActive.Rows(i).Item("RRT2").ToString
+                                    clsBG_T_BUDGET_HEADER.RRT3 = dtAllHDActive.Rows(i).Item("RRT3").ToString
+                                    clsBG_T_BUDGET_HEADER.RRT4 = dtAllHDActive.Rows(i).Item("RRT4").ToString
+                                    clsBG_T_BUDGET_HEADER.RRT5 = dtAllHDActive.Rows(i).Item("RRT5").ToString
+                                    clsBG_T_BUDGET_HEADER.WorkingBG1 = dtAllHDActive.Rows(i).Item("Working_BG1").ToString
+                                    clsBG_T_BUDGET_HEADER.WorkingBG2 = dtAllHDActive.Rows(i).Item("Working_BG2").ToString
+
+
+                                    '// Call Function: Insert Budget Header
+                                    If clsBG_T_BUDGET_HEADER.Insert001(conn, trans) = False Then
+                                        Throw New Exception("Can not insert budget header!")
+                                    End If
+                                End If
+
+
+                            Next
+                        End If
+                    Else
+                        If Not dtAllHDActive Is Nothing AndAlso dtAllHDActive.Rows.Count > 0 Then
+
+                            For i As Integer = 0 To dtAllHDActive.Rows.Count - 1
+                                '// Set Parameters
+                                clsBG_T_BUDGET_HEADER.BudgetYear = dtAllHDActive.Rows(i).Item("BUDGET_YEAR").ToString
+                                clsBG_T_BUDGET_HEADER.PeriodType = dtAllHDActive.Rows(i).Item("PERIOD_TYPE").ToString
+                                clsBG_T_BUDGET_HEADER.BudgetType = dtAllHDActive.Rows(i).Item("BUDGET_TYPE").ToString
+                                clsBG_T_BUDGET_HEADER.UserPIC = Me.PersonInCharge
+                                clsBG_T_BUDGET_HEADER.RevNo = dtAllHDActive.Rows(i).Item("REV_NO").ToString
+                                clsBG_T_BUDGET_HEADER.Status = dtAllHDActive.Rows(i).Item("STATUS").ToString
+                                clsBG_T_BUDGET_HEADER.UserId = Me.CreateUserId
+                                clsBG_T_BUDGET_HEADER.ProjectNo = dtAllHDActive.Rows(i).Item("PROJECT_NO").ToString
+                                clsBG_T_BUDGET_HEADER.RRT1 = dtAllHDActive.Rows(i).Item("RRT1").ToString
+                                clsBG_T_BUDGET_HEADER.RRT2 = dtAllHDActive.Rows(i).Item("RRT2").ToString
+                                clsBG_T_BUDGET_HEADER.RRT3 = dtAllHDActive.Rows(i).Item("RRT3").ToString
+                                clsBG_T_BUDGET_HEADER.RRT4 = dtAllHDActive.Rows(i).Item("RRT4").ToString
+                                clsBG_T_BUDGET_HEADER.RRT5 = dtAllHDActive.Rows(i).Item("RRT5").ToString
+                                clsBG_T_BUDGET_HEADER.WorkingBG1 = dtAllHDActive.Rows(i).Item("Working_BG1").ToString
+                                clsBG_T_BUDGET_HEADER.WorkingBG2 = dtAllHDActive.Rows(i).Item("Working_BG2").ToString
+
+
+                                '// Call Function: Insert Budget Header
+                                If clsBG_T_BUDGET_HEADER.Insert001(conn, trans) = False Then
+                                    Throw New Exception("Can not insert budget header!")
+                                End If
+                            Next
+
+                        End If
+                    End If
+
+
                 Else                                '// Add data
                     If clsBG_M_BUDGET_ORDER.Insert001(conn, trans) Then
                         result = True
                     End If
                 End If
+
+                If result Then
+                    trans.Commit()
+                End If
             Catch ex As Exception
-                result = False
+                trans.Rollback()
                 showErrorMessage("Error: " & ex.Message)
+            Finally
+                If conn.State <> ConnectionState.Closed Then
+                    conn.Close()
+                End If
             End Try
         Else
             result = False

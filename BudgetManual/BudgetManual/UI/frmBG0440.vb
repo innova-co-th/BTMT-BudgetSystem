@@ -795,7 +795,7 @@ Public Class frmBG0440
                 Case "RevYear"
                     drInvestments("RevYear") = returnValue
                 Case "DiffYear"
-                    drInvestments("DiffYear") = Convert.ToDecimal(Nz(drInvestments("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("PrevRRT1"), 0.0))
+                    drInvestments("DiffYear") = (Convert.ToDecimal(Nz(drInvestments("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("PrevRRT1"), 0.0)))
             End Select
 
         Next
@@ -3977,12 +3977,12 @@ Public Class frmBG0440
                 Case "WBRevYear"
                     drWorkingBudget("RevYear") = returnValue
                 Case "WBDiffYear"
-                    drWorkingBudget("DiffYear") = Convert.ToDecimal(Nz(drWorkingBudget("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("PrevRRT1"), 0.0))
+                    drWorkingBudget("DiffYear") = (Convert.ToDecimal(Nz(drWorkingBudget("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("PrevRRT1"), 0.0)))
             End Select
 
 
         Next
-        drWorkingBudget("DiffYear") = Convert.ToDecimal(Nz(drWorkingBudget("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("PrevRRT1"), 0.0))
+        drWorkingBudget("DiffYear") = (Convert.ToDecimal(Nz(drWorkingBudget("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("PrevRRT1"), 0.0)))
         Return True
     End Function
 
