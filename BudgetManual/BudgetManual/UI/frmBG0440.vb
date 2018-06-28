@@ -3862,8 +3862,8 @@ Public Class frmBG0440
                     drAdministrationCost("RRT4") = returnValue
                 Case "ADMIN_RRT5"
                     drAdministrationCost("RRT5") = returnValue
-                    'Case "ADMIN_REVYEAR"
-                    '    drAdministrationCost("REVYEAR") = returnValue
+                Case "ADMIN_REVYEAR"
+                    drAdministrationCost("REVYEAR") = returnValue
                 Case "ADMIN_PrevRRT1"
                     drAdministrationCost("PrevRRT1") = returnValue
                 Case "ADMIN_PrevRRT2"
@@ -3876,8 +3876,10 @@ Public Class frmBG0440
                     drAdministrationCost("PrevRRT5") = returnValue
                 Case "ADMIN_DIFFYEAR"
                     drAdministrationCost("DiffYear") = returnValue
-                Case "ADMIN_REVYEAR"
-                    drAdministrationCost("DiffRRT1") = returnValue
+                Case "ADMIN_DIFFRRT1"
+                    drAdministrationCost("DIFFRRT1") = returnValue
+
+
 
             End Select
 
@@ -3914,8 +3916,8 @@ Public Class frmBG0440
                     drManufacturingCost("RRT4") = returnValue
                 Case "FC_RRT5"
                     drManufacturingCost("RRT5") = returnValue
-                    'Case "FC_REVYEAR"
-                    '    drManufacturingCost("REVYEAR") = returnValue
+                Case "FC_REVYEAR"
+                    drManufacturingCost("REVYEAR") = returnValue
                 Case "FC_PrevRRT1"
                     drManufacturingCost("PrevRRT1") = returnValue
                 Case "FC_PrevRRT2"
@@ -3928,8 +3930,8 @@ Public Class frmBG0440
                     drManufacturingCost("PrevRRT5") = returnValue
                 Case "FC_DIFFYEAR"
                     drManufacturingCost("DiffYear") = returnValue
-                Case "FC_REVYEAR"
-                    drManufacturingCost("DiffRRT1") = returnValue
+                Case "FC_DIFFRRT1"
+                    drManufacturingCost("DIFFRRT1") = returnValue
 
             End Select
 
@@ -3982,6 +3984,9 @@ Public Class frmBG0440
                     drWorkingBudget("RevYear") = returnValue
                 Case "WBDiffYear"
                     drWorkingBudget("DiffYear") = (Convert.ToDecimal(Nz(drWorkingBudget("RevYear"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("PrevRRT1"), 0.0)))
+                Case "WBDIFFRRT1"
+                    drWorkingBudget("DIFFRRT1") = returnValue
+
             End Select
 
 
