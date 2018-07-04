@@ -957,10 +957,13 @@ Public Class frmBG0440
 
             Dim strColumnName As String = dsData.Tables(0).Columns(k).ColumnName
 
-            strExpression = "Sum(" + strColumnName + ")"
-            strFilter = "BUDGET_TYPE = 'E'"
-            returnValue = dsData.Tables(0).Compute(strExpression, strFilter)
-            drWorkingBudget(dsData.Tables(0).Columns(k).ColumnName) = returnValue
+            If strColumnName <> "MTP_RRT1" Then
+                strExpression = "Sum(" + strColumnName + ")"
+                strFilter = "BUDGET_TYPE = 'E'"
+                returnValue = dsData.Tables(0).Compute(strExpression, strFilter)
+                drWorkingBudget(dsData.Tables(0).Columns(k).ColumnName) = returnValue
+            End If
+           
 
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "WB_ACTUAL_1ST_HALF"
@@ -984,9 +987,6 @@ Public Class frmBG0440
 
                 Case "WB_TOTAL_1ST_HALF"
                     drWorkingBudget("TOTAL_1ST_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("WB_M1"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_M2"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_M3"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_M4"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_M5"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_M6"), 0.0))
-
-                    'Case "WB_MTP_RRT1"
-                    'drWorkingBudget("MTP_RRT1") = returnValue
 
                 Case "MTPWB"
                     strExpression = "Sum(" + strColumnName + ")"
