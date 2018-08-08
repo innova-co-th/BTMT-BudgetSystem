@@ -1079,7 +1079,11 @@ Public Class frmBG0200
                     '// Set Column Headers
                     If Not grvBudget4.Columns("g4col6").HeaderText.Contains("'") Then
                         For i = 6 To 8
-                            grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
+                            'grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
+
+                            grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2)) + 1
+
+                            'grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
 
                             grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
 
@@ -1088,16 +1092,21 @@ Public Class frmBG0200
                         If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
                             For i = 1 To 5
                                 '// Current Year
-                                grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
+                                'grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
+                                grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
                                 grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Replace("@1", CInt(Mid(Me.BudgetKey, 3, 2)).ToString("00"))
                             Next
 
-                            grvBudget4.Columns("g4colDiff1").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (1)).ToString("00")
-                            grvBudget4.Columns("g4colDiff2").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (2)).ToString("00")
+                            'grvBudget4.Columns("g4colDiff1").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (1)).ToString("00")
+                            'grvBudget4.Columns("g4colDiff2").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (2)).ToString("00")
+
+                            grvBudget4.Columns("g4colDiff1").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (2)).ToString("00")
+                            grvBudget4.Columns("g4colDiff2").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (3)).ToString("00")
 
                             For i = 1 To 4
                                 '// Previous Year
-                                grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
+                                'grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
+                                grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
                                 grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
                             Next
                         End If
