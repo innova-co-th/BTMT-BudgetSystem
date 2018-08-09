@@ -951,7 +951,7 @@ Public Class frmBG0440
                                             ByRef drWorkingBudget As DataRow) As Boolean
         Dim strExpression As String
         Dim strFilter As String = String.Empty
-        Dim returnValue As Object
+        Dim returnValue As Object = Nothing
 
         For k As Integer = intDataColumnIndex To dsData.Tables(0).Columns.Count - 1
 
