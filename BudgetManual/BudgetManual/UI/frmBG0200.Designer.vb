@@ -3840,7 +3840,7 @@ Partial Class frmBG0200
         'g4col7
         '
         Me.g4col7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.g4col7.DataPropertyName = "PrevRRT1"
+        Me.g4col7.DataPropertyName = "PrevRRT2"
         Me.g4col7.Frozen = True
         Me.g4col7.HeaderText = "MTP@1 Year"
         Me.g4col7.MinimumWidth = 30
@@ -3883,7 +3883,7 @@ Partial Class frmBG0200
         'g4col10
         '
         Me.g4col10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.g4col10.DataPropertyName = "PrevRRT2"
+        Me.g4col10.DataPropertyName = "PrevRRT3"
         Me.g4col10.Frozen = True
         Me.g4col10.HeaderText = "MTP@1 Year"
         Me.g4col10.MaxInputLength = 30
@@ -3926,7 +3926,7 @@ Partial Class frmBG0200
         'g4col12
         '
         Me.g4col12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.g4col12.DataPropertyName = "PrevRRT3"
+        Me.g4col12.DataPropertyName = "PrevRRT4"
         Me.g4col12.Frozen = True
         Me.g4col12.HeaderText = "MTP@1 Year"
         Me.g4col12.MaxInputLength = 30

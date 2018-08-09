@@ -3190,7 +3190,7 @@ Public Class frmBG0200
             '// Auto Calculation
             For intRowIndex As Integer = 0 To dtDat.Rows.Count - 1
                 '// Calc Diff Year
-                dblTotal = CDbl(Nz(dtDat.Rows(intRowIndex)![RevYear], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT1], 0))
+                dblTotal = CDbl(Nz(dtDat.Rows(intRowIndex)![RevYear], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT2], 0))
                 If dblTotal = 0 Then
                     dtDat.Rows(intRowIndex)![DiffYear] = DBNull.Value
                 Else
@@ -3198,7 +3198,7 @@ Public Class frmBG0200
                 End If
 
                 '// Calc Diff Year 1 
-                dblTotal1 = CDbl(Nz(dtDat.Rows(intRowIndex)![RRT1], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT2], 0))
+                dblTotal1 = CDbl(Nz(dtDat.Rows(intRowIndex)![RRT2], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT3], 0))
                 If dblTotal1 = 0 Then
                     dtDat.Rows(intRowIndex)![DiffYear1] = DBNull.Value
                 Else
@@ -3206,7 +3206,7 @@ Public Class frmBG0200
                 End If
 
                 '// Calc Diff Year 2
-                dblTotal2 = CDbl(Nz(dtDat.Rows(intRowIndex)![RRT2], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT3], 0))
+                dblTotal2 = CDbl(Nz(dtDat.Rows(intRowIndex)![RRT3], 0)) - CDbl(Nz(dtDat.Rows(intRowIndex)![PrevRRT4], 0))
                 If dblTotal2 = 0 Then
                     dtDat.Rows(intRowIndex)![DiffYear2] = DBNull.Value
                 Else

@@ -362,7 +362,7 @@ Public Class frmBG0670
                     '    Me.ComboBox1_SelectedIndexChanged("", Nothing)
                 ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
                     grbReference.Enabled = True
-                    Me.cboRefBudgetYear.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue)
+                    Me.cboRefBudgetYear.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) + 1
                     Me.ComboBox1_SelectedIndexChanged("", Nothing)
                 Else
                     grbReference.Enabled = False
