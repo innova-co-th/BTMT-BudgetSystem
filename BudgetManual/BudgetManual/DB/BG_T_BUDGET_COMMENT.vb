@@ -362,6 +362,12 @@ Public Class BG_T_BUDGET_COMMENT
                         strCondition = " RRT1 = '" & Me.Comment & "'"
                     Case "2"
                         strCondition = " RRT2 = '" & Me.Comment & "'"
+                    Case "3"
+                        strCondition = " RRT3 = '" & Me.Comment & "'"
+                    Case "4"
+                        strCondition = " RRT4 = '" & Me.Comment & "'"
+                    Case "5"
+                        strCondition = " RRT5 = '" & Me.Comment & "'"
                 End Select
             Else
                 Select Case Me.MonthNo

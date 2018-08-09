@@ -127,11 +127,14 @@ Public Class frmBG0200
         Dim strPeriod As String = String.Empty
 
         Try
-            If BudgetKey.Substring(4, 2).IndexOf("0") = 0 Then
-                strPeriod = BudgetKey.Substring(5, 1)
-            Else
-                strPeriod = BudgetKey.Substring(4, 2)
+            If BudgetKey <> "" Then
+                If BudgetKey.Substring(4, 2).IndexOf("0") = 0 Then
+                    strPeriod = BudgetKey.Substring(5, 1)
+                Else
+                    strPeriod = BudgetKey.Substring(4, 2)
+                End If
             End If
+            
         Catch ex As Exception
             Throw ex
         End Try
@@ -3214,7 +3217,7 @@ Public Class frmBG0200
             grvBudget4.AutoGenerateColumns = False
             grvBudget4.DataSource = dtDat
 
-            '// Calc MTP Budget
+            '// Calc MTP Budget '---1. Change Input MTP Budget (Budget Journal) Comment 8/8/2018 
             If Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
                 For intRowIndex As Integer = 0 To dtDat.Rows.Count - 1
                     CalcMTPBudgetNew(intRowIndex)
@@ -3401,130 +3404,130 @@ Public Class frmBG0200
             strRRT(5) = lblRRT5p.Text.Replace("%", "")
 
             If IsNumeric(strRRT(1)) Or IsNumeric(strRRT(2)) Or IsNumeric(strRRT(3)) Or IsNumeric(strRRT(4)) Or IsNumeric(strRRT(5)) Then
-                '// get [Revise Year] value
-                dblReviseYear = CDbl(Nz(grvBudget4.Item("g4col6", intRow).Value, 0))
-                strOrderNo = CStr(grvBudget4.Item("OrderNo4", intRow).Value)
+                ''// get [Revise Year] value
+                'dblReviseYear = CDbl(Nz(grvBudget4.Item("g4col6", intRow).Value, 0))
+                'strOrderNo = CStr(grvBudget4.Item("OrderNo4", intRow).Value)
 
-                If dblReviseYear = 0 Then
-                    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
-                        grvBudget4.Item("g4col9", intRow).Value = 0
-                    End If
-                    grvBudget4.Item("g4ex01", intRow).Value = 0
+                'If dblReviseYear = 0 Then
+                '    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
+                '        grvBudget4.Item("g4col9", intRow).Value = 0
+                '    End If
+                '    grvBudget4.Item("g4ex01", intRow).Value = 0
 
-                    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
-                        grvBudget4.Item("g4col11", intRow).Value = 0
-                    End If
-                    grvBudget4.Item("g4ex02", intRow).Value = 0
+                '    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
+                '        grvBudget4.Item("g4col11", intRow).Value = 0
+                '    End If
+                '    grvBudget4.Item("g4ex02", intRow).Value = 0
 
-                    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
-                        grvBudget4.Item("g4col13", intRow).Value = 0
-                    End If
-                    grvBudget4.Item("g4ex03", intRow).Value = 0
+                '    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
+                '        grvBudget4.Item("g4col13", intRow).Value = 0
+                '    End If
+                '    grvBudget4.Item("g4ex03", intRow).Value = 0
 
-                    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
-                        grvBudget4.Item("g4col15", intRow).Value = 0
-                    End If
-                    grvBudget4.Item("g4ex04", intRow).Value = 0
+                '    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
+                '        grvBudget4.Item("g4col15", intRow).Value = 0
+                '    End If
+                '    grvBudget4.Item("g4ex04", intRow).Value = 0
 
-                    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
-                        grvBudget4.Item("g4col17", intRow).Value = 0
-                    End If
-                    grvBudget4.Item("g4ex05", intRow).Value = 0
+                '    If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
+                '        grvBudget4.Item("g4col17", intRow).Value = 0
+                '    End If
+                '    grvBudget4.Item("g4ex05", intRow).Value = 0
 
-                Else
-                    If CStr(Nz(grvBudget4.Item("g4col3", intRow).Value)) = "Fixed Cost" Then
-                        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
-                            grvBudget4.Item("g4col9", intRow).Value = dblReviseYear
-                        End If
-                        grvBudget4.Item("g4ex01", intRow).Value = dblReviseYear
+                'Else
+                '    If CStr(Nz(grvBudget4.Item("g4col3", intRow).Value)) = "Fixed Cost" Then
+                '        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
+                '            grvBudget4.Item("g4col9", intRow).Value = dblReviseYear
+                '        End If
+                '        grvBudget4.Item("g4ex01", intRow).Value = dblReviseYear
 
-                        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
-                            grvBudget4.Item("g4col11", intRow).Value = dblReviseYear
-                        End If
-                        grvBudget4.Item("g4ex02", intRow).Value = dblReviseYear
+                '        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
+                '            grvBudget4.Item("g4col11", intRow).Value = dblReviseYear
+                '        End If
+                '        grvBudget4.Item("g4ex02", intRow).Value = dblReviseYear
 
-                        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
-                            grvBudget4.Item("g4col13", intRow).Value = dblReviseYear
-                        End If
-                        grvBudget4.Item("g4ex03", intRow).Value = dblReviseYear
+                '        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
+                '            grvBudget4.Item("g4col13", intRow).Value = dblReviseYear
+                '        End If
+                '        grvBudget4.Item("g4ex03", intRow).Value = dblReviseYear
 
-                        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
-                            grvBudget4.Item("g4col15", intRow).Value = dblReviseYear
-                        End If
-                        grvBudget4.Item("g4ex04", intRow).Value = dblReviseYear
+                '        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
+                '            grvBudget4.Item("g4col15", intRow).Value = dblReviseYear
+                '        End If
+                '        grvBudget4.Item("g4ex04", intRow).Value = dblReviseYear
 
-                        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
-                            grvBudget4.Item("g4col17", intRow).Value = dblReviseYear
-                        End If
-                        grvBudget4.Item("g4ex05", intRow).Value = dblReviseYear
+                '        If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '        IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
+                '            grvBudget4.Item("g4col17", intRow).Value = dblReviseYear
+                '        End If
+                '        grvBudget4.Item("g4ex05", intRow).Value = dblReviseYear
 
-                    Else
-                        If IsNumeric(strRRT(1)) Then
-                            intRRT = CInt(strRRT(1))
-                            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
-                                grvBudget4.Item("g4col9", intRow).Value = dblReviseYear / 100 * intRRT
-                            End If
-                            grvBudget4.Item("g4ex01", intRow).Value = dblReviseYear / 100 * intRRT
-                        Else
-                            grvBudget4.Item("g4ex01", intRow).Value = 0
-                        End If
+                '    Else
+                '        If IsNumeric(strRRT(1)) Then
+                '            intRRT = CInt(strRRT(1))
+                '            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT1]) Then
+                '                grvBudget4.Item("g4col9", intRow).Value = dblReviseYear / 100 * intRRT
+                '            End If
+                '            grvBudget4.Item("g4ex01", intRow).Value = dblReviseYear / 100 * intRRT
+                '        Else
+                '            grvBudget4.Item("g4ex01", intRow).Value = 0
+                '        End If
 
-                        If IsNumeric(strRRT(2)) Then
-                            intRRT = CInt(strRRT(2))
-                            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
-                                grvBudget4.Item("g4col11", intRow).Value = dblReviseYear / 100 * intRRT
-                            End If
-                            grvBudget4.Item("g4ex02", intRow).Value = dblReviseYear / 100 * intRRT
-                        Else
-                            grvBudget4.Item("g4ex02", intRow).Value = 0
-                        End If
+                '        If IsNumeric(strRRT(2)) Then
+                '            intRRT = CInt(strRRT(2))
+                '            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT2]) Then
+                '                grvBudget4.Item("g4col11", intRow).Value = dblReviseYear / 100 * intRRT
+                '            End If
+                '            grvBudget4.Item("g4ex02", intRow).Value = dblReviseYear / 100 * intRRT
+                '        Else
+                '            grvBudget4.Item("g4ex02", intRow).Value = 0
+                '        End If
 
-                        If IsNumeric(strRRT(3)) Then
-                            intRRT = CInt(strRRT(3))
-                            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
-                                grvBudget4.Item("g4col13", intRow).Value = dblReviseYear / 100 * intRRT
-                            End If
-                            grvBudget4.Item("g4ex03", intRow).Value = dblReviseYear / 100 * intRRT
-                        Else
-                            grvBudget4.Item("g4ex03", intRow).Value = 0
-                        End If
+                '        If IsNumeric(strRRT(3)) Then
+                '            intRRT = CInt(strRRT(3))
+                '            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT3]) Then
+                '                grvBudget4.Item("g4col13", intRow).Value = dblReviseYear / 100 * intRRT
+                '            End If
+                '            grvBudget4.Item("g4ex03", intRow).Value = dblReviseYear / 100 * intRRT
+                '        Else
+                '            grvBudget4.Item("g4ex03", intRow).Value = 0
+                '        End If
 
-                        If IsNumeric(strRRT(4)) Then
-                            intRRT = CInt(strRRT(4))
-                            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
-                                grvBudget4.Item("g4col15", intRow).Value = dblReviseYear / 100 * intRRT
-                            End If
-                            grvBudget4.Item("g4ex04", intRow).Value = dblReviseYear / 100 * intRRT
-                        Else
-                            grvBudget4.Item("g4ex04", intRow).Value = 0
-                        End If
+                '        If IsNumeric(strRRT(4)) Then
+                '            intRRT = CInt(strRRT(4))
+                '            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT4]) Then
+                '                grvBudget4.Item("g4col15", intRow).Value = dblReviseYear / 100 * intRRT
+                '            End If
+                '            grvBudget4.Item("g4ex04", intRow).Value = dblReviseYear / 100 * intRRT
+                '        Else
+                '            grvBudget4.Item("g4ex04", intRow).Value = 0
+                '        End If
 
-                        If IsNumeric(strRRT(5)) Then
-                            intRRT = CInt(strRRT(5))
-                            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
-                            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
-                                grvBudget4.Item("g4col17", intRow).Value = dblReviseYear / 100 * intRRT
-                            End If
-                            grvBudget4.Item("g4ex05", intRow).Value = dblReviseYear / 100 * intRRT
-                        Else
-                            grvBudget4.Item("g4ex05", intRow).Value = 0
-                        End If
-                    End If
-                End If
+                '        If IsNumeric(strRRT(5)) Then
+                '            intRRT = CInt(strRRT(5))
+                '            If (Me.OperationCd = enumOperationCd.InputBudget Or (Me.OperationCd = enumOperationCd.AdjustBudget Or Me.OperationCd = enumOperationCd.AdjustBudgetDirectInput)) And _
+                '            IsDBNull(m_dtCheckMTPNew.Select("OrderNo = '" & strOrderNo & "'")(0)![RRT5]) Then
+                '                grvBudget4.Item("g4col17", intRow).Value = dblReviseYear / 100 * intRRT
+                '            End If
+                '            grvBudget4.Item("g4ex05", intRow).Value = dblReviseYear / 100 * intRRT
+                '        Else
+                '            grvBudget4.Item("g4ex05", intRow).Value = 0
+                '        End If
+                '    End If
+                'End If
 
                 CheckValidateMTPBudget(grvBudget4.Columns("g4col9").Index, intRow)
                 CheckValidateMTPBudget(grvBudget4.Columns("g4col11").Index, intRow)
@@ -5070,6 +5073,7 @@ Public Class frmBG0200
                 End If
             End If
             myBudgetDataChanged = True
+
         Catch ex As Exception
             MessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -5556,6 +5560,8 @@ Public Class frmBG0200
                     Else
                         myClsBG0200BL.LogOperationCd = enumOperationCd.InputBudget
                     End If
+
+                    HighlightWorkingBGAndComment()
                     myClsBG0200BL.WriteTransLog()
 
                     '// Refresh side menu
@@ -6911,10 +6917,10 @@ Public Class frmBG0200
 
             Select Case ColumnName
                 Case "g4col9"
-                    intRRT = 1
+                    intRRT = 2
                     blnFound = True
                 Case "g4col11"
-                    intRRT = 2
+                    intRRT = 3
                     blnFound = True
             End Select
 
@@ -7268,23 +7274,23 @@ Public Class frmBG0200
                     dt = GetComment(strOrderNo)
                     If Not dt Is Nothing AndAlso dt.Rows.Count > 0 Then
                         If i Mod 2 = 0 Then
-                            If dt.Rows(0).Item("RRT1").ToString <> "" Then
+                            If dt.Rows(0).Item("RRT2").ToString <> "" Then
                                 grvBudget4.Item("g4col9", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
                             Else
                                 grvBudget4.Item("g4col9", i).Style.BackColor = grvBudget4.Columns("g4col9").DefaultCellStyle.BackColor
                             End If
-                            If dt.Rows(0).Item("RRT2").ToString <> "" Then
+                            If dt.Rows(0).Item("RRT3").ToString <> "" Then
                                 grvBudget4.Item("g4col11", i).Style.BackColor = System.Drawing.Color.FromArgb(250, 233, 6) 'RGB(64, 221, 242)
                             Else
                                 grvBudget4.Item("g4col11", i).Style.BackColor = grvBudget4.Columns("g4col11").DefaultCellStyle.BackColor
                             End If
                         Else
-                            If dt.Rows(0).Item("RRT1").ToString <> "" Then
+                            If dt.Rows(0).Item("RRT2").ToString <> "" Then
                                 grvBudget4.Item("g4col9", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
                             Else
                                 grvBudget4.Item("g4col9", i).Style.BackColor = grvBudget4.AlternatingRowsDefaultCellStyle.BackColor
                             End If
-                            If dt.Rows(0).Item("RRT2").ToString <> "" Then
+                            If dt.Rows(0).Item("RRT3").ToString <> "" Then
                                 grvBudget4.Item("g4col11", i).Style.BackColor = System.Drawing.Color.FromArgb(64, 221, 242)  'Color.BlueViolet
                             Else
                                 grvBudget4.Item("g4col11", i).Style.BackColor = grvBudget4.AlternatingRowsDefaultCellStyle.BackColor

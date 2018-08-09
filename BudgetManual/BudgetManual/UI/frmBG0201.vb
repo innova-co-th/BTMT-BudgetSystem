@@ -183,6 +183,14 @@ Public Class frmBG0201
                             Me.Comment = pSource.Rows(0).Item("RRT1").ToString
                         Case "2"
                             Me.Comment = pSource.Rows(0).Item("RRT2").ToString
+                        Case "3"
+                            Me.Comment = pSource.Rows(0).Item("RRT3").ToString
+                        Case "4"
+                            Me.Comment = pSource.Rows(0).Item("RRT4").ToString
+                        Case "5"
+                            Me.Comment = pSource.Rows(0).Item("RRT5").ToString
+
+
                     End Select
                 End If
             Else
