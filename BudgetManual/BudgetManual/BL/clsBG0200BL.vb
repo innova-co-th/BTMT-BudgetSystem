@@ -1183,6 +1183,32 @@ Public Class clsBG0200BL
                 End If
 
 
+                '// Add OB (Next year)
+                clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
+                clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
+                clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
+                clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.OriginalBudget)
+                clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) + 1)
+                clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
+                clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
+                clsBG_T_BUDGET_REFERENCE.CreateUserID = Me.UserId
+
+                '// Check data exist
+                If clsBG_T_BUDGET_REFERENCE.Select001() = True Then
+
+                    If clsBG_T_BUDGET_REFERENCE.dtResult.Rows.Count = 0 Then
+                        '// Add new record
+                        If clsBG_T_BUDGET_REFERENCE.Insert001(conn, trans) = False Then
+                            Throw New Exception("Can not insert budget reference!")
+                        End If
+                    End If
+                Else
+                    Throw New Exception("Can not insert budget reference!")
+                End If
+
+
+
                 '// Add MTP(Previous year)
                 clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
