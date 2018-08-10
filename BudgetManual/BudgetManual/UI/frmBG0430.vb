@@ -1952,12 +1952,12 @@ Public Class frmBG0430
         '0 AS REVISE_YEAR,
         row = dtColumns.NewRow()
         row("Column_Name") = "RevYear"
-        row("Column_Title") = "Original Year'" & strYear
+        row("Column_Title") = "Original Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT1"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & strYear
+        row("Column_Name") = "PrevRRT2"
+        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
         '0 AS DIFF_YEAR,
@@ -1967,23 +1967,23 @@ Public Class frmBG0430
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
-        row("Column_Name") = "RRT1"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 1
+        row("Column_Name") = "RRT2"
+        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
-        row("Column_Name") = "PrevRRT2"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 1
+        row("Column_Name") = "PrevRRT3"
+        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_PREV_YEAR"
-        row("Column_Title") = "Diff" & " Year'" & CInt(strYear) + 1
+        row("Column_Title") = "Diff" & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
-        row("Column_Name") = "RRT2"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
+        row("Column_Name") = "RRT3"
+        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
         dtColumns.Rows.Add(row)
 
         'row = dtColumns.NewRow
