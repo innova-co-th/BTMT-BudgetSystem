@@ -1329,22 +1329,7 @@ Public Class frmBG0420
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "REVISE_TOTAL_YEAR"
-        dRow("Column_Title") = "Original Year'" & strYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "PrevRRT1"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear)
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "DIFF_TOTAL_YEAR"
-        dRow("Column_Title") = "Diff Year'" & strYear
-        dtColumns.Rows.Add(dRow)
-
-        dRow = dtColumns.NewRow
-        dRow("Column_Name") = "RRT1"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 1)
+        dRow("Column_Title") = "Original Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1353,14 +1338,29 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "DIFF_PREV_YEAR"
+        dRow("Column_Name") = "DIFF_TOTAL_YEAR"
         dRow("Column_Title") = "Diff Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
-
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "RRT2"
         dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 2)
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "PrevRRT3"
+        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "DIFF_PREV_YEAR"
+        dRow("Column_Title") = "Diff Year'" & CStr(intYear + 2)
+        dtColumns.Rows.Add(dRow)
+
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "RRT3"
+        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
         dtColumns.Rows.Add(dRow)
 
         'dRow = dtColumns.NewRow
