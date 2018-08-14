@@ -777,7 +777,7 @@ Public Class clsBG0200BL
         clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
         '// Get Reference Budget
-        clsBG_T_BUDGET_DATA.RefBudgetYear = "1"
+        clsBG_T_BUDGET_DATA.RefBudgetYear = Me.BudgetYear
         clsBG_T_BUDGET_DATA.RefPeriodType = "1"
         clsBG_T_BUDGET_DATA.RefProjectNo = "1"
         clsBG_T_BUDGET_DATA.RefRevNo = "1"
@@ -785,6 +785,7 @@ Public Class clsBG0200BL
         clsBG_T_BUDGET_DATA.RefEstRevNo = "1"
         clsBG_T_BUDGET_DATA.RefRBProjectNo = "1"
         clsBG_T_BUDGET_DATA.RefRBRevNo = "1"
+        clsBG_T_BUDGET_DATA.RefBudgetYear = Me.BudgetYear
         clsBG_T_BUDGET_DATA.MtpProjectNo = "1"
         clsBG_T_BUDGET_DATA.MtpRevNo = "1"
 
@@ -834,12 +835,13 @@ Public Class clsBG0200BL
                 End If
 
                 If clsBG_T_BUDGET_REFERENCE.dtResult.Rows.Count > 0 Then
-
                     clsBG_T_BUDGET_DATA.RefBudgetYear = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_BUDGET_YEAR").ToString
                     clsBG_T_BUDGET_DATA.RefPeriodType = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_PERIOD_TYPE").ToString
                     clsBG_T_BUDGET_DATA.RefProjectNo = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_PROJECT_NO").ToString
                     clsBG_T_BUDGET_DATA.RefRevNo = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_REV_NO").ToString
-
+                Else
+                    clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.MTPBudget)
                 End If
 
             ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then

@@ -1002,8 +1002,8 @@ Public Class frmBG0200
                         grvBudget1.Columns("g1col17").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
                         grvBudget1.Columns("g1col18").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
                         grvBudget1.Columns("g1col25").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
-                        grvBudget1.Columns("g1col25").HeaderText = grvBudget1.Columns("g1col25").HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
-                        grvBudget1.Columns("g1col26").HeaderText += (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
+                        grvBudget1.Columns("g1col25").HeaderText = grvBudget1.Columns("g1col25").HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
+                        grvBudget1.Columns("g1col26").HeaderText += (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00")
                     End If
 
                     '// Show/Hide WK Column

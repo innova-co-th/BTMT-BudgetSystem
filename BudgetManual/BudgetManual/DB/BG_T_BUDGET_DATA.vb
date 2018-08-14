@@ -45,6 +45,8 @@ Public Class BG_T_BUDGET_DATA
     Private myOBProjectNo As String = String.Empty
     Private myOBRevNo As String = String.Empty
 
+
+
 #End Region
 
 #Region "Property"
