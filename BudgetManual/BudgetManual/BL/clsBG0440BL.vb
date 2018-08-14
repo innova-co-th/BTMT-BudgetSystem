@@ -147,7 +147,7 @@ Public Class clsBG0440BL
         clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
         '// Get Reference Budget
-        clsBG_T_BUDGET_DATA.RefBudgetYear = "1"
+        clsBG_T_BUDGET_DATA.RefBudgetYear = Me.BudgetYear
         clsBG_T_BUDGET_DATA.RefPeriodType = "1"
         clsBG_T_BUDGET_DATA.RefProjectNo = "1"
         clsBG_T_BUDGET_DATA.RefRevNo = "1"
