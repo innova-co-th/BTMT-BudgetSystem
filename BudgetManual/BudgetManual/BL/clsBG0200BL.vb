@@ -1141,7 +1141,7 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
                 clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
-                clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 1)
+                clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
                 clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
                 clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
                 clsBG_T_BUDGET_REFERENCE.CreateUserID = Me.UserId
@@ -1504,7 +1504,7 @@ Public Class clsBG0200BL
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
             clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
-            clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 1)
+            clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
             clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
             clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
             clsBG_T_BUDGET_REFERENCE.CreateUserID = Me.UserId
