@@ -246,7 +246,9 @@ Public Class clsBG0430BL
 
                 clsBG_T_BUDGET_DATA.MtpProjectNo = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_PROJECT_NO").ToString
                 clsBG_T_BUDGET_DATA.MtpRevNo = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_REV_NO").ToString
-
+            Else
+                clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
+                clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(enumPeriodType.MTPBudget)
             End If
 
         ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
