@@ -401,12 +401,12 @@ Public Class frmBG0440
 
         row = dtColumns.NewRow()
         row("Column_Name") = "MTP_RRT1"
-        row("Column_Title") = "MTP " & CInt(strYear) - 1 & " Year'" & strYear
+        row("Column_Title") = "MTP " & CInt(strYear) - 2 & " Year'" & strYear
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_MTP"
-        row("Column_Title") = "Diff vs MTP" & CInt(strYear) - 1
+        row("Column_Title") = "Diff vs MTP" & CInt(strYear) - 2
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
