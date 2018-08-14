@@ -384,7 +384,7 @@ Public Class frmBG0670
 
                 If CInt(strPeriod) = BGConstant.enumPeriodType.OriginalBudget Then
                     grbReference2.Enabled = True
-                    Me.cboRefBudgetYear2.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 1
+                    Me.cboRefBudgetYear2.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 2
                     Me.cboRefBudgetYear2_SelectedIndexChanged("", Nothing)
                 
                 ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
