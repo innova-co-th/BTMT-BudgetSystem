@@ -1703,7 +1703,7 @@ Public Class frmBG0200
 
                     lblSumMTP1.Text = "MTP" & Me.GetBudgetYear()
                     lblSumMTP2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    lblSumMTP3.Text = "RB Y" & Me.GetBudgetYear()
+                    lblSumMTP3.Text = "OB Y" & CStr(CInt(Me.GetBudgetYear()) + 1) 'Me.GetBudgetYear()
                     lblSumMTP4.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1)
                     lblSumMTP5.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 2)
                     lblSumMTP6.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 3)
@@ -7309,4 +7309,5 @@ Public Class frmBG0200
 
 #End Region
 
+   
 End Class

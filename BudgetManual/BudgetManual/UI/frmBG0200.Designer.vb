@@ -338,6 +338,35 @@ Partial Class frmBG0200
         Me.pnlMTP_SUM = New System.Windows.Forms.Panel
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
         Me.grvBudget4 = New System.Windows.Forms.DataGridView
+        Me.g4Wk = New System.Windows.Forms.DataGridViewCheckBoxColumn
+        Me.OrderNo4 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col1 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col2 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col3 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col4 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col5 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4Pic = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col6 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col7 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col8 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col9 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col10 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4colDiff1 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col11 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col12 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4colDiff2 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col13 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col14 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col15 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col16 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col17 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4ex01 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4ex02 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4ex03 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4ex04 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4ex05 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.g4col19 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.BudgetOrderNo = New System.Windows.Forms.DataGridViewTextBoxColumn
         Me.lblSum1Val = New System.Windows.Forms.Label
         Me.pnlSummary = New System.Windows.Forms.GroupBox
         Me.lblSum12 = New System.Windows.Forms.Label
@@ -408,35 +437,6 @@ Partial Class frmBG0200
         Me.numMtpProjectNo = New System.Windows.Forms.NumericUpDown
         Me.lblHPrevProjectNo = New System.Windows.Forms.Label
         Me.cmdReInputByOrder = New System.Windows.Forms.Button
-        Me.g4Wk = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.OrderNo4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4Pic = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col7 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col8 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col9 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col10 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4colDiff1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col11 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col12 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4colDiff2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col13 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col14 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col15 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col16 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col17 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4ex01 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4ex02 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4ex03 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4ex04 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4ex05 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.g4col19 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.BudgetOrderNo = New System.Windows.Forms.DataGridViewTextBoxColumn
         CType(Me.grvBudget1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grvBudget2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grvBudget3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -2422,15 +2422,16 @@ Partial Class frmBG0200
         Me.txtWKRRT1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtWKRRT1.Location = New System.Drawing.Point(6, 34)
         Me.txtWKRRT1.Name = "txtWKRRT1"
-        Me.txtWKRRT1.Size = New System.Drawing.Size(65, 20)
+        Me.txtWKRRT1.Size = New System.Drawing.Size(11, 20)
         Me.txtWKRRT1.TabIndex = 65
         Me.txtWKRRT1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtWKRRT1, "WK H1")
+        Me.txtWKRRT1.Visible = False
         '
         'txtWKRRT2
         '
         Me.txtWKRRT2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtWKRRT2.Location = New System.Drawing.Point(77, 34)
+        Me.txtWKRRT2.Location = New System.Drawing.Point(22, 34)
         Me.txtWKRRT2.Name = "txtWKRRT2"
         Me.txtWKRRT2.Size = New System.Drawing.Size(65, 20)
         Me.txtWKRRT2.TabIndex = 66
@@ -2440,13 +2441,12 @@ Partial Class frmBG0200
         'txtWKRRT3
         '
         Me.txtWKRRT3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtWKRRT3.Location = New System.Drawing.Point(148, 34)
+        Me.txtWKRRT3.Location = New System.Drawing.Point(93, 34)
         Me.txtWKRRT3.Name = "txtWKRRT3"
         Me.txtWKRRT3.Size = New System.Drawing.Size(65, 20)
         Me.txtWKRRT3.TabIndex = 67
         Me.txtWKRRT3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtWKRRT3, "WK H2")
-        Me.txtWKRRT3.Visible = False
         '
         'txtWKRRT4
         '
@@ -2495,18 +2495,17 @@ Partial Class frmBG0200
         'txtMTPInv3
         '
         Me.txtMTPInv3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtMTPInv3.Location = New System.Drawing.Point(216, 27)
+        Me.txtMTPInv3.Location = New System.Drawing.Point(120, 27)
         Me.txtMTPInv3.Name = "txtMTPInv3"
         Me.txtMTPInv3.Size = New System.Drawing.Size(100, 20)
         Me.txtMTPInv3.TabIndex = 67
         Me.txtMTPInv3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtMTPInv3, "WK H2")
-        Me.txtMTPInv3.Visible = False
         '
         'txtMTPInv2
         '
         Me.txtMTPInv2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtMTPInv2.Location = New System.Drawing.Point(111, 27)
+        Me.txtMTPInv2.Location = New System.Drawing.Point(15, 27)
         Me.txtMTPInv2.Name = "txtMTPInv2"
         Me.txtMTPInv2.Size = New System.Drawing.Size(100, 20)
         Me.txtMTPInv2.TabIndex = 66
@@ -2518,10 +2517,11 @@ Partial Class frmBG0200
         Me.txtMTPInv1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtMTPInv1.Location = New System.Drawing.Point(6, 27)
         Me.txtMTPInv1.Name = "txtMTPInv1"
-        Me.txtMTPInv1.Size = New System.Drawing.Size(100, 20)
+        Me.txtMTPInv1.Size = New System.Drawing.Size(10, 20)
         Me.txtMTPInv1.TabIndex = 65
         Me.txtMTPInv1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtMTPInv1, "WK H1")
+        Me.txtMTPInv1.Visible = False
         '
         'txtPYInv5
         '
@@ -2548,18 +2548,17 @@ Partial Class frmBG0200
         'txtPYInv3
         '
         Me.txtPYInv3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtPYInv3.Location = New System.Drawing.Point(219, 27)
+        Me.txtPYInv3.Location = New System.Drawing.Point(118, 27)
         Me.txtPYInv3.Name = "txtPYInv3"
         Me.txtPYInv3.Size = New System.Drawing.Size(95, 20)
         Me.txtPYInv3.TabIndex = 67
         Me.txtPYInv3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtPYInv3, "WK H2")
-        Me.txtPYInv3.Visible = False
         '
         'txtPYInv2
         '
         Me.txtPYInv2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtPYInv2.Location = New System.Drawing.Point(118, 27)
+        Me.txtPYInv2.Location = New System.Drawing.Point(17, 27)
         Me.txtPYInv2.Name = "txtPYInv2"
         Me.txtPYInv2.Size = New System.Drawing.Size(95, 20)
         Me.txtPYInv2.TabIndex = 66
@@ -2571,10 +2570,11 @@ Partial Class frmBG0200
         Me.txtPYInv1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtPYInv1.Location = New System.Drawing.Point(17, 27)
         Me.txtPYInv1.Name = "txtPYInv1"
-        Me.txtPYInv1.Size = New System.Drawing.Size(95, 20)
+        Me.txtPYInv1.Size = New System.Drawing.Size(10, 20)
         Me.txtPYInv1.TabIndex = 65
         Me.txtPYInv1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtPYInv1, "WK H1")
+        Me.txtPYInv1.Visible = False
         '
         'txtMTPWB
         '
@@ -2917,806 +2917,9 @@ Partial Class frmBG0200
         Me.grvBudget4.ShowCellToolTips = False
         Me.grvBudget4.ShowEditingIcon = False
         Me.grvBudget4.ShowRowErrors = False
-        Me.grvBudget4.Size = New System.Drawing.Size(1206, 243)
+        Me.grvBudget4.Size = New System.Drawing.Size(1206, 194)
         Me.grvBudget4.TabIndex = 69
         Me.grvBudget4.Visible = False
-        '
-        'lblSum1Val
-        '
-        Me.lblSum1Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum1Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum1Val.Location = New System.Drawing.Point(126, 11)
-        Me.lblSum1Val.Name = "lblSum1Val"
-        Me.lblSum1Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum1Val.TabIndex = 70
-        Me.lblSum1Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'pnlSummary
-        '
-        Me.pnlSummary.BackColor = System.Drawing.SystemColors.Control
-        Me.pnlSummary.Controls.Add(Me.lblSum12)
-        Me.pnlSummary.Controls.Add(Me.lblSum12Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum11)
-        Me.pnlSummary.Controls.Add(Me.lblSum11Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum10)
-        Me.pnlSummary.Controls.Add(Me.lblSum10Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum9)
-        Me.pnlSummary.Controls.Add(Me.lblSum9Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum8)
-        Me.pnlSummary.Controls.Add(Me.lblSum8Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum7)
-        Me.pnlSummary.Controls.Add(Me.lblSum7Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum6)
-        Me.pnlSummary.Controls.Add(Me.lblSum6Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum5)
-        Me.pnlSummary.Controls.Add(Me.lblSum5Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum4)
-        Me.pnlSummary.Controls.Add(Me.lblSum4Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum3)
-        Me.pnlSummary.Controls.Add(Me.lblSum3Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum2)
-        Me.pnlSummary.Controls.Add(Me.lblSum2Val)
-        Me.pnlSummary.Controls.Add(Me.lblSum1)
-        Me.pnlSummary.Controls.Add(Me.lblSum1Val)
-        Me.pnlSummary.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlSummary.Location = New System.Drawing.Point(0, 490)
-        Me.pnlSummary.Name = "pnlSummary"
-        Me.pnlSummary.Size = New System.Drawing.Size(1209, 66)
-        Me.pnlSummary.TabIndex = 71
-        Me.pnlSummary.TabStop = False
-        Me.pnlSummary.Text = "Summary"
-        '
-        'lblSum12
-        '
-        Me.lblSum12.BackColor = System.Drawing.Color.White
-        Me.lblSum12.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSum12.Location = New System.Drawing.Point(1000, 40)
-        Me.lblSum12.Name = "lblSum12"
-        Me.lblSum12.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum12.TabIndex = 93
-        Me.lblSum12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum12Val
-        '
-        Me.lblSum12Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum12Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum12Val.Location = New System.Drawing.Point(1111, 38)
-        Me.lblSum12Val.Name = "lblSum12Val"
-        Me.lblSum12Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum12Val.TabIndex = 92
-        Me.lblSum12Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum11
-        '
-        Me.lblSum11.BackColor = System.Drawing.Color.White
-        Me.lblSum11.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSum11.Location = New System.Drawing.Point(1000, 15)
-        Me.lblSum11.Name = "lblSum11"
-        Me.lblSum11.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum11.TabIndex = 91
-        Me.lblSum11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum11Val
-        '
-        Me.lblSum11Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum11Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum11Val.Location = New System.Drawing.Point(1111, 13)
-        Me.lblSum11Val.Name = "lblSum11Val"
-        Me.lblSum11Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum11Val.TabIndex = 90
-        Me.lblSum11Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum10
-        '
-        Me.lblSum10.BackColor = System.Drawing.Color.White
-        Me.lblSum10.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSum10.Location = New System.Drawing.Point(803, 40)
-        Me.lblSum10.Name = "lblSum10"
-        Me.lblSum10.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum10.TabIndex = 89
-        Me.lblSum10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum10Val
-        '
-        Me.lblSum10Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum10Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum10Val.Location = New System.Drawing.Point(914, 38)
-        Me.lblSum10Val.Name = "lblSum10Val"
-        Me.lblSum10Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum10Val.TabIndex = 88
-        Me.lblSum10Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum9
-        '
-        Me.lblSum9.BackColor = System.Drawing.Color.White
-        Me.lblSum9.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSum9.Location = New System.Drawing.Point(803, 14)
-        Me.lblSum9.Name = "lblSum9"
-        Me.lblSum9.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum9.TabIndex = 87
-        Me.lblSum9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum9Val
-        '
-        Me.lblSum9Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum9Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum9Val.Location = New System.Drawing.Point(914, 12)
-        Me.lblSum9Val.Name = "lblSum9Val"
-        Me.lblSum9Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum9Val.TabIndex = 86
-        Me.lblSum9Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum8
-        '
-        Me.lblSum8.BackColor = System.Drawing.Color.White
-        Me.lblSum8.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSum8.Location = New System.Drawing.Point(606, 40)
-        Me.lblSum8.Name = "lblSum8"
-        Me.lblSum8.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum8.TabIndex = 85
-        Me.lblSum8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum8Val
-        '
-        Me.lblSum8Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum8Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum8Val.Location = New System.Drawing.Point(717, 37)
-        Me.lblSum8Val.Name = "lblSum8Val"
-        Me.lblSum8Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum8Val.TabIndex = 84
-        Me.lblSum8Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum7
-        '
-        Me.lblSum7.BackColor = System.Drawing.Color.White
-        Me.lblSum7.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSum7.Location = New System.Drawing.Point(606, 13)
-        Me.lblSum7.Name = "lblSum7"
-        Me.lblSum7.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum7.TabIndex = 83
-        Me.lblSum7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum7Val
-        '
-        Me.lblSum7Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum7Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum7Val.Location = New System.Drawing.Point(717, 11)
-        Me.lblSum7Val.Name = "lblSum7Val"
-        Me.lblSum7Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum7Val.TabIndex = 82
-        Me.lblSum7Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum6
-        '
-        Me.lblSum6.BackColor = System.Drawing.Color.White
-        Me.lblSum6.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum6.Location = New System.Drawing.Point(409, 40)
-        Me.lblSum6.Name = "lblSum6"
-        Me.lblSum6.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum6.TabIndex = 81
-        Me.lblSum6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum6Val
-        '
-        Me.lblSum6Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum6Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum6Val.Location = New System.Drawing.Point(520, 37)
-        Me.lblSum6Val.Name = "lblSum6Val"
-        Me.lblSum6Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum6Val.TabIndex = 80
-        Me.lblSum6Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum5
-        '
-        Me.lblSum5.BackColor = System.Drawing.Color.White
-        Me.lblSum5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum5.Location = New System.Drawing.Point(409, 13)
-        Me.lblSum5.Name = "lblSum5"
-        Me.lblSum5.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum5.TabIndex = 79
-        Me.lblSum5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum5Val
-        '
-        Me.lblSum5Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum5Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum5Val.Location = New System.Drawing.Point(520, 11)
-        Me.lblSum5Val.Name = "lblSum5Val"
-        Me.lblSum5Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum5Val.TabIndex = 78
-        Me.lblSum5Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum4
-        '
-        Me.lblSum4.BackColor = System.Drawing.Color.White
-        Me.lblSum4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum4.Location = New System.Drawing.Point(212, 40)
-        Me.lblSum4.Name = "lblSum4"
-        Me.lblSum4.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum4.TabIndex = 77
-        Me.lblSum4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum4Val
-        '
-        Me.lblSum4Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum4Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum4Val.Location = New System.Drawing.Point(323, 37)
-        Me.lblSum4Val.Name = "lblSum4Val"
-        Me.lblSum4Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum4Val.TabIndex = 76
-        Me.lblSum4Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum3
-        '
-        Me.lblSum3.BackColor = System.Drawing.Color.White
-        Me.lblSum3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum3.Location = New System.Drawing.Point(212, 13)
-        Me.lblSum3.Name = "lblSum3"
-        Me.lblSum3.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum3.TabIndex = 75
-        Me.lblSum3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum3Val
-        '
-        Me.lblSum3Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum3Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum3Val.Location = New System.Drawing.Point(323, 11)
-        Me.lblSum3Val.Name = "lblSum3Val"
-        Me.lblSum3Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum3Val.TabIndex = 74
-        Me.lblSum3Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum2
-        '
-        Me.lblSum2.BackColor = System.Drawing.Color.White
-        Me.lblSum2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum2.Location = New System.Drawing.Point(14, 40)
-        Me.lblSum2.Name = "lblSum2"
-        Me.lblSum2.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum2.TabIndex = 73
-        Me.lblSum2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum2Val
-        '
-        Me.lblSum2Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSum2Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum2Val.Location = New System.Drawing.Point(126, 37)
-        Me.lblSum2Val.Name = "lblSum2Val"
-        Me.lblSum2Val.Size = New System.Drawing.Size(80, 23)
-        Me.lblSum2Val.TabIndex = 72
-        Me.lblSum2Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSum1
-        '
-        Me.lblSum1.BackColor = System.Drawing.Color.White
-        Me.lblSum1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSum1.Location = New System.Drawing.Point(15, 13)
-        Me.lblSum1.Name = "lblSum1"
-        Me.lblSum1.Size = New System.Drawing.Size(108, 18)
-        Me.lblSum1.TabIndex = 71
-        Me.lblSum1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'fraWBMTP
-        '
-        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT5)
-        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT4)
-        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT3)
-        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT2)
-        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT1)
-        Me.fraWBMTP.Controls.Add(Me.txtWKRRT5)
-        Me.fraWBMTP.Controls.Add(Me.txtWKRRT4)
-        Me.fraWBMTP.Controls.Add(Me.txtWKRRT3)
-        Me.fraWBMTP.Controls.Add(Me.txtWKRRT2)
-        Me.fraWBMTP.Controls.Add(Me.txtWKRRT1)
-        Me.fraWBMTP.Location = New System.Drawing.Point(713, 134)
-        Me.fraWBMTP.Name = "fraWBMTP"
-        Me.fraWBMTP.Size = New System.Drawing.Size(360, 63)
-        Me.fraWBMTP.TabIndex = 65
-        Me.fraWBMTP.TabStop = False
-        Me.fraWBMTP.Text = "PY Working Budget"
-        Me.fraWBMTP.Visible = False
-        '
-        'lblHWKRRT5
-        '
-        Me.lblHWKRRT5.AutoSize = True
-        Me.lblHWKRRT5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHWKRRT5.Location = New System.Drawing.Point(287, 18)
-        Me.lblHWKRRT5.Name = "lblHWKRRT5"
-        Me.lblHWKRRT5.Size = New System.Drawing.Size(36, 13)
-        Me.lblHWKRRT5.TabIndex = 74
-        Me.lblHWKRRT5.Text = "RRT5"
-        Me.lblHWKRRT5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHWKRRT5.Visible = False
-        '
-        'lblHWKRRT4
-        '
-        Me.lblHWKRRT4.AutoSize = True
-        Me.lblHWKRRT4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHWKRRT4.Location = New System.Drawing.Point(216, 18)
-        Me.lblHWKRRT4.Name = "lblHWKRRT4"
-        Me.lblHWKRRT4.Size = New System.Drawing.Size(36, 13)
-        Me.lblHWKRRT4.TabIndex = 73
-        Me.lblHWKRRT4.Text = "RRT4"
-        Me.lblHWKRRT4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHWKRRT4.Visible = False
-        '
-        'lblHWKRRT3
-        '
-        Me.lblHWKRRT3.AutoSize = True
-        Me.lblHWKRRT3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHWKRRT3.Location = New System.Drawing.Point(145, 18)
-        Me.lblHWKRRT3.Name = "lblHWKRRT3"
-        Me.lblHWKRRT3.Size = New System.Drawing.Size(36, 13)
-        Me.lblHWKRRT3.TabIndex = 72
-        Me.lblHWKRRT3.Text = "RRT3"
-        Me.lblHWKRRT3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHWKRRT3.Visible = False
-        '
-        'lblHWKRRT2
-        '
-        Me.lblHWKRRT2.AutoSize = True
-        Me.lblHWKRRT2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHWKRRT2.Location = New System.Drawing.Point(74, 18)
-        Me.lblHWKRRT2.Name = "lblHWKRRT2"
-        Me.lblHWKRRT2.Size = New System.Drawing.Size(36, 13)
-        Me.lblHWKRRT2.TabIndex = 71
-        Me.lblHWKRRT2.Text = "RRT2"
-        Me.lblHWKRRT2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lblHWKRRT1
-        '
-        Me.lblHWKRRT1.AutoSize = True
-        Me.lblHWKRRT1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHWKRRT1.Location = New System.Drawing.Point(3, 18)
-        Me.lblHWKRRT1.Name = "lblHWKRRT1"
-        Me.lblHWKRRT1.Size = New System.Drawing.Size(36, 13)
-        Me.lblHWKRRT1.TabIndex = 70
-        Me.lblHWKRRT1.Text = "RRT1"
-        Me.lblHWKRRT1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'pnlMTPInvestment
-        '
-        Me.pnlMTPInvestment.BackColor = System.Drawing.SystemColors.Control
-        Me.pnlMTPInvestment.Controls.Add(Me.GroupBox4)
-        Me.pnlMTPInvestment.Controls.Add(Me.GroupBox3)
-        Me.pnlMTPInvestment.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlMTPInvestment.Location = New System.Drawing.Point(0, 435)
-        Me.pnlMTPInvestment.Name = "pnlMTPInvestment"
-        Me.pnlMTPInvestment.Size = New System.Drawing.Size(1209, 55)
-        Me.pnlMTPInvestment.TabIndex = 74
-        Me.pnlMTPInvestment.Visible = False
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.lblHPYInv5)
-        Me.GroupBox4.Controls.Add(Me.lblHPYInv4)
-        Me.GroupBox4.Controls.Add(Me.lblHPYInv3)
-        Me.GroupBox4.Controls.Add(Me.lblHPYInv2)
-        Me.GroupBox4.Controls.Add(Me.lblHPYInv1)
-        Me.GroupBox4.Controls.Add(Me.txtPYInv5)
-        Me.GroupBox4.Controls.Add(Me.txtPYInv4)
-        Me.GroupBox4.Controls.Add(Me.txtPYInv3)
-        Me.GroupBox4.Controls.Add(Me.txtPYInv2)
-        Me.GroupBox4.Controls.Add(Me.txtPYInv1)
-        Me.GroupBox4.Location = New System.Drawing.Point(541, 0)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(527, 54)
-        Me.GroupBox4.TabIndex = 74
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "PY Investment"
-        '
-        'lblHPYInv5
-        '
-        Me.lblHPYInv5.AutoSize = True
-        Me.lblHPYInv5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHPYInv5.Location = New System.Drawing.Point(419, 14)
-        Me.lblHPYInv5.Name = "lblHPYInv5"
-        Me.lblHPYInv5.Size = New System.Drawing.Size(29, 12)
-        Me.lblHPYInv5.TabIndex = 74
-        Me.lblHPYInv5.Text = "RRT5"
-        Me.lblHPYInv5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHPYInv5.Visible = False
-        '
-        'lblHPYInv4
-        '
-        Me.lblHPYInv4.AutoSize = True
-        Me.lblHPYInv4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHPYInv4.Location = New System.Drawing.Point(318, 14)
-        Me.lblHPYInv4.Name = "lblHPYInv4"
-        Me.lblHPYInv4.Size = New System.Drawing.Size(29, 12)
-        Me.lblHPYInv4.TabIndex = 73
-        Me.lblHPYInv4.Text = "RRT4"
-        Me.lblHPYInv4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHPYInv4.Visible = False
-        '
-        'lblHPYInv3
-        '
-        Me.lblHPYInv3.AutoSize = True
-        Me.lblHPYInv3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHPYInv3.Location = New System.Drawing.Point(217, 14)
-        Me.lblHPYInv3.Name = "lblHPYInv3"
-        Me.lblHPYInv3.Size = New System.Drawing.Size(29, 12)
-        Me.lblHPYInv3.TabIndex = 72
-        Me.lblHPYInv3.Text = "RRT3"
-        Me.lblHPYInv3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHPYInv3.Visible = False
-        '
-        'lblHPYInv2
-        '
-        Me.lblHPYInv2.AutoSize = True
-        Me.lblHPYInv2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHPYInv2.Location = New System.Drawing.Point(116, 14)
-        Me.lblHPYInv2.Name = "lblHPYInv2"
-        Me.lblHPYInv2.Size = New System.Drawing.Size(29, 12)
-        Me.lblHPYInv2.TabIndex = 71
-        Me.lblHPYInv2.Text = "RRT2"
-        Me.lblHPYInv2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lblHPYInv1
-        '
-        Me.lblHPYInv1.AutoSize = True
-        Me.lblHPYInv1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHPYInv1.Location = New System.Drawing.Point(15, 14)
-        Me.lblHPYInv1.Name = "lblHPYInv1"
-        Me.lblHPYInv1.Size = New System.Drawing.Size(29, 12)
-        Me.lblHPYInv1.TabIndex = 70
-        Me.lblHPYInv1.Text = "RRT1"
-        Me.lblHPYInv1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.BackColor = System.Drawing.SystemColors.Control
-        Me.GroupBox3.Controls.Add(Me.lblHMTPInv5)
-        Me.GroupBox3.Controls.Add(Me.lblHMTPInv4)
-        Me.GroupBox3.Controls.Add(Me.lblHMTPInv3)
-        Me.GroupBox3.Controls.Add(Me.lblHMTPInv2)
-        Me.GroupBox3.Controls.Add(Me.lblHMTPInv1)
-        Me.GroupBox3.Controls.Add(Me.txtMTPInv5)
-        Me.GroupBox3.Controls.Add(Me.txtMTPInv4)
-        Me.GroupBox3.Controls.Add(Me.txtMTPInv3)
-        Me.GroupBox3.Controls.Add(Me.txtMTPInv2)
-        Me.GroupBox3.Controls.Add(Me.txtMTPInv1)
-        Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(535, 54)
-        Me.GroupBox3.TabIndex = 73
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "MTP Investment"
-        '
-        'lblHMTPInv5
-        '
-        Me.lblHMTPInv5.AutoSize = True
-        Me.lblHMTPInv5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHMTPInv5.Location = New System.Drawing.Point(426, 14)
-        Me.lblHMTPInv5.Name = "lblHMTPInv5"
-        Me.lblHMTPInv5.Size = New System.Drawing.Size(29, 12)
-        Me.lblHMTPInv5.TabIndex = 74
-        Me.lblHMTPInv5.Text = "RRT5"
-        Me.lblHMTPInv5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHMTPInv5.Visible = False
-        '
-        'lblHMTPInv4
-        '
-        Me.lblHMTPInv4.AutoSize = True
-        Me.lblHMTPInv4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHMTPInv4.Location = New System.Drawing.Point(320, 14)
-        Me.lblHMTPInv4.Name = "lblHMTPInv4"
-        Me.lblHMTPInv4.Size = New System.Drawing.Size(29, 12)
-        Me.lblHMTPInv4.TabIndex = 73
-        Me.lblHMTPInv4.Text = "RRT4"
-        Me.lblHMTPInv4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHMTPInv4.Visible = False
-        '
-        'lblHMTPInv3
-        '
-        Me.lblHMTPInv3.AutoSize = True
-        Me.lblHMTPInv3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHMTPInv3.Location = New System.Drawing.Point(214, 14)
-        Me.lblHMTPInv3.Name = "lblHMTPInv3"
-        Me.lblHMTPInv3.Size = New System.Drawing.Size(29, 12)
-        Me.lblHMTPInv3.TabIndex = 72
-        Me.lblHMTPInv3.Text = "RRT3"
-        Me.lblHMTPInv3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblHMTPInv3.Visible = False
-        '
-        'lblHMTPInv2
-        '
-        Me.lblHMTPInv2.AutoSize = True
-        Me.lblHMTPInv2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHMTPInv2.Location = New System.Drawing.Point(109, 14)
-        Me.lblHMTPInv2.Name = "lblHMTPInv2"
-        Me.lblHMTPInv2.Size = New System.Drawing.Size(29, 12)
-        Me.lblHMTPInv2.TabIndex = 71
-        Me.lblHMTPInv2.Text = "RRT2"
-        Me.lblHMTPInv2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lblHMTPInv1
-        '
-        Me.lblHMTPInv1.AutoSize = True
-        Me.lblHMTPInv1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblHMTPInv1.Location = New System.Drawing.Point(4, 14)
-        Me.lblHMTPInv1.Name = "lblHMTPInv1"
-        Me.lblHMTPInv1.Size = New System.Drawing.Size(29, 12)
-        Me.lblHMTPInv1.TabIndex = 70
-        Me.lblHMTPInv1.Text = "RRT1"
-        Me.lblHMTPInv1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'pnlSummaryMTP
-        '
-        Me.pnlSummaryMTP.BackColor = System.Drawing.SystemColors.Control
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP8)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP11Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP10Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP9Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP8Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP7)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP7Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP6)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP6Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP5)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP5Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP4)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP4Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP3)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP3Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP2)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP2Val)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP1)
-        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP1Val)
-        Me.pnlSummaryMTP.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pnlSummaryMTP.Location = New System.Drawing.Point(0, 335)
-        Me.pnlSummaryMTP.Name = "pnlSummaryMTP"
-        Me.pnlSummaryMTP.Size = New System.Drawing.Size(1209, 100)
-        Me.pnlSummaryMTP.TabIndex = 92
-        Me.pnlSummaryMTP.TabStop = False
-        Me.pnlSummaryMTP.Text = "Summary"
-        Me.pnlSummaryMTP.Visible = False
-        '
-        'lblSumMTP8
-        '
-        Me.lblSumMTP8.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP8.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSumMTP8.Location = New System.Drawing.Point(790, 16)
-        Me.lblSumMTP8.Name = "lblSumMTP8"
-        Me.lblSumMTP8.Size = New System.Drawing.Size(121, 18)
-        Me.lblSumMTP8.TabIndex = 90
-        Me.lblSumMTP8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lblSumMTP8.Visible = False
-        '
-        'lblSumMTP11Val
-        '
-        Me.lblSumMTP11Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP11Val.Location = New System.Drawing.Point(790, 42)
-        Me.lblSumMTP11Val.Name = "lblSumMTP11Val"
-        Me.lblSumMTP11Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP11Val.TabIndex = 89
-        Me.lblSumMTP11Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblSumMTP11Val.Visible = False
-        '
-        'lblSumMTP10Val
-        '
-        Me.lblSumMTP10Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP10Val.Location = New System.Drawing.Point(663, 68)
-        Me.lblSumMTP10Val.Name = "lblSumMTP10Val"
-        Me.lblSumMTP10Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP10Val.TabIndex = 88
-        Me.lblSumMTP10Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblSumMTP10Val.Visible = False
-        '
-        'lblSumMTP9Val
-        '
-        Me.lblSumMTP9Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP9Val.Location = New System.Drawing.Point(663, 42)
-        Me.lblSumMTP9Val.Name = "lblSumMTP9Val"
-        Me.lblSumMTP9Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP9Val.TabIndex = 86
-        Me.lblSumMTP9Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblSumMTP9Val.Visible = False
-        '
-        'lblSumMTP8Val
-        '
-        Me.lblSumMTP8Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP8Val.Location = New System.Drawing.Point(536, 68)
-        Me.lblSumMTP8Val.Name = "lblSumMTP8Val"
-        Me.lblSumMTP8Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP8Val.TabIndex = 84
-        Me.lblSumMTP8Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblSumMTP8Val.Visible = False
-        '
-        'lblSumMTP7
-        '
-        Me.lblSumMTP7.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP7.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
-        Me.lblSumMTP7.Location = New System.Drawing.Point(663, 16)
-        Me.lblSumMTP7.Name = "lblSumMTP7"
-        Me.lblSumMTP7.Size = New System.Drawing.Size(121, 18)
-        Me.lblSumMTP7.TabIndex = 83
-        Me.lblSumMTP7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lblSumMTP7.Visible = False
-        '
-        'lblSumMTP7Val
-        '
-        Me.lblSumMTP7Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP7Val.Location = New System.Drawing.Point(536, 42)
-        Me.lblSumMTP7Val.Name = "lblSumMTP7Val"
-        Me.lblSumMTP7Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP7Val.TabIndex = 82
-        Me.lblSumMTP7Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblSumMTP7Val.Visible = False
-        '
-        'lblSumMTP6
-        '
-        Me.lblSumMTP6.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP6.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSumMTP6.Location = New System.Drawing.Point(536, 16)
-        Me.lblSumMTP6.Name = "lblSumMTP6"
-        Me.lblSumMTP6.Size = New System.Drawing.Size(121, 18)
-        Me.lblSumMTP6.TabIndex = 81
-        Me.lblSumMTP6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lblSumMTP6.Visible = False
-        '
-        'lblSumMTP6Val
-        '
-        Me.lblSumMTP6Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP6Val.Location = New System.Drawing.Point(409, 68)
-        Me.lblSumMTP6Val.Name = "lblSumMTP6Val"
-        Me.lblSumMTP6Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP6Val.TabIndex = 80
-        Me.lblSumMTP6Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblSumMTP6Val.Visible = False
-        '
-        'lblSumMTP5
-        '
-        Me.lblSumMTP5.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSumMTP5.Location = New System.Drawing.Point(407, 16)
-        Me.lblSumMTP5.Name = "lblSumMTP5"
-        Me.lblSumMTP5.Size = New System.Drawing.Size(123, 18)
-        Me.lblSumMTP5.TabIndex = 79
-        Me.lblSumMTP5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lblSumMTP5Val
-        '
-        Me.lblSumMTP5Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP5Val.Location = New System.Drawing.Point(409, 42)
-        Me.lblSumMTP5Val.Name = "lblSumMTP5Val"
-        Me.lblSumMTP5Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP5Val.TabIndex = 78
-        Me.lblSumMTP5Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSumMTP4
-        '
-        Me.lblSumMTP4.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSumMTP4.Location = New System.Drawing.Point(280, 16)
-        Me.lblSumMTP4.Name = "lblSumMTP4"
-        Me.lblSumMTP4.Size = New System.Drawing.Size(121, 18)
-        Me.lblSumMTP4.TabIndex = 77
-        Me.lblSumMTP4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lblSumMTP4Val
-        '
-        Me.lblSumMTP4Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP4Val.Location = New System.Drawing.Point(282, 68)
-        Me.lblSumMTP4Val.Name = "lblSumMTP4Val"
-        Me.lblSumMTP4Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP4Val.TabIndex = 76
-        Me.lblSumMTP4Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSumMTP3
-        '
-        Me.lblSumMTP3.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSumMTP3.Location = New System.Drawing.Point(124, 16)
-        Me.lblSumMTP3.Name = "lblSumMTP3"
-        Me.lblSumMTP3.Size = New System.Drawing.Size(123, 18)
-        Me.lblSumMTP3.TabIndex = 75
-        Me.lblSumMTP3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lblSumMTP3Val
-        '
-        Me.lblSumMTP3Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP3Val.Location = New System.Drawing.Point(282, 42)
-        Me.lblSumMTP3Val.Name = "lblSumMTP3Val"
-        Me.lblSumMTP3Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP3Val.TabIndex = 74
-        Me.lblSumMTP3Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSumMTP2
-        '
-        Me.lblSumMTP2.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSumMTP2.Location = New System.Drawing.Point(14, 71)
-        Me.lblSumMTP2.Name = "lblSumMTP2"
-        Me.lblSumMTP2.Size = New System.Drawing.Size(108, 18)
-        Me.lblSumMTP2.TabIndex = 73
-        Me.lblSumMTP2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSumMTP2Val
-        '
-        Me.lblSumMTP2Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP2Val.Location = New System.Drawing.Point(125, 68)
-        Me.lblSumMTP2Val.Name = "lblSumMTP2Val"
-        Me.lblSumMTP2Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP2Val.TabIndex = 72
-        Me.lblSumMTP2Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSumMTP1
-        '
-        Me.lblSumMTP1.BackColor = System.Drawing.Color.White
-        Me.lblSumMTP1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblSumMTP1.Location = New System.Drawing.Point(14, 44)
-        Me.lblSumMTP1.Name = "lblSumMTP1"
-        Me.lblSumMTP1.Size = New System.Drawing.Size(108, 18)
-        Me.lblSumMTP1.TabIndex = 71
-        Me.lblSumMTP1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'lblSumMTP1Val
-        '
-        Me.lblSumMTP1Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lblSumMTP1Val.Location = New System.Drawing.Point(125, 42)
-        Me.lblSumMTP1Val.Name = "lblSumMTP1Val"
-        Me.lblSumMTP1Val.Size = New System.Drawing.Size(121, 23)
-        Me.lblSumMTP1Val.TabIndex = 70
-        Me.lblSumMTP1Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'cboMtpRevno
-        '
-        Me.cboMtpRevno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboMtpRevno.FormattingEnabled = True
-        Me.cboMtpRevno.Location = New System.Drawing.Point(74, 41)
-        Me.cboMtpRevno.Name = "cboMtpRevno"
-        Me.cboMtpRevno.Size = New System.Drawing.Size(53, 21)
-        Me.cboMtpRevno.TabIndex = 3
-        '
-        'gbOB_MTP
-        '
-        Me.gbOB_MTP.Controls.Add(Me.cboMtpRevno)
-        Me.gbOB_MTP.Controls.Add(Me.lblHPrevRevNo)
-        Me.gbOB_MTP.Controls.Add(Me.numMtpProjectNo)
-        Me.gbOB_MTP.Controls.Add(Me.lblHPrevProjectNo)
-        Me.gbOB_MTP.Location = New System.Drawing.Point(694, 59)
-        Me.gbOB_MTP.Name = "gbOB_MTP"
-        Me.gbOB_MTP.Size = New System.Drawing.Size(141, 70)
-        Me.gbOB_MTP.TabIndex = 93
-        Me.gbOB_MTP.TabStop = False
-        Me.gbOB_MTP.Text = "MTP"
-        '
-        'lblHPrevRevNo
-        '
-        Me.lblHPrevRevNo.AutoSize = True
-        Me.lblHPrevRevNo.Location = New System.Drawing.Point(15, 44)
-        Me.lblHPrevRevNo.Name = "lblHPrevRevNo"
-        Me.lblHPrevRevNo.Size = New System.Drawing.Size(53, 13)
-        Me.lblHPrevRevNo.TabIndex = 2
-        Me.lblHPrevRevNo.Text = "Rev. No.:"
-        '
-        'numMtpProjectNo
-        '
-        Me.numMtpProjectNo.Location = New System.Drawing.Point(74, 19)
-        Me.numMtpProjectNo.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.numMtpProjectNo.Name = "numMtpProjectNo"
-        Me.numMtpProjectNo.Size = New System.Drawing.Size(38, 20)
-        Me.numMtpProjectNo.TabIndex = 1
-        Me.numMtpProjectNo.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        '
-        'lblHPrevProjectNo
-        '
-        Me.lblHPrevProjectNo.AutoSize = True
-        Me.lblHPrevProjectNo.Location = New System.Drawing.Point(8, 21)
-        Me.lblHPrevProjectNo.Name = "lblHPrevProjectNo"
-        Me.lblHPrevProjectNo.Size = New System.Drawing.Size(60, 13)
-        Me.lblHPrevProjectNo.TabIndex = 0
-        Me.lblHPrevProjectNo.Text = "Project No:"
-        '
-        'cmdReInputByOrder
-        '
-        Me.cmdReInputByOrder.Location = New System.Drawing.Point(336, 12)
-        Me.cmdReInputByOrder.Name = "cmdReInputByOrder"
-        Me.cmdReInputByOrder.Size = New System.Drawing.Size(100, 23)
-        Me.cmdReInputByOrder.TabIndex = 94
-        Me.cmdReInputByOrder.Text = "Re-Input by Order"
-        Me.cmdReInputByOrder.UseVisualStyleBackColor = True
         '
         'g4Wk
         '
@@ -4123,6 +3326,803 @@ Partial Class frmBG0200
         Me.BudgetOrderNo.Name = "BudgetOrderNo"
         Me.BudgetOrderNo.Visible = False
         Me.BudgetOrderNo.Width = 106
+        '
+        'lblSum1Val
+        '
+        Me.lblSum1Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum1Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum1Val.Location = New System.Drawing.Point(126, 11)
+        Me.lblSum1Val.Name = "lblSum1Val"
+        Me.lblSum1Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum1Val.TabIndex = 70
+        Me.lblSum1Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'pnlSummary
+        '
+        Me.pnlSummary.BackColor = System.Drawing.SystemColors.Control
+        Me.pnlSummary.Controls.Add(Me.lblSum12)
+        Me.pnlSummary.Controls.Add(Me.lblSum12Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum11)
+        Me.pnlSummary.Controls.Add(Me.lblSum11Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum10)
+        Me.pnlSummary.Controls.Add(Me.lblSum10Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum9)
+        Me.pnlSummary.Controls.Add(Me.lblSum9Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum8)
+        Me.pnlSummary.Controls.Add(Me.lblSum8Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum7)
+        Me.pnlSummary.Controls.Add(Me.lblSum7Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum6)
+        Me.pnlSummary.Controls.Add(Me.lblSum6Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum5)
+        Me.pnlSummary.Controls.Add(Me.lblSum5Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum4)
+        Me.pnlSummary.Controls.Add(Me.lblSum4Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum3)
+        Me.pnlSummary.Controls.Add(Me.lblSum3Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum2)
+        Me.pnlSummary.Controls.Add(Me.lblSum2Val)
+        Me.pnlSummary.Controls.Add(Me.lblSum1)
+        Me.pnlSummary.Controls.Add(Me.lblSum1Val)
+        Me.pnlSummary.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pnlSummary.Location = New System.Drawing.Point(0, 490)
+        Me.pnlSummary.Name = "pnlSummary"
+        Me.pnlSummary.Size = New System.Drawing.Size(1209, 66)
+        Me.pnlSummary.TabIndex = 71
+        Me.pnlSummary.TabStop = False
+        Me.pnlSummary.Text = "Summary"
+        '
+        'lblSum12
+        '
+        Me.lblSum12.BackColor = System.Drawing.Color.White
+        Me.lblSum12.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSum12.Location = New System.Drawing.Point(1000, 40)
+        Me.lblSum12.Name = "lblSum12"
+        Me.lblSum12.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum12.TabIndex = 93
+        Me.lblSum12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum12Val
+        '
+        Me.lblSum12Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum12Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum12Val.Location = New System.Drawing.Point(1111, 38)
+        Me.lblSum12Val.Name = "lblSum12Val"
+        Me.lblSum12Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum12Val.TabIndex = 92
+        Me.lblSum12Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum11
+        '
+        Me.lblSum11.BackColor = System.Drawing.Color.White
+        Me.lblSum11.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSum11.Location = New System.Drawing.Point(1000, 15)
+        Me.lblSum11.Name = "lblSum11"
+        Me.lblSum11.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum11.TabIndex = 91
+        Me.lblSum11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum11Val
+        '
+        Me.lblSum11Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum11Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum11Val.Location = New System.Drawing.Point(1111, 13)
+        Me.lblSum11Val.Name = "lblSum11Val"
+        Me.lblSum11Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum11Val.TabIndex = 90
+        Me.lblSum11Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum10
+        '
+        Me.lblSum10.BackColor = System.Drawing.Color.White
+        Me.lblSum10.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSum10.Location = New System.Drawing.Point(803, 40)
+        Me.lblSum10.Name = "lblSum10"
+        Me.lblSum10.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum10.TabIndex = 89
+        Me.lblSum10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum10Val
+        '
+        Me.lblSum10Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum10Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum10Val.Location = New System.Drawing.Point(914, 38)
+        Me.lblSum10Val.Name = "lblSum10Val"
+        Me.lblSum10Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum10Val.TabIndex = 88
+        Me.lblSum10Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum9
+        '
+        Me.lblSum9.BackColor = System.Drawing.Color.White
+        Me.lblSum9.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSum9.Location = New System.Drawing.Point(803, 14)
+        Me.lblSum9.Name = "lblSum9"
+        Me.lblSum9.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum9.TabIndex = 87
+        Me.lblSum9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum9Val
+        '
+        Me.lblSum9Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum9Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum9Val.Location = New System.Drawing.Point(914, 12)
+        Me.lblSum9Val.Name = "lblSum9Val"
+        Me.lblSum9Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum9Val.TabIndex = 86
+        Me.lblSum9Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum8
+        '
+        Me.lblSum8.BackColor = System.Drawing.Color.White
+        Me.lblSum8.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSum8.Location = New System.Drawing.Point(606, 40)
+        Me.lblSum8.Name = "lblSum8"
+        Me.lblSum8.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum8.TabIndex = 85
+        Me.lblSum8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum8Val
+        '
+        Me.lblSum8Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum8Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum8Val.Location = New System.Drawing.Point(717, 37)
+        Me.lblSum8Val.Name = "lblSum8Val"
+        Me.lblSum8Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum8Val.TabIndex = 84
+        Me.lblSum8Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum7
+        '
+        Me.lblSum7.BackColor = System.Drawing.Color.White
+        Me.lblSum7.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSum7.Location = New System.Drawing.Point(606, 13)
+        Me.lblSum7.Name = "lblSum7"
+        Me.lblSum7.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum7.TabIndex = 83
+        Me.lblSum7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum7Val
+        '
+        Me.lblSum7Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum7Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum7Val.Location = New System.Drawing.Point(717, 11)
+        Me.lblSum7Val.Name = "lblSum7Val"
+        Me.lblSum7Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum7Val.TabIndex = 82
+        Me.lblSum7Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum6
+        '
+        Me.lblSum6.BackColor = System.Drawing.Color.White
+        Me.lblSum6.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum6.Location = New System.Drawing.Point(409, 40)
+        Me.lblSum6.Name = "lblSum6"
+        Me.lblSum6.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum6.TabIndex = 81
+        Me.lblSum6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum6Val
+        '
+        Me.lblSum6Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum6Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum6Val.Location = New System.Drawing.Point(520, 37)
+        Me.lblSum6Val.Name = "lblSum6Val"
+        Me.lblSum6Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum6Val.TabIndex = 80
+        Me.lblSum6Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum5
+        '
+        Me.lblSum5.BackColor = System.Drawing.Color.White
+        Me.lblSum5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum5.Location = New System.Drawing.Point(409, 13)
+        Me.lblSum5.Name = "lblSum5"
+        Me.lblSum5.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum5.TabIndex = 79
+        Me.lblSum5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum5Val
+        '
+        Me.lblSum5Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum5Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum5Val.Location = New System.Drawing.Point(520, 11)
+        Me.lblSum5Val.Name = "lblSum5Val"
+        Me.lblSum5Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum5Val.TabIndex = 78
+        Me.lblSum5Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum4
+        '
+        Me.lblSum4.BackColor = System.Drawing.Color.White
+        Me.lblSum4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum4.Location = New System.Drawing.Point(212, 40)
+        Me.lblSum4.Name = "lblSum4"
+        Me.lblSum4.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum4.TabIndex = 77
+        Me.lblSum4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum4Val
+        '
+        Me.lblSum4Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum4Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum4Val.Location = New System.Drawing.Point(323, 37)
+        Me.lblSum4Val.Name = "lblSum4Val"
+        Me.lblSum4Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum4Val.TabIndex = 76
+        Me.lblSum4Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum3
+        '
+        Me.lblSum3.BackColor = System.Drawing.Color.White
+        Me.lblSum3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum3.Location = New System.Drawing.Point(212, 13)
+        Me.lblSum3.Name = "lblSum3"
+        Me.lblSum3.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum3.TabIndex = 75
+        Me.lblSum3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum3Val
+        '
+        Me.lblSum3Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum3Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum3Val.Location = New System.Drawing.Point(323, 11)
+        Me.lblSum3Val.Name = "lblSum3Val"
+        Me.lblSum3Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum3Val.TabIndex = 74
+        Me.lblSum3Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum2
+        '
+        Me.lblSum2.BackColor = System.Drawing.Color.White
+        Me.lblSum2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum2.Location = New System.Drawing.Point(14, 40)
+        Me.lblSum2.Name = "lblSum2"
+        Me.lblSum2.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum2.TabIndex = 73
+        Me.lblSum2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum2Val
+        '
+        Me.lblSum2Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSum2Val.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum2Val.Location = New System.Drawing.Point(126, 37)
+        Me.lblSum2Val.Name = "lblSum2Val"
+        Me.lblSum2Val.Size = New System.Drawing.Size(80, 23)
+        Me.lblSum2Val.TabIndex = 72
+        Me.lblSum2Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSum1
+        '
+        Me.lblSum1.BackColor = System.Drawing.Color.White
+        Me.lblSum1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSum1.Location = New System.Drawing.Point(15, 13)
+        Me.lblSum1.Name = "lblSum1"
+        Me.lblSum1.Size = New System.Drawing.Size(108, 18)
+        Me.lblSum1.TabIndex = 71
+        Me.lblSum1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'fraWBMTP
+        '
+        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT5)
+        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT4)
+        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT3)
+        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT2)
+        Me.fraWBMTP.Controls.Add(Me.lblHWKRRT1)
+        Me.fraWBMTP.Controls.Add(Me.txtWKRRT5)
+        Me.fraWBMTP.Controls.Add(Me.txtWKRRT4)
+        Me.fraWBMTP.Controls.Add(Me.txtWKRRT3)
+        Me.fraWBMTP.Controls.Add(Me.txtWKRRT2)
+        Me.fraWBMTP.Controls.Add(Me.txtWKRRT1)
+        Me.fraWBMTP.Location = New System.Drawing.Point(713, 134)
+        Me.fraWBMTP.Name = "fraWBMTP"
+        Me.fraWBMTP.Size = New System.Drawing.Size(360, 63)
+        Me.fraWBMTP.TabIndex = 65
+        Me.fraWBMTP.TabStop = False
+        Me.fraWBMTP.Text = "PY Working Budget"
+        Me.fraWBMTP.Visible = False
+        '
+        'lblHWKRRT5
+        '
+        Me.lblHWKRRT5.AutoSize = True
+        Me.lblHWKRRT5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHWKRRT5.Location = New System.Drawing.Point(287, 18)
+        Me.lblHWKRRT5.Name = "lblHWKRRT5"
+        Me.lblHWKRRT5.Size = New System.Drawing.Size(36, 13)
+        Me.lblHWKRRT5.TabIndex = 74
+        Me.lblHWKRRT5.Text = "RRT5"
+        Me.lblHWKRRT5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHWKRRT5.Visible = False
+        '
+        'lblHWKRRT4
+        '
+        Me.lblHWKRRT4.AutoSize = True
+        Me.lblHWKRRT4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHWKRRT4.Location = New System.Drawing.Point(216, 18)
+        Me.lblHWKRRT4.Name = "lblHWKRRT4"
+        Me.lblHWKRRT4.Size = New System.Drawing.Size(36, 13)
+        Me.lblHWKRRT4.TabIndex = 73
+        Me.lblHWKRRT4.Text = "RRT4"
+        Me.lblHWKRRT4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHWKRRT4.Visible = False
+        '
+        'lblHWKRRT3
+        '
+        Me.lblHWKRRT3.AutoSize = True
+        Me.lblHWKRRT3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHWKRRT3.Location = New System.Drawing.Point(90, 18)
+        Me.lblHWKRRT3.Name = "lblHWKRRT3"
+        Me.lblHWKRRT3.Size = New System.Drawing.Size(36, 13)
+        Me.lblHWKRRT3.TabIndex = 72
+        Me.lblHWKRRT3.Text = "RRT3"
+        Me.lblHWKRRT3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblHWKRRT2
+        '
+        Me.lblHWKRRT2.AutoSize = True
+        Me.lblHWKRRT2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHWKRRT2.Location = New System.Drawing.Point(19, 18)
+        Me.lblHWKRRT2.Name = "lblHWKRRT2"
+        Me.lblHWKRRT2.Size = New System.Drawing.Size(36, 13)
+        Me.lblHWKRRT2.TabIndex = 71
+        Me.lblHWKRRT2.Text = "RRT2"
+        Me.lblHWKRRT2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblHWKRRT1
+        '
+        Me.lblHWKRRT1.AutoSize = True
+        Me.lblHWKRRT1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHWKRRT1.Location = New System.Drawing.Point(3, 18)
+        Me.lblHWKRRT1.Name = "lblHWKRRT1"
+        Me.lblHWKRRT1.Size = New System.Drawing.Size(36, 13)
+        Me.lblHWKRRT1.TabIndex = 70
+        Me.lblHWKRRT1.Text = "RRT1"
+        Me.lblHWKRRT1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHWKRRT1.Visible = False
+        '
+        'pnlMTPInvestment
+        '
+        Me.pnlMTPInvestment.BackColor = System.Drawing.SystemColors.Control
+        Me.pnlMTPInvestment.Controls.Add(Me.GroupBox4)
+        Me.pnlMTPInvestment.Controls.Add(Me.GroupBox3)
+        Me.pnlMTPInvestment.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pnlMTPInvestment.Location = New System.Drawing.Point(0, 435)
+        Me.pnlMTPInvestment.Name = "pnlMTPInvestment"
+        Me.pnlMTPInvestment.Size = New System.Drawing.Size(1209, 55)
+        Me.pnlMTPInvestment.TabIndex = 74
+        Me.pnlMTPInvestment.Visible = False
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.lblHPYInv5)
+        Me.GroupBox4.Controls.Add(Me.lblHPYInv4)
+        Me.GroupBox4.Controls.Add(Me.lblHPYInv3)
+        Me.GroupBox4.Controls.Add(Me.lblHPYInv2)
+        Me.GroupBox4.Controls.Add(Me.lblHPYInv1)
+        Me.GroupBox4.Controls.Add(Me.txtPYInv5)
+        Me.GroupBox4.Controls.Add(Me.txtPYInv4)
+        Me.GroupBox4.Controls.Add(Me.txtPYInv3)
+        Me.GroupBox4.Controls.Add(Me.txtPYInv2)
+        Me.GroupBox4.Controls.Add(Me.txtPYInv1)
+        Me.GroupBox4.Location = New System.Drawing.Point(541, 0)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(527, 54)
+        Me.GroupBox4.TabIndex = 74
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "PY Investment"
+        '
+        'lblHPYInv5
+        '
+        Me.lblHPYInv5.AutoSize = True
+        Me.lblHPYInv5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHPYInv5.Location = New System.Drawing.Point(419, 14)
+        Me.lblHPYInv5.Name = "lblHPYInv5"
+        Me.lblHPYInv5.Size = New System.Drawing.Size(29, 12)
+        Me.lblHPYInv5.TabIndex = 74
+        Me.lblHPYInv5.Text = "RRT5"
+        Me.lblHPYInv5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHPYInv5.Visible = False
+        '
+        'lblHPYInv4
+        '
+        Me.lblHPYInv4.AutoSize = True
+        Me.lblHPYInv4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHPYInv4.Location = New System.Drawing.Point(318, 14)
+        Me.lblHPYInv4.Name = "lblHPYInv4"
+        Me.lblHPYInv4.Size = New System.Drawing.Size(29, 12)
+        Me.lblHPYInv4.TabIndex = 73
+        Me.lblHPYInv4.Text = "RRT4"
+        Me.lblHPYInv4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHPYInv4.Visible = False
+        '
+        'lblHPYInv3
+        '
+        Me.lblHPYInv3.AutoSize = True
+        Me.lblHPYInv3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHPYInv3.Location = New System.Drawing.Point(116, 14)
+        Me.lblHPYInv3.Name = "lblHPYInv3"
+        Me.lblHPYInv3.Size = New System.Drawing.Size(29, 12)
+        Me.lblHPYInv3.TabIndex = 72
+        Me.lblHPYInv3.Text = "RRT3"
+        Me.lblHPYInv3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblHPYInv2
+        '
+        Me.lblHPYInv2.AutoSize = True
+        Me.lblHPYInv2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHPYInv2.Location = New System.Drawing.Point(15, 14)
+        Me.lblHPYInv2.Name = "lblHPYInv2"
+        Me.lblHPYInv2.Size = New System.Drawing.Size(29, 12)
+        Me.lblHPYInv2.TabIndex = 71
+        Me.lblHPYInv2.Text = "RRT2"
+        Me.lblHPYInv2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblHPYInv1
+        '
+        Me.lblHPYInv1.AutoSize = True
+        Me.lblHPYInv1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHPYInv1.Location = New System.Drawing.Point(15, 14)
+        Me.lblHPYInv1.Name = "lblHPYInv1"
+        Me.lblHPYInv1.Size = New System.Drawing.Size(29, 12)
+        Me.lblHPYInv1.TabIndex = 70
+        Me.lblHPYInv1.Text = "RRT1"
+        Me.lblHPYInv1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHPYInv1.Visible = False
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.BackColor = System.Drawing.SystemColors.Control
+        Me.GroupBox3.Controls.Add(Me.lblHMTPInv5)
+        Me.GroupBox3.Controls.Add(Me.lblHMTPInv4)
+        Me.GroupBox3.Controls.Add(Me.lblHMTPInv3)
+        Me.GroupBox3.Controls.Add(Me.lblHMTPInv2)
+        Me.GroupBox3.Controls.Add(Me.lblHMTPInv1)
+        Me.GroupBox3.Controls.Add(Me.txtMTPInv5)
+        Me.GroupBox3.Controls.Add(Me.txtMTPInv4)
+        Me.GroupBox3.Controls.Add(Me.txtMTPInv3)
+        Me.GroupBox3.Controls.Add(Me.txtMTPInv2)
+        Me.GroupBox3.Controls.Add(Me.txtMTPInv1)
+        Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(535, 54)
+        Me.GroupBox3.TabIndex = 73
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "MTP Investment"
+        '
+        'lblHMTPInv5
+        '
+        Me.lblHMTPInv5.AutoSize = True
+        Me.lblHMTPInv5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHMTPInv5.Location = New System.Drawing.Point(426, 14)
+        Me.lblHMTPInv5.Name = "lblHMTPInv5"
+        Me.lblHMTPInv5.Size = New System.Drawing.Size(29, 12)
+        Me.lblHMTPInv5.TabIndex = 74
+        Me.lblHMTPInv5.Text = "RRT5"
+        Me.lblHMTPInv5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHMTPInv5.Visible = False
+        '
+        'lblHMTPInv4
+        '
+        Me.lblHMTPInv4.AutoSize = True
+        Me.lblHMTPInv4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHMTPInv4.Location = New System.Drawing.Point(320, 14)
+        Me.lblHMTPInv4.Name = "lblHMTPInv4"
+        Me.lblHMTPInv4.Size = New System.Drawing.Size(29, 12)
+        Me.lblHMTPInv4.TabIndex = 73
+        Me.lblHMTPInv4.Text = "RRT4"
+        Me.lblHMTPInv4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHMTPInv4.Visible = False
+        '
+        'lblHMTPInv3
+        '
+        Me.lblHMTPInv3.AutoSize = True
+        Me.lblHMTPInv3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHMTPInv3.Location = New System.Drawing.Point(118, 14)
+        Me.lblHMTPInv3.Name = "lblHMTPInv3"
+        Me.lblHMTPInv3.Size = New System.Drawing.Size(29, 12)
+        Me.lblHMTPInv3.TabIndex = 72
+        Me.lblHMTPInv3.Text = "RRT3"
+        Me.lblHMTPInv3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblHMTPInv2
+        '
+        Me.lblHMTPInv2.AutoSize = True
+        Me.lblHMTPInv2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHMTPInv2.Location = New System.Drawing.Point(13, 14)
+        Me.lblHMTPInv2.Name = "lblHMTPInv2"
+        Me.lblHMTPInv2.Size = New System.Drawing.Size(29, 12)
+        Me.lblHMTPInv2.TabIndex = 71
+        Me.lblHMTPInv2.Text = "RRT2"
+        Me.lblHMTPInv2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblHMTPInv1
+        '
+        Me.lblHMTPInv1.AutoSize = True
+        Me.lblHMTPInv1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblHMTPInv1.Location = New System.Drawing.Point(4, 14)
+        Me.lblHMTPInv1.Name = "lblHMTPInv1"
+        Me.lblHMTPInv1.Size = New System.Drawing.Size(29, 12)
+        Me.lblHMTPInv1.TabIndex = 70
+        Me.lblHMTPInv1.Text = "RRT1"
+        Me.lblHMTPInv1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblHMTPInv1.Visible = False
+        '
+        'pnlSummaryMTP
+        '
+        Me.pnlSummaryMTP.BackColor = System.Drawing.SystemColors.Control
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP8)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP11Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP10Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP9Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP8Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP7)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP7Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP6)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP6Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP5)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP5Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP4)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP4Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP3)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP3Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP2)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP2Val)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP1)
+        Me.pnlSummaryMTP.Controls.Add(Me.lblSumMTP1Val)
+        Me.pnlSummaryMTP.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pnlSummaryMTP.Location = New System.Drawing.Point(0, 335)
+        Me.pnlSummaryMTP.Name = "pnlSummaryMTP"
+        Me.pnlSummaryMTP.Size = New System.Drawing.Size(1209, 100)
+        Me.pnlSummaryMTP.TabIndex = 92
+        Me.pnlSummaryMTP.TabStop = False
+        Me.pnlSummaryMTP.Text = "Summary"
+        Me.pnlSummaryMTP.Visible = False
+        '
+        'lblSumMTP8
+        '
+        Me.lblSumMTP8.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP8.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSumMTP8.Location = New System.Drawing.Point(702, 16)
+        Me.lblSumMTP8.Name = "lblSumMTP8"
+        Me.lblSumMTP8.Size = New System.Drawing.Size(121, 18)
+        Me.lblSumMTP8.TabIndex = 90
+        Me.lblSumMTP8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblSumMTP8.Visible = False
+        '
+        'lblSumMTP11Val
+        '
+        Me.lblSumMTP11Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP11Val.Location = New System.Drawing.Point(702, 42)
+        Me.lblSumMTP11Val.Name = "lblSumMTP11Val"
+        Me.lblSumMTP11Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP11Val.TabIndex = 89
+        Me.lblSumMTP11Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblSumMTP11Val.Visible = False
+        '
+        'lblSumMTP10Val
+        '
+        Me.lblSumMTP10Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP10Val.Location = New System.Drawing.Point(575, 68)
+        Me.lblSumMTP10Val.Name = "lblSumMTP10Val"
+        Me.lblSumMTP10Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP10Val.TabIndex = 88
+        Me.lblSumMTP10Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblSumMTP10Val.Visible = False
+        '
+        'lblSumMTP9Val
+        '
+        Me.lblSumMTP9Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP9Val.Location = New System.Drawing.Point(575, 42)
+        Me.lblSumMTP9Val.Name = "lblSumMTP9Val"
+        Me.lblSumMTP9Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP9Val.TabIndex = 86
+        Me.lblSumMTP9Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblSumMTP9Val.Visible = False
+        '
+        'lblSumMTP8Val
+        '
+        Me.lblSumMTP8Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP8Val.Location = New System.Drawing.Point(448, 68)
+        Me.lblSumMTP8Val.Name = "lblSumMTP8Val"
+        Me.lblSumMTP8Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP8Val.TabIndex = 84
+        Me.lblSumMTP8Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblSumMTP8Val.Visible = False
+        '
+        'lblSumMTP7
+        '
+        Me.lblSumMTP7.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP7.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!)
+        Me.lblSumMTP7.Location = New System.Drawing.Point(575, 16)
+        Me.lblSumMTP7.Name = "lblSumMTP7"
+        Me.lblSumMTP7.Size = New System.Drawing.Size(121, 18)
+        Me.lblSumMTP7.TabIndex = 83
+        Me.lblSumMTP7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblSumMTP7.Visible = False
+        '
+        'lblSumMTP7Val
+        '
+        Me.lblSumMTP7Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP7Val.Location = New System.Drawing.Point(448, 42)
+        Me.lblSumMTP7Val.Name = "lblSumMTP7Val"
+        Me.lblSumMTP7Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP7Val.TabIndex = 82
+        Me.lblSumMTP7Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSumMTP6
+        '
+        Me.lblSumMTP6.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP6.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSumMTP6.Location = New System.Drawing.Point(448, 16)
+        Me.lblSumMTP6.Name = "lblSumMTP6"
+        Me.lblSumMTP6.Size = New System.Drawing.Size(121, 18)
+        Me.lblSumMTP6.TabIndex = 81
+        Me.lblSumMTP6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblSumMTP6Val
+        '
+        Me.lblSumMTP6Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP6Val.Location = New System.Drawing.Point(321, 68)
+        Me.lblSumMTP6Val.Name = "lblSumMTP6Val"
+        Me.lblSumMTP6Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP6Val.TabIndex = 80
+        Me.lblSumMTP6Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSumMTP5
+        '
+        Me.lblSumMTP5.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP5.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSumMTP5.Location = New System.Drawing.Point(319, 16)
+        Me.lblSumMTP5.Name = "lblSumMTP5"
+        Me.lblSumMTP5.Size = New System.Drawing.Size(123, 18)
+        Me.lblSumMTP5.TabIndex = 79
+        Me.lblSumMTP5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblSumMTP5Val
+        '
+        Me.lblSumMTP5Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP5Val.Location = New System.Drawing.Point(321, 42)
+        Me.lblSumMTP5Val.Name = "lblSumMTP5Val"
+        Me.lblSumMTP5Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP5Val.TabIndex = 78
+        Me.lblSumMTP5Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSumMTP4
+        '
+        Me.lblSumMTP4.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP4.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSumMTP4.Location = New System.Drawing.Point(280, 16)
+        Me.lblSumMTP4.Name = "lblSumMTP4"
+        Me.lblSumMTP4.Size = New System.Drawing.Size(27, 18)
+        Me.lblSumMTP4.TabIndex = 77
+        Me.lblSumMTP4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblSumMTP4.Visible = False
+        '
+        'lblSumMTP4Val
+        '
+        Me.lblSumMTP4Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP4Val.Location = New System.Drawing.Point(125, 68)
+        Me.lblSumMTP4Val.Name = "lblSumMTP4Val"
+        Me.lblSumMTP4Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP4Val.TabIndex = 76
+        Me.lblSumMTP4Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSumMTP3
+        '
+        Me.lblSumMTP3.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP3.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSumMTP3.Location = New System.Drawing.Point(124, 16)
+        Me.lblSumMTP3.Name = "lblSumMTP3"
+        Me.lblSumMTP3.Size = New System.Drawing.Size(123, 18)
+        Me.lblSumMTP3.TabIndex = 75
+        Me.lblSumMTP3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblSumMTP3Val
+        '
+        Me.lblSumMTP3Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP3Val.Location = New System.Drawing.Point(282, 42)
+        Me.lblSumMTP3Val.Name = "lblSumMTP3Val"
+        Me.lblSumMTP3Val.Size = New System.Drawing.Size(27, 23)
+        Me.lblSumMTP3Val.TabIndex = 74
+        Me.lblSumMTP3Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblSumMTP3Val.Visible = False
+        '
+        'lblSumMTP2
+        '
+        Me.lblSumMTP2.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP2.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSumMTP2.Location = New System.Drawing.Point(14, 71)
+        Me.lblSumMTP2.Name = "lblSumMTP2"
+        Me.lblSumMTP2.Size = New System.Drawing.Size(108, 18)
+        Me.lblSumMTP2.TabIndex = 73
+        Me.lblSumMTP2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSumMTP2Val
+        '
+        Me.lblSumMTP2Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP2Val.Location = New System.Drawing.Point(125, 68)
+        Me.lblSumMTP2Val.Name = "lblSumMTP2Val"
+        Me.lblSumMTP2Val.Size = New System.Drawing.Size(22, 23)
+        Me.lblSumMTP2Val.TabIndex = 72
+        Me.lblSumMTP2Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblSumMTP2Val.Visible = False
+        '
+        'lblSumMTP1
+        '
+        Me.lblSumMTP1.BackColor = System.Drawing.Color.White
+        Me.lblSumMTP1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.lblSumMTP1.Location = New System.Drawing.Point(14, 44)
+        Me.lblSumMTP1.Name = "lblSumMTP1"
+        Me.lblSumMTP1.Size = New System.Drawing.Size(108, 18)
+        Me.lblSumMTP1.TabIndex = 71
+        Me.lblSumMTP1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSumMTP1Val
+        '
+        Me.lblSumMTP1Val.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lblSumMTP1Val.Location = New System.Drawing.Point(125, 42)
+        Me.lblSumMTP1Val.Name = "lblSumMTP1Val"
+        Me.lblSumMTP1Val.Size = New System.Drawing.Size(121, 23)
+        Me.lblSumMTP1Val.TabIndex = 70
+        Me.lblSumMTP1Val.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'cboMtpRevno
+        '
+        Me.cboMtpRevno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboMtpRevno.FormattingEnabled = True
+        Me.cboMtpRevno.Location = New System.Drawing.Point(74, 41)
+        Me.cboMtpRevno.Name = "cboMtpRevno"
+        Me.cboMtpRevno.Size = New System.Drawing.Size(53, 21)
+        Me.cboMtpRevno.TabIndex = 3
+        '
+        'gbOB_MTP
+        '
+        Me.gbOB_MTP.Controls.Add(Me.cboMtpRevno)
+        Me.gbOB_MTP.Controls.Add(Me.lblHPrevRevNo)
+        Me.gbOB_MTP.Controls.Add(Me.numMtpProjectNo)
+        Me.gbOB_MTP.Controls.Add(Me.lblHPrevProjectNo)
+        Me.gbOB_MTP.Location = New System.Drawing.Point(694, 59)
+        Me.gbOB_MTP.Name = "gbOB_MTP"
+        Me.gbOB_MTP.Size = New System.Drawing.Size(141, 70)
+        Me.gbOB_MTP.TabIndex = 93
+        Me.gbOB_MTP.TabStop = False
+        Me.gbOB_MTP.Text = "MTP"
+        '
+        'lblHPrevRevNo
+        '
+        Me.lblHPrevRevNo.AutoSize = True
+        Me.lblHPrevRevNo.Location = New System.Drawing.Point(15, 44)
+        Me.lblHPrevRevNo.Name = "lblHPrevRevNo"
+        Me.lblHPrevRevNo.Size = New System.Drawing.Size(53, 13)
+        Me.lblHPrevRevNo.TabIndex = 2
+        Me.lblHPrevRevNo.Text = "Rev. No.:"
+        '
+        'numMtpProjectNo
+        '
+        Me.numMtpProjectNo.Location = New System.Drawing.Point(74, 19)
+        Me.numMtpProjectNo.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.numMtpProjectNo.Name = "numMtpProjectNo"
+        Me.numMtpProjectNo.Size = New System.Drawing.Size(38, 20)
+        Me.numMtpProjectNo.TabIndex = 1
+        Me.numMtpProjectNo.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'lblHPrevProjectNo
+        '
+        Me.lblHPrevProjectNo.AutoSize = True
+        Me.lblHPrevProjectNo.Location = New System.Drawing.Point(8, 21)
+        Me.lblHPrevProjectNo.Name = "lblHPrevProjectNo"
+        Me.lblHPrevProjectNo.Size = New System.Drawing.Size(60, 13)
+        Me.lblHPrevProjectNo.TabIndex = 0
+        Me.lblHPrevProjectNo.Text = "Project No:"
+        '
+        'cmdReInputByOrder
+        '
+        Me.cmdReInputByOrder.Location = New System.Drawing.Point(336, 12)
+        Me.cmdReInputByOrder.Name = "cmdReInputByOrder"
+        Me.cmdReInputByOrder.Size = New System.Drawing.Size(100, 23)
+        Me.cmdReInputByOrder.TabIndex = 94
+        Me.cmdReInputByOrder.Text = "Re-Input by Order"
+        Me.cmdReInputByOrder.UseVisualStyleBackColor = True
         '
         'frmBG0200
         '
