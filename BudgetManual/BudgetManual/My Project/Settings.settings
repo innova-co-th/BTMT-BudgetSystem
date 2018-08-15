@@ -20,28 +20,28 @@
     <Setting Name="BudgetData" Type="System.String" Scope="Application">
       <Value Profile="(Default)">BG_T_ACCOUNT_REOPEN,BG_T_BUDGET_ADJUST,BG_T_BUDGET_ADJUST2,BG_T_BUDGET_DATA,BG_T_BUDGET_HEADER,BG_T_BUDGET_PERIOD,BG_T_INFORMATION</Value>
     </Setting>
-    <Setting Name="BUDGETConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Data Source=MASHIMARO2\SQLEXPRESS2014;Initial Catalog=BUDGET_BTMT;User ID=sa;Password=abc123$1&lt;/ConnectionString&gt;
-  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Data Source=MASHIMARO2\SQLEXPRESS2014;Initial Catalog=BUDGET_BTMT;User ID=sa;Password=abc123$1</Value>
-    </Setting>
-    <Setting Name="ServerName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MASHIMARO2\SQLEXPRESS2014</Value>
-    </Setting>
-    <Setting Name="Password" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">abc123$1</Value>
-    </Setting>
     <Setting Name="MasterData" Type="System.String" Scope="Application">
       <Value Profile="(Default)">BG_M_ACCOUNT,BG_M_ASSET_CATEGORY,BG_M_ASSET_GROUP,BG_M_ASSET_PROJECT,BG_M_BUDGET_ORDER,BG_M_CHILD_PIC,BG_M_DEPT,BG_M_PERSON_IN_CHARGE,BG_M_SETTINGS,BG_M_TRANSFER_MASTER,BG_M_USER</Value>
     </Setting>
+    <Setting Name="BUDGETConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=10.30.99.232;Initial Catalog=BUDGET;Persist Security Info=True;User ID=sa;Password=P@ssw0rd&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=10.30.99.232;Initial Catalog=BUDGET;Persist Security Info=True;User ID=sa;Password=P@ssw0rd</Value>
+    </Setting>
+    <Setting Name="ServerName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">10.30.99.232</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">P@ssw0rd</Value>
+    </Setting>
     <Setting Name="ConnStr" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">user id=sa; data source=MASHIMARO2\SQLEXPRESS2014; persist security info=True; initial catalog=BUDGET_BTMT;password=abc123$1</Value>
+      <Value Profile="(Default)">user id=sa; data source=10.30.99.232; persist security info=True; initial catalog=BUDGET;password=P@ssw0rd</Value>
     </Setting>
     <Setting Name="DatabaseName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">BUDGET_BTMT</Value>
+      <Value Profile="(Default)">BUDGET</Value>
     </Setting>
   </Settings>
 </SettingsFile>

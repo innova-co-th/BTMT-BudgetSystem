@@ -32,7 +32,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>D:\Project\2012\btmt\Budget\Released\Publish\</PublishUrl>
+    <PublishUrl>D:\Project2008\BTMT\BudgetManual\BudgetManual\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -46,8 +46,8 @@
     <UpdateUrl>\\10.30.99.37\Install\</UpdateUrl>
     <ProductName>BTMT Budgeting System</ProductName>
     <PublisherName>INNOVA Software</PublisherName>
-    <ApplicationRevision>9</ApplicationRevision>
-    <ApplicationVersion>1.1.6.9</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.1.8.3</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
