@@ -2715,8 +2715,8 @@
       , BGDT.M4 [Budget_4], BGDT.M5 [Budget_5], BGDT.M6 [Budget_6]
       , BGDT.M7 [Budget_7], BGDT.M8 [Budget_8], BGDT.M9 [Budget_9]
       , BGDT.M10 [Budget_10], BGDT.M11 [Budget_11], BGDT.M12 [Budget_12]
-      , BGDT.RRT1 [MTP_1]
       , BGDT.RRT2 [MTP_2]
+      , BGDT.RRT3 [MTP_3]
       FROM [BG_T_BUDGET_DATA] BGDT
       LEFT JOIN [BG_M_BUDGET_ORDER] BGOR ON BGDT.BUDGET_ORDER_NO = BGOR.BUDGET_ORDER_NO
       WHERE CONVERT(VARCHAR(10), BGDT.BUDGET_YEAR) = '@P_BUDGET_YEAR'
@@ -2805,8 +2805,8 @@
       , BGDT.M4 [Budget_4], BGDT.M5 [Budget_5], BGDT.M6 [Budget_6]
       , BGDT.M7 [Budget_7], BGDT.M8 [Budget_8], BGDT.M9 [Budget_9]
       , BGDT.M10 [Budget_10], BGDT.M11 [Budget_11], BGDT.M12 [Budget_12]
-      , BGDT.RRT1 [MTP_1]
       , BGDT.RRT2 [MTP_2]
+      , BGDT.RRT3 [MTP_3]
       FROM [BG_T_BUDGET_DATA] BGDT
       LEFT JOIN [BG_M_BUDGET_ORDER] BGOR ON BGDT.BUDGET_ORDER_NO = BGOR.BUDGET_ORDER_NO
       WHERE CONVERT(VARCHAR(10), BGDT.BUDGET_YEAR) = '@P_BUDGET_YEAR'
