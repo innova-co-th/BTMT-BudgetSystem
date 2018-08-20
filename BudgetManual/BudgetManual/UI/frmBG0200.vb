@@ -1571,7 +1571,7 @@ Public Class frmBG0200
                     Dim returnvalue As Object
 
                     lblSum1.Text = "Estimate 2nd Half'" & Me.GetBudgetYear()
-                    lblSum2.Text = "Revise 2nd Half'" & Me.GetBudgetYear()
+                    lblSum2.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Revise 2nd Half'" & Me.GetBudgetYear()
                     lblSum3.Text = "Actual 1st Half'" & Me.GetBudgetYear()
                     lblSum4.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
                     lblSum5.Text = "Estimate Total Year'" & Me.GetBudgetYear()
@@ -1623,7 +1623,7 @@ Public Class frmBG0200
 
                     lblSum1.Text = "Estimate 1st Half'" & Me.GetBudgetYear()
                     lblSum2.Text = "Original 1st Half'" & Me.GetBudgetYear()
-                    lblSum3.Text = "Revise 2nd Half'" & Me.GetBudgetYear()
+                    lblSum3.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Revise 2nd Half'" & Me.GetBudgetYear()
                     lblSum4.Text = "Original 2nd Half'" & Me.GetBudgetYear()
                     lblSum5.Text = "Diff 1st Half'" & Me.GetBudgetYear()
                     lblSum6.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
@@ -1968,7 +1968,7 @@ Public Class frmBG0200
                 Dim returnvalue As Object
 
                 lblSum1.Text = "Estimate 2nd Half'" & Me.GetBudgetYear()
-                lblSum2.Text = "Revise 2nd Half'" & Me.GetBudgetYear()
+                lblSum2.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Revise 2nd Half'" & Me.GetBudgetYear()
                 lblSum3.Text = "Actual 1st Half'" & Me.GetBudgetYear()
                 lblSum4.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
                 lblSum5.Text = "Estimate Total Year'" & Me.GetBudgetYear()
@@ -2020,7 +2020,7 @@ Public Class frmBG0200
 
                 lblSum1.Text = "Estimate 1st Half'" & Me.GetBudgetYear()
                 lblSum2.Text = "Original 1st Half'" & Me.GetBudgetYear()
-                lblSum3.Text = "Revise 2nd Half'" & Me.GetBudgetYear()
+                lblSum3.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Revise 2nd Half'" & Me.GetBudgetYear()
                 lblSum4.Text = "Original 2nd Half'" & Me.GetBudgetYear()
                 lblSum5.Text = "Diff 1st Half'" & Me.GetBudgetYear()
                 lblSum6.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
