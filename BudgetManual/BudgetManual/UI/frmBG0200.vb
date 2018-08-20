@@ -1481,8 +1481,8 @@ Public Class frmBG0200
                     lblSum5.Text = "Diff 1st Half"
                     lblSum6.Text = "Diff 2st Half"
                     lblSum7.Text = "Total Year'" & Me.GetBudgetYear()
-                    lblSum9.Text = "MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00") & "Y" & Me.GetBudgetYear()
-                    lblSum10.Text = "Diff vs MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
+                    lblSum9.Text = "MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00") & "Y" & Me.GetBudgetYear()
+                    lblSum10.Text = "Diff vs MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00")
                     lblSum11.Text = "Total Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
                     lblSum12.Text = "Diff vs Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
 
