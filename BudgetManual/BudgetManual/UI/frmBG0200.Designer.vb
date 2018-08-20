@@ -1744,7 +1744,7 @@ Partial Class frmBG0200
         '
         Me.lblRRT5.AutoSize = True
         Me.lblRRT5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT5.Location = New System.Drawing.Point(565, 17)
+        Me.lblRRT5.Location = New System.Drawing.Point(473, 17)
         Me.lblRRT5.Name = "lblRRT5"
         Me.lblRRT5.Size = New System.Drawing.Size(29, 13)
         Me.lblRRT5.TabIndex = 56
@@ -1756,7 +1756,7 @@ Partial Class frmBG0200
         '
         Me.lblRRT4.AutoSize = True
         Me.lblRRT4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT4.Location = New System.Drawing.Point(443, 17)
+        Me.lblRRT4.Location = New System.Drawing.Point(351, 17)
         Me.lblRRT4.Name = "lblRRT4"
         Me.lblRRT4.Size = New System.Drawing.Size(29, 13)
         Me.lblRRT4.TabIndex = 55
@@ -1768,19 +1768,18 @@ Partial Class frmBG0200
         '
         Me.lblRRT3.AutoSize = True
         Me.lblRRT3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT3.Location = New System.Drawing.Point(321, 18)
+        Me.lblRRT3.Location = New System.Drawing.Point(229, 18)
         Me.lblRRT3.Name = "lblRRT3"
         Me.lblRRT3.Size = New System.Drawing.Size(29, 13)
         Me.lblRRT3.TabIndex = 54
         Me.lblRRT3.Text = "Year"
         Me.lblRRT3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblRRT3.Visible = False
         '
         'lblRRT2
         '
         Me.lblRRT2.AutoSize = True
         Me.lblRRT2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT2.Location = New System.Drawing.Point(199, 18)
+        Me.lblRRT2.Location = New System.Drawing.Point(107, 18)
         Me.lblRRT2.Name = "lblRRT2"
         Me.lblRRT2.Size = New System.Drawing.Size(29, 13)
         Me.lblRRT2.TabIndex = 53
@@ -1791,7 +1790,7 @@ Partial Class frmBG0200
         '
         Me.lblRRT1.AutoSize = True
         Me.lblRRT1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT1.Location = New System.Drawing.Point(77, 18)
+        Me.lblRRT1.Location = New System.Drawing.Point(29, 18)
         Me.lblRRT1.Name = "lblRRT1"
         Me.lblRRT1.Size = New System.Drawing.Size(29, 13)
         Me.lblRRT1.TabIndex = 52
@@ -1805,10 +1804,11 @@ Partial Class frmBG0200
         Me.txtRRT0.Location = New System.Drawing.Point(6, 34)
         Me.txtRRT0.Name = "txtRRT0"
         Me.txtRRT0.ReadOnly = True
-        Me.txtRRT0.Size = New System.Drawing.Size(65, 20)
+        Me.txtRRT0.Size = New System.Drawing.Size(24, 20)
         Me.txtRRT0.TabIndex = 39
         Me.txtRRT0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtRRT0, "RRT")
+        Me.txtRRT0.Visible = False
         '
         'lblRRT0
         '
@@ -1820,12 +1820,13 @@ Partial Class frmBG0200
         Me.lblRRT0.TabIndex = 51
         Me.lblRRT0.Text = "Year"
         Me.lblRRT0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblRRT0.Visible = False
         '
         'txtRRT1
         '
         Me.txtRRT1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRRT1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.txtRRT1.Location = New System.Drawing.Point(80, 34)
+        Me.txtRRT1.Location = New System.Drawing.Point(32, 34)
         Me.txtRRT1.Name = "txtRRT1"
         Me.txtRRT1.ReadOnly = True
         Me.txtRRT1.Size = New System.Drawing.Size(65, 20)
@@ -1837,7 +1838,7 @@ Partial Class frmBG0200
         '
         Me.txtRRT2.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRRT2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.txtRRT2.Location = New System.Drawing.Point(202, 34)
+        Me.txtRRT2.Location = New System.Drawing.Point(110, 34)
         Me.txtRRT2.Name = "txtRRT2"
         Me.txtRRT2.ReadOnly = True
         Me.txtRRT2.Size = New System.Drawing.Size(65, 20)
@@ -1849,20 +1850,19 @@ Partial Class frmBG0200
         '
         Me.txtRRT3.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRRT3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.txtRRT3.Location = New System.Drawing.Point(324, 34)
+        Me.txtRRT3.Location = New System.Drawing.Point(232, 34)
         Me.txtRRT3.Name = "txtRRT3"
         Me.txtRRT3.ReadOnly = True
         Me.txtRRT3.Size = New System.Drawing.Size(65, 20)
         Me.txtRRT3.TabIndex = 42
         Me.txtRRT3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ToolTip1.SetToolTip(Me.txtRRT3, "RRT")
-        Me.txtRRT3.Visible = False
         '
         'txtRRT4
         '
         Me.txtRRT4.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRRT4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.txtRRT4.Location = New System.Drawing.Point(446, 34)
+        Me.txtRRT4.Location = New System.Drawing.Point(354, 34)
         Me.txtRRT4.Name = "txtRRT4"
         Me.txtRRT4.ReadOnly = True
         Me.txtRRT4.Size = New System.Drawing.Size(65, 20)
@@ -1875,7 +1875,7 @@ Partial Class frmBG0200
         '
         Me.txtRRT5.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.txtRRT5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.txtRRT5.Location = New System.Drawing.Point(568, 34)
+        Me.txtRRT5.Location = New System.Drawing.Point(476, 34)
         Me.txtRRT5.Name = "txtRRT5"
         Me.txtRRT5.ReadOnly = True
         Me.txtRRT5.Size = New System.Drawing.Size(65, 20)
@@ -1889,19 +1889,20 @@ Partial Class frmBG0200
         Me.lblRRT1p.BackColor = System.Drawing.SystemColors.Control
         Me.lblRRT1p.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblRRT1p.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT1p.Location = New System.Drawing.Point(147, 34)
+        Me.lblRRT1p.Location = New System.Drawing.Point(99, 34)
         Me.lblRRT1p.Name = "lblRRT1p"
-        Me.lblRRT1p.Size = New System.Drawing.Size(50, 20)
+        Me.lblRRT1p.Size = New System.Drawing.Size(10, 20)
         Me.lblRRT1p.TabIndex = 45
         Me.lblRRT1p.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolTip1.SetToolTip(Me.lblRRT1p, "RRT%")
+        Me.lblRRT1p.Visible = False
         '
         'lblRRT2p
         '
         Me.lblRRT2p.BackColor = System.Drawing.SystemColors.Control
         Me.lblRRT2p.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblRRT2p.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT2p.Location = New System.Drawing.Point(269, 34)
+        Me.lblRRT2p.Location = New System.Drawing.Point(177, 34)
         Me.lblRRT2p.Name = "lblRRT2p"
         Me.lblRRT2p.Size = New System.Drawing.Size(50, 20)
         Me.lblRRT2p.TabIndex = 46
@@ -1913,7 +1914,7 @@ Partial Class frmBG0200
         Me.lblRRT5p.BackColor = System.Drawing.SystemColors.Control
         Me.lblRRT5p.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblRRT5p.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT5p.Location = New System.Drawing.Point(635, 34)
+        Me.lblRRT5p.Location = New System.Drawing.Point(543, 34)
         Me.lblRRT5p.Name = "lblRRT5p"
         Me.lblRRT5p.Size = New System.Drawing.Size(50, 20)
         Me.lblRRT5p.TabIndex = 49
@@ -1926,20 +1927,19 @@ Partial Class frmBG0200
         Me.lblRRT3p.BackColor = System.Drawing.SystemColors.Control
         Me.lblRRT3p.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblRRT3p.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT3p.Location = New System.Drawing.Point(391, 34)
+        Me.lblRRT3p.Location = New System.Drawing.Point(299, 34)
         Me.lblRRT3p.Name = "lblRRT3p"
         Me.lblRRT3p.Size = New System.Drawing.Size(50, 20)
         Me.lblRRT3p.TabIndex = 47
         Me.lblRRT3p.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ToolTip1.SetToolTip(Me.lblRRT3p, "RRT%")
-        Me.lblRRT3p.Visible = False
         '
         'lblRRT4p
         '
         Me.lblRRT4p.BackColor = System.Drawing.SystemColors.Control
         Me.lblRRT4p.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblRRT4p.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lblRRT4p.Location = New System.Drawing.Point(513, 34)
+        Me.lblRRT4p.Location = New System.Drawing.Point(421, 34)
         Me.lblRRT4p.Name = "lblRRT4p"
         Me.lblRRT4p.Size = New System.Drawing.Size(50, 20)
         Me.lblRRT4p.TabIndex = 48
