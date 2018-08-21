@@ -321,8 +321,8 @@ Public Class frmBG0350
                         DataList.Add(arrDataList(n)) '// RRT1
                         n += 1
                         DataList.Add(arrDataList(n)) '// RRT2
-                        'n += 1
-                        'DataList.Add(arrDataList(n)) '// RRT3
+                        n += 1
+                        DataList.Add(arrDataList(n)) '// RRT3
                         'n += 1
                         'DataList.Add(arrDataList(n)) '// RRT4
                         'n += 1
