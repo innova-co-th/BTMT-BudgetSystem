@@ -5183,29 +5183,29 @@ Public Class frmBG0200
 
     Private Sub txtRRT0_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT0.TextChanged
         Try
-            If IsNumeric(txtRRT0.Text) AndAlso CDbl(txtRRT0.Text) > 0 Then
+            If IsNumeric(txtRRT1.Text) AndAlso CDbl(txtRRT1.Text) > 0 Then
                 If IsNumeric(txtRRT1.Text) AndAlso CDbl(txtRRT1.Text) > 0 Then
-                    lblRRT1p.Text = ((CDbl(txtRRT1.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+                    lblRRT1p.Text = ((CDbl(txtRRT1.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
                 Else
                     lblRRT1p.Text = ""
                 End If
                 If IsNumeric(txtRRT2.Text) AndAlso CDbl(txtRRT2.Text) > 0 Then
-                    lblRRT2p.Text = ((CDbl(txtRRT2.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+                    lblRRT2p.Text = ((CDbl(txtRRT2.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
                 Else
                     lblRRT2p.Text = ""
                 End If
                 If IsNumeric(txtRRT3.Text) AndAlso CDbl(txtRRT3.Text) > 0 Then
-                    lblRRT3p.Text = ((CDbl(txtRRT3.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+                    lblRRT3p.Text = ((CDbl(txtRRT3.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
                 Else
                     lblRRT3p.Text = ""
                 End If
                 If IsNumeric(txtRRT4.Text) AndAlso CDbl(txtRRT4.Text) > 0 Then
-                    lblRRT4p.Text = ((CDbl(txtRRT4.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+                    lblRRT4p.Text = ((CDbl(txtRRT4.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
                 Else
                     lblRRT4p.Text = ""
                 End If
                 If IsNumeric(txtRRT5.Text) AndAlso CDbl(txtRRT5.Text) > 0 Then
-                    lblRRT5p.Text = ((CDbl(txtRRT5.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+                    lblRRT5p.Text = ((CDbl(txtRRT5.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
                 Else
                     lblRRT5p.Text = ""
                 End If
@@ -5235,8 +5235,8 @@ Public Class frmBG0200
 
     Private Sub txtRRT2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT2.TextChanged
         Try
-            If IsNumeric(txtRRT2.Text) AndAlso IsNumeric(txtRRT0.Text) AndAlso CDbl(txtRRT0.Text) > 0 AndAlso CDbl(txtRRT2.Text) > 0 Then
-                lblRRT2p.Text = ((CDbl(txtRRT2.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+            If IsNumeric(txtRRT2.Text) AndAlso IsNumeric(txtRRT1.Text) AndAlso CDbl(txtRRT1.Text) > 0 AndAlso CDbl(txtRRT2.Text) > 0 Then
+                lblRRT2p.Text = ((CDbl(txtRRT2.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
             Else
                 lblRRT2p.Text = ""
             End If
@@ -5247,8 +5247,8 @@ Public Class frmBG0200
 
     Private Sub txtRRT3_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT3.TextChanged
         Try
-            If IsNumeric(txtRRT3.Text) AndAlso IsNumeric(txtRRT0.Text) AndAlso CDbl(txtRRT0.Text) > 0 AndAlso CDbl(txtRRT3.Text) > 0 Then
-                lblRRT3p.Text = ((CDbl(txtRRT3.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+            If IsNumeric(txtRRT3.Text) AndAlso IsNumeric(txtRRT1.Text) AndAlso CDbl(txtRRT1.Text) > 0 AndAlso CDbl(txtRRT3.Text) > 0 Then
+                lblRRT3p.Text = ((CDbl(txtRRT3.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
             Else
                 lblRRT3p.Text = ""
             End If
@@ -5259,8 +5259,8 @@ Public Class frmBG0200
 
     Private Sub txtRRT4_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT4.TextChanged
         Try
-            If IsNumeric(txtRRT4.Text) AndAlso IsNumeric(txtRRT0.Text) AndAlso CDbl(txtRRT0.Text) > 0 AndAlso CDbl(txtRRT4.Text) > 0 Then
-                lblRRT4p.Text = ((CDbl(txtRRT4.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+            If IsNumeric(txtRRT4.Text) AndAlso IsNumeric(txtRRT1.Text) AndAlso CDbl(txtRRT1.Text) > 0 AndAlso CDbl(txtRRT4.Text) > 0 Then
+                lblRRT4p.Text = ((CDbl(txtRRT4.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
             Else
                 lblRRT4p.Text = ""
             End If
@@ -5271,8 +5271,8 @@ Public Class frmBG0200
 
     Private Sub txtRRT5_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT5.TextChanged
         Try
-            If IsNumeric(txtRRT5.Text) AndAlso IsNumeric(txtRRT0.Text) AndAlso CDbl(txtRRT0.Text) > 0 AndAlso CDbl(txtRRT5.Text) > 0 Then
-                lblRRT5p.Text = ((CDbl(txtRRT5.Text) / CDbl(txtRRT0.Text)) * 100).ToString("0") & "%"
+            If IsNumeric(txtRRT5.Text) AndAlso IsNumeric(txtRRT1.Text) AndAlso CDbl(txtRRT1.Text) > 0 AndAlso CDbl(txtRRT5.Text) > 0 Then
+                lblRRT5p.Text = ((CDbl(txtRRT5.Text) / CDbl(txtRRT1.Text)) * 100).ToString("0") & "%"
             Else
                 lblRRT5p.Text = ""
             End If

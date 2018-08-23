@@ -370,6 +370,7 @@ Partial Class frmBG0670
         Me.lblRRT1p.Size = New System.Drawing.Size(50, 20)
         Me.lblRRT1p.TabIndex = 45
         Me.lblRRT1p.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblRRT1p.Visible = False
         '
         'lblRRT2p
         '

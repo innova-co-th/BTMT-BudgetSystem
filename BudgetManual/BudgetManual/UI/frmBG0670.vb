@@ -110,11 +110,18 @@ Public Class frmBG0670
                 Dim intRRT4 As Integer = ConvertToInt(myClsBG0670BL.dtResult.Rows(0)("RRT4").ToString)
                 Dim intRRT5 As Integer = ConvertToInt(myClsBG0670BL.dtResult.Rows(0)("RRT5").ToString)
 
-                Me.lblRRT1p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT1))
-                Me.lblRRT2p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT2))
-                Me.lblRRT3p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT3))
-                Me.lblRRT4p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT4))
-                Me.lblRRT5p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT5))
+                'Me.lblRRT1p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT1))
+                'Me.lblRRT2p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT2))
+                'Me.lblRRT3p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT3))
+                'Me.lblRRT4p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT4))
+                'Me.lblRRT5p.Text = CStr(Me.CalYearlyRate(intRRT0, intRRT5))
+
+                '-- 2018/08/23
+                Me.lblRRT1p.Text = CStr(Me.CalYearlyRate(intRRT1, intRRT1))
+                Me.lblRRT2p.Text = CStr(Me.CalYearlyRate(intRRT1, intRRT2))
+                Me.lblRRT3p.Text = CStr(Me.CalYearlyRate(intRRT1, intRRT3))
+                Me.lblRRT4p.Text = CStr(Me.CalYearlyRate(intRRT1, intRRT4))
+                Me.lblRRT5p.Text = CStr(Me.CalYearlyRate(intRRT1, intRRT5))
 
             Else
                 Me.txtRRT0.Text = ""
@@ -527,7 +534,8 @@ Public Class frmBG0670
     End Sub
 
     Private Sub txtRRT0_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT0.Leave
-        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        'Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT1.Text))
         Dim intCurrentYear As Integer = CInt(CheckEmptyStr(Me.txtRRT1.Text))
 
         Me.lblRRT1p.Text = CStr(CalYearlyRate(intLastYear, intCurrentYear))
@@ -553,28 +561,32 @@ Public Class frmBG0670
     End Sub
 
     Private Sub txtRRT2_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT2.Leave
-        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        'Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT1.Text))
         Dim intCurrentYear As Integer = CInt(CheckEmptyStr(Me.txtRRT2.Text))
 
         Me.lblRRT2p.Text = CStr(CalYearlyRate(intLastYear, intCurrentYear))
     End Sub
 
     Private Sub txtRRT3_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT3.Leave
-        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        'Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT1.Text))
         Dim intCurrentYear As Integer = CInt(CheckEmptyStr(Me.txtRRT3.Text))
 
         Me.lblRRT3p.Text = CStr(CalYearlyRate(intLastYear, intCurrentYear))
     End Sub
 
     Private Sub txtRRT4_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT4.Leave
-        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        'Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT1.Text))
         Dim intCurrentYear As Integer = CInt(CheckEmptyStr(Me.txtRRT4.Text))
 
         Me.lblRRT4p.Text = CStr(CalYearlyRate(intLastYear, intCurrentYear))
     End Sub
 
     Private Sub txtRRT5_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtRRT5.Leave
-        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        'Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT0.Text))
+        Dim intLastYear As Integer = CInt(CheckEmptyStr(Me.txtRRT1.Text))
         Dim intCurrentYear As Integer = CInt(CheckEmptyStr(Me.txtRRT5.Text))
 
         Me.lblRRT5p.Text = CStr(CalYearlyRate(intLastYear, intCurrentYear))
