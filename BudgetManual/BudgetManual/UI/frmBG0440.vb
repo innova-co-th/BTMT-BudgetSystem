@@ -992,7 +992,7 @@ Public Class frmBG0440
 
                 Case "MTPWB"
                     strExpression = "Sum(" + strColumnName + ")"
-                    strFilter = "BUDGET_TYPE = ''"
+                    'strFilter = "BUDGET_TYPE = ''"
                     returnValue = dsData.Tables(0).Compute(strExpression, strFilter)
                     drWorkingBudget("MTP_RRT1") = returnValue
 
