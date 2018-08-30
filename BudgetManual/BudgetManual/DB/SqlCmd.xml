@@ -8738,7 +8738,7 @@
       --WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = 3 AND BUDGET_TYPE = 'E' AND PROJECT_NO = 1)
 
       LEFT JOIN BG_T_BUDGET_DATA MIN_RVBD
-      ON BD.BUDGET_YEAR = MIN_RVBD.BUDGET_YEAR
+      ON BD.BUDGET_YEAR +1 = MIN_RVBD.BUDGET_YEAR
       AND BD.BUDGET_ORDER_NO = MIN_RVBD.BUDGET_ORDER_NO
       AND  MIN_RVBD.PERIOD_TYPE = 3
       AND MIN_RVBD.REV_NO = 1
@@ -8796,21 +8796,45 @@
       AND BO.BUDGET_TYPE = '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       /*AND BH.Status >= @Status
-      AND (ISNULL(BD.RRT1 ,0) &lt;&gt; 0
-      OR ISNULL(BD.RRT2 ,0) &lt;&gt; 0
-      OR ISNULL(BD.RRT3 ,0) &lt;&gt; 0
-      OR ISNULL(BD.RRT4 ,0) &lt;&gt; 0
-      OR ISNULL(BD.RRT5 ,0) &lt;&gt; 0
-      OR ISNULL(MIN_REV.RRT1 ,0) &lt;&gt; 0
-      OR ISNULL(MIN_REV.RRT2 ,0) &lt;&gt; 0
-      OR ISNULL(MIN_REV.RRT3 ,0) &lt;&gt; 0
-      OR ISNULL(MIN_REV.RRT4 ,0) &lt;&gt; 0
-      OR ISNULL(MIN_REV.RRT5 ,0) &lt;&gt; 0
+      AND ( OB_BUDGET_DATA.M1 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M2 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M3 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M4 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M5 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M6 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M7 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M8 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M9 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M10 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M11 &lt;&gt; 0
+      OR OB_BUDGET_DATA.M12 &lt;&gt; 0
+      OR BD.RRT1 &lt;&gt; 0
+      OR BD.RRT2 &lt;&gt; 0
+      OR BD.RRT3 &lt;&gt; 0
+      OR BD.RRT4 &lt;&gt; 0
+      OR BD.RRT5 &lt;&gt; 0
+      OR PREVBD.RRT1 &lt;&gt; 0
+      OR PREVBD.RRT2 &lt;&gt; 0
+      OR PREVBD.RRT3 &lt;&gt; 0
+      OR PREVBD.RRT4 &lt;&gt; 0
+      OR PREVBD.RRT5 &lt;&gt; 0
       OR MIN_REV.RRT1 &lt;&gt; 0
       OR MIN_REV.RRT2 &lt;&gt; 0
       OR MIN_REV.RRT3 &lt;&gt; 0
       OR MIN_REV.RRT4 &lt;&gt; 0
-      OR MIN_REV.RRT5 &lt;&gt; 0)*/
+      OR MIN_REV.RRT5 &lt;&gt; 0
+      OR MIN_RVBD.M1 &lt;&gt; 0
+      OR MIN_RVBD.M2 &lt;&gt; 0
+      OR MIN_RVBD.M3 &lt;&gt; 0
+      OR MIN_RVBD.M4 &lt;&gt; 0
+      OR MIN_RVBD.M5 &lt;&gt; 0
+      OR MIN_RVBD.M6 &lt;&gt; 0
+      OR MIN_RVBD.M7 &lt;&gt; 0
+      OR MIN_RVBD.M8 &lt;&gt; 0
+      OR MIN_RVBD.M9 &lt;&gt; 0
+      OR MIN_RVBD.M10 &lt;&gt; 0
+      OR MIN_RVBD.M11 &lt;&gt; 0
+      OR MIN_RVBD.M12 &lt;&gt; 0)*/
       GROUP BY BD.BUDGET_YEAR, BD.PERIOD_TYPE, BD.PROJECT_NO, AC.ACCOUNT_NO, AC.ACCOUNT_NAME , BO.BUDGET_TYPE , BO.EXPENSE_TYPE
 
       UNION
@@ -9114,7 +9138,7 @@
       --WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = 1 AND BUDGET_TYPE = 'E' AND PROJECT_NO = 1)
 
       LEFT JOIN BG_T_BUDGET_DATA MIN_RVBD
-      ON BD.BUDGET_YEAR = MIN_RVBD.BUDGET_YEAR
+      ON BD.BUDGET_YEAR+1 = MIN_RVBD.BUDGET_YEAR
       AND BD.BUDGET_ORDER_NO = MIN_RVBD.BUDGET_ORDER_NO
       AND  MIN_RVBD.PERIOD_TYPE = 1
       AND MIN_RVBD.REV_NO = 1
@@ -9195,6 +9219,18 @@
       OR MIN_REV.RRT3 &lt;&gt; 0
       OR MIN_REV.RRT4 &lt;&gt; 0
       OR MIN_REV.RRT5 &lt;&gt; 0
+      OR MIN_RVBD.M1 &lt;&gt; 0
+      OR MIN_RVBD.M2 &lt;&gt; 0
+      OR MIN_RVBD.M3 &lt;&gt; 0
+      OR MIN_RVBD.M4 &lt;&gt; 0
+      OR MIN_RVBD.M5 &lt;&gt; 0
+      OR MIN_RVBD.M6 &lt;&gt; 0
+      OR MIN_RVBD.M7 &lt;&gt; 0
+      OR MIN_RVBD.M8 &lt;&gt; 0
+      OR MIN_RVBD.M9 &lt;&gt; 0
+      OR MIN_RVBD.M10 &lt;&gt; 0
+      OR MIN_RVBD.M11 &lt;&gt; 0
+      OR MIN_RVBD.M12 &lt;&gt; 0
       )
       /*AND BH.Status >= @Status
       AND (ISNULL(BD.RRT1 ,0) &lt;&gt; 0
