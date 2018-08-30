@@ -5728,7 +5728,7 @@
       0 AS WB_M10,
       0 AS WB_M11,
       0 AS WB_M12,
-      MTPWB AS MTPWB,
+      0 AS MTPWB,
       0 AS WB_MTP_RRT1,
       0 AS WB_TOTAL_1ST_HALF,
       0 AS WB_TOTAL_2ND_HALF
@@ -7038,7 +7038,7 @@
       0 AS WB_M10,
       0 AS WB_M11,
       0 AS WB_M12,
-      MTPWB AS MTPWB,
+      0 AS MTPWB,
       0 AS WB_MTP_RRT1,
       0 AS WB_TOTAL_1ST_HALF,
       0 AS WB_TOTAL_2ND_HALF
