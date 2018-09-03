@@ -46,8 +46,8 @@
     <UpdateUrl>\\10.30.99.37\Install\</UpdateUrl>
     <ProductName>BTMT Budgeting System</ProductName>
     <PublisherName>INNOVA Software</PublisherName>
-    <ApplicationRevision>9</ApplicationRevision>
-    <ApplicationVersion>1.1.8.9</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.1.9.0</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
