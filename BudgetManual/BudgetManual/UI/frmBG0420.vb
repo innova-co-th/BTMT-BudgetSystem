@@ -319,6 +319,7 @@ Public Class frmBG0420
 
             myClsBG0420BL.GetBudgetStatus()
 
+           
             Dim strPeriod As String = String.Empty
             Select Case CInt(Me.cboPeriodType.SelectedValue)
                 Case CType(enumPeriodType.OriginalBudget, Integer)
