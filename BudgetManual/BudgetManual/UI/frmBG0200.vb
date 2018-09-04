@@ -951,9 +951,16 @@ Public Class frmBG0200
                             dr("PrevRRT3") = CDbl(drDat("PrevRRT3")).ToString("#,##0.00")
                         End If
 
-                        If CDec(Nz(drDat("PrevRRT4"), 0)) <> 0 Then
-                            dr("PrevRRT4") = CDbl(drDat("PrevRRT4")).ToString("#,##0.00")
+                        If Me.GetBudgetYear() = "2019" Then
+                            If CDec(Nz(drDat("Prev1RRT5"), 0)) <> 0 Then
+                                dr("PrevRRT4") = CDbl(drDat("Prev1RRT5")).ToString("#,##0.00")
+                            End If
+                        Else
+                            If CDec(Nz(drDat("PrevRRT4"), 0)) <> 0 Then
+                                dr("PrevRRT4") = CDbl(drDat("PrevRRT4")).ToString("#,##0.00")
+                            End If
                         End If
+                       
 
                         If CDec(Nz(drDat("PrevRRT5"), 0)) <> 0 Then
                             dr("PrevRRT5") = CDbl(drDat("PrevRRT5")).ToString("#,##0.00")
@@ -1109,8 +1116,15 @@ Public Class frmBG0200
                             For i = 1 To 4
                                 '// Previous Year
                                 'grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
-                                grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
-                                grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                                If Me.GetBudgetYear() = "2019" AndAlso i = 2 Then
+                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
+                                Else
+                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                                End If
+                                
+                              
                             Next
                         End If
                     End If
@@ -1118,7 +1132,22 @@ Public Class frmBG0200
                     If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
                         '// Show MTP Budget
                         For i = 9 To 12
-                            grvBudget4.Columns("g4col" & CStr(i)).Visible = True
+                            'If CInt(Me.GetBudgetYear()) > 2019 Then
+
+                            'Else
+                            '    grvBudget4.Columns("g4col" & CStr(i)).Visible = True
+                            'End If
+                            If i = 12 Then
+                                If CInt(Me.GetBudgetYear()) > 2019 Then
+                                    grvBudget4.Columns("g4col" & CStr(i)).Visible = False
+                                    grvBudget4.Columns("g4colDiff2").Visible = False
+                                Else
+                                    grvBudget4.Columns("g4col" & CStr(i)).Visible = True
+                                End If
+                            Else
+                                grvBudget4.Columns("g4col" & CStr(i)).Visible = True
+                            End If
+
                         Next
 
                         '// Show MTP Budget CAL
