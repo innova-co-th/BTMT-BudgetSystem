@@ -463,6 +463,13 @@ Public Class BG_T_BUDGET_COMMENT
                         strCondition = "RRT1"
                     Case "2"
                         strCondition = "RRT2"
+                    Case "3"
+                        strCondition = "RRT3"
+                    Case "4"
+                        strCondition = "RRT4"
+                    Case "5"
+                        strCondition = "RRT5"
+
                 End Select
             Else
                 Select Case Me.MonthNo
