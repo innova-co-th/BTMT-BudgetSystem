@@ -481,7 +481,7 @@ Public Class frmBG0430
         'ISNULL(MASTER_DATA.M9,0) AS M9,
         row = dtColumns.NewRow()
         row("Column_Name") = "M9"
-        row("Column_Title") = "Sept'" & strHalfYear
+        row("Column_Title") = "Sep'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         'ISNULL(MASTER_DATA.M10,0) AS M10,

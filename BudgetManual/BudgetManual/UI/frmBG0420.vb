@@ -959,7 +959,7 @@ Public Class frmBG0420
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "M9"
-        dRow("Column_Title") = "Sept'" & strHalfYear
+        dRow("Column_Title") = "Sep'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow

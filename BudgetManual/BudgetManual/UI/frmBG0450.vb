@@ -375,7 +375,7 @@ Public Class frmBG0450
         ' SUM(ISNULL(MASTER_DATA.M3, 0)) AS M3, 
         row = dtColumns.NewRow()
         row("Column_Name") = "M9"
-        row("Column_Title") = "Sept'" & strHalfYear
+        row("Column_Title") = "Sep'" & strHalfYear
         dtColumns.Rows.Add(row)
 
 

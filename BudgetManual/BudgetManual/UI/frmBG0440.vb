@@ -371,7 +371,7 @@ Public Class frmBG0440
 
         row = dtColumns.NewRow()
         row("Column_Name") = "M9"
-        row("Column_Title") = "Sept'" & strHalfYear
+        row("Column_Title") = "Sep'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
