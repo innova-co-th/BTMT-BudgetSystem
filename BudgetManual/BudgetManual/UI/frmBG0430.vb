@@ -1963,7 +1963,7 @@ Public Class frmBG0430
         '0 AS DIFF_YEAR,
         row = dtColumns.NewRow()
         row("Column_Name") = "DiffYear"
-        row("Column_Title") = "Diff Year'" & strYear
+        row("Column_Title") = "Diff Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow

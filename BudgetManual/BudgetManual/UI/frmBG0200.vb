@@ -1730,14 +1730,21 @@ Public Class frmBG0200
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
                     Dim returnvalue As Object
 
-                    lblSumMTP1.Text = "MTP" & Me.GetBudgetYear()
+                    'lblSumMTP1.Text = "MTP" & Me.GetBudgetYear()
+                    lblSumMTP1.Text = "Original"
                     lblSumMTP2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    lblSumMTP3.Text = "OB Y" & CStr(CInt(Me.GetBudgetYear()) + 1) 'Me.GetBudgetYear()
+                    lblSumMTPN1.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    'lblSumMTP3.Text = "OB Y" & CStr(CInt(Me.GetBudgetYear()) + 1) 'Me.GetBudgetYear()
+                    lblSumMTP3.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1) 'Me.GetBudgetYear()
                     lblSumMTP4.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1)
                     lblSumMTP5.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 2)
                     lblSumMTP6.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 3)
                     lblSumMTP7.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 4)
                     lblSumMTP8.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 5)
+
+                    lblSumMTPN2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()))
+                    lblSumMTPN3.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    lblSumMTPN4.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
 
                     lblSumMTP3Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                     lblSumMTP7Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
@@ -1836,6 +1843,28 @@ Public Class frmBG0200
                     Else
                         lblSumMTP11Val.Text = "0.00"
                     End If
+
+                    'Add Diff 
+                    Dim dbSumMTP1Val As Double = 0
+                    Dim dbSumMTP4Val As Double = 0
+                    Dim dbSumMTP5Val As Double = 0
+                    Dim dbSumMTP6Val As Double = 0
+
+                    If lblSumMTP1Val.Text <> "" Then
+                        dbSumMTP1Val = CDbl(lblSumMTP1Val.Text)
+                    End If
+                    If lblSumMTP4Val.Text <> "" Then
+                        dbSumMTP4Val = CDbl(lblSumMTP4Val.Text)
+                    End If
+                    lblSumMTPN1Val.Text = CDbl(dbSumMTP1Val - dbSumMTP4Val).ToString("#,##0.00")
+
+                    If lblSumMTP5Val.Text <> "" Then
+                        dbSumMTP5Val = CDbl(lblSumMTP5Val.Text)
+                    End If
+                    If lblSumMTP6Val.Text <> "" Then
+                        dbSumMTP6Val = CDbl(lblSumMTP6Val.Text)
+                    End If
+                    lblSumMTPN2Val.Text = CDbl(dbSumMTP5Val - dbSumMTP6Val).ToString("#,##0.00")
                 End If
 
                 lblRecNum.Text = dvTemp.Count.ToString("#,##0") & " Record(s)"
