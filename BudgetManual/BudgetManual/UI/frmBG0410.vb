@@ -348,6 +348,8 @@ Public Class frmBG0410
                     myClsBG0410BL.PrevRevNo = String.Empty
                 End If
 
+                myClsBG0410BL.ShowZeroValue = Me.chkShowZeroValue.Checked
+
                 Dim ds As DataSet
                 If myClsBG0410BL.GetBudgetData() = False Then
                     ds = Nothing
@@ -450,6 +452,8 @@ Public Class frmBG0410
 
         Dim strPeriod As String = cboPeriodType.Text
         strPeriod = strPeriod.Substring(0, strPeriod.IndexOf("Budget") - 1)
+
+        myClsBG0410BL.ShowZeroValue = Me.chkShowZeroValue.Checked
 
         If myClsBG0410BL.GetBudgetData() = False Then
             dsData = Nothing
