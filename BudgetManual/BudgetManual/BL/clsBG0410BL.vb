@@ -17,6 +17,7 @@ Public Class clsBG0410BL
     Private strRevNo As String = String.Empty
     Private strPrevProjectNo As String = String.Empty
     Private strPrevRevNo As String = String.Empty
+    Private myShowZeroValue As Boolean = False
 #End Region
 
 #Region "Property"
@@ -138,6 +139,16 @@ Public Class clsBG0410BL
         End Set
     End Property
 
+    Property ShowZeroValue() As Boolean
+        Get
+            Return myShowZeroValue
+        End Get
+        Set(ByVal value As Boolean)
+            myShowZeroValue = value
+        End Set
+    End Property
+
+
 #End Region
 
 #Region "Function"
@@ -153,6 +164,7 @@ Public Class clsBG0410BL
         clsBG_T_BUDGET_DATA.UserPIC = Me.PIC
         clsBG_T_BUDGET_DATA.MTPChecked = Me.MTPChecked
         clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
+        clsBG_T_BUDGET_DATA.ShowZeroValue = Me.ShowZeroValue
 
         '// Get Reference Budget
         clsBG_T_BUDGET_DATA.RefBudgetYear = Me.BudgetYear
@@ -308,7 +320,7 @@ Public Class clsBG0410BL
                 Case CStr(enumPeriodType.OriginalBudget)
                     'clsBG_T_BUDGET_DATA.MtpProjectNo = Me.PrevProjectNo
                     'clsBG_T_BUDGET_DATA.MtpRevNo = Me.PrevRevNo
-                    If clsBG_T_BUDGET_DATA.Select004_9() = False Then
+                    If clsBG_T_BUDGET_DATA.Select004_9() = False Then 'Edited Zero Filter 
                         Return False
                     End If
                     clsBG_T_BUDGET_DATA.dtResult.TableName = "BUDGET_DATA"

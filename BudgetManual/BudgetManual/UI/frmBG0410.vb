@@ -222,6 +222,8 @@ Public Class frmBG0410
                 myClsBG0410BL.PrevRevNo = String.Empty
             End If
 
+            myClsBG0410BL.ShowZeroValue = Me.chkShowZeroValue.Checked
+
             If myClsBG0410BL.GetBudgetData() = False Then
                 clsBG0400.DS = Nothing
             Else
@@ -234,6 +236,7 @@ Public Class frmBG0410
             End If
 
             myClsBG0410BL.GetBudgetStatus()
+
 
             Dim strPeriod As String = String.Empty
             Select Case CInt(Me.cboPeriodType.SelectedValue)

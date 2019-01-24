@@ -44,6 +44,7 @@ Public Class BG_T_BUDGET_DATA
     Private myRefRBRevNo As String = String.Empty
     Private myOBProjectNo As String = String.Empty
     Private myOBRevNo As String = String.Empty
+    Private myShowZeroValue As Boolean = False
 
 
 
@@ -471,6 +472,17 @@ Public Class BG_T_BUDGET_DATA
     End Property
 #End Region
 
+#Region "ShowZeroValue"
+    Property ShowZeroValue() As Boolean
+        Get
+            Return myShowZeroValue
+        End Get
+        Set(ByVal value As Boolean)
+            myShowZeroValue = value
+        End Set
+    End Property
+#End Region
+
 #End Region
 
 #Region "Function"
@@ -743,6 +755,20 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
 
+            Dim strZroFilter As String
+            strZroFilter = " WHERE ACTUAL_DATA.H1 <> 0 OR MAX_REV.REVISE_SECOND_HALF <> 0 OR (ISNULL(MASTER_DATA.M1, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M2, 0) <> 0 OR ISNULL(MASTER_DATA.M3, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 OR ISNULL(MASTER_DATA.M5, 0) <> 0 OR ISNULL(MASTER_DATA.M6, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 OR ISNULL(MASTER_DATA.M8, 0) <> 0 OR ISNULL(MASTER_DATA.M9, 0) <> 0" & _
+                           " OR ISNULL(MTP.RRT2,0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 OR ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
+
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
             da.Fill(dt)
@@ -795,6 +821,23 @@ Public Class BG_T_BUDGET_DATA
             Else
                 strSQL = strSQL.Replace("@PICCONDITION", "AND BUDGET_ORDER.PERSON_IN_CHARGE_NO = '@PIC'")
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
+            End If
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M7, 0) <> 0 OR ISNULL(ACTUAL_DATA.M8, 0) <> 0 OR " & _
+                           " ISNULL(ACTUAL_DATA.M9, 0) <> 0 OR (ISNULL(MASTER_DATA.M10, 0) <> 0 OR " & _
+                           " ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
             End If
 
             da = New SqlDataAdapter(strSQL, conn)
@@ -855,6 +898,22 @@ Public Class BG_T_BUDGET_DATA
             '    Dim intLen As Integer = strSQL.LastIndexOf(")")
             '    strSQL = strSQL.Insert(intLen, strMTPSql)
             'End If
+
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE(ISNULL(ORIGINAL_BUDGET.H1, 0) <> 0 OR ISNULL(ORIGINAL_BUDGET.H2, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M1, 0) <> 0 OR ISNULL(ACTUAL_DATA.M2, 0) <> 0 OR ISNULL(ACTUAL_DATA.M3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 OR ISNULL(MASTER_DATA.M5, 0) <> 0 OR ISNULL(MASTER_DATA.M6, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 OR ISNULL(MASTER_DATA.M8, 0) <> 0 OR ISNULL(MASTER_DATA.M9, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 OR ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT1, 0) <> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
@@ -922,6 +981,36 @@ Public Class BG_T_BUDGET_DATA
             '    Dim intLen As Integer = strSQL.LastIndexOf(")")
             '    strSQL = strSQL.Insert(intLen, strMTPSql)
             'End If
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE(ISNULL(OB_BUDGET_DATA.M1, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M2, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M3, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M4, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M5, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M6, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M7, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M8, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M9, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(OB_BUDGET_DATA.M12, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA1.RRT1, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA1.RRT2, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA1.RRT3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA1.RRT4, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA1.RRT5, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT1, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT2, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT3, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT4, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT5, 0) <> 0) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
@@ -1121,6 +1210,20 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
 
+            Dim strZroFilter As String
+            strZroFilter = "WHERE ACTUAL_DATA.H1 <> 0 OR MAX_REV.REVISE_SECOND_HALF <> 0 OR (ISNULL(MASTER_DATA.M1, 0) <> 0" & _
+                           "OR ISNULL(MASTER_DATA.M2, 0) <> 0 OR ISNULL(MASTER_DATA.M3, 0) <> 0" & _
+                           "OR ISNULL(MASTER_DATA.M4, 0) <> 0 OR ISNULL(MASTER_DATA.M5, 0) <> 0 OR ISNULL(MASTER_DATA.M6, 0) <> 0" & _
+                           "OR ISNULL(MASTER_DATA.M7, 0) <> 0 OR ISNULL(MASTER_DATA.M8, 0) <> 0 OR ISNULL(MASTER_DATA.M9, 0) <> 0" & _
+                           "OR ISNULL(MTP.RRT2,0) <> 0" & _
+                           "OR ISNULL(MASTER_DATA.M10, 0) <> 0 OR ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0" & _
+                           ")"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
             da.Fill(dt)
@@ -1176,6 +1279,24 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
 
+            Dim strZroFilter As String
+            strZroFilter = "WHERE ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M7, 0) <> 0 OR ISNULL(ACTUAL_DATA.M8, 0) <> 0 OR " & _
+                           " ISNULL(ACTUAL_DATA.M9, 0) <> 0 OR (ISNULL(MASTER_DATA.M10, 0) <> 0 OR " & _
+                           " ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
+
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
             da.Fill(dt)
@@ -1230,11 +1351,21 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@PIC", Me.UserPIC)
             End If
 
-            'If Me.MTPChecked = True Then
-            '    Dim strMTPSql As String = " OR ISNULL(MASTER_DATA.RRT1, 0)<> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0 OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0"
-            '    Dim intLen As Integer = strSQL.LastIndexOf(")")
-            '    strSQL = strSQL.Insert(intLen, strMTPSql)
-            'End If
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE(ISNULL(ORIGINAL_BUDGET.H1, 0) <> 0 OR ISNULL(ORIGINAL_BUDGET.H2, 0) <> 0" & _
+                           " OR ISNULL(ACTUAL_DATA.M1, 0) <> 0 OR ISNULL(ACTUAL_DATA.M2, 0) <> 0 OR ISNULL(ACTUAL_DATA.M3, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 OR ISNULL(MASTER_DATA.M5, 0) <> 0 OR ISNULL(MASTER_DATA.M6, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 OR ISNULL(MASTER_DATA.M8, 0) <> 0 OR ISNULL(MASTER_DATA.M9, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 OR ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.RRT1, 0) <> 0 OR ISNULL(MASTER_DATA.RRT2, 0) <> 0 OR ISNULL(MASTER_DATA.RRT3, 0) <> 0" & _
+                           " OR ISNULL(MASTER_DATA.RRT4, 0) <> 0 OR ISNULL(MASTER_DATA.RRT5, 0) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable
@@ -1302,6 +1433,36 @@ Public Class BG_T_BUDGET_DATA
             '    Dim intLen As Integer = strSQL.LastIndexOf(")")
             '    strSQL = strSQL.Insert(intLen, strMTPSql)
             'End If
+
+            Dim strZroFilter As String
+            strZroFilter = "  WHERE(ISNULL(OB_BUDGET_DATA.M1, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M2, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M3, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M4, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M5, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M6, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M7, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M8, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M9, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M10, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M11, 0) <> 0" & _
+                           "  OR ISNULL(OB_BUDGET_DATA.M12, 0) <> 0" & _
+                           "  OR ISNULL(MASTER_DATA1.RRT1, 0) <> 0" & _
+                           "  OR ISNULL(MASTER_DATA1.RRT2, 0) <> 0" & _
+                           "  OR ISNULL(MASTER_DATA1.RRT3, 0) <> 0" & _
+                           "  OR ISNULL(MASTER_DATA1.RRT4, 0) <> 0" & _
+                           "  OR ISNULL(MASTER_DATA1.RRT5, 0) <> 0" & _
+                           "  OR ISNULL(MTP.RRT1, 0) <> 0" & _
+                           "  OR ISNULL(MTP.RRT2, 0) <> 0" & _
+                           "  OR ISNULL(MTP.RRT3, 0) <> 0" & _
+                           "  OR ISNULL(MTP.RRT4, 0) <> 0" & _
+                           "  OR ISNULL(MTP.RRT5, 0) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
 
             da = New SqlDataAdapter(strSQL, conn)
             dt = New DataTable

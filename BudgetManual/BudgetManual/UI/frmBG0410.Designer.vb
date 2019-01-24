@@ -45,6 +45,7 @@ Partial Class frmBG0410
         Me.lblPrevRevNo = New System.Windows.Forms.Label
         Me.numPrevProjectNo = New System.Windows.Forms.NumericUpDown
         Me.Label3 = New System.Windows.Forms.Label
+        Me.chkShowZeroValue = New System.Windows.Forms.CheckBox
         CType(Me.numYear, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.numProjectNo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbPrevYear.SuspendLayout()
@@ -83,7 +84,7 @@ Partial Class frmBG0410
         'cmdPreview
         '
         Me.cmdPreview.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdPreview.Location = New System.Drawing.Point(97, 158)
+        Me.cmdPreview.Location = New System.Drawing.Point(97, 179)
         Me.cmdPreview.Name = "cmdPreview"
         Me.cmdPreview.Size = New System.Drawing.Size(75, 23)
         Me.cmdPreview.TabIndex = 14
@@ -129,7 +130,7 @@ Partial Class frmBG0410
         'cmdPrint
         '
         Me.cmdPrint.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdPrint.Location = New System.Drawing.Point(16, 158)
+        Me.cmdPrint.Location = New System.Drawing.Point(16, 179)
         Me.cmdPrint.Name = "cmdPrint"
         Me.cmdPrint.Size = New System.Drawing.Size(75, 23)
         Me.cmdPrint.TabIndex = 13
@@ -145,7 +146,7 @@ Partial Class frmBG0410
         'cmdClose
         '
         Me.cmdClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdClose.Location = New System.Drawing.Point(286, 158)
+        Me.cmdClose.Location = New System.Drawing.Point(286, 179)
         Me.cmdClose.Name = "cmdClose"
         Me.cmdClose.Size = New System.Drawing.Size(75, 23)
         Me.cmdClose.TabIndex = 16
@@ -166,7 +167,7 @@ Partial Class frmBG0410
         'cmdExcel
         '
         Me.cmdExcel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdExcel.Location = New System.Drawing.Point(178, 158)
+        Me.cmdExcel.Location = New System.Drawing.Point(178, 179)
         Me.cmdExcel.Name = "cmdExcel"
         Me.cmdExcel.Size = New System.Drawing.Size(75, 23)
         Me.cmdExcel.TabIndex = 15
@@ -218,7 +219,7 @@ Partial Class frmBG0410
         Me.gbPrevYear.Controls.Add(Me.numPrevProjectNo)
         Me.gbPrevYear.Controls.Add(Me.Label3)
         Me.gbPrevYear.Enabled = False
-        Me.gbPrevYear.Location = New System.Drawing.Point(16, 151)
+        Me.gbPrevYear.Location = New System.Drawing.Point(16, 219)
         Me.gbPrevYear.Name = "gbPrevYear"
         Me.gbPrevYear.Size = New System.Drawing.Size(345, 51)
         Me.gbPrevYear.TabIndex = 12
@@ -264,11 +265,22 @@ Partial Class frmBG0410
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "Project No:"
         '
+        'chkShowZeroValue
+        '
+        Me.chkShowZeroValue.AutoSize = True
+        Me.chkShowZeroValue.Location = New System.Drawing.Point(16, 156)
+        Me.chkShowZeroValue.Name = "chkShowZeroValue"
+        Me.chkShowZeroValue.Size = New System.Drawing.Size(108, 17)
+        Me.chkShowZeroValue.TabIndex = 17
+        Me.chkShowZeroValue.Text = "Show Zero Value"
+        Me.chkShowZeroValue.UseVisualStyleBackColor = True
+        '
         'frmBG0410
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(420, 196)
+        Me.ClientSize = New System.Drawing.Size(420, 281)
+        Me.Controls.Add(Me.chkShowZeroValue)
         Me.Controls.Add(Me.cmdExcel)
         Me.Controls.Add(Me.cmdClose)
         Me.Controls.Add(Me.cmdPrint)
@@ -324,4 +336,5 @@ Partial Class frmBG0410
     Friend WithEvents lblPrevRevNo As System.Windows.Forms.Label
     Friend WithEvents numPrevProjectNo As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents chkShowZeroValue As System.Windows.Forms.CheckBox
 End Class
