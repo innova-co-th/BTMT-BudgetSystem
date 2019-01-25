@@ -3152,11 +3152,9 @@
       AND MTP.PERIOD_TYPE = 10
       AND MTP.PROJECT_NO = @MtpProjectNo
       AND MTP.REV_NO = @MtpRevNo
-      --AND MTP.REV_NO = (SELECT ISNULL(MAX(REV_NO),1) AS MAX_REV_NO FROM BG_T_BUDGET_HEADER
-      --WHERE BUDGET_YEAR = (@BudgetYear-1)
-      --AND PERIOD_TYPE = 10 AND BUDGET_TYPE = 'E' AND PROJECT_NO = @MtpProjectNo)
+      @ShowZeroValue
 
-      WHERE
+      <!--WHERE
       (
       ISNULL(ACTUAL_DATA.H1, 0) &lt;&gt; 0
       OR ISNULL(MAX_REV.REVISE_SECOND_HALF, 0) &lt;&gt; 0
@@ -3173,7 +3171,7 @@
       OR ISNULL(MASTER_DATA.M11, 0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.M12, 0) &lt;&gt; 0
       OR ISNULL(MTP.RRT2,0) &lt;&gt; 0
-      )
+      )-->
 
     </SELECT005_1>
     <SELECT005_2>
@@ -3274,7 +3272,9 @@
       AND MTP.PROJECT_NO = @MtpProjectNo
       AND MTP.REV_NO = '@MtpRevNo'
 
-      WHERE
+      @ShowZeroValue
+
+      <!--WHERE
       (
       ISNULL(ACTUAL_DATA.H1, 0) &lt;&gt; 0
       OR ISNULL(MAX_REV.REVISE_SECOND_HALF, 0) &lt;&gt; 0
@@ -3291,7 +3291,7 @@
       OR ISNULL(MASTER_DATA.M11, 0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.M12, 0) &lt;&gt; 0
       OR ISNULL(MTP.RRT2,0) &lt;&gt; 0
-      )
+      )-->
 
     </SELECT005_3>
     <SELECT006_1>
@@ -3994,7 +3994,8 @@
       AND ACTUAL_DATA.BUDGET_ORDER_NO = MAX_REV.BUDGET_ORDER_NO
       AND ACTUAL_DATA.DATA_TYPE = 2
 
-      WHERE
+      @ShowZeroValue
+      <!--WHERE
       (
       ISNULL(ACTUAL_DATA.H1, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M7, 0) &lt;&gt; 0
@@ -4009,7 +4010,7 @@
       OR ISNULL(MASTER_DATA.M10, 0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.M11, 0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.M12, 0) &lt;&gt; 0
-      )
+      )-->
     </SELECT007_1>
     <SELECT007_2>
       AND BUDGET_ORDER.ACCOUNT_NO = '@AccountNo'
@@ -4100,7 +4101,8 @@
       AND ACTUAL_DATA.BUDGET_ORDER_NO = MAX_REV.BUDGET_ORDER_NO
       AND ACTUAL_DATA.DATA_TYPE = 2
 
-      WHERE
+      @ShowZeroValue
+      <!--WHERE
       (
       ISNULL(ACTUAL_DATA.H1, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M7, 0) &lt;&gt; 0
@@ -4115,7 +4117,7 @@
       OR ISNULL(MASTER_DATA.M10, 0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.M11, 0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.M12, 0) &lt;&gt; 0
-      )
+      )-->
     </SELECT007_3>
     <SELECT008_1>
       SELECT MAX_REV.BUDGET_YEAR, MAX_REV.PERIOD_TYPE, MAX_REV.PROJECT_NO, MAX_REV.BUDGET_ORDER_NO,
@@ -4204,8 +4206,8 @@
       AND ACTUAL_DATA.PROJECT_NO = @ProjectNo
       AND MAX_REV.BUDGET_ORDER_NO = ACTUAL_DATA.BUDGET_ORDER_NO
       AND ACTUAL_DATA.DATA_TYPE = 2
-
-      WHERE
+      @ShowZeroValue
+      <!--WHERE
       (
       ISNULL(ORIGINAL_BUDGET.H1, 0) &lt;&gt; 0
       OR ISNULL(ORIGINAL_BUDGET.H2, 0) &lt;&gt; 0
@@ -4226,7 +4228,7 @@
       OR ISNULL(MASTER_DATA.RRT3 ,0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.RRT4 ,0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.RRT5 ,0) &lt;&gt; 0
-      )
+      )-->
     </SELECT008_1>
     <SELECT008_2>
       AND BUDGET_ORDER.ACCOUNT_NO = '@AccountNo'
@@ -4320,7 +4322,9 @@
       AND MAX_REV.BUDGET_ORDER_NO = ACTUAL_DATA.BUDGET_ORDER_NO
       AND ACTUAL_DATA.DATA_TYPE = 2
 
-      WHERE
+      @ShowZeroValue
+
+      <!--WHERE
       (
       ISNULL(ORIGINAL_BUDGET.H1, 0) &lt;&gt; 0
       OR ISNULL(ORIGINAL_BUDGET.H2, 0) &lt;&gt; 0
@@ -4341,7 +4345,7 @@
       OR ISNULL(MASTER_DATA.RRT3 ,0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.RRT4 ,0) &lt;&gt; 0
       OR ISNULL(MASTER_DATA.RRT5 ,0) &lt;&gt; 0
-      )
+      )-->
     </SELECT008_3>
     <SELECT009>
       SELECT
@@ -9585,11 +9589,12 @@
       AND BO.BUDGET_TYPE = '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       @AccountNo
-      AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
+      @ShowZeroValue1
+      --AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
 
       UNION
 
@@ -9623,11 +9628,12 @@
       AND BO.BUDGET_TYPE = '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       @AccountNo
-      AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
+      @ShowZeroValue2
+      --AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
 
       ) AS BUDGET_ORDER_MAIN
 
@@ -9655,12 +9661,13 @@
       AND BO.BUDGET_TYPE =  '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       @AccountNo
-      AND (
-      BD.RRT1 &lt;&gt; 0
-      OR BD.RRT2 &lt;&gt; 0
-      OR BD.RRT3 &lt;&gt; 0
-      OR BD.RRT4 &lt;&gt; 0
-      OR BD.RRT5 &lt;&gt; 0)
+      @ShowZeroValue3
+      --AND (
+      --BD.RRT1 &lt;&gt; 0
+      --OR BD.RRT2 &lt;&gt; 0
+      --OR BD.RRT3 &lt;&gt; 0
+      --OR BD.RRT4 &lt;&gt; 0
+      --OR BD.RRT5 &lt;&gt; 0)
 
 
       LEFT OUTER JOIN BG_T_BUDGET_DATA AS OB_BUDGET_DATA
@@ -9677,13 +9684,14 @@
       AND PREVBD.PERIOD_TYPE  = @PeriodType
       AND PREVBD.PROJECT_NO = @RefRBProjectNo
       AND PREVBD.REV_NO = @RefRBRevNo
-      AND (
-      ISNULL(PREVBD.RRT1,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT2,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT3,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT4,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT5,0) &lt;&gt; 0
-      )
+      @ShowZeroValue4
+      --AND (
+      --ISNULL(PREVBD.RRT1,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT2,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT3,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT4,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT5,0) &lt;&gt; 0
+      --)
 
     </SELECT028>
 
@@ -9891,11 +9899,12 @@
       AND BO.BUDGET_TYPE = '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       @AccountNo
-      AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
+      @ShowZeroValue1
+      --AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
 
       UNION
 
@@ -9930,11 +9939,12 @@
       AND BO.BUDGET_TYPE = '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       @AccountNo
-      AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
-      OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
+      @ShowZeroValue2
+      --AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) &lt;&gt; 0
+      --OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) &lt;&gt; 0)
 
       ) AS BUDGET_ORDER_MAIN
 
@@ -9962,12 +9972,13 @@
       AND BO.BUDGET_TYPE =  '@BudgetType'
       AND BO.ACTIVE_FLAG = 1
       @AccountNo
-      AND (
-      BD.RRT1 &lt;&gt; 0
-      OR BD.RRT2 &lt;&gt; 0
-      OR BD.RRT3 &lt;&gt; 0
-      OR BD.RRT4 &lt;&gt; 0
-      OR BD.RRT5 &lt;&gt; 0)
+      @ShowZeroValue3
+      --AND (
+      --BD.RRT1 &lt;&gt; 0
+      --OR BD.RRT2 &lt;&gt; 0
+      --OR BD.RRT3 &lt;&gt; 0
+      --OR BD.RRT4 &lt;&gt; 0
+      --OR BD.RRT5 &lt;&gt; 0)
 
 
       LEFT OUTER JOIN BG_T_BUDGET_DATA AS OB_BUDGET_DATA
@@ -9984,13 +9995,14 @@
       AND PREVBD.PERIOD_TYPE  = @PeriodType
       AND PREVBD.PROJECT_NO = @RefRBProjectNo
       AND PREVBD.REV_NO = @RefRBRevNo
-      AND (
-      ISNULL(PREVBD.RRT1,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT2,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT3,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT4,0) &lt;&gt; 0
-      OR ISNULL(PREVBD.RRT5,0) &lt;&gt; 0
-      )
+      @ShowZeroValue4
+      --AND (
+      --ISNULL(PREVBD.RRT1,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT2,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT3,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT4,0) &lt;&gt; 0
+      --OR ISNULL(PREVBD.RRT5,0) &lt;&gt; 0
+      --)
 
     </SELECT028_2>
     

@@ -148,6 +148,8 @@ Public Class frmBG0430
 
             'myClsBG0430BL.MTPBudget = Me.chkShowMTP.Checked
 
+            myClsBG0430BL.ShowZeroValue = Me.chkShowZeroValue.Checked
+
             If myClsBG0430BL.getBudgetData() Then
 
                 Dim ds As DataSet = myClsBG0430BL.BudgetData
@@ -3142,6 +3144,8 @@ Public Class frmBG0430
             End If
 
             'myClsBG0430BL.MTPBudget = Me.chkShowMTP.Checked
+
+            myClsBG0430BL.ShowZeroValue = Me.chkShowZeroValue.Checked
 
             If myClsBG0430BL.getBudgetData() Then
 

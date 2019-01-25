@@ -1532,6 +1532,32 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@AccountNo", strAccountNo)
             End If
 
+            Dim strZroFilter As String
+            strZroFilter = " WHERE " & _
+                           " ( " & _
+                           " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(MAX_REV.REVISE_SECOND_HALF, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M1, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M2, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M5, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M6, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M8, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M9, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT2,0) <> 0 " & _
+                           " )"
+
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
             da = New SqlDataAdapter(strSQL, conn)
             ds = New DataSet
 
@@ -1598,6 +1624,32 @@ Public Class BG_T_BUDGET_DATA
                 strAccountNo = strAccountNo.Replace("@AccountNo", Me.AccountNo)
                 strSQL = strSQL.Replace("@AccountNo", strAccountNo)
             End If
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE " & _
+                           " ( " & _
+                           " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(MAX_REV.REVISE_SECOND_HALF, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M1, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M2, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M5, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M6, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M8, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M9, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " OR ISNULL(MTP.RRT2,0) <> 0 " & _
+                           " ) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
 
             da = New SqlDataAdapter(strSQL, conn)
             ds = New DataSet
@@ -1741,6 +1793,29 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@AccountNo", strAccountNo)
             End If
 
+            Dim strZroFilter As String
+            strZroFilter = " WHERE " & _
+                           " ( " & _
+                           " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M7,0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M8,0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M9,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " )"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
             da = New SqlDataAdapter(strSQL, conn)
             ds = New DataSet
 
@@ -1803,6 +1878,29 @@ Public Class BG_T_BUDGET_DATA
                 strAccountNo = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT007_2")
                 strAccountNo = strAccountNo.Replace("@AccountNo", Me.AccountNo)
                 strSQL = strSQL.Replace("@AccountNo", strAccountNo)
+            End If
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE " & _
+                           " ( " & _
+                           " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M7,0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M8,0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M9,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " ) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
             End If
 
             da = New SqlDataAdapter(strSQL, conn)
@@ -1874,6 +1972,35 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@AccountNo", strAccountNo)
             End If
 
+            Dim strZroFilter As String
+            strZroFilter = " WHERE " & _
+                           " ( " & _
+                           " ISNULL(ORIGINAL_BUDGET.H1, 0) <> 0 " & _
+                           " OR ISNULL(ORIGINAL_BUDGET.H2, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M1, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M2, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M5, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M6, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M8, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M9, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT1 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT2 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT3 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT4 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT5 ,0) <> 0 " & _
+                           " )"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
+            End If
+
             da = New SqlDataAdapter(strSQL, conn)
             ds = New DataSet
 
@@ -1942,6 +2069,35 @@ Public Class BG_T_BUDGET_DATA
                 strAccountNo = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT008_2")
                 strAccountNo = strAccountNo.Replace("@AccountNo", Me.AccountNo)
                 strSQL = strSQL.Replace("@AccountNo", strAccountNo)
+            End If
+
+            Dim strZroFilter As String
+            strZroFilter = " WHERE " & _
+                           " ( " & _
+                           " ISNULL(ORIGINAL_BUDGET.H1, 0) <> 0 " & _
+                           " OR ISNULL(ORIGINAL_BUDGET.H2, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M1, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M2, 0) <> 0 " & _
+                           " OR ISNULL(ACTUAL_DATA.M3, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M4, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M5, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M6, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M7, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M8, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M9, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M10, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M11, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.M12, 0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT1 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT2 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT3 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT4 ,0) <> 0 " & _
+                           " OR ISNULL(MASTER_DATA.RRT5 ,0) <> 0 " & _
+                           " ) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue", strZroFilter)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue", "")
             End If
 
             da = New SqlDataAdapter(strSQL, conn)
@@ -4147,11 +4303,64 @@ Public Class BG_T_BUDGET_DATA
             If Me.AccountNo.Equals(String.Empty) OrElse _
                 String.Equals(Me.AccountNo.Trim.ToUpper, STRING_ALL.ToUpper) Then
                 strSQL = strSQL.Replace("@AccountNo", "")
-
             Else
                 strSQL = strSQL.Replace("@AccountNo", " AND BO.ACCOUNT_NO = '" & Me.AccountNo & "'")
-
             End If
+
+            Dim strZroFilter1 As String
+            strZroFilter1 = " AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) <> 0) "
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue1", strZroFilter1)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue1", "")
+            End If
+
+            Dim strZroFilter2 As String
+            strZroFilter2 = " AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue2", strZroFilter2)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue2", "")
+            End If
+
+
+            Dim strZroFilter3 As String
+            strZroFilter3 = " AND ( " & _
+                            " BD.RRT1 <> 0 " & _
+                            " OR BD.RRT2 <> 0 " & _
+                            " OR BD.RRT3 <> 0 " & _
+                            " OR BD.RRT4 <> 0 " & _
+                            " OR BD.RRT5 <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue3", strZroFilter3)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue3", "")
+            End If
+
+             
+
+            Dim strZroFilter4 As String
+            strZroFilter4 = " AND ( " & _
+                            " ISNULL(PREVBD.RRT1,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT2,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT3,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT4,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT5,0) <> 0 " & _
+                            " )"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue4", strZroFilter4)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue4", "")
+            End If
+
 
             da = New SqlDataAdapter(strSQL, conn)
             DS = New DataSet
@@ -4220,6 +4429,61 @@ Public Class BG_T_BUDGET_DATA
             Else
                 strSQL = strSQL.Replace("@AccountNo", " AND BO.ACCOUNT_NO = '" & Me.AccountNo & "'")
 
+            End If
+
+            Dim strZroFilter1 As String
+            strZroFilter1 = " AND (" & _
+                            " (ISNULL(OB_BUDGET_DATA.RRT1,0)) <> 0" & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) <> 0" & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) <> 0" & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) <> 0" & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue1", strZroFilter1)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue1", "")
+            End If
+
+
+            Dim strZroFilter2 As String
+            strZroFilter2 = " AND ((ISNULL(OB_BUDGET_DATA.RRT1,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT2,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT3,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT4,0)) <> 0 " & _
+                            " OR (ISNULL(OB_BUDGET_DATA.RRT5,0)) <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue2", strZroFilter2)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue2", "")
+            End If
+
+
+            Dim strZroFilter3 As String
+            strZroFilter3 = " AND ( " & _
+                            " BD.RRT1 <> 0 " & _
+                            " OR BD.RRT2 <> 0 " & _
+                            " OR BD.RRT3 <> 0 " & _
+                            " OR BD.RRT4 <> 0 " & _
+                            " OR BD.RRT5 <> 0)"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue3", strZroFilter3)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue3", "")
+            End If
+
+
+            Dim strZroFilter4 As String
+            strZroFilter4 = " AND ( " & _
+                            " ISNULL(PREVBD.RRT1,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT2,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT3,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT4,0) <> 0 " & _
+                            " OR ISNULL(PREVBD.RRT5,0) <> 0 " & _
+                            " )"
+            If Me.ShowZeroValue = False Then
+                strSQL = strSQL.Replace("@ShowZeroValue4", strZroFilter4)
+            ElseIf Me.ShowZeroValue = True Then
+                strSQL = strSQL.Replace("@ShowZeroValue4", "")
             End If
 
             da = New SqlDataAdapter(strSQL, conn)

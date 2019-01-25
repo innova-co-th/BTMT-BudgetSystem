@@ -21,6 +21,7 @@ Public Class clsBG0430BL
     Private strRevNo As String = String.Empty
     Private myPrevProjectNo As String = String.Empty
     Private strPrevRevNo As String = String.Empty
+    Private myShowZeroValue As Boolean = False
 #End Region
 
 #Region "Property"
@@ -140,6 +141,15 @@ Public Class clsBG0430BL
             strPrevRevNo = value
         End Set
     End Property
+
+    Property ShowZeroValue() As Boolean
+        Get
+            Return myShowZeroValue
+        End Get
+        Set(ByVal value As Boolean)
+            myShowZeroValue = value
+        End Set
+    End Property
 #End Region
 
 #Region "Function"
@@ -168,6 +178,7 @@ Public Class clsBG0430BL
         clsBG_T_BUDGET_DATA.BudgetYear = Me.BudgetYear
         clsBG_T_BUDGET_DATA.PeriodType = Me.PeriodType
         clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
+        clsBG_T_BUDGET_DATA.ShowZeroValue = Me.ShowZeroValue
 
         If String.Equals(Me.AccountNo.Trim.ToUpper, ALL_ACCOUNT.ToUpper) Then
             clsBG_T_BUDGET_DATA.AccountNo = ALL_ACCOUNT
