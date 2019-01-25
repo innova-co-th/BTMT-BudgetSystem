@@ -107,7 +107,7 @@ Partial Class frmBG0350
         '
         Me.cboPeriodType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboPeriodType.FormattingEnabled = True
-        Me.cboPeriodType.Items.AddRange(New Object() {"Original Budget", "Estimate Budget", "Revise Budget", "Estimate Budget (Actual Oct)", "Revise Budget (Actual Apr)", "Original Budget (Input Data)", "Estimate Budget (Input Data)", "Revise Budget (Input Data)", "Revise Budget (Input MTP)"})
+        Me.cboPeriodType.Items.AddRange(New Object() {"Original Budget", "Estimate Budget", "Forecast Budget", "Estimate Budget (Actual Oct)", "Forecast Budget (Actual Apr)", "Original Budget (Input Data)", "Estimate Budget (Input Data)", "Forecast Budget (Input Data)", "Forecast Budget (Input MTP)"})
         Me.cboPeriodType.Location = New System.Drawing.Point(96, 44)
         Me.cboPeriodType.Name = "cboPeriodType"
         Me.cboPeriodType.Size = New System.Drawing.Size(245, 21)

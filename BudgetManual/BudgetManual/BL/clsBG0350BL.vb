@@ -112,7 +112,7 @@ Public Class clsBG0350BL
         Dim rtn As Boolean = False
 
         If Me.PeriodType = CStr(enumPeriodType.EstimateBudget2) Or _
-        Me.PeriodType = CStr(enumPeriodType.ReviseBudget2) Then
+        Me.PeriodType = CStr(enumPeriodType.ForecastBudget2) Then
 
             '// Import Actual Data 
             '// -- Actual Data => Input Data Table
@@ -141,8 +141,8 @@ Public Class clsBG0350BL
 
                     End If
 
-                ElseIf Me.PeriodType = CStr(enumPeriodType.ReviseBudget2) Then  '// Revise Budget's Actual Apr
-                    clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.ReviseBudget)
+                ElseIf Me.PeriodType = CStr(enumPeriodType.ForecastBudget2) Then  '// Forecast Budget's Actual Apr
+                    clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.ForecastBudget)
 
                     If clsBG_T_BUDGET_DATA.Select019() = True AndAlso clsBG_T_BUDGET_DATA.dtResult.Rows.Count > 0 Then
                         clsBG_T_BUDGET_DATA.M(4) = (CDbl(Me.DataList(3)) / 1000).ToString
@@ -161,7 +161,7 @@ Public Class clsBG0350BL
 
         ElseIf Me.PeriodType = CStr(enumPeriodType.OriginalBudget3) Or _
         Me.PeriodType = CStr(enumPeriodType.EstimateBudget3) Or _
-        Me.PeriodType = CStr(enumPeriodType.ReviseBudget3) Then
+        Me.PeriodType = CStr(enumPeriodType.ForecastBudget3) Then
 
             '// Import Input Data
             '// -- Budget Data => Input Data Table
@@ -219,8 +219,8 @@ Public Class clsBG0350BL
 
                     End If
 
-                ElseIf Me.PeriodType = CStr(enumPeriodType.ReviseBudget3) Then '// Revise Budget's Input Data
-                    clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.ReviseBudget)
+                ElseIf Me.PeriodType = CStr(enumPeriodType.ForecastBudget3) Then '// Forecast Budget's Input Data
+                    clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.ForecastBudget)
                     clsBG_T_BUDGET_DATA.DataList = Me.DataList
 
                     If clsBG_T_BUDGET_DATA.Select019() = True AndAlso clsBG_T_BUDGET_DATA.dtResult.Rows.Count > 0 Then
@@ -236,7 +236,7 @@ Public Class clsBG0350BL
                 Return rtn
             End If
 
-        ElseIf Me.PeriodType = CStr(enumPeriodType.ReviseBudget4) Then '// Revise Budget's MTP Data
+        ElseIf Me.PeriodType = CStr(enumPeriodType.ForecastBudget4) Then '// Forecast Budget's MTP Data
 
             '// Import MTP Data
             '// -- MTP Data => Input Data Table
@@ -251,7 +251,7 @@ Public Class clsBG0350BL
                 clsBG_T_BUDGET_DATA.UserId = p_strUserId
                 clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
-                clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.ReviseBudget)
+                clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.ForecastBudget)
                 clsBG_T_BUDGET_DATA.DataList = Me.DataList
 
                 If clsBG_T_BUDGET_DATA.Select019() = True AndAlso clsBG_T_BUDGET_DATA.dtResult.Rows.Count > 0 Then

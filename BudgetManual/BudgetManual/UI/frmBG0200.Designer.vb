@@ -1832,7 +1832,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle87.Format = "N2"
         DataGridViewCellStyle87.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g3col16.DefaultCellStyle = DataGridViewCellStyle87
-        Me.g3col16.HeaderText = "Revise Jul"
+        Me.g3col16.HeaderText = "Forecast Jul"
         Me.g3col16.MaxInputLength = 30
         Me.g3col16.MinimumWidth = 30
         Me.g3col16.Name = "g3col16"
@@ -1847,7 +1847,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle88.Format = "N2"
         DataGridViewCellStyle88.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g3col17.DefaultCellStyle = DataGridViewCellStyle88
-        Me.g3col17.HeaderText = "Revise Aug"
+        Me.g3col17.HeaderText = "Forecast Aug"
         Me.g3col17.MaxInputLength = 30
         Me.g3col17.MinimumWidth = 30
         Me.g3col17.Name = "g3col17"
@@ -1862,7 +1862,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle89.Format = "N2"
         DataGridViewCellStyle89.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g3col18.DefaultCellStyle = DataGridViewCellStyle89
-        Me.g3col18.HeaderText = "Revise Sep"
+        Me.g3col18.HeaderText = "Forecast Sep"
         Me.g3col18.MaxInputLength = 30
         Me.g3col18.MinimumWidth = 30
         Me.g3col18.Name = "g3col18"
@@ -1878,7 +1878,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle90.NullValue = "-"
         DataGridViewCellStyle90.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g3col19.DefaultCellStyle = DataGridViewCellStyle90
-        Me.g3col19.HeaderText = "Revise Oct"
+        Me.g3col19.HeaderText = "Forecast Oct"
         Me.g3col19.MaxInputLength = 30
         Me.g3col19.MinimumWidth = 30
         Me.g3col19.Name = "g3col19"
@@ -1893,7 +1893,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle91.Format = "N2"
         DataGridViewCellStyle91.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g3col20.DefaultCellStyle = DataGridViewCellStyle91
-        Me.g3col20.HeaderText = "Revise Nov"
+        Me.g3col20.HeaderText = "Forecast Nov"
         Me.g3col20.MaxInputLength = 30
         Me.g3col20.MinimumWidth = 30
         Me.g3col20.Name = "g3col20"
@@ -1908,7 +1908,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle92.Format = "N2"
         DataGridViewCellStyle92.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
         Me.g3col21.DefaultCellStyle = DataGridViewCellStyle92
-        Me.g3col21.HeaderText = "Revise Dec"
+        Me.g3col21.HeaderText = "Forecast Dec"
         Me.g3col21.MaxInputLength = 30
         Me.g3col21.MinimumWidth = 30
         Me.g3col21.Name = "g3col21"
@@ -1921,7 +1921,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle93.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle93.Format = "N2"
         Me.g3col22.DefaultCellStyle = DataGridViewCellStyle93
-        Me.g3col22.HeaderText = "Revise 2nd Half"
+        Me.g3col22.HeaderText = "Forecast 2nd Half"
         Me.g3col22.MinimumWidth = 30
         Me.g3col22.Name = "g3col22"
         Me.g3col22.ReadOnly = True
@@ -1947,7 +1947,7 @@ Partial Class frmBG0200
         DataGridViewCellStyle95.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle95.Format = "N2"
         Me.g3col24.DefaultCellStyle = DataGridViewCellStyle95
-        Me.g3col24.HeaderText = "Revise Year"
+        Me.g3col24.HeaderText = "Forecast Year"
         Me.g3col24.MinimumWidth = 30
         Me.g3col24.Name = "g3col24"
         Me.g3col24.ReadOnly = True

@@ -38,7 +38,7 @@ Public Class clsBG0200BL
     Private myMTP_SUM3 As String = String.Empty
     Private myMTP_SUM4 As String = String.Empty
     Private myMTP_SUM5 As String = String.Empty
-    Private myReviseRevNo As String = String.Empty
+    Private myForecastRevNo As String = String.Empty
     Private myPrevMTPRevNo As String = String.Empty
     Private myWKRRT1 As String = String.Empty
     Private myWKRRT2 As String = String.Empty
@@ -245,13 +245,13 @@ Public Class clsBG0200BL
     End Property
 #End Region
 
-#Region "ReviseRevNo"
-    Property ReviseRevNo() As String
+#Region "ForecastRevNo"
+    Property ForecastRevNo() As String
         Get
-            Return myReviseRevNo
+            Return myForecastRevNo
         End Get
         Set(ByVal value As String)
-            myReviseRevNo = value
+            myForecastRevNo = value
         End Set
     End Property
 #End Region
@@ -846,7 +846,7 @@ Public Class clsBG0200BL
 
             ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
 
-                '// Ref. Revise  
+                '// Ref. Forecast  
                 clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
@@ -1160,12 +1160,12 @@ Public Class clsBG0200BL
                 End If
 
             ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.MTPBudget Then
-                '// Add Revise (Same year)
+                '// Add Forecast (Same year)
                 clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.ReviseBudget)
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.ForecastBudget)
                 clsBG_T_BUDGET_REFERENCE.RefBudgetYear = Me.BudgetYear
                 clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
                 clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
@@ -1525,12 +1525,12 @@ Public Class clsBG0200BL
             End If
 
         ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.MTPBudget Then
-            '// Add Revise (Same year)
+            '// Add Forecast (Same year)
             clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.ReviseBudget)
+            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.ForecastBudget)
             clsBG_T_BUDGET_REFERENCE.RefBudgetYear = Me.BudgetYear
             clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
             clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
@@ -1580,7 +1580,7 @@ Public Class clsBG0200BL
 
         End If
 
-       
+
         Return True
     End Function
 
@@ -1969,7 +1969,7 @@ Public Class clsBG0200BL
         End If
 
         Return blnS
-      
+
     End Function
     Public Function SaveApproveBudgetData() As Boolean
         Dim clsBG_T_BUDGET_HEADER As New BG_T_BUDGET_HEADER
@@ -2021,7 +2021,7 @@ Public Class clsBG0200BL
             End If
         End If
 
-  
+
 
         Return blnS
 
@@ -2153,7 +2153,7 @@ Public Class clsBG0200BL
                         Exit For
                     End If
                 End If
-              
+
             Next
 
             Return blnS
@@ -2355,40 +2355,40 @@ Public Class clsBG0200BL
         End If
     End Function
 
-    Public Function GetReviseMaxRevNo() As Boolean
+    Public Function GetForecastMaxRevNo() As Boolean
         Dim clsBG_T_BUDGET_HEADER As New BG_T_BUDGET_HEADER
 
         clsBG_T_BUDGET_HEADER.BudgetYear = Me.BudgetYear
-        clsBG_T_BUDGET_HEADER.PeriodType = CStr(enumPeriodType.ReviseBudget)
+        clsBG_T_BUDGET_HEADER.PeriodType = CStr(enumPeriodType.ForecastBudget)
         clsBG_T_BUDGET_HEADER.BudgetType = Me.BudgetType
         clsBG_T_BUDGET_HEADER.ProjectNo = "1"
         clsBG_T_BUDGET_HEADER.UserPIC = Me.UserPIC
 
         If Me.UserPIC = "0000" Then
             If clsBG_T_BUDGET_HEADER.Select006() = True Then
-                Me.ReviseRevNo = clsBG_T_BUDGET_HEADER.RevNo
+                Me.ForecastRevNo = clsBG_T_BUDGET_HEADER.RevNo
 
                 Return True
             Else
-                Me.ReviseRevNo = "1"
+                Me.ForecastRevNo = "1"
 
                 Return False
 
             End If
         Else
             If clsBG_T_BUDGET_HEADER.Select012() = True Then
-                Me.ReviseRevNo = clsBG_T_BUDGET_HEADER.RevNo
+                Me.ForecastRevNo = clsBG_T_BUDGET_HEADER.RevNo
 
                 Return True
             Else
-                Me.ReviseRevNo = "1"
+                Me.ForecastRevNo = "1"
 
                 Return False
 
             End If
         End If
 
-     
+
     End Function
 
     Public Function GetPrevMTPMaxRevNo() As Boolean
@@ -2980,8 +2980,8 @@ Public Class clsBG0200BL
         ElseIf Me.PeriodType = CStr(enumPeriodType.EstimateBudget) Then
             strPeriodType = "Estimate Budget"
 
-        ElseIf Me.PeriodType = CStr(enumPeriodType.ReviseBudget) Then
-            strPeriodType = "Revise Budget"
+        ElseIf Me.PeriodType = CStr(enumPeriodType.ForecastBudget) Then
+            strPeriodType = "Forecast Budget"
 
         ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
             strPeriodType = "MTP Budget"
@@ -3178,11 +3178,11 @@ Public Class clsBG0200BL
             Return False
         End If
 
-      
+
         If Me.RevNo = "1" Then
             Return False
         End If
-       
+
         '// Get Transfer Data
         If GetTransferCost2(Me.BudgetYear, Me.PeriodType, Me.RevNo, Me.ProjectNo) = False Then
             Return False
@@ -3202,7 +3202,7 @@ Public Class clsBG0200BL
                     ReDim dblTransValue(11)
 
                     For idx = 0 To drData.Length - 1
-                        If Me.PeriodType = CStr(enumPeriodType.ReviseBudget) Then '// Revise Budget transfer cost on Apr - Dec only.
+                        If Me.PeriodType = CStr(enumPeriodType.ForecastBudget) Then '// Forecast Budget transfer cost on Apr - Dec only.
                             For i = 3 To 11
                                 dblTransValue(i) = dblTransValue(i) - _
                                                     (CDbl(Nz(drData(idx).Item("M" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))
@@ -3255,7 +3255,7 @@ Public Class clsBG0200BL
 
                     For idx = 0 To drData.Length - 1
 
-                        If Me.PeriodType = CStr(enumPeriodType.ReviseBudget) Then '// Revise Budget transfer cost on Apr - Dec only.
+                        If Me.PeriodType = CStr(enumPeriodType.ForecastBudget) Then '// Forecast Budget transfer cost on Apr - Dec only.
                             For i = 3 To 11
                                 dblTransValue(i) = dblTransValue(i) + _
                                                     (CDbl(Nz(drData(idx).Item("M" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))
@@ -3331,7 +3331,7 @@ Public Class clsBG0200BL
                 dt = New DataTable
             End If
         End If
-       
+
         Return dt
     End Function
 

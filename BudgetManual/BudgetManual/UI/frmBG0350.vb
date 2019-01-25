@@ -166,11 +166,11 @@ Public Class frmBG0350
 
                                 myClsBG0350BL.CheckPeriodType = CStr(enumPeriodType.EstimateBudget)
 
-                            ElseIf myClsBG0350BL.PeriodType = CStr(enumPeriodType.ReviseBudget2) Or _
-                            myClsBG0350BL.PeriodType = CStr(enumPeriodType.ReviseBudget3) Or _
-                            myClsBG0350BL.PeriodType = CStr(enumPeriodType.ReviseBudget4) Then
+                            ElseIf myClsBG0350BL.PeriodType = CStr(enumPeriodType.ForecastBudget2) Or _
+                            myClsBG0350BL.PeriodType = CStr(enumPeriodType.ForecastBudget3) Or _
+                            myClsBG0350BL.PeriodType = CStr(enumPeriodType.ForecastBudget4) Then
 
-                                myClsBG0350BL.CheckPeriodType = CStr(enumPeriodType.ReviseBudget)
+                                myClsBG0350BL.CheckPeriodType = CStr(enumPeriodType.ForecastBudget)
 
                             ElseIf myClsBG0350BL.PeriodType = CStr(enumPeriodType.OriginalBudget3) Then
 

@@ -369,13 +369,13 @@ Public Class BGCommon
 
     End Function
 
-    Public Shared Function SetupReviseColumnsCells(ByRef xSt As Excel.Worksheet, ByVal colStartIndex As Integer, ByVal bMTPCheck As Boolean, _
+    Public Shared Function SetupForecastColumnsCells(ByRef xSt As Excel.Worksheet, ByVal colStartIndex As Integer, ByVal bMTPCheck As Boolean, _
                                     ByVal intColMergeStart As Integer, ByVal intColMergeEnd As Integer, _
                                     ByVal strColValue As String, ByVal arrColRowList() As Integer, _
                                     ByVal intActualStart As Integer, ByVal intActualEnd As Integer, _
                                     ByVal intEstimateStart As Integer, ByVal intEstimateEnd As Integer, _
-                                    ByVal intReviseStart As Integer, ByVal intReviseEnd As Integer, _
-                                    ByVal intMTPReviseStart As Integer, ByVal intMTPReviseEnd As Integer, _
+                                    ByVal intForecastStart As Integer, ByVal intForecastEnd As Integer, _
+                                    ByVal intMTPForecastStart As Integer, ByVal intMTPForecastEnd As Integer, _
                                     ByVal intMTPStart As Integer, ByVal intMTPEnd As Integer, Optional ByVal bMergeTwoColumn As Boolean = True) As Boolean
 
         If bMergeTwoColumn = True Then
@@ -393,7 +393,7 @@ Public Class BGCommon
         Next
         If bMTPCheck = False Then
 
-            '//Setup Actual, Estimate & Revise Title
+            '//Setup Actual, Estimate & Forecast Title
             xSt.Cells(colStartIndex - 1, intActualStart) = "Actual"
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intActualEnd)).MergeCells = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intActualEnd)).Font.Bold = True
@@ -404,13 +404,13 @@ Public Class BGCommon
             xSt.Range(xSt.Cells(colStartIndex - 1, intEstimateStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).Font.Bold = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intEstimateStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            xSt.Cells(colStartIndex - 1, intReviseStart) = "Revise"
-            xSt.Range(xSt.Cells(colStartIndex - 1, intReviseStart), xSt.Cells(colStartIndex - 1, intReviseEnd)).MergeCells = True
-            xSt.Range(xSt.Cells(colStartIndex - 1, intReviseStart), xSt.Cells(colStartIndex - 1, intReviseEnd)).Font.Bold = True
-            xSt.Range(xSt.Cells(colStartIndex - 1, intReviseStart), xSt.Cells(colStartIndex - 1, intReviseEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+            xSt.Cells(colStartIndex - 1, intForecastStart) = "Forecast"
+            xSt.Range(xSt.Cells(colStartIndex - 1, intForecastStart), xSt.Cells(colStartIndex - 1, intForecastEnd)).MergeCells = True
+            xSt.Range(xSt.Cells(colStartIndex - 1, intForecastStart), xSt.Cells(colStartIndex - 1, intForecastEnd)).Font.Bold = True
+            xSt.Range(xSt.Cells(colStartIndex - 1, intForecastStart), xSt.Cells(colStartIndex - 1, intForecastEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
         Else
 
-            xSt.Cells(colStartIndex - 1, intActualStart) = "Revise"
+            xSt.Cells(colStartIndex - 1, intActualStart) = "Forecast"
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).MergeCells = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).Font.Bold = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
@@ -419,10 +419,10 @@ Public Class BGCommon
 
         If bMTPCheck = True Then
 
-            'xSt.Cells(colStartIndex - 1, intMTPReviseStart) = "Revise"
-            'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPReviseStart), xSt.Cells(colStartIndex - 1, intMTPReviseEnd)).MergeCells = True
-            'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPReviseStart), xSt.Cells(colStartIndex - 1, intMTPReviseEnd)).Font.Bold = True
-            'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPReviseStart), xSt.Cells(colStartIndex - 1, intMTPReviseEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+            'xSt.Cells(colStartIndex - 1, intMTPForecastStart) = "Forecast"
+            'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPForecastStart), xSt.Cells(colStartIndex - 1, intMTPForecastEnd)).MergeCells = True
+            'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPForecastStart), xSt.Cells(colStartIndex - 1, intMTPForecastEnd)).Font.Bold = True
+            'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPForecastStart), xSt.Cells(colStartIndex - 1, intMTPForecastEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
             'xSt.Cells(colStartIndex - 1, intMTPStart) = "MTP Budget"
             'xSt.Range(xSt.Cells(colStartIndex - 1, intMTPStart), xSt.Cells(colStartIndex - 1, intMTPEnd)).MergeCells = True

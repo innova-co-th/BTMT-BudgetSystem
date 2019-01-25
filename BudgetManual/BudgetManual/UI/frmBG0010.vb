@@ -183,8 +183,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If
@@ -254,8 +254,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If
@@ -363,8 +363,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If
@@ -452,8 +452,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If
@@ -544,8 +544,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If
@@ -634,8 +634,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If
@@ -703,8 +703,8 @@ Public Class frmBG0010
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
                     strPeriodName = "Estimate Budget"
-                ElseIf strPeriodId = CStr(enumPeriodType.ReviseBudget) Then
-                    strPeriodName = "Revise Budget"
+                ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
+                    strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MTPBudget) Then
                     strPeriodName = "MTP Budget"
                 End If

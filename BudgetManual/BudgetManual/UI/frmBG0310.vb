@@ -42,7 +42,7 @@ Public Class frmBG0310
         'cboPeriodType.Items.Clear()
         'cboPeriodType.Items.Add("Original Budget")
         'cboPeriodType.Items.Add("Estimate Budget")
-        'cboPeriodType.Items.Add("Revise Budget")
+        'cboPeriodType.Items.Add("Forecast Budget")
         'cboPeriodType.Items.Add("MTP Budget")
 
 
@@ -60,12 +60,12 @@ Public Class frmBG0310
 
     Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
 
-        '// Check if new MTP, must have revise budget.
+        '// Check if new MTP, must have Forecast budget.
         If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MTPBudget) Then
             myClsBG0310BL.BudgetYear = numYear.Value.ToString("0000")
             myClsBG0310BL.ProjectNo = numProjectNo.Value.ToString
 
-            If myClsBG0310BL.CheckReviseExist = False Then
+            If myClsBG0310BL.CheckForecastExist = False Then
 
                 MessageBox.Show("Can not create Budget period!", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 

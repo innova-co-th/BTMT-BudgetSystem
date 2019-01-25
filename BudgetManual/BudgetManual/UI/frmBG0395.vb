@@ -39,8 +39,8 @@ Public Class frmBG0395
                 ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.EstimateBudget Then
                     strTemp = CStr(dr("BUDGET_YEAR")) & " Estimate Budget " & CStr(dr("PROJECT_NO"))
 
-                ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.ReviseBudget Then
-                    strTemp = CStr(dr("BUDGET_YEAR")) & " Revise Budget " & CStr(dr("PROJECT_NO"))
+                ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.ForecastBudget Then
+                    strTemp = CStr(dr("BUDGET_YEAR")) & " Forecast Budget " & CStr(dr("PROJECT_NO"))
 
                 ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.MTPBudget Then
                     strTemp = CStr(dr("BUDGET_YEAR")) & " MTP Budget " & CStr(dr("PROJECT_NO"))
@@ -68,8 +68,8 @@ Public Class frmBG0395
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.OriginalBudget)
         ElseIf cboPeriod.Text.Contains("Estimate") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
-        ElseIf cboPeriod.Text.Contains("Revise") Then
-            myClsBG0395BL.PeriodType = CStr(enumPeriodType.ReviseBudget)
+        ElseIf cboPeriod.Text.Contains("Forecast") Then
+            myClsBG0395BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod.Text.Contains("MTP") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.MTPBudget)
         End If
@@ -94,7 +94,7 @@ Public Class frmBG0395
     End Sub
 
     Private Sub cboPeriod_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cboPeriod.SelectedIndexChanged
-       
+
         SetHideRadio()
     End Sub
 
@@ -114,8 +114,8 @@ Public Class frmBG0395
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.OriginalBudget)
         ElseIf cboPeriod.Text.Contains("Estimate") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
-        ElseIf cboPeriod.Text.Contains("Revise") Then
-            myClsBG0395BL.PeriodType = CStr(enumPeriodType.ReviseBudget)
+        ElseIf cboPeriod.Text.Contains("Forecast") Then
+            myClsBG0395BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod.Text.Contains("MTP") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.MTPBudget)
         End If

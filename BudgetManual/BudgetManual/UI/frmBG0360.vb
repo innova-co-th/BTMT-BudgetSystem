@@ -68,7 +68,7 @@ Public Class frmBG0360
 
         'drTemp = dtPeriodType.NewRow
         'drTemp("KEY") = "3"
-        'drTemp("VALUE") = "Revise Budget"
+        'drTemp("VALUE") = "Forecast Budget"
         'dtPeriodType.Rows.Add(drTemp)
 
         'fillComboBox(Me.cboPeriodType, dtPeriodType, "KEY", "VALUE", False)

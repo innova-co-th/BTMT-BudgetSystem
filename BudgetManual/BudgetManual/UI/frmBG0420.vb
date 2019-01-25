@@ -61,7 +61,7 @@ Public Class frmBG0420
             'cboPeriodType.Items.Clear()
             'cboPeriodType.Items.Add("Original Budget")
             'cboPeriodType.Items.Add("Estimate Budget")
-            'cboPeriodType.Items.Add("Revise Budget")
+            'cboPeriodType.Items.Add("Forecast Budget")
             'cboPeriodType.SelectedIndex = 0
 
             If p_intUserLevelId = enumUserLevel.SystemAdministrator Then
@@ -164,7 +164,7 @@ Public Class frmBG0420
                 Exit Sub
             End If
 
-           
+
             PrintDialog1.AllowSomePages = True
             '     printDialog1.ShowDialog()
 
@@ -185,13 +185,13 @@ Public Class frmBG0420
                         reportPath = p_strAppPath & "\Reports\RPT002-2.rpt"
                         strPeriod = "Estimate"
                         Exit Select
-                    Case CType(enumPeriodType.ReviseBudget, Integer)
+                    Case CType(enumPeriodType.ForecastBudget, Integer)
                         If Me.chkHideEstimate.Checked = True Then
                             reportPath = p_strAppPath & "\Reports\RPT002-4.rpt"
                         Else
                             reportPath = p_strAppPath & "\Reports\RPT002-3.rpt"
                         End If
-                        strPeriod = "Revise"
+                        strPeriod = "Forecast"
                         Exit Select
                     Case CType(enumPeriodType.MTPBudget, Integer)
                         reportPath = p_strAppPath & "\Reports\RPT002-5.rpt"
@@ -319,7 +319,7 @@ Public Class frmBG0420
 
             myClsBG0420BL.GetBudgetStatus()
 
-           
+
             Dim strPeriod As String = String.Empty
             Select Case CInt(Me.cboPeriodType.SelectedValue)
                 Case CType(enumPeriodType.OriginalBudget, Integer)
@@ -330,13 +330,13 @@ Public Class frmBG0420
                     clsBG0400.ReportName = "RPT002-2.rpt"
                     strPeriod = "Estimate"
                     Exit Select
-                Case CType(enumPeriodType.ReviseBudget, Integer)
+                Case CType(enumPeriodType.ForecastBudget, Integer)
                     If Me.chkHideEstimate.Checked = True Then
                         clsBG0400.ReportName = "RPT002-4.rpt"
                     Else
                         clsBG0400.ReportName = "RPT002-3.rpt"
                     End If
-                    strPeriod = "Revise"
+                    strPeriod = "Forecast"
                     Exit Select
                 Case CType(enumPeriodType.MTPBudget, Integer)
                     clsBG0400.ReportName = "RPT002-5.rpt"
@@ -370,7 +370,7 @@ Public Class frmBG0420
 
     Private Sub cboPeriodType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPeriodType.SelectedIndexChanged
 
-        If CInt(cboPeriodType.SelectedValue) = CType(enumPeriodType.ReviseBudget, Integer) Then
+        If CInt(cboPeriodType.SelectedValue) = CType(enumPeriodType.ForecastBudget, Integer) Then
             Me.chkHideEstimate.Enabled = True
         Else
             Me.chkHideEstimate.Checked = False
@@ -390,7 +390,7 @@ Public Class frmBG0420
             Exit Sub
         End If
 
-       
+
 
         Me.Cursor = Cursors.WaitCursor
 
@@ -475,12 +475,12 @@ Public Class frmBG0420
                 OutputExcel(dsGroups, dtColumns, False, strSubTitle, strYear, False, _
                             intGroupFirstIndex, intGroupSecondIndex, strPeriod)
 
-            Case CType(enumPeriodType.ReviseBudget, Integer)  '//Revise
+            Case CType(enumPeriodType.ForecastBudget, Integer)  '//Forecast
 
                 If Me.chkHideEstimate.Checked = True Then
                     InsertMTPColumnData(dtColumns, strYear)
                 Else
-                    InsertReviseColumnData(dtColumns, strYear)
+                    InsertForecastColumnData(dtColumns, strYear)
                 End If
 
                 '//Create group data
@@ -568,13 +568,13 @@ Public Class frmBG0420
                 arrCols = New Integer() {1, 4, 5, 12, 13, 14}
                 SetupEstimateColumnsCells(xSt, colStartIndex, 2, 3, "Person in Charge Section", arrCols, 6, 8, 9, 11)
 
-            ElseIf strPeriod = "Revise" Then
+            ElseIf strPeriod = "Forecast" Then
 
                 arrCols = New Integer() {1, 4, 11, 12, 13, 20, 21, 22, 23}
                 If bMTPCheck = True Then
                     arrCols = New Integer() {1, 4, 11, 12, 13, 14}
                 End If
-                SetupReviseColumnsCells(xSt, colStartIndex, bMTPCheck, 2, 3, "Person in Charge Section", arrCols, 5, 7, 8, 10, 14, 19, 5, 10, 24, 28)
+                SetupForecastColumnsCells(xSt, colStartIndex, bMTPCheck, 2, 3, "Person in Charge Section", arrCols, 5, 7, 8, 10, 14, 19, 5, 10, 24, 28)
 
             ElseIf strPeriod = "MTP" Then
 
@@ -785,7 +785,7 @@ Public Class frmBG0420
                 xSt.Range(xSt.Cells(colStartIndex, 9), xSt.Cells(rowMax - 1, 11)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 12), xSt.Cells(rowMax - 1, 14)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
-            ElseIf strPeriod = "Revise" Then
+            ElseIf strPeriod = "Forecast" Then
 
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, 4)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 If bMTPCheck = False Then
@@ -851,7 +851,7 @@ Public Class frmBG0420
 
                 intImageIndex = 795
 
-            Case "Revise"
+            Case "Forecast"
                 intUnitPriceStart = 22
                 intUnitPriceEnd = 23
 
@@ -908,7 +908,7 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_SECOND_HALF"
+        dRow("Column_Name") = "Forecast_SECOND_HALF"
         dRow("Column_Title") = "Estimate 2nd Half'" & strHalfLastYear
         dtColumns.Rows.Add(dRow)
 
@@ -1037,7 +1037,7 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_SECOND_HALF"
+        dRow("Column_Name") = "Forecast_SECOND_HALF"
         dRow("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
@@ -1091,7 +1091,7 @@ Public Class frmBG0420
 
     End Function
 
-    Private Function InsertReviseColumnData(ByRef dtColumns As DataTable, ByVal strYear As String) As Boolean
+    Private Function InsertForecastColumnData(ByRef dtColumns As DataTable, ByVal strYear As String) As Boolean
 
         Dim dRow As DataRow
         Dim strHalfYear As String = strYear.Substring(2, 2)
@@ -1192,8 +1192,8 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_SECOND_HALF"
-        dRow("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        dRow("Column_Name") = "Forecast_SECOND_HALF"
+        dRow("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1202,8 +1202,8 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_TOTAL_YEAR"
-        dRow("Column_Title") = "Revise Year'" & strYear
+        dRow("Column_Name") = "Forecast_TOTAL_YEAR"
+        dRow("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1278,8 +1278,8 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_SECOND_HALF"
-        dRow("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        dRow("Column_Name") = "Forecast_SECOND_HALF"
+        dRow("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1288,8 +1288,8 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_TOTAL_YEAR"
-        dRow("Column_Title") = "Revise Year'" & strYear
+        dRow("Column_Name") = "Forecast_TOTAL_YEAR"
+        dRow("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1329,7 +1329,7 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "REVISE_TOTAL_YEAR"
+        dRow("Column_Name") = "Forecast_TOTAL_YEAR"
         dRow("Column_Title") = "Original Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
 

@@ -170,13 +170,13 @@ Public Class clsBG0310BL
         End If
     End Function
 
-    Public Function CheckReviseExist() As Boolean
+    Public Function CheckForecastExist() As Boolean
 
         Dim clsBG_T_BUDGET_PERIOD As New BG_T_BUDGET_PERIOD
 
         '// Set Parameters
         clsBG_T_BUDGET_PERIOD.BudgetYear = Me.BudgetYear
-        clsBG_T_BUDGET_PERIOD.PeriodType = CStr(enumPeriodType.ReviseBudget)
+        clsBG_T_BUDGET_PERIOD.PeriodType = CStr(enumPeriodType.ForecastBudget)
         clsBG_T_BUDGET_PERIOD.ProjectNo = "1"
 
         '// Call Function: Select exist Period

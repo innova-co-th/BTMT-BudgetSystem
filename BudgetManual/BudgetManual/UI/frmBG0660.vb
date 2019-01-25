@@ -146,8 +146,8 @@ Public Class frmBG0660
         '            drNew("VALUE") = "Original Budget"
         '        Case enumPeriodType.EstimateBudget
         '            drNew("VALUE") = "Estimate Budget"
-        '        Case enumPeriodType.ReviseBudget
-        '            drNew("VALUE") = "Revise Budget"
+        '        Case enumPeriodType.ForecastBudget
+        '            drNew("VALUE") = "Forecast Budget"
         '    End Select
         '    dtPeriodType.Rows.Add(drNew)
         'Next
@@ -506,7 +506,7 @@ Public Class frmBG0660
                     Case "2"
                         periodType = "Estimate Budget"
                     Case "3"
-                        periodType = "Revise Budget"
+                        periodType = "Forecast Budget"
                     Case "10"
                         periodType = "MTP Budget"
                 End Select

@@ -46,7 +46,7 @@ Public Class frmBG0390
         'cboPeriodType.Items.Clear()
         'cboPeriodType.Items.Add("Original Budget")
         'cboPeriodType.Items.Add("Estimate Budget")
-        'cboPeriodType.Items.Add("Revise Budget")
+        'cboPeriodType.Items.Add("Forecast Budget")
         'cboPeriodType.SelectedIndex = 0
     End Function
 
@@ -71,8 +71,8 @@ Public Class frmBG0390
                     myClsBG0390BL.PeriodType = CStr(enumPeriodType.OriginalBudget)
                 Case CType(enumPeriodType.EstimateBudget, Integer)
                     myClsBG0390BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
-                Case CType(enumPeriodType.ReviseBudget, Integer)
-                    myClsBG0390BL.PeriodType = CStr(enumPeriodType.ReviseBudget)
+                Case CType(enumPeriodType.ForecastBudget, Integer)
+                    myClsBG0390BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
                 Case CType(enumPeriodType.MTPBudget, Integer)
                     myClsBG0390BL.PeriodType = CStr(enumPeriodType.MTPBudget)
             End Select

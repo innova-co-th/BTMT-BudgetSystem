@@ -40,13 +40,13 @@
     Public Enum enumPeriodType As Integer
         OriginalBudget = 1
         EstimateBudget = 2
-        ReviseBudget = 3
+        ForecastBudget = 3
         EstimateBudget2 = 4
-        ReviseBudget2 = 5
+        ForecastBudget2 = 5
         OriginalBudget3 = 6
         EstimateBudget3 = 7
-        ReviseBudget3 = 8
-        ReviseBudget4 = 9
+        ForecastBudget3 = 8
+        ForecastBudget4 = 9
         MTPBudget = 10
         BudgetCompareVer10 = 11 '1st Half
         BudgetCompareVer20 = 12 '2nd Half

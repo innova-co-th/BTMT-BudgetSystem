@@ -75,7 +75,7 @@ Public Class frmBG0440
     '        Dim dr As DataRow = dt.NewRow()
     '        dt.Rows.Add(New Object() {enumPeriodType.OriginalBudget, "Original Budget"})
     '        dt.Rows.Add(New Object() {enumPeriodType.EstimateBudget, "Estimate Budget"})
-    '        dt.Rows.Add(New Object() {enumPeriodType.ReviseBudget, "Revise Budget"})
+    '        dt.Rows.Add(New Object() {enumPeriodType.ForecastBudget, "Forecast Budget"})
 
     '        Me.cboPeriodType.DataSource = dt
     '        Me.cboPeriodType.DisplayMember = "PeriodTypeName"
@@ -156,7 +156,7 @@ Public Class frmBG0440
                             strReportName = "RPT004-1.rpt"
                         Case enumPeriodType.EstimateBudget
                             strReportName = "RPT004-2.rpt"
-                        Case enumPeriodType.ReviseBudget
+                        Case enumPeriodType.ForecastBudget
                             If Not chkShowMTP.Checked Then
                                 strReportName = "RPT004-3.rpt"
                             Else
@@ -317,9 +317,9 @@ Public Class frmBG0440
         row("Column_Title") = "Actual 1st Half'" & strHalfLastYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(REVISE_BUDGET.H2,0)) AS REVISE_2ND_HALF,
+        'SUM(ISNULL(Forecast_BUDGET.H2,0)) AS Forecast_2ND_HALF,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_2ND_HALF"
+        row("Column_Name") = "Forecast_2ND_HALF"
         row("Column_Title") = "Estimate 2nd Half'" & strHalfLastYear
         dtColumns.Rows.Add(row)
 
@@ -421,7 +421,7 @@ Public Class frmBG0440
 
         'SUM(ISNULL(MASTER_DATA.M7, 0)) AS M7, SUM(ISNULL(MASTER_DATA.M8, 0)) AS M8, SUM(ISNULL(MASTER_DATA.M9, 0)) AS M9, SUM(ISNULL(MASTER_DATA.M10, 0)) AS M10, SUM(ISNULL(MASTER_DATA.M11, 0)) AS M11, SUM(ISNULL(MASTER_DATA.M12, 0)) AS M12,
         '0 AS INVESTMENT_ACTUAL_1ST_HALF,
-        '0 AS INVESTMENT_REVISE_2ND_HALF,
+        '0 AS INVESTMENT_Forecast_2ND_HALF,
         '0 AS INVESTMENT_M1,
         '0 AS INVESTMENT_M2,
         '0 AS INVESTMENT_M3,
@@ -431,8 +431,8 @@ Public Class frmBG0440
         '0 AS INVESTMENT_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @Admin THEN ISNULL(ACTUAL_DATA.H1,0) ELSE 0 END ) AS ADMIN_ACTUAL_1ST_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @FC THEN ISNULL(ACTUAL_DATA.H1,0) ELSE 0 END ) AS FC_ACTUAL_1ST_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin THEN ISNULL(REVISE_BUDGET.H2,0) ELSE 0 END ) AS ADMIN_REVISE_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @FC THEN ISNULL(REVISE_BUDGET.H2,0) ELSE 0 END ) AS FC_REVISE_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin THEN ISNULL(Forecast_BUDGET.H2,0) ELSE 0 END ) AS ADMIN_Forecast_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @FC THEN ISNULL(Forecast_BUDGET.H2,0) ELSE 0 END ) AS FC_Forecast_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @Admin THEN ISNULL(MASTER_DATA.M1,0) ELSE 0 END ) AS ADMIN_M1,
         'SUM(CASE WHEN MAX_REV.COST = @FC THEN ISNULL(MASTER_DATA.M1,0) ELSE 0 END ) AS FC_M1,
         'SUM(CASE WHEN MAX_REV.COST = @Admin THEN ISNULL(MASTER_DATA.M2,0) ELSE 0 END ) AS ADMIN_M2,
@@ -464,7 +464,7 @@ Public Class frmBG0440
         'SUM(CASE WHEN MAX_REV.COST = @Admin THEN ISNULL(MASTER_DATA.M1,0) + ISNULL(MASTER_DATA.M2,0) + ISNULL(MASTER_DATA.M3,0) + ISNULL(MASTER_DATA.M4,0) + ISNULL(MASTER_DATA.M5,0) + ISNULL(MASTER_DATA.M6,0) + ISNULL(MASTER_DATA.M7,0) + ISNULL(MASTER_DATA.M8,0) + ISNULL(MASTER_DATA.M9,0) + ISNULL(MASTER_DATA.M10,0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12,0) ELSE 0 END ) AS ADMIN_TOTAL_YEAR,
         'SUM(CASE WHEN MAX_REV.COST = @FC THEN ISNULL(MASTER_DATA.M1,0) + ISNULL(MASTER_DATA.M2,0) + ISNULL(MASTER_DATA.M3,0) + ISNULL(MASTER_DATA.M4,0) + ISNULL(MASTER_DATA.M5,0) + ISNULL(MASTER_DATA.M6,0) + ISNULL(MASTER_DATA.M7,0) + ISNULL(MASTER_DATA.M8,0) + ISNULL(MASTER_DATA.M9,0) + ISNULL(MASTER_DATA.M10,0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12,0) ELSE 0 END ) AS FC_TOTAL_YEAR,
         '(SELECT ISNULL(WKH1,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_ACTUAL_1ST_HALF,
-        '(SELECT ISNULL(WKH2,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_REVISE_2ND_HALF,
+        '(SELECT ISNULL(WKH2,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_Forecast_2ND_HALF,
         'SUM(ISNULL(MIN_REV.M1,0) -   ISNULL(MASTER_DATA.M1,0)) AS WB_M1,
         'SUM(ISNULL(MIN_REV.M2,0) -   ISNULL(MASTER_DATA.M2,0)) AS WB_M2,
         'SUM(ISNULL(MIN_REV.M3,0) -   ISNULL(MASTER_DATA.M3,0)) AS WB_M3,
@@ -596,8 +596,8 @@ Public Class frmBG0440
                     ElseIf strColumnName = "TOTAL_YEAR" Then
                         dtResult.Rows(m)![TOTAL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![TOTAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![TOTAL_2ND_HALF], 0.0))
                     ElseIf strColumnName = "TOTAL_LAST_YEAR" Then
-                        '{DetailByAccountCode.ACTUAL_1ST_HALF} + {DetailByAccountCode.REVISE_2ND_HALF}
-                        dtResult.Rows(m)![TOTAL_LAST_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ACTUAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![REVISE_2ND_HALF], 0.0))
+                        '{DetailByAccountCode.ACTUAL_1ST_HALF} + {DetailByAccountCode.Forecast_2ND_HALF}
+                        dtResult.Rows(m)![TOTAL_LAST_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ACTUAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![Forecast_2ND_HALF], 0.0))
                     ElseIf strColumnName = "DIFFERENCE" Then
                         '{@TotalYear} - {@TotalLastYear}
                         dtResult.Rows(m)![DIFFERENCE] = Convert.ToDecimal(Nz(dtResult.Rows(m)![TOTAL_YEAR], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![TOTAL_LAST_YEAR], 0.0))
@@ -698,8 +698,8 @@ Public Class frmBG0440
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "INVESTMENT_ACTUAL_1ST_HALF"
                     drInvestments("ACTUAL_1ST_HALF") = returnValue
-                Case "INVESTMENT_REVISE_2ND_HALF"
-                    drInvestments("REVISE_2ND_HALF") = returnValue
+                Case "INVESTMENT_Forecast_2ND_HALF"
+                    drInvestments("Forecast_2ND_HALF") = returnValue
 
                 Case "INVESTMENT_M1"
                     drInvestments("M1") = returnValue
@@ -723,8 +723,8 @@ Public Class frmBG0440
                     '{@INVEST_1ST_HALF} + {@INVEST_2ND_HALF}
                     drInvestments("TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("TOTAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("TOTAL_2ND_HALF"), 0.0))
 
-                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_REVISE_2ND_HALF}
-                    drInvestments("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drInvestments("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_2ND_HALF"), 0.0))
+                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_Forecast_2ND_HALF}
+                    drInvestments("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drInvestments("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_2ND_HALF"), 0.0))
 
                     '{@INVEST_TOTAL_YEAR} - {@INVEST_TOTAL_LAST_YEAR}
                     drInvestments("DIFFERENCE") = Convert.ToDecimal(Nz(drInvestments("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("TOTAL_LAST_YEAR"), 0.0))
@@ -824,8 +824,8 @@ Public Class frmBG0440
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "FC_ACTUAL_1ST_HALF"
                     drManufacturingCost("ACTUAL_1ST_HALF") = returnValue
-                Case "FC_REVISE_2ND_HALF"
-                    drManufacturingCost("REVISE_2ND_HALF") = returnValue
+                Case "FC_Forecast_2ND_HALF"
+                    drManufacturingCost("Forecast_2ND_HALF") = returnValue
                 Case "FC_M1"
                     drManufacturingCost("M1") = returnValue
                 Case "FC_M2"
@@ -851,8 +851,8 @@ Public Class frmBG0440
                     drManufacturingCost("TOTAL_YEAR") = returnValue
 
                     '//Calculate
-                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_REVISE_2ND_HALF}
-                    drManufacturingCost("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drManufacturingCost("FC_ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drManufacturingCost("FC_REVISE_2ND_HALF"), 0.0))
+                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_Forecast_2ND_HALF}
+                    drManufacturingCost("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drManufacturingCost("FC_ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drManufacturingCost("FC_Forecast_2ND_HALF"), 0.0))
 
                     '{@INVEST_TOTAL_YEAR} - {@INVEST_TOTAL_LAST_YEAR}
                     drManufacturingCost("DIFFERENCE") = Convert.ToDecimal(Nz(drManufacturingCost("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drManufacturingCost("TOTAL_LAST_YEAR"), 0.0))
@@ -896,8 +896,8 @@ Public Class frmBG0440
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "ADMIN_ACTUAL_1ST_HALF"
                     drAdministrationCost("ACTUAL_1ST_HALF") = returnValue
-                Case "ADMIN_REVISE_2ND_HALF"
-                    drAdministrationCost("REVISE_2ND_HALF") = returnValue
+                Case "ADMIN_Forecast_2ND_HALF"
+                    drAdministrationCost("Forecast_2ND_HALF") = returnValue
                 Case "ADMIN_M1"
                     drAdministrationCost("M1") = returnValue
                 Case "ADMIN_M2"
@@ -923,8 +923,8 @@ Public Class frmBG0440
                     drAdministrationCost("TOTAL_YEAR") = returnValue
 
                     '//Calculate
-                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_REVISE_2ND_HALF}
-                    drAdministrationCost("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drAdministrationCost("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drAdministrationCost("REVISE_2ND_HALF"), 0.0))
+                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_Forecast_2ND_HALF}
+                    drAdministrationCost("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drAdministrationCost("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drAdministrationCost("Forecast_2ND_HALF"), 0.0))
 
                     '{@INVEST_TOTAL_YEAR} - {@INVEST_TOTAL_LAST_YEAR}
                     drAdministrationCost("DIFFERENCE") = Convert.ToDecimal(Nz(drAdministrationCost("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drAdministrationCost("TOTAL_LAST_YEAR"), 0.0))
@@ -965,15 +965,15 @@ Public Class frmBG0440
                 returnValue = dsData.Tables(0).Compute(strExpression, strFilter)
                 drWorkingBudget(dsData.Tables(0).Columns(k).ColumnName) = returnValue
             End If
-           
+
 
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "WB_ACTUAL_1ST_HALF"
                     'drWorkingBudget("ACTUAL_1ST_HALF") = returnValue
                     drWorkingBudget("ACTUAL_1ST_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(2)![WB_ACTUAL_1ST_HALF], 0.0))
-                Case "WB_REVISE_2ND_HALF"
-                    'drWorkingBudget("REVISE_2ND_HALF") = returnValue
-                    drWorkingBudget("REVISE_2ND_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(2)![WB_REVISE_2ND_HALF], 0.0))
+                Case "WB_Forecast_2ND_HALF"
+                    'drWorkingBudget("Forecast_2ND_HALF") = returnValue
+                    drWorkingBudget("Forecast_2ND_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(2)![WB_Forecast_2ND_HALF], 0.0))
                 Case "WB_M1"
                     drWorkingBudget("M1") = returnValue
                 Case "WB_M2"
@@ -1002,8 +1002,8 @@ Public Class frmBG0440
                     'Case "ADMIN_TOTAL_YEAR"
                     drWorkingBudget("TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("TOTAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("TOTAL_2ND_HALF"), 0.0))
 
-                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_REVISE_2ND_HALF}
-                    drWorkingBudget("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("REVISE_2ND_HALF"), 0.0))
+                    '{@INVEST_ACTUAL_1ST_HALF} + {@INVEST_Forecast_2ND_HALF}
+                    drWorkingBudget("TOTAL_LAST_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("Forecast_2ND_HALF"), 0.0))
 
                     '{@INVEST_TOTAL_YEAR} - {@INVEST_TOTAL_LAST_YEAR}
                     drWorkingBudget("DIFFERENCE") = Convert.ToDecimal(Nz(drWorkingBudget("TOTAL_YEAR"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("TOTAL_LAST_YEAR"), 0.0))
@@ -1082,7 +1082,7 @@ Public Class frmBG0440
             MergeColumnsCells(ws, 3, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 4, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 11, colStartIndex - 1, colStartIndex)
-           
+
             MergeColumnsCells(ws, 18, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 19, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 20, colStartIndex - 1, colStartIndex)
@@ -1096,13 +1096,13 @@ Public Class frmBG0440
             ws.Range(ws.Cells(colStartIndex - 1, 1), ws.Cells(colStartIndex - 1, 2)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 1), ws.Cells(colStartIndex - 1, 2)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            '//Setup Revise & Estimate Title
+            '//Setup Forecast & Estimate Title
             ws.Cells(colStartIndex - 1, 5) = "1st Half'" & Me.numYear.Text.ToString.Substring(2, 2)
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).MergeCells = True
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 5), ws.Cells(colStartIndex - 1, 10)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            '//Setup Revise & Estimate Title
+            '//Setup Forecast & Estimate Title
             ws.Cells(colStartIndex - 1, 12) = "2nd Half'" & Me.numYear.Text.ToString.Substring(2, 2)
             ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).MergeCells = True
             ws.Range(ws.Cells(colStartIndex - 1, 12), ws.Cells(colStartIndex - 1, 17)).Font.Bold = True
@@ -1309,9 +1309,9 @@ Public Class frmBG0440
         row("Column_Title") = "Actual 1st Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(REVISE_BUDGET.H2,0)) AS REVISE_2ND_HALF,
+        'SUM(ISNULL(Forecast_BUDGET.H2,0)) AS Forecast_2ND_HALF,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_2ND_HALF"
+        row("Column_Name") = "Forecast_2ND_HALF"
         row("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
@@ -1357,7 +1357,7 @@ Public Class frmBG0440
         row("Column_Title") = "Estimate 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM((ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) - ISNULL(REVISE_BUDGET.H2,0)) AS DIFFERENCE_2ND_HALF,
+        'SUM((ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) - ISNULL(Forecast_BUDGET.H2,0)) AS DIFFERENCE_2ND_HALF,
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFFERENCE_2ND_HALF"
         row("Column_Title") = "Diff 2nd Half'" & strHalfYear
@@ -1370,7 +1370,7 @@ Public Class frmBG0440
         dtColumns.Rows.Add(row)
 
         '0 AS INVESTMENT_ACTUAL_1ST_HALF,
-        '0 AS INVESTMENT_REVISE_2ND_HALF,
+        '0 AS INVESTMENT_Forecast_2ND_HALF,
         '0 AS INVESTMENT_ACTUAL_JUL,
         '0 AS INVESTMENT_ACTUAL_AUG,
         '0 AS INVESTMENT_ACTUAL_SEP,
@@ -1391,16 +1391,16 @@ Public Class frmBG0440
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS FC_M12,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(ACTUAL_DATA.H1,0) ELSE 0 END) AS ACTUAL_ADMIN_1ST_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(ACTUAL_DATA.H1,0) ELSE 0 END) AS ACTUAL_FC_1ST_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(REVISE_BUDGET.H2,0) ELSE 0 END) AS REVISE_ADMIN_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(REVISE_BUDGET.H2,0) ELSE 0 END) AS REVISE_FC_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(Forecast_BUDGET.H2,0) ELSE 0 END) AS Forecast_ADMIN_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(Forecast_BUDGET.H2,0) ELSE 0 END) AS Forecast_FC_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) ELSE 0 END) AS ESTIMATE_ADMIN_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) ELSE 0 END) AS ESTIMATE_FC_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(REVISE_BUDGET.H2,0)) ELSE 0 END) AS DIFFERENCE_ADMIN_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(REVISE_BUDGET.H2,0)) ELSE 0 END) AS DIFFERENCE_FC_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(Forecast_BUDGET.H2,0)) ELSE 0 END) AS DIFFERENCE_ADMIN_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(Forecast_BUDGET.H2,0)) ELSE 0 END) AS DIFFERENCE_FC_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(ACTUAL_DATA.H1,0) + (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) ELSE 0 END) AS ESTIMATE_ADMIN_TOTAL_YEAR,
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(ACTUAL_DATA.H1,0) + (ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) ELSE 0 END) AS ESTIMATE_FC_TOTAL_YEAR,
         '(SELECT ISNULL(WKH1,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_ACTUAL_1ST_HALF,
-        '(SELECT ISNULL(WKH2,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_REVISE_2ND_HALF,
+        '(SELECT ISNULL(WKH2,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_Forecast_2ND_HALF,
         '0 AS WB_ACTUAL_M7,
         '0 AS WB_ACTUAL_M8,
         '0 AS WB_ACTUAL_M9,
@@ -1493,8 +1493,8 @@ Public Class frmBG0440
             '        ElseIf strColumnName = "TOTAL_YEAR" Then
             '            dtResult.Rows(m)![TOTAL_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![TOTAL_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![TOTAL_2ND_HALF])
             '        ElseIf strColumnName = "TOTAL_LAST_YEAR" Then
-            '            '{DetailByAccountCode.ACTUAL_1ST_HALF} + {DetailByAccountCode.REVISE_2ND_HALF}
-            '            dtResult.Rows(m)![TOTAL_LAST_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![ACTUAL_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![REVISE_2ND_HALF])
+            '            '{DetailByAccountCode.ACTUAL_1ST_HALF} + {DetailByAccountCode.Forecast_2ND_HALF}
+            '            dtResult.Rows(m)![TOTAL_LAST_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![ACTUAL_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![Forecast_2ND_HALF])
             '        ElseIf strColumnName = "DIFFERENCE" Then
             '            '{@TotalYear} - {@TotalLastYear}
             '            dtResult.Rows(m)![DIFFERENCE] = Convert.ToDecimal(dtResult.Rows(m)![TOTAL_YEAR]) - Convert.ToDecimal(dtResult.Rows(m)![TOTAL_LAST_YEAR])
@@ -1592,8 +1592,8 @@ Public Class frmBG0440
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "INVESTMENT_ACTUAL_1ST_HALF"
                     drInvestments("ACTUAL_1ST_HALF") = returnValue
-                Case "INVESTMENT_REVISE_2ND_HALF"
-                    drInvestments("REVISE_2ND_HALF") = returnValue
+                Case "INVESTMENT_Forecast_2ND_HALF"
+                    drInvestments("Forecast_2ND_HALF") = returnValue
 
                 Case "INVESTMENT_ACTUAL_JUL"
                     drInvestments("M7") = returnValue
@@ -1612,8 +1612,8 @@ Public Class frmBG0440
                     'SUM(ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) AS ESTIMATE_2ND_HALF,
                     drInvestments("ESTIMATE_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_JUL"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_AUG"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_SEP"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_OCT"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_NOV"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_DEC"), 0.0))
 
-                    'SUM((ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) - ISNULL(REVISE_BUDGET.H2,0)) AS DIFFERENCE_2ND_HALF,
-                    drInvestments("DIFFERENCE_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("ESTIMATE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("REVISE_2ND_HALF"), 0.0))
+                    'SUM((ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) - ISNULL(Forecast_BUDGET.H2,0)) AS DIFFERENCE_2ND_HALF,
+                    drInvestments("DIFFERENCE_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("ESTIMATE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("Forecast_2ND_HALF"), 0.0))
 
                     'SUM(ISNULL(ACTUAL_DATA.H1,0) + ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) AS ESTIMATE_TOTAL_YEAR,
                     drInvestments("ESTIMATE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_JUL"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_AUG"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_SEP"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_OCT"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_NOV"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_DEC"), 0.0))
@@ -1645,8 +1645,8 @@ Public Class frmBG0440
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "ACTUAL_FC_1ST_HALF"
                     drManufacturingCost("ACTUAL_1ST_HALF") = returnValue
-                Case "REVISE_FC_2ND_HALF"
-                    drManufacturingCost("REVISE_2ND_HALF") = returnValue
+                Case "Forecast_FC_2ND_HALF"
+                    drManufacturingCost("Forecast_2ND_HALF") = returnValue
                 Case "FC_M7"
                     drManufacturingCost("M7") = returnValue
                 Case "FC_M8"
@@ -1695,8 +1695,8 @@ Public Class frmBG0440
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "ACTUAL_ADMIN_1ST_HALF"
                     drAdministrationCost("ACTUAL_1ST_HALF") = returnValue
-                Case "REVISE_ADMIN_2ND_HALF"
-                    drAdministrationCost("REVISE_2ND_HALF") = returnValue
+                Case "Forecast_ADMIN_2ND_HALF"
+                    drAdministrationCost("Forecast_2ND_HALF") = returnValue
                 Case "ADMIN_M7"
                     drAdministrationCost("M7") = returnValue
                 Case "ADMIN_M8"
@@ -1744,9 +1744,9 @@ Public Class frmBG0440
                 Case "WB_ACTUAL_1ST_HALF"
                     'drWorkingBudget("ACTUAL_1ST_HALF") = returnValue
                     drWorkingBudget("ACTUAL_1ST_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(0)![WB_ACTUAL_1ST_HALF], 0.0))
-                Case "WB_REVISE_2ND_HALF"
-                    'drWorkingBudget("REVISE_2ND_HALF") = returnValue
-                    drWorkingBudget("REVISE_2ND_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(0)![WB_REVISE_2ND_HALF], 0.0))
+                Case "WB_Forecast_2ND_HALF"
+                    'drWorkingBudget("Forecast_2ND_HALF") = returnValue
+                    drWorkingBudget("Forecast_2ND_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(0)![WB_Forecast_2ND_HALF], 0.0))
                 Case "WB_ACTUAL_M7"
                     drWorkingBudget("M7") = returnValue
                 Case "WB_ACTUAL_M8"
@@ -1762,7 +1762,7 @@ Public Class frmBG0440
                 Case "WB_ESTIMATE_2ND_HALF"
                     drWorkingBudget("ESTIMATE_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("WB_ACTUAL_M7"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_ACTUAL_M8"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_ACTUAL_M9"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_ESTIMATE_M10"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_ESTIMATE_M11"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_ESTIMATE_M12"), 0.0))
                 Case "WB_DIFFERENCE_2ND_HALF"
-                    drWorkingBudget("DIFFERENCE_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("REVISE_2ND_HALF"), 0.0))
+                    drWorkingBudget("DIFFERENCE_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("Forecast_2ND_HALF"), 0.0))
                 Case "WB_ESTIMATE_TOTAL_YEAR"
                     drWorkingBudget("ESTIMATE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_2ND_HALF"), 0.0))
             End Select
@@ -2022,7 +2022,7 @@ Public Class frmBG0440
         Return blnRet
     End Function
 
-    Private Function InsertReviseColumnData(ByRef dtColumns As DataTable, _
+    Private Function InsertForecastColumnData(ByRef dtColumns As DataTable, _
                                             ByVal strYear As String) As Boolean
 
         Dim strHalfYear As String = strYear.Substring(2, 2)
@@ -2100,46 +2100,46 @@ Public Class frmBG0440
         row("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M7, 0)) AS REVISE_M7, 
+        'SUM(ISNULL(MASTER_DATA.M7, 0)) AS Forecast_M7, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M7"
+        row("Column_Name") = "Forecast_M7"
         row("Column_Title") = "Jul'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M8, 0)) AS REVISE_M8, 
+        'SUM(ISNULL(MASTER_DATA.M8, 0)) AS Forecast_M8, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M8"
+        row("Column_Name") = "Forecast_M8"
         row("Column_Title") = "Aug'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M9, 0)) AS REVISE_M9,
+        'SUM(ISNULL(MASTER_DATA.M9, 0)) AS Forecast_M9,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M9"
+        row("Column_Name") = "Forecast_M9"
         row("Column_Title") = "Sep'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M10, 0)) AS REVISE_M10, 
+        'SUM(ISNULL(MASTER_DATA.M10, 0)) AS Forecast_M10, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M10"
+        row("Column_Name") = "Forecast_M10"
         row("Column_Title") = "Oct'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M11, 0)) AS REVISE_M11, 
+        'SUM(ISNULL(MASTER_DATA.M11, 0)) AS Forecast_M11, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M11"
+        row("Column_Name") = "Forecast_M11"
         row("Column_Title") = "Nov'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M12, 0)) AS REVISE_M12,
+        'SUM(ISNULL(MASTER_DATA.M12, 0)) AS Forecast_M12,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M12"
+        row("Column_Name") = "Forecast_M12"
         row("Column_Title") = "Dec'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS REVISE_2ND_HALF,
+        'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS Forecast_2ND_HALF,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_2ND_HALF"
-        row("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        row("Column_Name") = "Forecast_2ND_HALF"
+        row("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0)) AS DIFF_2ND_HALF,
@@ -2148,10 +2148,10 @@ Public Class frmBG0440
         row("Column_Title") = "Diff 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS REVISE_TOTAL_YEAR,
+        'SUM(ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS Forecast_TOTAL_YEAR,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_TOTAL_YEAR"
-        row("Column_Title") = "Revise Year'" & strYear
+        row("Column_Name") = "Forecast_TOTAL_YEAR"
+        row("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(row)
 
         'SUM((ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0)) - ISNULL(ORIGINAL_BUDGET.H1,0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0) ) AS DIFF_TOTAL_YEAR,
@@ -2173,12 +2173,12 @@ Public Class frmBG0440
         '0 AS INVESTMENT_ESTIMATE_MAY,
         '0 AS INVESTMENT_ESTIMATE_JUN,
         '0 AS INVESTMENT_ORIGINAL_2ND_HALF,
-        '0 AS INVESTMENT_REVISE_JUL,
-        '0 AS INVESTMENT_REVISE_AUG,
-        '0 AS INVESTMENT_REVISE_SEP,
-        '0 AS INVESTMENT_REVISE_OCT,
-        '0 AS INVESTMENT_REVISE_NOV,
-        '0 AS INVESTMENT_REVISE_DEC,
+        '0 AS INVESTMENT_Forecast_JUL,
+        '0 AS INVESTMENT_Forecast_AUG,
+        '0 AS INVESTMENT_Forecast_SEP,
+        '0 AS INVESTMENT_Forecast_OCT,
+        '0 AS INVESTMENT_Forecast_NOV,
+        '0 AS INVESTMENT_Forecast_DEC,
         '0 AS INVESTMENT_RRT1,
         '0 AS INVESTMENT_RRT2,
         '0 AS INVESTMENT_RRT3,
@@ -2204,24 +2204,24 @@ Public Class frmBG0440
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN (ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) - ISNULL(ORIGINAL_BUDGET.H1,0)) ELSE 0 END) AS FC_DIFF_1ST_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(ORIGINAL_BUDGET.H2,0) ELSE 0 END) AS ADMIN_ORIGINAL_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(ORIGINAL_BUDGET.H2,0) ELSE 0 END) AS FC_ORIGINAL_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M7, 0) ELSE 0 END) AS ADMIN_REVISE_M7,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M7, 0) ELSE 0 END) AS FC_REVISE_M7,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M8, 0) ELSE 0 END) AS ADMIN_REVISE_M8,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M8, 0) ELSE 0 END) AS FC_REVISE_M8,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M9, 0) ELSE 0 END) AS ADMIN_REVISE_M9,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M9, 0) ELSE 0 END) AS FC_REVISE_M9,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M10, 0) ELSE 0 END) AS ADMIN_REVISE_M10,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M10, 0) ELSE 0 END) AS FC_REVISE_M10,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M11, 0) ELSE 0 END) AS ADMIN_REVISE_M11,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M11, 0) ELSE 0 END) AS FC_REVISE_M11,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS ADMIN_REVISE_M12,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS FC_REVISE_M12,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS ADMIN_REVISE_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS FC_REVISE_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M7, 0) ELSE 0 END) AS ADMIN_Forecast_M7,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M7, 0) ELSE 0 END) AS FC_Forecast_M7,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M8, 0) ELSE 0 END) AS ADMIN_Forecast_M8,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M8, 0) ELSE 0 END) AS FC_Forecast_M8,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M9, 0) ELSE 0 END) AS ADMIN_Forecast_M9,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M9, 0) ELSE 0 END) AS FC_Forecast_M9,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M10, 0) ELSE 0 END) AS ADMIN_Forecast_M10,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M10, 0) ELSE 0 END) AS FC_Forecast_M10,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M11, 0) ELSE 0 END) AS ADMIN_Forecast_M11,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M11, 0) ELSE 0 END) AS FC_Forecast_M11,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS ADMIN_Forecast_M12,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS FC_Forecast_M12,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS ADMIN_Forecast_2ND_HALF,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ELSE 0 END) AS FC_Forecast_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN (ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0)) ELSE 0 END) AS ADMIN_DIFF_2ND_HALF,
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN (ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0)) ELSE 0 END) AS FC_DIFF_2ND_HALF,
-        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ( ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) +  ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ) ELSE 0 END) AS ADMIN_REVISE_TOTAL_YEAR,
-        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ( ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) +  ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ) ELSE 0 END) AS FC_REVISE_TOTAL_YEAR,
+        'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ( ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) +  ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ) ELSE 0 END) AS ADMIN_Forecast_TOTAL_YEAR,
+        'SUM(CASE WHEN MAX_REV.COST = @FC  THEN ( ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) +  ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) ) ELSE 0 END) AS FC_Forecast_TOTAL_YEAR,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN (ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) - ISNULL(ORIGINAL_BUDGET.H1,0)) + (ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0)) ELSE 0 END) AS ADMIN_DIFF_TOTAL_YEAR,
         'SUM(CASE WHEN MAX_REV.COST = @FC  THEN (ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) - ISNULL(ORIGINAL_BUDGET.H1,0)) + (ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0)) ELSE 0 END) AS FC_DIFF_TOTAL_YEAR,
         'SUM(CASE WHEN MAX_REV.COST = @Admin  THEN ISNULL(MASTER_DATA.RRT1, 0) ELSE 0 END) AS ADMIN_RRT1,
@@ -2244,15 +2244,15 @@ Public Class frmBG0440
         '0 AS WB_ESTIMATE_1ST_HALF,
         '0 AS WB_DIFF_1ST_HALF,
         '(SELECT ISNULL(WKH2,0) FROM BG_T_BUDGET_ADJUST WHERE BUDGET_YEAR=@BudgetYear AND PERIOD_TYPE=@PeriodType AND REV_NO= (SELECT MAX(REV_NO) AS REV_NO FROM BG_T_BUDGET_DATA WHERE BUDGET_YEAR = @BudgetYear AND PERIOD_TYPE = @PeriodType)) AS WB_ORIGINAL_2ND_HALF,
-        'SUM(ISNULL(MIN_REV.M7,0) - ISNULL(MASTER_DATA.M7, 0)) AS WB_REVISE_M7,
-        'SUM(ISNULL(MIN_REV.M8,0) - ISNULL(MASTER_DATA.M8, 0)) AS WB_REVISE_M8,
-        'SUM(ISNULL(MIN_REV.M9,0) - ISNULL(MASTER_DATA.M9, 0)) AS WB_REVISE_M9,
-        'SUM(ISNULL(MIN_REV.M10,0) - ISNULL(MASTER_DATA.M10, 0)) AS WB_REVISE_M10,
-        'SUM(ISNULL(MIN_REV.M11,0) - ISNULL(MASTER_DATA.M11, 0)) AS WB_REVISE_M11,
-        'SUM(ISNULL(MIN_REV.M12,0) - ISNULL(MASTER_DATA.M12, 0)) AS WB_REVISE_M12,
-        '0 AS WB_REVISE_2ND_HALF,
+        'SUM(ISNULL(MIN_REV.M7,0) - ISNULL(MASTER_DATA.M7, 0)) AS WB_Forecast_M7,
+        'SUM(ISNULL(MIN_REV.M8,0) - ISNULL(MASTER_DATA.M8, 0)) AS WB_Forecast_M8,
+        'SUM(ISNULL(MIN_REV.M9,0) - ISNULL(MASTER_DATA.M9, 0)) AS WB_Forecast_M9,
+        'SUM(ISNULL(MIN_REV.M10,0) - ISNULL(MASTER_DATA.M10, 0)) AS WB_Forecast_M10,
+        'SUM(ISNULL(MIN_REV.M11,0) - ISNULL(MASTER_DATA.M11, 0)) AS WB_Forecast_M11,
+        'SUM(ISNULL(MIN_REV.M12,0) - ISNULL(MASTER_DATA.M12, 0)) AS WB_Forecast_M12,
+        '0 AS WB_Forecast_2ND_HALF,
         '0 AS WB_DIFF_2ND_HALF,
-        '0 AS WB_REVISE_TOTAL_YEAR,
+        '0 AS WB_Forecast_TOTAL_YEAR,
         '0 AS WB_DIFF_TOTAL_YEAR,
         '0 AS WB_RRT1,
         '0 AS WB_RRT2,
@@ -2264,7 +2264,7 @@ Public Class frmBG0440
 
     End Function
 
-    Private Function InsertReviseMTPColumnData(ByRef dtColumns As DataTable, _
+    Private Function InsertForecastMTPColumnData(ByRef dtColumns As DataTable, _
                                                ByVal strYear As String) As Boolean
 
         Dim strHalfYear As String = strYear.Substring(2, 2)
@@ -2342,46 +2342,46 @@ Public Class frmBG0440
         row("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M7, 0)) AS REVISE_M7, 
+        'SUM(ISNULL(MASTER_DATA.M7, 0)) AS Forecast_M7, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M7"
+        row("Column_Name") = "Forecast_M7"
         row("Column_Title") = "Jul'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M8, 0)) AS REVISE_M8, 
+        'SUM(ISNULL(MASTER_DATA.M8, 0)) AS Forecast_M8, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M8"
+        row("Column_Name") = "Forecast_M8"
         row("Column_Title") = "Aug'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M9, 0)) AS REVISE_M9,
+        'SUM(ISNULL(MASTER_DATA.M9, 0)) AS Forecast_M9,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M9"
+        row("Column_Name") = "Forecast_M9"
         row("Column_Title") = "Sep'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M10, 0)) AS REVISE_M10, 
+        'SUM(ISNULL(MASTER_DATA.M10, 0)) AS Forecast_M10, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M10"
+        row("Column_Name") = "Forecast_M10"
         row("Column_Title") = "Oct'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M11, 0)) AS REVISE_M11, 
+        'SUM(ISNULL(MASTER_DATA.M11, 0)) AS Forecast_M11, 
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M11"
+        row("Column_Name") = "Forecast_M11"
         row("Column_Title") = "Nov'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M12, 0)) AS REVISE_M12,
+        'SUM(ISNULL(MASTER_DATA.M12, 0)) AS Forecast_M12,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_M12"
+        row("Column_Name") = "Forecast_M12"
         row("Column_Title") = "Dec'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS REVISE_2ND_HALF,
+        'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS Forecast_2ND_HALF,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_2ND_HALF"
-        row("Column_Title") = "Revise 2nd Half'" & strHalfYear
+        row("Column_Name") = "Forecast_2ND_HALF"
+        row("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         'SUM(ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0)) AS DIFF_2ND_HALF,
@@ -2390,10 +2390,10 @@ Public Class frmBG0440
         row("Column_Title") = "Diff 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
-        'SUM(ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS REVISE_TOTAL_YEAR,
+        'SUM(ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0)) AS Forecast_TOTAL_YEAR,
         row = dtColumns.NewRow()
-        row("Column_Name") = "REVISE_TOTAL_YEAR"
-        row("Column_Title") = "Revise Year'" & strYear
+        row("Column_Name") = "Forecast_TOTAL_YEAR"
+        row("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(row)
 
         'SUM((ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0)) - ISNULL(ORIGINAL_BUDGET.H1,0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0) ) AS DIFF_TOTAL_YEAR,
@@ -2522,7 +2522,7 @@ Public Class frmBG0440
 
     End Function
 
-    Private Function SetupReviseGroupbyData(ByVal dsData As DataSet, _
+    Private Function SetupForecastGroupbyData(ByVal dsData As DataSet, _
                                             ByVal strGroupColumnName As String, _
                                             ByVal strGroupColumnTitle As String, _
                                             ByVal intDataColumnIndex As Integer, _
@@ -2563,16 +2563,16 @@ Public Class frmBG0440
         Dim drOutflowTotal As DataRow = dtResult.NewRow
 
         '//Calculate Investments
-        CalculateReviseInvestments(dsData, intDataColumnIndex, blnMTPBudget, drInvestments)
+        CalculateForecastInvestments(dsData, intDataColumnIndex, blnMTPBudget, drInvestments)
 
         '//Calculate Manufacturing cost
-        CalculateReviseManufacturingCost(dsData, intDataColumnIndex, blnMTPBudget, drManufacturingCost)
+        CalculateForecastManufacturingCost(dsData, intDataColumnIndex, blnMTPBudget, drManufacturingCost)
 
         '//Calculate Administration cost
-        CalculateReviseAdministrationCost(dsData, intDataColumnIndex, blnMTPBudget, drAdministrationCost)
+        CalculateForecastAdministrationCost(dsData, intDataColumnIndex, blnMTPBudget, drAdministrationCost)
 
         '//Calculate Working Budget
-        CalculateReviseWorkingBudget(dsData, intDataColumnIndex, blnMTPBudget, drWorkingBudget)
+        CalculateForecastWorkingBudget(dsData, intDataColumnIndex, blnMTPBudget, drWorkingBudget)
 
         Dim intGroupTotalIndex As Integer = 0
         For i As Integer = 0 To intGroupCount - 1
@@ -2608,7 +2608,7 @@ Public Class frmBG0440
             dtResult.Rows.Add(drEmpty)
 
             'dtResult.TableName = arrRows(0)(strGroupColumnName).ToString & " " & arrRows(0)(strGroupColumnTitle).ToString
-            dtResult.TableName = "Revise Budget"
+            dtResult.TableName = "Forecast Budget"
 
             'intGroupTotalIndex = intGroupTotalIndex + dtResult.Rows.Count
             intGroupTotalIndex = intGroupTotalIndex + CInt(arrRows.Length) + 2
@@ -2791,7 +2791,7 @@ Public Class frmBG0440
 
     End Function
 
-    Private Function GeneratReviseExcel(ByVal dsData As DataSet, ByVal dtColumns As DataTable, ByVal blnMTPBudget As Boolean) As Boolean
+    Private Function GeneratForecastExcel(ByVal dsData As DataSet, ByVal dtColumns As DataTable, ByVal blnMTPBudget As Boolean) As Boolean
         Dim blnRet As Boolean = False
         Dim rowStartIndex As Integer = 8
         Dim colStartIndex As Integer = 7
@@ -2857,7 +2857,7 @@ Public Class frmBG0440
             ws.Range(ws.Cells(colStartIndex - 1, 1), ws.Cells(colStartIndex - 1, 2)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 1), ws.Cells(colStartIndex - 1, 2)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            '//Setup Revise & Estimate Title
+            '//Setup Forecast & Estimate Title
             If blnMTPBudget = False Then
 
                 ws.Cells(colStartIndex - 1, 4) = "Actual"
@@ -2870,13 +2870,13 @@ Public Class frmBG0440
                 ws.Range(ws.Cells(colStartIndex - 1, 7), ws.Cells(colStartIndex - 1, 9)).Font.Bold = True
                 ws.Range(ws.Cells(colStartIndex - 1, 7), ws.Cells(colStartIndex - 1, 9)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-                ws.Cells(colStartIndex - 1, 13) = "Revise"
+                ws.Cells(colStartIndex - 1, 13) = "Forecast"
                 ws.Range(ws.Cells(colStartIndex - 1, 13), ws.Cells(colStartIndex - 1, 18)).MergeCells = True
                 ws.Range(ws.Cells(colStartIndex - 1, 13), ws.Cells(colStartIndex - 1, 18)).Font.Bold = True
                 ws.Range(ws.Cells(colStartIndex - 1, 13), ws.Cells(colStartIndex - 1, 18)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
             Else
-                ws.Cells(colStartIndex - 1, 4) = "Revise"
+                ws.Cells(colStartIndex - 1, 4) = "Forecast"
                 ws.Range(ws.Cells(colStartIndex - 1, 4), ws.Cells(colStartIndex - 1, 9)).MergeCells = True
                 ws.Range(ws.Cells(colStartIndex - 1, 4), ws.Cells(colStartIndex - 1, 9)).Font.Bold = True
                 ws.Range(ws.Cells(colStartIndex - 1, 4), ws.Cells(colStartIndex - 1, 9)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
@@ -3466,7 +3466,7 @@ Public Class frmBG0440
         Return True
     End Function
 
-    Private Function CalculateReviseInvestments(ByVal dsData As DataSet, _
+    Private Function CalculateForecastInvestments(ByVal dsData As DataSet, _
                                           ByVal intDataColumnIndex As Integer, _
                                           ByVal blnMTPBudget As Boolean, _
                                           ByRef drInvestments As DataRow) As Boolean
@@ -3513,19 +3513,19 @@ Public Class frmBG0440
                     drInvestments("ESTIMATE_M6") = returnValue
                 Case "INVESTMENT_ORIGINAL_2ND_HALF"
                     drInvestments("ORIGINAL_2ND_HALF") = returnValue
-                Case "INVESTMENT_REVISE_JUL"
-                    drInvestments("REVISE_M7") = returnValue
-                Case "INVESTMENT_REVISE_AUG"
-                    drInvestments("REVISE_M8") = returnValue
-                Case "INVESTMENT_REVISE_SEP"
-                    drInvestments("REVISE_M9") = returnValue
-                Case "INVESTMENT_REVISE_OCT"
-                    drInvestments("REVISE_M10") = returnValue
-                Case "INVESTMENT_REVISE_NOV"
-                    drInvestments("REVISE_M11") = returnValue
-                Case "INVESTMENT_REVISE_DEC"
+                Case "INVESTMENT_Forecast_JUL"
+                    drInvestments("Forecast_M7") = returnValue
+                Case "INVESTMENT_Forecast_AUG"
+                    drInvestments("Forecast_M8") = returnValue
+                Case "INVESTMENT_Forecast_SEP"
+                    drInvestments("Forecast_M9") = returnValue
+                Case "INVESTMENT_Forecast_OCT"
+                    drInvestments("Forecast_M10") = returnValue
+                Case "INVESTMENT_Forecast_NOV"
+                    drInvestments("Forecast_M11") = returnValue
+                Case "INVESTMENT_Forecast_DEC"
 
-                    drInvestments("REVISE_M12") = returnValue
+                    drInvestments("Forecast_M12") = returnValue
 
                     '{@INVEST_ACTUAL_JAN} + {@INVEST_ACTUAL_FEB} + {@INVEST_ACTUAL_MAR} + {@INVEST_ESTIMATE_APR} + {@INVEST_ESTIMATE_MAY} + {@INVEST_ESTIMATE_JUN}
                     drInvestments("ESTIMATE_1ST_HALF") = Convert.ToDecimal(Nz(drInvestments("ACTUAL_M1"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("ACTUAL_M2"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("ACTUAL_M3"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("ESTIMATE_M4"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("ESTIMATE_M5"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("ESTIMATE_M6"), 0.0))
@@ -3533,18 +3533,18 @@ Public Class frmBG0440
                     '{@INVEST_ESTIMATE_1ST_HALF} - {@INVEST_ORIGINAL_1ST_HALF}
                     drInvestments("DIFF_1ST_HALF") = Convert.ToDecimal(Nz(drInvestments("ESTIMATE_1ST_HALF"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("ORIGINAL_1ST_HALF"), 0.0))
 
-                    'Sum ({ReviseSummaryByAccountCode.INVESTMENT_REVISE_JUL})+Sum ({ReviseSummaryByAccountCode.INVESTMENT_REVISE_AUG})+Sum ({ReviseSummaryByAccountCode.INVESTMENT_REVISE_SEP})+Sum ({ReviseSummaryByAccountCode.INVESTMENT_REVISE_OCT})+Sum ({ReviseSummaryByAccountCode.INVESTMENT_REVISE_NOV})+Sum ({ReviseSummaryByAccountCode.INVESTMENT_REVISE_DEC})
-                    drInvestments("REVISE_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("REVISE_M7"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_M8"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_M9"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_M10"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_M11"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_M12"), 0.0))
+                    'Sum ({ForecastSummaryByAccountCode.INVESTMENT_Forecast_JUL})+Sum ({ForecastSummaryByAccountCode.INVESTMENT_Forecast_AUG})+Sum ({ForecastSummaryByAccountCode.INVESTMENT_Forecast_SEP})+Sum ({ForecastSummaryByAccountCode.INVESTMENT_Forecast_OCT})+Sum ({ForecastSummaryByAccountCode.INVESTMENT_Forecast_NOV})+Sum ({ForecastSummaryByAccountCode.INVESTMENT_Forecast_DEC})
+                    drInvestments("Forecast_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("Forecast_M7"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_M8"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_M9"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_M10"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_M11"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_M12"), 0.0))
 
-                    '{@INVEST_REVISE_2ND_HALF} - {@INVEST_ORIGINAL_2ND_HALF}
-                    drInvestments("DIFF_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("REVISE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("ORIGINAL_2ND_HALF"), 0.0))
+                    '{@INVEST_Forecast_2ND_HALF} - {@INVEST_ORIGINAL_2ND_HALF}
+                    drInvestments("DIFF_2ND_HALF") = Convert.ToDecimal(Nz(drInvestments("Forecast_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drInvestments("ORIGINAL_2ND_HALF"), 0.0))
 
-                    '{@INVEST_ESTIMATE_1ST_HALF} + {@INVEST_REVISE_2ND_HALF}
-                    'drInvestments("REVISE_TOTAL_YEAR") = Convert.ToDecimal(drInvestments("ACTUAL_M1")) + Convert.ToDecimal(drInvestments("ACTUAL_M2")) + Convert.ToDecimal(drInvestments("ACTUAL_M3")) + Convert.ToDecimal(drInvestments("ESTIMATE_M4")) + Convert.ToDecimal(drInvestments("ESTIMATE_M5")) + Convert.ToDecimal(drInvestments("ESTIMATE_M6")) + Convert.ToDecimal(drInvestments("REVISE_M7")) + Convert.ToDecimal(drInvestments("REVISE_M8")) + Convert.ToDecimal(drInvestments("REVISE_M9")) + Convert.ToDecimal(drInvestments("REVISE_M10")) + Convert.ToDecimal(drInvestments("REVISE_M11")) + Convert.ToDecimal(drInvestments("REVISE_M12"))
-                    drInvestments("REVISE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("ESTIMATE_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("REVISE_2ND_HALF"), 0.0))
+                    '{@INVEST_ESTIMATE_1ST_HALF} + {@INVEST_Forecast_2ND_HALF}
+                    'drInvestments("Forecast_TOTAL_YEAR") = Convert.ToDecimal(drInvestments("ACTUAL_M1")) + Convert.ToDecimal(drInvestments("ACTUAL_M2")) + Convert.ToDecimal(drInvestments("ACTUAL_M3")) + Convert.ToDecimal(drInvestments("ESTIMATE_M4")) + Convert.ToDecimal(drInvestments("ESTIMATE_M5")) + Convert.ToDecimal(drInvestments("ESTIMATE_M6")) + Convert.ToDecimal(drInvestments("Forecast_M7")) + Convert.ToDecimal(drInvestments("Forecast_M8")) + Convert.ToDecimal(drInvestments("Forecast_M9")) + Convert.ToDecimal(drInvestments("Forecast_M10")) + Convert.ToDecimal(drInvestments("Forecast_M11")) + Convert.ToDecimal(drInvestments("Forecast_M12"))
+                    drInvestments("Forecast_TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("ESTIMATE_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("Forecast_2ND_HALF"), 0.0))
 
                     '{@INVEST_DIFF_1ST_HALF} + {@INVEST_DIFF_2ND_HALF}
-                    'drInvestments("DIFF_TOTAL_YEAR") = Convert.ToDecimal(drInvestments("ACTUAL_M1")) + Convert.ToDecimal(drInvestments("ACTUAL_M2")) + Convert.ToDecimal(drInvestments("ACTUAL_M3")) + Convert.ToDecimal(drInvestments("ESTIMATE_M4")) + Convert.ToDecimal(drInvestments("ESTIMATE_M5")) + Convert.ToDecimal(drInvestments("ESTIMATE_M6")) + Convert.ToDecimal(drInvestments("REVISE_M7")) + Convert.ToDecimal(drInvestments("REVISE_M8")) + Convert.ToDecimal(drInvestments("REVISE_M9")) + Convert.ToDecimal(drInvestments("REVISE_M10")) + Convert.ToDecimal(drInvestments("REVISE_M11")) + Convert.ToDecimal(drInvestments("REVISE_M12")) - Convert.ToDecimal(drInvestments("ORIGINAL_2ND_HALF"))
+                    'drInvestments("DIFF_TOTAL_YEAR") = Convert.ToDecimal(drInvestments("ACTUAL_M1")) + Convert.ToDecimal(drInvestments("ACTUAL_M2")) + Convert.ToDecimal(drInvestments("ACTUAL_M3")) + Convert.ToDecimal(drInvestments("ESTIMATE_M4")) + Convert.ToDecimal(drInvestments("ESTIMATE_M5")) + Convert.ToDecimal(drInvestments("ESTIMATE_M6")) + Convert.ToDecimal(drInvestments("Forecast_M7")) + Convert.ToDecimal(drInvestments("Forecast_M8")) + Convert.ToDecimal(drInvestments("Forecast_M9")) + Convert.ToDecimal(drInvestments("Forecast_M10")) + Convert.ToDecimal(drInvestments("Forecast_M11")) + Convert.ToDecimal(drInvestments("Forecast_M12")) - Convert.ToDecimal(drInvestments("ORIGINAL_2ND_HALF"))
                     drInvestments("DIFF_TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("DIFF_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("DIFF_2ND_HALF"), 0.0))
 
             End Select
@@ -3574,7 +3574,7 @@ Public Class frmBG0440
         Return True
     End Function
 
-    Private Function CalculateReviseManufacturingCost(ByVal dsData As DataSet, _
+    Private Function CalculateForecastManufacturingCost(ByVal dsData As DataSet, _
                                                 ByVal intDataColumnIndex As Integer, _
                                                 ByVal blnMTPBudget As Boolean, _
                                                 ByRef drManufacturingCost As DataRow) As Boolean
@@ -3612,24 +3612,24 @@ Public Class frmBG0440
                     drManufacturingCost("DIFF_1ST_HALF") = returnValue
                 Case "FC_ORIGINAL_2ND_HALF"
                     drManufacturingCost("ORIGINAL_2ND_HALF") = returnValue
-                Case "FC_REVISE_M7"
-                    drManufacturingCost("REVISE_M7") = returnValue
-                Case "FC_REVISE_M8"
-                    drManufacturingCost("REVISE_M8") = returnValue
-                Case "FC_REVISE_M9"
-                    drManufacturingCost("REVISE_M9") = returnValue
-                Case "FC_REVISE_M10"
-                    drManufacturingCost("REVISE_M10") = returnValue
-                Case "FC_REVISE_M11"
-                    drManufacturingCost("REVISE_M11") = returnValue
-                Case "FC_REVISE_M12"
-                    drManufacturingCost("REVISE_M12") = returnValue
-                Case "FC_REVISE_2ND_HALF"
-                    drManufacturingCost("REVISE_2ND_HALF") = returnValue
+                Case "FC_Forecast_M7"
+                    drManufacturingCost("Forecast_M7") = returnValue
+                Case "FC_Forecast_M8"
+                    drManufacturingCost("Forecast_M8") = returnValue
+                Case "FC_Forecast_M9"
+                    drManufacturingCost("Forecast_M9") = returnValue
+                Case "FC_Forecast_M10"
+                    drManufacturingCost("Forecast_M10") = returnValue
+                Case "FC_Forecast_M11"
+                    drManufacturingCost("Forecast_M11") = returnValue
+                Case "FC_Forecast_M12"
+                    drManufacturingCost("Forecast_M12") = returnValue
+                Case "FC_Forecast_2ND_HALF"
+                    drManufacturingCost("Forecast_2ND_HALF") = returnValue
                 Case "FC_DIFF_2ND_HALF"
                     drManufacturingCost("DIFF_2ND_HALF") = returnValue
-                Case "FC_REVISE_TOTAL_YEAR"
-                    drManufacturingCost("REVISE_TOTAL_YEAR") = returnValue
+                Case "FC_Forecast_TOTAL_YEAR"
+                    drManufacturingCost("Forecast_TOTAL_YEAR") = returnValue
                 Case "FC_DIFF_TOTAL_YEAR"
                     drManufacturingCost("DIFF_TOTAL_YEAR") = returnValue
             End Select
@@ -3654,7 +3654,7 @@ Public Class frmBG0440
         Return True
     End Function
 
-    Private Function CalculateReviseAdministrationCost(ByVal dsData As DataSet, _
+    Private Function CalculateForecastAdministrationCost(ByVal dsData As DataSet, _
                                       ByVal intDataColumnIndex As Integer, _
                                        ByVal blnMTPBudget As Boolean, _
                                       ByRef drAdministrationCost As DataRow) As Boolean
@@ -3692,24 +3692,24 @@ Public Class frmBG0440
                     drAdministrationCost("DIFF_1ST_HALF") = returnValue
                 Case "ADMIN_ORIGINAL_2ND_HALF"
                     drAdministrationCost("ORIGINAL_2ND_HALF") = returnValue
-                Case "ADMIN_REVISE_M7"
-                    drAdministrationCost("REVISE_M7") = returnValue
-                Case "ADMIN_REVISE_M8"
-                    drAdministrationCost("REVISE_M8") = returnValue
-                Case "ADMIN_REVISE_M9"
-                    drAdministrationCost("REVISE_M9") = returnValue
-                Case "ADMIN_REVISE_M10"
-                    drAdministrationCost("REVISE_M10") = returnValue
-                Case "ADMIN_REVISE_M11"
-                    drAdministrationCost("REVISE_M11") = returnValue
-                Case "ADMIN_REVISE_M12"
-                    drAdministrationCost("REVISE_M12") = returnValue
-                Case "ADMIN_REVISE_2ND_HALF"
-                    drAdministrationCost("REVISE_2ND_HALF") = returnValue
+                Case "ADMIN_Forecast_M7"
+                    drAdministrationCost("Forecast_M7") = returnValue
+                Case "ADMIN_Forecast_M8"
+                    drAdministrationCost("Forecast_M8") = returnValue
+                Case "ADMIN_Forecast_M9"
+                    drAdministrationCost("Forecast_M9") = returnValue
+                Case "ADMIN_Forecast_M10"
+                    drAdministrationCost("Forecast_M10") = returnValue
+                Case "ADMIN_Forecast_M11"
+                    drAdministrationCost("Forecast_M11") = returnValue
+                Case "ADMIN_Forecast_M12"
+                    drAdministrationCost("Forecast_M12") = returnValue
+                Case "ADMIN_Forecast_2ND_HALF"
+                    drAdministrationCost("Forecast_2ND_HALF") = returnValue
                 Case "ADMIN_DIFF_2ND_HALF"
                     drAdministrationCost("DIFF_2ND_HALF") = returnValue
-                Case "ADMIN_REVISE_TOTAL_YEAR"
-                    drAdministrationCost("REVISE_TOTAL_YEAR") = returnValue
+                Case "ADMIN_Forecast_TOTAL_YEAR"
+                    drAdministrationCost("Forecast_TOTAL_YEAR") = returnValue
                 Case "ADMIN_DIFF_TOTAL_YEAR"
                     drAdministrationCost("DIFF_TOTAL_YEAR") = returnValue
             End Select
@@ -3734,7 +3734,7 @@ Public Class frmBG0440
         Return True
     End Function
 
-    Private Function CalculateReviseWorkingBudget(ByVal dsData As DataSet, _
+    Private Function CalculateForecastWorkingBudget(ByVal dsData As DataSet, _
                                             ByVal intDataColumnIndex As Integer, _
                                             ByVal blnMTPBudget As Boolean, _
                                             ByRef drWorkingBudget As DataRow) As Boolean
@@ -3755,8 +3755,8 @@ Public Class frmBG0440
             '    Debug.Print("WB_ORIGINAL_2ND_HALF")
             'End If
 
-            'If strColumnName = "WB_REVISE_2ND_HALF" Then
-            '    Debug.Print("WB_REVISE_2ND_HALF")
+            'If strColumnName = "WB_Forecast_2ND_HALF" Then
+            '    Debug.Print("WB_Forecast_2ND_HALF")
             'End If
             Select Case dsData.Tables(0).Columns(k).ColumnName
                 Case "WB_ORIGINAL_1ST_HALF"
@@ -3781,38 +3781,38 @@ Public Class frmBG0440
                     'drWorkingBudget("DIFF_1ST_HALF") = returnValue
                     drWorkingBudget("DIFF_1ST_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_M1"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_M2"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_M3"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_M4"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_M5"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_M6"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("ORIGINAL_1ST_HALF"), 0.0))
                 Case "WB_ORIGINAL_2ND_HALF"
-                    '  '{ReviseSummaryByAccountCode.WB_ORIGINAL_2ND_HALF}
+                    '  '{ForecastSummaryByAccountCode.WB_ORIGINAL_2ND_HALF}
                     'drWorkingBudget("ORIGINAL_2ND_HALF") = returnValue
                     drWorkingBudget("ORIGINAL_2ND_HALF") = Convert.ToDecimal(Nz(dsData.Tables(0).Rows(0)![WB_ORIGINAL_2ND_HALF], 0.0))
-                Case "WB_REVISE_M7"
-                    drWorkingBudget("REVISE_M7") = returnValue
-                Case "WB_REVISE_M8"
-                    drWorkingBudget("REVISE_M8") = returnValue
-                Case "WB_REVISE_M9"
-                    drWorkingBudget("REVISE_M9") = returnValue
-                Case "WB_REVISE_M10"
-                    drWorkingBudget("REVISE_M10") = returnValue
-                Case "WB_REVISE_M11"
-                    drWorkingBudget("REVISE_M11") = returnValue
-                Case "WB_REVISE_M12"
-                    drWorkingBudget("REVISE_M12") = returnValue
-                Case "WB_REVISE_2ND_HALF"
-                    '{@WBReviseM7} + {@WBReviseM8} + {@WBReviseM9} + {@WBReviseM10} + {@WBReviseM11} + {@WBReviseM12}
-                    'drWorkingBudget("REVISE_2ND_HALF") = returnValue
-                    drWorkingBudget("REVISE_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("WB_REVISE_M7"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_REVISE_M8"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_REVISE_M9"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("REVISE_M10"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_REVISE_M11"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_REVISE_M12"), 0.0))
+                Case "WB_Forecast_M7"
+                    drWorkingBudget("Forecast_M7") = returnValue
+                Case "WB_Forecast_M8"
+                    drWorkingBudget("Forecast_M8") = returnValue
+                Case "WB_Forecast_M9"
+                    drWorkingBudget("Forecast_M9") = returnValue
+                Case "WB_Forecast_M10"
+                    drWorkingBudget("Forecast_M10") = returnValue
+                Case "WB_Forecast_M11"
+                    drWorkingBudget("Forecast_M11") = returnValue
+                Case "WB_Forecast_M12"
+                    drWorkingBudget("Forecast_M12") = returnValue
+                Case "WB_Forecast_2ND_HALF"
+                    '{@WBForecastM7} + {@WBForecastM8} + {@WBForecastM9} + {@WBForecastM10} + {@WBForecastM11} + {@WBForecastM12}
+                    'drWorkingBudget("Forecast_2ND_HALF") = returnValue
+                    drWorkingBudget("Forecast_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("WB_Forecast_M7"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_Forecast_M8"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_Forecast_M9"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("Forecast_M10"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_Forecast_M11"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("WB_Forecast_M12"), 0.0))
                 Case "WB_DIFF_2ND_HALF"
-                    '{@WBRevise2ndHalf} - {@WBOriginal2ndHalf}
+                    '{@WBForecast2ndHalf} - {@WBOriginal2ndHalf}
                     'drWorkingBudget("DIFF_2ND_HALF") = returnValue
-                    drWorkingBudget("DIFF_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("REVISE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("ORIGINAL_2ND_HALF"), 0.0))
-                Case "WB_REVISE_TOTAL_YEAR"
-                    '{@WBEstimate1stHalf} + {@WBRevise2ndHalf}
-                    'drWorkingBudget("REVISE_TOTAL_YEAR") = returnValue
-                    'drWorkingBudget("REVISE_TOTAL_YEAR") = Convert.ToDecimal(drWorkingBudget("ACTUAL_M1")) + Convert.ToDecimal(drWorkingBudget("ACTUAL_M2")) + Convert.ToDecimal(drWorkingBudget("ACTUAL_M3")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M4")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M5")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M6")) + Convert.ToDecimal(drWorkingBudget("REVISE_M7")) + Convert.ToDecimal(drWorkingBudget("REVISE_M8")) + Convert.ToDecimal(drWorkingBudget("REVISE_M9")) + Convert.ToDecimal(drWorkingBudget("REVISE_M9")) + Convert.ToDecimal(drWorkingBudget("REVISE_M10")) + Convert.ToDecimal(drWorkingBudget("REVISE_M11")) + Convert.ToDecimal(drWorkingBudget("REVISE_M12"))
-                    drWorkingBudget("REVISE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("REVISE_2ND_HALF"), 0.0))
+                    drWorkingBudget("DIFF_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("Forecast_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("ORIGINAL_2ND_HALF"), 0.0))
+                Case "WB_Forecast_TOTAL_YEAR"
+                    '{@WBEstimate1stHalf} + {@WBForecast2ndHalf}
+                    'drWorkingBudget("Forecast_TOTAL_YEAR") = returnValue
+                    'drWorkingBudget("Forecast_TOTAL_YEAR") = Convert.ToDecimal(drWorkingBudget("ACTUAL_M1")) + Convert.ToDecimal(drWorkingBudget("ACTUAL_M2")) + Convert.ToDecimal(drWorkingBudget("ACTUAL_M3")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M4")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M5")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M6")) + Convert.ToDecimal(drWorkingBudget("Forecast_M7")) + Convert.ToDecimal(drWorkingBudget("Forecast_M8")) + Convert.ToDecimal(drWorkingBudget("Forecast_M9")) + Convert.ToDecimal(drWorkingBudget("Forecast_M9")) + Convert.ToDecimal(drWorkingBudget("Forecast_M10")) + Convert.ToDecimal(drWorkingBudget("Forecast_M11")) + Convert.ToDecimal(drWorkingBudget("Forecast_M12"))
+                    drWorkingBudget("Forecast_TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("Forecast_2ND_HALF"), 0.0))
                 Case "WB_DIFF_TOTAL_YEAR"
                     '{@WBDiff1stHalf} + {@WBDiff2ndHalf}
                     'drWorkingBudget("DIFF_TOTAL_YEAR") = returnValue
-                    'drWorkingBudget("DIFF_TOTAL_YEAR") = Convert.ToDecimal(drWorkingBudget("REVISE_TOTAL_YEAR")) - Convert.ToDecimal(drWorkingBudget("ORIGINAL_2ND_HALF"))
+                    'drWorkingBudget("DIFF_TOTAL_YEAR") = Convert.ToDecimal(drWorkingBudget("Forecast_TOTAL_YEAR")) - Convert.ToDecimal(drWorkingBudget("ORIGINAL_2ND_HALF"))
                     drWorkingBudget("DIFF_TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("DIFF_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("DIFF_2ND_HALF"), 0.0))
             End Select
 
@@ -4151,7 +4151,7 @@ Public Class frmBG0440
 
     Private Sub cboPeriodType_SelectedValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPeriodType.SelectedValueChanged
         If m_blnFormLoading = False Then
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.ReviseBudget, Integer) Then
+            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.ForecastBudget, Integer) Then
                 chkShowMTP.Enabled = True
             Else
                 chkShowMTP.Enabled = False
@@ -4249,23 +4249,23 @@ Public Class frmBG0440
                             '//Generate excel
                             GeneratEstimateExcel(dsGroups, dtColumns)
 
-                        Case enumPeriodType.ReviseBudget
+                        Case enumPeriodType.ForecastBudget
                             If Not chkShowMTP.Checked Then
                                 'strReportName = "RPT004-3.rpt"
                                 '//Insert ColumnData
-                                InsertReviseColumnData(dtColumns, strYear)
+                                InsertForecastColumnData(dtColumns, strYear)
                                 '//DataSet GroupBy
-                                dsGroups = SetupReviseGroupbyData(ds, "EXPENSE_TYPE", "EXPENSE_TYPE", 7, False)
+                                dsGroups = SetupForecastGroupbyData(ds, "EXPENSE_TYPE", "EXPENSE_TYPE", 7, False)
                                 '//Generate Excel
-                                GeneratReviseExcel(dsGroups, dtColumns, False)
+                                GeneratForecastExcel(dsGroups, dtColumns, False)
                             Else
                                 'strReportName = "RPT004-4.rpt"
                                 '//Insert ColumnData
-                                InsertReviseMTPColumnData(dtColumns, strYear)
+                                InsertForecastMTPColumnData(dtColumns, strYear)
                                 '//DataSet GroupBy
-                                dsGroups = SetupReviseGroupbyData(ds, "EXPENSE_TYPE", "EXPENSE_TYPE", 7, True)
+                                dsGroups = SetupForecastGroupbyData(ds, "EXPENSE_TYPE", "EXPENSE_TYPE", 7, True)
                                 '//Generate Excel
-                                GeneratReviseExcel(dsGroups, dtColumns, True)
+                                GeneratForecastExcel(dsGroups, dtColumns, True)
                             End If
 
                         Case enumPeriodType.MTPBudget

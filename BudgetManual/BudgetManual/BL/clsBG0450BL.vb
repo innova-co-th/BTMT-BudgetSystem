@@ -208,7 +208,7 @@ Public Class clsBG0450BL
 
         ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
 
-            '// Ref. Revise  
+            '// Ref. Forecast  
             clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
@@ -292,8 +292,8 @@ Public Class clsBG0450BL
                         Return False
                     End If
 
-                Case enumPeriodType.ReviseBudget
-                    clsBG_T_BUDGET_DATA.TableName = "ReviseApplicant"
+                Case enumPeriodType.ForecastBudget
+                    clsBG_T_BUDGET_DATA.TableName = "ForecastApplicant"
                     'clsBG_T_BUDGET_DATA.MTPBudget = Me.MTPBudget
                     If clsBG_T_BUDGET_DATA.Select011_2() = False Then
                         Return False
@@ -329,8 +329,8 @@ Public Class clsBG0450BL
                         Return False
                     End If
 
-                Case enumPeriodType.ReviseBudget
-                    clsBG_T_BUDGET_DATA.TableName = "ReviseApplicant"
+                Case enumPeriodType.ForecastBudget
+                    clsBG_T_BUDGET_DATA.TableName = "ForecastApplicant"
                     'clsBG_T_BUDGET_DATA.MTPBudget = Me.MTPBudget
                     If clsBG_T_BUDGET_DATA.Select011() = False Then
                         Return False

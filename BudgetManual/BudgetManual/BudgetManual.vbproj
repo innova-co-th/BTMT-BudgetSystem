@@ -229,6 +229,11 @@
     <Compile Include="DB\BG_T_TRANS_LOG.vb" />
     <Compile Include="DB\BG_T_ACCOUNT_REOPEN.vb" />
     <Compile Include="DB\BG_T_BUDGET_REFERENCE.vb" />
+    <Compile Include="Reports\DS001.Designer.vb">
+      <DependentUpon>DS001.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Reports\DS001.vb">
       <DependentUpon>DS001.xsd</DependentUpon>
     </Compile>
@@ -1317,6 +1322,7 @@
     <None Include="Reports\DS001.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DS001.Designer.vb</LastGenOutput>
     </None>
     <None Include="Reports\DS001.xss">
       <DependentUpon>DS001.xsd</DependentUpon>

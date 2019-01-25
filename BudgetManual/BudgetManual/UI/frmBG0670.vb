@@ -363,7 +363,7 @@ Public Class frmBG0670
                     Me.cboRefBudgetYear.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 1
                     Me.ComboBox1_SelectedIndexChanged("", Nothing)
 
-                    'ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.ReviseBudget Then
+                    'ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.ForecastBudget Then
                     '    grbReference.Enabled = True
                     '    Me.cboRefBudgetYear.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue)
                     '    Me.ComboBox1_SelectedIndexChanged("", Nothing)
@@ -393,7 +393,7 @@ Public Class frmBG0670
                     grbReference2.Enabled = True
                     Me.cboRefBudgetYear2.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 2
                     Me.cboRefBudgetYear2_SelectedIndexChanged("", Nothing)
-                
+
                 ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
                     grbReference2.Enabled = True
                     Me.cboRefBudgetYear2.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 1
@@ -623,11 +623,11 @@ Public Class frmBG0670
                     Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.EstimateBudget
                     cboRefPeriodType_SelectedIndexChanged("", Nothing)
 
-                    'ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.ReviseBudget Then
+                    'ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.ForecastBudget Then
                     '    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget
                     '    cboRefPeriodType_SelectedIndexChanged("", Nothing)
                 ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
-                    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget ' Edited by Kwang for Prototype No.4. Menu : Budget Adjust Master 'BGConstant.enumPeriodType.ReviseBudget
+                    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget ' Edited by Kwang for Prototype No.4. Menu : Budget Adjust Master 'BGConstant.enumPeriodType.ForecastBudget
                     cboRefPeriodType_SelectedIndexChanged("", Nothing)
                 Else
                     grbReference.Enabled = False
