@@ -349,7 +349,7 @@ Public Class clsBG0430BL
                     End If
 
                 Case enumPeriodType.ForecastBudget
-                    clsBG_T_BUDGET_DATA.TableName = "ForecastBudget"
+                    clsBG_T_BUDGET_DATA.TableName = "ReviseBudget"
                     'clsBG_T_BUDGET_DATA.MTPBudget = Me.MTPBudget
                     If clsBG_T_BUDGET_DATA.Select008_3() = False Then
                         Return False
@@ -385,7 +385,7 @@ Public Class clsBG0430BL
                     End If
 
                 Case enumPeriodType.ForecastBudget
-                    clsBG_T_BUDGET_DATA.TableName = "ForecastBudget"
+                    clsBG_T_BUDGET_DATA.TableName = "ReviseBudget"
                     'clsBG_T_BUDGET_DATA.MTPBudget = Me.MTPBudget
                     If clsBG_T_BUDGET_DATA.Select008() = False Then
                         Return False

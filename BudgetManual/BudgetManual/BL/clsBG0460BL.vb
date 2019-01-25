@@ -155,7 +155,7 @@ Public Class clsBG0460BL
                     If clsBG_T_BUDGET_DATA.Select012_6() = False Then
                         Return False
                     End If
-                    clsBG_T_BUDGET_DATA.dtResult.TableName = "Forecast_BUDGET"
+                    clsBG_T_BUDGET_DATA.dtResult.TableName = "REVISE_BUDGET"
                     Exit Select
                 Case Else
                     Return False
@@ -181,7 +181,7 @@ Public Class clsBG0460BL
                     If clsBG_T_BUDGET_DATA.Select012_3() = False Then
                         Return False
                     End If
-                    clsBG_T_BUDGET_DATA.dtResult.TableName = "Forecast_BUDGET"
+                    clsBG_T_BUDGET_DATA.dtResult.TableName = "REVISE_BUDGET"
                     Exit Select
                 Case Else
                     Return False
