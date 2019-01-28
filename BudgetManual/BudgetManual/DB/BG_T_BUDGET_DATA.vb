@@ -756,7 +756,7 @@ Public Class BG_T_BUDGET_DATA
             End If
 
             Dim strZroFilter As String
-            strZroFilter = " WHERE ACTUAL_DATA.H1 <> 0 OR MAX_REV.Forecast_SECOND_HALF <> 0 OR (ISNULL(MASTER_DATA.M1, 0) <> 0" & _
+            strZroFilter = " WHERE ACTUAL_DATA.H1 <> 0 OR MAX_REV.REVISE_SECOND_HALF <> 0 OR (ISNULL(MASTER_DATA.M1, 0) <> 0" & _
                            " OR ISNULL(MASTER_DATA.M2, 0) <> 0 OR ISNULL(MASTER_DATA.M3, 0) <> 0" & _
                            " OR ISNULL(MASTER_DATA.M4, 0) <> 0 OR ISNULL(MASTER_DATA.M5, 0) <> 0 OR ISNULL(MASTER_DATA.M6, 0) <> 0" & _
                            " OR ISNULL(MASTER_DATA.M7, 0) <> 0 OR ISNULL(MASTER_DATA.M8, 0) <> 0 OR ISNULL(MASTER_DATA.M9, 0) <> 0" & _
@@ -825,12 +825,12 @@ Public Class BG_T_BUDGET_DATA
 
             Dim strZroFilter As String
             strZroFilter = " WHERE ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M7, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M8, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M9, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M10, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M11, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M7, 0) <> 0 OR ISNULL(ACTUAL_DATA.M8, 0) <> 0 OR " & _
                            " ISNULL(ACTUAL_DATA.M9, 0) <> 0 OR (ISNULL(MASTER_DATA.M10, 0) <> 0 OR " & _
                            " ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0) "
@@ -1211,7 +1211,7 @@ Public Class BG_T_BUDGET_DATA
             End If
 
             Dim strZroFilter As String
-            strZroFilter = "WHERE ACTUAL_DATA.H1 <> 0 OR MAX_REV.Forecast_SECOND_HALF <> 0 OR (ISNULL(MASTER_DATA.M1, 0) <> 0" & _
+            strZroFilter = "WHERE ACTUAL_DATA.H1 <> 0 OR MAX_REV.REVISE_SECOND_HALF <> 0 OR (ISNULL(MASTER_DATA.M1, 0) <> 0" & _
                            "OR ISNULL(MASTER_DATA.M2, 0) <> 0 OR ISNULL(MASTER_DATA.M3, 0) <> 0" & _
                            "OR ISNULL(MASTER_DATA.M4, 0) <> 0 OR ISNULL(MASTER_DATA.M5, 0) <> 0 OR ISNULL(MASTER_DATA.M6, 0) <> 0" & _
                            "OR ISNULL(MASTER_DATA.M7, 0) <> 0 OR ISNULL(MASTER_DATA.M8, 0) <> 0 OR ISNULL(MASTER_DATA.M9, 0) <> 0" & _
@@ -1281,12 +1281,12 @@ Public Class BG_T_BUDGET_DATA
 
             Dim strZroFilter As String
             strZroFilter = "WHERE ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M7, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M8, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M9, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M10, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M11, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M7, 0) <> 0 OR ISNULL(ACTUAL_DATA.M8, 0) <> 0 OR " & _
                            " ISNULL(ACTUAL_DATA.M9, 0) <> 0 OR (ISNULL(MASTER_DATA.M10, 0) <> 0 OR " & _
                            " ISNULL(MASTER_DATA.M11, 0) <> 0 OR ISNULL(MASTER_DATA.M12, 0) <> 0) "
@@ -1536,7 +1536,7 @@ Public Class BG_T_BUDGET_DATA
             strZroFilter = " WHERE " & _
                            " ( " & _
                            " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
-                           " OR ISNULL(MAX_REV.Forecast_SECOND_HALF, 0) <> 0 " & _
+                           " OR ISNULL(MAX_REV.REVISE_SECOND_HALF, 0) <> 0 " & _
                            " OR ISNULL(MASTER_DATA.M1, 0) <> 0 " & _
                            " OR ISNULL(MASTER_DATA.M2, 0) <> 0 " & _
                            " OR ISNULL(MASTER_DATA.M3, 0) <> 0 " & _
@@ -1629,7 +1629,7 @@ Public Class BG_T_BUDGET_DATA
             strZroFilter = " WHERE " & _
                            " ( " & _
                            " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
-                           " OR ISNULL(MAX_REV.Forecast_SECOND_HALF, 0) <> 0 " & _
+                           " OR ISNULL(MAX_REV.REVISE_SECOND_HALF, 0) <> 0 " & _
                            " OR ISNULL(MASTER_DATA.M1, 0) <> 0 " & _
                            " OR ISNULL(MASTER_DATA.M2, 0) <> 0 " & _
                            " OR ISNULL(MASTER_DATA.M3, 0) <> 0 " & _
@@ -1775,7 +1775,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT007_1")
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
-            strSQL = strSQL.Replace("@ForecastBudget", CStr(enumPeriodType.ForecastBudget))
+            strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ForecastBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@REFPeriod", Me.RefPeriodType)
@@ -1797,12 +1797,12 @@ Public Class BG_T_BUDGET_DATA
             strZroFilter = " WHERE " & _
                            " ( " & _
                            " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M7, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M8, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M9, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M10, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M11, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M7,0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M8,0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M9,0) <> 0 " & _
@@ -1866,7 +1866,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT007_3")
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
-            strSQL = strSQL.Replace("@ForecastBudget", CStr(enumPeriodType.ForecastBudget))
+            strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ForecastBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
@@ -1884,12 +1884,12 @@ Public Class BG_T_BUDGET_DATA
             strZroFilter = " WHERE " & _
                            " ( " & _
                            " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M7, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M8, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M9, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M10, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M11, 0) <> 0 " & _
-                           " OR ISNULL(Forecast_BUDGET.M12, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M10, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M11, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M12, 0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M7,0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M8,0) <> 0 " & _
                            " OR ISNULL(ACTUAL_DATA.M9,0) <> 0 " & _
@@ -2266,7 +2266,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT010")
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
-            strSQL = strSQL.Replace("@ForecastBudget", CStr(enumPeriodType.ForecastBudget))
+            strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ForecastBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@REFPERIOD", Me.RefPeriodType)
@@ -2319,7 +2319,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT010_2")
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
-            strSQL = strSQL.Replace("@ForecastBudget", CStr(enumPeriodType.ForecastBudget))
+            strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ForecastBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
@@ -3556,7 +3556,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT016")
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
-            strSQL = strSQL.Replace("@ForecastBudget", CStr(enumPeriodType.ForecastBudget))
+            strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ForecastBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
 
             da = New SqlDataAdapter(strSQL, conn)
@@ -3608,7 +3608,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT017")
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
-            strSQL = strSQL.Replace("@ForecastBudget", CStr(enumPeriodType.ForecastBudget))
+            strSQL = strSQL.Replace("@ReviseBudget", CStr(enumPeriodType.ForecastBudget))
             strSQL = strSQL.Replace("@ActualData", CStr(enumUploadDataType.ActualData))
 
             da = New SqlDataAdapter(strSQL, conn)
@@ -3929,7 +3929,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
             strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
-            strSQL = strSQL.Replace("@ForecastRevNo", Me.ForecastRevNo)
+            strSQL = strSQL.Replace("@ReviseRevNo", Me.ForecastRevNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@UserPIC", Me.UserPIC)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
@@ -3990,7 +3990,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
             strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
-            strSQL = strSQL.Replace("@ForecastRevNo", Me.ForecastRevNo)
+            strSQL = strSQL.Replace("@ReviseRevNo", Me.ForecastRevNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
@@ -4050,7 +4050,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
             strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
-            strSQL = strSQL.Replace("@ForecastRevNo", Me.ForecastRevNo)
+            strSQL = strSQL.Replace("@ReviseRevNo", Me.ForecastRevNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@UserPIC", Me.UserPIC)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
@@ -4111,7 +4111,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
             strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
-            strSQL = strSQL.Replace("@ForecastRevNo", Me.ForecastRevNo)
+            strSQL = strSQL.Replace("@ReviseRevNo", Me.ForecastRevNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@UserPIC", Me.UserPIC)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
@@ -4172,7 +4172,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
             strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
-            strSQL = strSQL.Replace("@ForecastRevNo", Me.ForecastRevNo)
+            strSQL = strSQL.Replace("@ReviseRevNo", Me.ForecastRevNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
@@ -4229,7 +4229,7 @@ Public Class BG_T_BUDGET_DATA
             strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
             strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
             strSQL = strSQL.Replace("@BudgetType", Me.BudgetType)
-            strSQL = strSQL.Replace("@ForecastRevNo", Me.ForecastRevNo)
+            strSQL = strSQL.Replace("@ReviseRevNo", Me.ForecastRevNo)
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@Status", Me.Status)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)

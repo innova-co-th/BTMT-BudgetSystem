@@ -310,7 +310,7 @@ Public Class frmBG0450
 
         'SUM(ISNULL(Forecast_BUDGET.H2,0)) AS Forecast_2ND_HALF,
         row = dtColumns.NewRow()
-        row("Column_Name") = "Forecast_2ND_HALF"
+        row("Column_Name") = "REVISE_2ND_HALF"
         row("Column_Title") = "Estimate 2nd Half'" & strHalfLastYear
         dtColumns.Rows.Add(row)
 
@@ -511,7 +511,7 @@ Public Class frmBG0450
                             Dim strColumnName As String = dtResult.Columns(p).ColumnName
                             If strColumnName = "TOTAL_LAST_YEAR" Then
                                 '{DetailByAccountCode.ACTUAL_1ST_HALF} + {DetailByAccountCode.Forecast_2ND_HALF}
-                                dtResult.Rows(m)![TOTAL_LAST_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ACTUAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![Forecast_2ND_HALF], 0.0))
+                                dtResult.Rows(m)![TOTAL_LAST_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ACTUAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![REVISE_2ND_HALF], 0.0))
                             ElseIf strColumnName = "DIFFERENCE" Then
                                 '{@TotalYear} - {@TotalLastYear}
                                 dtResult.Rows(m)![DIFFERENCE] = Convert.ToDecimal(Nz(dtResult.Rows(m)![TOTAL_YEAR], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![TOTAL_LAST_YEAR], 0.0))
@@ -855,7 +855,7 @@ Public Class frmBG0450
 
         'SUM(ISNULL(Forecast_BUDGET.H2,0)) AS Forecast_BUDGET_2ND_HALF,
         row = dtColumns.NewRow()
-        row("Column_Name") = "Forecast_BUDGET_2ND_HALF"
+        row("Column_Name") = "REVISE_BUDGET_2ND_HALF"
         row("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
@@ -990,7 +990,7 @@ Public Class frmBG0450
                         If strColumnName = "DIFFERENCE_2ND_HALF" Then
                             'If strColumnName = "DIFFERENCE_2ND_HALF" Then
                             '{EstimateApplicant.ESTIMATE_BUDGET_2ND_HALF} - {EstimateApplicant.Forecast_BUDGET_2ND_HALF}
-                            dtResult.Rows(m)![DIFFERENCE_2ND_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_BUDGET_2ND_HALF], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![Forecast_BUDGET_2ND_HALF], 0.0))
+                            dtResult.Rows(m)![DIFFERENCE_2ND_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_BUDGET_2ND_HALF], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![REVISE_BUDGET_2ND_HALF], 0.0))
                         ElseIf strColumnName = "ESTIMATE_BUDGET_TOTAL" Then
                             'ElseIf strColumnName = "ESTIMATE_BUDGET_TOTAL" Then
                             '{EstimateApplicant.ACTUAL_1ST_HALF} + {EstimateApplicant.ESTIMATE_BUDGET_2ND_HALF}
@@ -1394,7 +1394,7 @@ Public Class frmBG0450
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
-        row("Column_Name") = "Forecast_2ND_HALF"
+        row("Column_Name") = "REVISE_2ND_HALF"
         row("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
@@ -1404,7 +1404,7 @@ Public Class frmBG0450
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
-        row("Column_Name") = "Forecast_TOTAL_YEAR"
+        row("Column_Name") = "REVISE_TOTAL_YEAR"
         row("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(row)
 
@@ -1606,7 +1606,7 @@ Public Class frmBG0450
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
-        row("Column_Name") = "Forecast_2ND_HALF"
+        row("Column_Name") = "REVISE_2ND_HALF"
         row("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
@@ -1616,7 +1616,7 @@ Public Class frmBG0450
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
-        row("Column_Name") = "Forecast_TOTAL_YEAR"
+        row("Column_Name") = "REVISE_TOTAL_YEAR"
         row("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(row)
 
@@ -1690,7 +1690,7 @@ Public Class frmBG0450
             dtResult.Columns.Add(col)
 
             col = New DataColumn()
-            col.ColumnName = "Forecast_2ND_HALF"
+            col.ColumnName = "REVISE_2ND_HALF"
             col.DataType = Type.GetType("System.Decimal")
             col.DefaultValue = 0.0
             dtResult.Columns.Add(col)
@@ -1702,7 +1702,7 @@ Public Class frmBG0450
             dtResult.Columns.Add(col)
 
             col = New DataColumn()
-            col.ColumnName = "Forecast_TOTAL_YEAR"
+            col.ColumnName = "REVISE_TOTAL_YEAR"
             col.DataType = Type.GetType("System.Decimal")
             col.DefaultValue = 0.0
             dtResult.Columns.Add(col)
@@ -1749,15 +1749,15 @@ Public Class frmBG0450
                             If strColumnName = "DIFF_1ST_HALF" Then
                                 'Diff 1st Half'11= {ForecastApplicant.ESTIMATE_1ST_HALF} - {ForecastApplicant.ORIGINAL_1ST_HALF}
                                 dtResult.Rows(m)![DIFF_1ST_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_1ST_HALF], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![ORIGINAL_1ST_HALF], 0.0))
-                            ElseIf strColumnName = "Forecast_2ND_HALF" Then
+                            ElseIf strColumnName = "REVISE_2ND_HALF" Then
                                 'Forecast 2nd Half'11 = {ForecastApplicant.M7} + {ForecastApplicant.M8} + {ForecastApplicant.M9} + {ForecastApplicant.M10} + {ForecastApplicant.M11} + {ForecastApplicant.M12}
-                                dtResult.Rows(m)![Forecast_2ND_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![M7], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M8], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M9], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M10], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M11], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M12], 0.0))
+                                dtResult.Rows(m)![REVISE_2ND_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![M7], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M8], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M9], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M10], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M11], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![M12], 0.0))
                             ElseIf strColumnName = "DIFF_2ND_HALF" Then
                                 'Diff 2nd Half'11 = {@Forecast2ndHalf} - {ForecastApplicant.ORIGINAL_2ND_HALF}
-                                dtResult.Rows(m)![DIFF_2ND_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![Forecast_2ND_HALF], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![ORIGINAL_2ND_HALF], 0.0))
-                            ElseIf strColumnName = "Forecast_TOTAL_YEAR" Then
+                                dtResult.Rows(m)![DIFF_2ND_HALF] = Convert.ToDecimal(Nz(dtResult.Rows(m)![REVISE_2ND_HALF], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![ORIGINAL_2ND_HALF], 0.0))
+                            ElseIf strColumnName = "REVISE_TOTAL_YEAR" Then
                                 'Forecast Year'2011 = {ForecastApplicant.ESTIMATE_1ST_HALF} + {@Forecast2ndHalf}
-                                dtResult.Rows(m)![Forecast_TOTAL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![Forecast_2ND_HALF], 0.0))
+                                dtResult.Rows(m)![REVISE_TOTAL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![REVISE_2ND_HALF], 0.0))
                             ElseIf strColumnName = "DIFF_TOTAL_YEAR" Then
                                 'Diff Year'2011 = {@Diff1stHalf} + {@Diff2ndHalf}
                                 dtResult.Rows(m)![DIFF_TOTAL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![DIFF_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![DIFF_2ND_HALF], 0.0))

@@ -589,7 +589,7 @@ Public Class frmBG0480
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "Forecast_SECOND_HALF"
+        dRow("Column_Name") = "REVISE_SECOND_HALF"
         dRow("Column_Title") = "Original 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
@@ -748,7 +748,7 @@ Public Class frmBG0480
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "Forecast_SECOND_HALF"
+        dRow("Column_Name") = "REVISE_SECOND_HALF"
         dRow("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
@@ -758,7 +758,7 @@ Public Class frmBG0480
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "Forecast_TOTAL_YEAR"
+        dRow("Column_Name") = "REVISE_TOTAL_YEAR"
         dRow("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
@@ -884,7 +884,7 @@ Public Class frmBG0480
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "Forecast_SECOND_HALF"
+        dRow("Column_Name") = "REVISE_SECOND_HALF"
         dRow("Column_Title") = "Forecast 2nd Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
@@ -894,7 +894,7 @@ Public Class frmBG0480
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "Forecast_TOTAL_YEAR"
+        dRow("Column_Name") = "REVISE_TOTAL_YEAR"
         dRow("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
@@ -965,7 +965,7 @@ Public Class frmBG0480
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
-        dRow("Column_Name") = "Forecast_TOTAL_YEAR"
+        dRow("Column_Name") = "REVISE_TOTAL_YEAR"
         dRow("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
