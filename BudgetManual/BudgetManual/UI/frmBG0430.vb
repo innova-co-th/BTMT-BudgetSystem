@@ -1498,7 +1498,7 @@ Public Class frmBG0430
         '//(ISNULL(ACTUAL_DATA.M1,0) + ISNULL(ACTUAL_DATA.M2,0) + ISNULL(ACTUAL_DATA.M3,0) + ISNULL(ESTIMATE_BUDGET.M4,0) + ISNULL(ESTIMATE_BUDGET.M5,0) + ISNULL(ESTIMATE_BUDGET.M6,0)) AS ESTIMATE_1ST_HALF,
         row = dtColumns.NewRow()
         row("Column_Name") = "ESTIMATE_1ST_HALF"
-        row("Column_Title") = "Estimate 1st Half'" & strHalfYear
+        row("Column_Title") = "Forecast 1st Half'" & strHalfYear
         dtColumns.Rows.Add(row)
 
         '//0 AS DIFF_1ST_HALF,
@@ -2360,7 +2360,7 @@ Public Class frmBG0430
                 ws.Range(ws.Cells(colStartIndex - 1, 6), ws.Cells(colStartIndex - 1, 8)).Font.Bold = True
                 ws.Range(ws.Cells(colStartIndex - 1, 6), ws.Cells(colStartIndex - 1, 8)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-                ws.Cells(colStartIndex - 1, 9) = "Estimate"
+                ws.Cells(colStartIndex - 1, 9) = "Forecast"
                 ws.Range(ws.Cells(colStartIndex - 1, 9), ws.Cells(colStartIndex - 1, 11)).MergeCells = True
                 ws.Range(ws.Cells(colStartIndex - 1, 9), ws.Cells(colStartIndex - 1, 11)).Font.Bold = True
                 ws.Range(ws.Cells(colStartIndex - 1, 9), ws.Cells(colStartIndex - 1, 11)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter

@@ -399,7 +399,7 @@ Public Class BGCommon
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intActualEnd)).Font.Bold = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intActualStart), xSt.Cells(colStartIndex - 1, intActualEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            xSt.Cells(colStartIndex - 1, intEstimateStart) = "Estimate"
+            xSt.Cells(colStartIndex - 1, intEstimateStart) = "Forecast"
             xSt.Range(xSt.Cells(colStartIndex - 1, intEstimateStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).MergeCells = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intEstimateStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).Font.Bold = True
             xSt.Range(xSt.Cells(colStartIndex - 1, intEstimateStart), xSt.Cells(colStartIndex - 1, intEstimateEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter

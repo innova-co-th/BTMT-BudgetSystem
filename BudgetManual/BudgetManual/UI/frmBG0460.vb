@@ -1139,7 +1139,7 @@ Public Class frmBG0460
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "ESTIMATE_FIRST_HALF"
-        dRow("Column_Title") = "Estimate 1st Half'" & strHalfYear
+        dRow("Column_Title") = "Forecast 1st Half'" & strHalfYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
