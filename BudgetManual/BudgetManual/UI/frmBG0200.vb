@@ -760,6 +760,8 @@ Public Class frmBG0200
                     dtGrid.Columns.Add(dc)
                     dc = New DataColumn("DiffYear", GetType(Double))
                     dtGrid.Columns.Add(dc)
+                    dc = New DataColumn("OBFullYear", GetType(Double))
+                    dtGrid.Columns.Add(dc)
 
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
 
@@ -1062,6 +1064,8 @@ Public Class frmBG0200
                         For i = 6 To 25
                             grvBudget3.Columns("g3col" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                         Next
+
+                        grvBudget3.Columns("g3col32").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                     End If
 
                     For i = 26 To 30
@@ -3351,6 +3355,14 @@ Public Class frmBG0200
                     dtDat.Rows(intRowIndex)![RevYear] = dblTotal
                 End If
 
+                '// Calc OB Year
+                dblTotal = CDbl(Nz(dtDat.Rows(intRowIndex)![IMP1], 0)) + CDbl(Nz(dtDat.Rows(intRowIndex)![IMP2], 0))
+                If dblTotal = 0 Then
+                    dtDat.Rows(intRowIndex)![OBFullYear] = DBNull.Value
+                Else
+                    dtDat.Rows(intRowIndex)![OBFullYear] = dblTotal
+                End If
+
                 '// Calc Diff Year
                 dblTotal = CDbl(Nz(dtDat.Rows(intRowIndex)![Diff1H], 0)) + CDbl(Nz(dtDat.Rows(intRowIndex)![Diff2H], 0))
                 If dblTotal = 0 Then
@@ -4455,7 +4467,8 @@ Public Class frmBG0200
                     column.Name = "g3col13" Or _
                     column.Name = "g3col15" Or _
                     column.Name = "g3col22" Or _
-                    column.Name = "g3col24") Then
+                    column.Name = "g3col24") Or _
+                    column.Name = "g3col32" Then
                     column.HeaderCell.Style = style
                     column.Width = 80
                 End If
@@ -4466,6 +4479,7 @@ Public Class frmBG0200
             grvBudget3.Columns("g3col15").DefaultCellStyle.Font = font
             grvBudget3.Columns("g3col22").DefaultCellStyle.Font = font
             grvBudget3.Columns("g3col24").DefaultCellStyle.Font = font
+            grvBudget3.Columns("g3col32").DefaultCellStyle.Font = font
 
             'Set Header Font Bold MTP
             font = New Font(grvBudget4.DefaultCellStyle.Font.FontFamily, 8, FontStyle.Bold)
