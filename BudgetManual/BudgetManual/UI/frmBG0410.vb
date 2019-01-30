@@ -887,6 +887,12 @@ Public Class frmBG0410
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
+
+        dRow = dtColumns.NewRow
         dRow("Column_Name") = "DIFF_TOTAL_YEAR"
         dRow("Column_Title") = "Diff Year'" & strYear
         dtColumns.Rows.Add(dRow)
@@ -1430,8 +1436,8 @@ Public Class frmBG0410
                     intUnitPriceStart = 23
                     intUnitPriceEnd = 24
                 Else
-                    intUnitPriceStart = 23
-                    intUnitPriceEnd = 24
+                    intUnitPriceStart = 24
+                    intUnitPriceEnd = 25
                 End If
 
                 If bMTPCheck = True Then
