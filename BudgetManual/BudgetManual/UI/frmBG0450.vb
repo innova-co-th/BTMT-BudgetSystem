@@ -1409,6 +1409,11 @@ Public Class frmBG0450
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_TOTAL_YEAR"
         row("Column_Title") = "Diff Year'" & strYear
         dtColumns.Rows.Add(row)
@@ -1621,6 +1626,11 @@ Public Class frmBG0450
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_TOTAL_YEAR"
         row("Column_Title") = "Diff Year'" & strYear
         dtColumns.Rows.Add(row)
@@ -1708,6 +1718,12 @@ Public Class frmBG0450
             dtResult.Columns.Add(col)
 
             col = New DataColumn()
+            col.ColumnName = "ORIGINAL_FULL_YEAR"
+            col.DataType = Type.GetType("System.Decimal")
+            col.DefaultValue = 0.0
+            dtResult.Columns.Add(col)
+
+            col = New DataColumn()
             col.ColumnName = "DIFF_TOTAL_YEAR"
             col.DataType = Type.GetType("System.Decimal")
             col.DefaultValue = 0.0
@@ -1761,6 +1777,9 @@ Public Class frmBG0450
                             ElseIf strColumnName = "DIFF_TOTAL_YEAR" Then
                                 'Diff Year'2011 = {@Diff1stHalf} + {@Diff2ndHalf}
                                 dtResult.Rows(m)![DIFF_TOTAL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![DIFF_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![DIFF_2ND_HALF], 0.0))
+                            ElseIf strColumnName = "ORIGINAL_FULL_YEAR" Then
+
+                                dtResult.Rows(m)![ORIGINAL_FULL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ORIGINAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![ORIGINAL_2ND_HALF], 0.0))
                             End If
                         Next
                     Next
@@ -1885,8 +1904,10 @@ Public Class frmBG0450
                 MergeColumnsCells(ws, 20, colStartIndex - 1, colStartIndex)
                 MergeColumnsCells(ws, 21, colStartIndex - 1, colStartIndex)
                 MergeColumnsCells(ws, 22, colStartIndex - 1, colStartIndex)
+                MergeColumnsCells(ws, 23, colStartIndex - 1, colStartIndex)
             Else
                 MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
+                MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
             End If
             '//Setup Item
             ws.Cells(colStartIndex - 1, 1) = "Item"
@@ -2056,8 +2077,12 @@ Public Class frmBG0450
             'intFontStart = 1
             'intFontEnd = colMax
             'End If
+            If Not chkShowMTP.Checked Then
+                intAuthorizeStart = 23
+            Else
+                intAuthorizeStart = 14
+            End If
 
-            intAuthorizeStart = 22
             intFontStart = 1
             intFontEnd = colMax
 
@@ -2093,7 +2118,7 @@ Public Class frmBG0450
 
             If blnMTPBudget = False Then
                 ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                ws.Range(ws.Cells(colStartIndex, 19), ws.Cells(rowMax, 22)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                ws.Range(ws.Cells(colStartIndex, 19), ws.Cells(rowMax, 23)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
             End If
 
             colStartIndex = colStartIndex + 1
