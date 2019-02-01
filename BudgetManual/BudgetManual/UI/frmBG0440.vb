@@ -2154,6 +2154,11 @@ Public Class frmBG0440
         row("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(row)
+
         'SUM((ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0)) - ISNULL(ORIGINAL_BUDGET.H1,0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0) ) AS DIFF_TOTAL_YEAR,
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_TOTAL_YEAR"
@@ -2394,6 +2399,11 @@ Public Class frmBG0440
         row = dtColumns.NewRow()
         row("Column_Name") = "REVISE_TOTAL_YEAR"
         row("Column_Title") = "Forecast Year'" & strYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(row)
 
         'SUM((ISNULL(ACTUAL_DATA.M1, 0) + ISNULL(ACTUAL_DATA.M2, 0) + ISNULL(ACTUAL_DATA.M3, 0) + ISNULL(ESTIMATE_BUDGET.M4, 0) + ISNULL(ESTIMATE_BUDGET.M5, 0) + ISNULL(ESTIMATE_BUDGET.M6, 0)) - ISNULL(ORIGINAL_BUDGET.H1,0) + ISNULL(MASTER_DATA.M7, 0) + ISNULL(MASTER_DATA.M8, 0) + ISNULL(MASTER_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11, 0) + ISNULL(MASTER_DATA.M12, 0) - ISNULL(ORIGINAL_BUDGET.H2,0) ) AS DIFF_TOTAL_YEAR,
@@ -2846,8 +2856,10 @@ Public Class frmBG0440
                 MergeColumnsCells(ws, 20, colStartIndex - 1, colStartIndex)
                 MergeColumnsCells(ws, 21, colStartIndex - 1, colStartIndex)
                 MergeColumnsCells(ws, 22, colStartIndex - 1, colStartIndex)
+                MergeColumnsCells(ws, 23, colStartIndex - 1, colStartIndex)
             Else
                 MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
+                MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
             End If
 
 
@@ -3047,8 +3059,12 @@ Public Class frmBG0440
             '    intFontStart = 1
             '    intFontEnd = colMax
             'End If
+            If blnMTPBudget = False Then
+                intAuthorizeStart = 23
+            Else
+                intAuthorizeStart = 14
+            End If
 
-            intAuthorizeStart = 22
             intFontStart = 1
             intFontEnd = colMax
 
@@ -3084,7 +3100,8 @@ Public Class frmBG0440
 
             If blnMTPBudget = False Then
                 ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 18)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                ws.Range(ws.Cells(colStartIndex, 19), ws.Cells(rowMax, 22)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                ws.Range(ws.Cells(colStartIndex, 19), ws.Cells(rowMax, 23)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+
             End If
 
             colStartIndex = colStartIndex + 1
@@ -3547,6 +3564,10 @@ Public Class frmBG0440
                     'drInvestments("DIFF_TOTAL_YEAR") = Convert.ToDecimal(drInvestments("ACTUAL_M1")) + Convert.ToDecimal(drInvestments("ACTUAL_M2")) + Convert.ToDecimal(drInvestments("ACTUAL_M3")) + Convert.ToDecimal(drInvestments("ESTIMATE_M4")) + Convert.ToDecimal(drInvestments("ESTIMATE_M5")) + Convert.ToDecimal(drInvestments("ESTIMATE_M6")) + Convert.ToDecimal(drInvestments("Forecast_M7")) + Convert.ToDecimal(drInvestments("Forecast_M8")) + Convert.ToDecimal(drInvestments("Forecast_M9")) + Convert.ToDecimal(drInvestments("Forecast_M10")) + Convert.ToDecimal(drInvestments("Forecast_M11")) + Convert.ToDecimal(drInvestments("Forecast_M12")) - Convert.ToDecimal(drInvestments("ORIGINAL_2ND_HALF"))
                     drInvestments("DIFF_TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("DIFF_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("DIFF_2ND_HALF"), 0.0))
 
+                Case "ORIGINAL_FULL_YEAR"
+
+                    drInvestments("ORIGINAL_FULL_YEAR") = Convert.ToDecimal(Nz(drInvestments("ORIGINAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("ORIGINAL_2ND_HALF"), 0.0))
+
             End Select
 
             '// MTP Budget
@@ -3630,6 +3651,8 @@ Public Class frmBG0440
                     drManufacturingCost("DIFF_2ND_HALF") = returnValue
                 Case "FC_REVISE_TOTAL_YEAR"
                     drManufacturingCost("REVISE_TOTAL_YEAR") = returnValue
+                Case "FC_ORIGINAL_FULL_YEAR"
+                    drManufacturingCost("ORIGINAL_FULL_YEAR") = returnValue
                 Case "FC_DIFF_TOTAL_YEAR"
                     drManufacturingCost("DIFF_TOTAL_YEAR") = returnValue
             End Select
@@ -3710,6 +3733,8 @@ Public Class frmBG0440
                     drAdministrationCost("DIFF_2ND_HALF") = returnValue
                 Case "ADMIN_REVISE_TOTAL_YEAR"
                     drAdministrationCost("REVISE_TOTAL_YEAR") = returnValue
+                Case "ADMIN_ORIGINAL_FULL_YEAR"
+                    drAdministrationCost("ORIGINAL_FULL_YEAR") = returnValue
                 Case "ADMIN_DIFF_TOTAL_YEAR"
                     drAdministrationCost("DIFF_TOTAL_YEAR") = returnValue
             End Select
@@ -3809,6 +3834,10 @@ Public Class frmBG0440
                     'drWorkingBudget("Forecast_TOTAL_YEAR") = returnValue
                     'drWorkingBudget("Forecast_TOTAL_YEAR") = Convert.ToDecimal(drWorkingBudget("ACTUAL_M1")) + Convert.ToDecimal(drWorkingBudget("ACTUAL_M2")) + Convert.ToDecimal(drWorkingBudget("ACTUAL_M3")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M4")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M5")) + Convert.ToDecimal(drWorkingBudget("ESTIMATE_M6")) + Convert.ToDecimal(drWorkingBudget("Forecast_M7")) + Convert.ToDecimal(drWorkingBudget("Forecast_M8")) + Convert.ToDecimal(drWorkingBudget("Forecast_M9")) + Convert.ToDecimal(drWorkingBudget("Forecast_M9")) + Convert.ToDecimal(drWorkingBudget("Forecast_M10")) + Convert.ToDecimal(drWorkingBudget("Forecast_M11")) + Convert.ToDecimal(drWorkingBudget("Forecast_M12"))
                     drWorkingBudget("REVISE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("REVISE_2ND_HALF"), 0.0))
+
+                Case "WB_ORIGINAL_FULL_YEAR"
+                    drWorkingBudget("ORIGINAL_FULL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ORIGINAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ORIGINAL_2ND_HALF"), 0.0))
+
                 Case "WB_DIFF_TOTAL_YEAR"
                     '{@WBDiff1stHalf} + {@WBDiff2ndHalf}
                     'drWorkingBudget("DIFF_TOTAL_YEAR") = returnValue
