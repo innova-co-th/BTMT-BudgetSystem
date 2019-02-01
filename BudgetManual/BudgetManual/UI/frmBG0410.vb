@@ -983,6 +983,12 @@ Public Class frmBG0410
         dRow("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "DIFF_TOTAL_YEAR"
         dRow("Column_Title") = "Diff Year'" & strYear
@@ -1433,8 +1439,8 @@ Public Class frmBG0410
             Case "Forecast"
 
                 If bMTPCheck = True Then
-                    intUnitPriceStart = 23
-                    intUnitPriceEnd = 24
+                    intUnitPriceStart = 15
+                    intUnitPriceEnd = 16
                 Else
                     intUnitPriceStart = 24
                     intUnitPriceEnd = 25
