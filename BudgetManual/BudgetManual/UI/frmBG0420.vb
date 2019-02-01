@@ -852,8 +852,13 @@ Public Class frmBG0420
                 intImageIndex = 795
 
             Case "Forecast"
-                intUnitPriceStart = 22
-                intUnitPriceEnd = 23
+                If bMTPCheck = False Then
+                    intUnitPriceStart = 23
+                    intUnitPriceEnd = 24
+                Else
+                    intUnitPriceStart = 14
+                    intUnitPriceEnd = 15
+                End If
 
                 intAuthorizeStart = 20
                 intAuthorizeEnd = 21
@@ -1207,6 +1212,11 @@ Public Class frmBG0420
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
         dRow("Column_Name") = "DIFF_TOTAL_YEAR"
         dRow("Column_Title") = "Diff Year'" & strYear
         dtColumns.Rows.Add(dRow)
@@ -1290,6 +1300,11 @@ Public Class frmBG0420
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "REVISE_TOTAL_YEAR"
         dRow("Column_Title") = "Forecast Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
