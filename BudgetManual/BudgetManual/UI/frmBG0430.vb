@@ -1567,6 +1567,11 @@ Public Class frmBG0430
         row("Column_Title") = "Forecast Year'" & strYear
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(row)
+
         '0 AS DIFF_YEAR,
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_YEAR"
@@ -1744,6 +1749,11 @@ Public Class frmBG0430
         row = dtColumns.NewRow()
         row("Column_Name") = "REVISE_YEAR"
         row("Column_Title") = "Forecast Year'" & strYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(row)
 
         '0 AS DIFF_YEAR,
@@ -2110,6 +2120,8 @@ Public Class frmBG0430
                         dtResult.Rows(m)![REVISE_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![ESTIMATE_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![REVISE_2ND_HALF])
                     ElseIf strColumnName = "DIFF_YEAR" Then
                         dtResult.Rows(m)![DIFF_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![DIFF_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![DIFF_2ND_HALF])
+                    ElseIf strColumnName = "ORIGINAL_FULL_YEAR" Then
+                        dtResult.Rows(m)![ORIGINAL_FULL_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![ORIGINAL_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![ORIGINAL_2ND_HALF])
                     End If
                 Next
             Next
@@ -2340,8 +2352,10 @@ Public Class frmBG0430
                 MergeColumnsCells(ws, 22, colStartIndex - 1, colStartIndex)
                 MergeColumnsCells(ws, 23, colStartIndex - 1, colStartIndex)
                 MergeColumnsCells(ws, 24, colStartIndex - 1, colStartIndex)
+                MergeColumnsCells(ws, 25, colStartIndex - 1, colStartIndex)
             Else
                 MergeColumnsCells(ws, 15, colStartIndex - 1, colStartIndex)
+                MergeColumnsCells(ws, 16, colStartIndex - 1, colStartIndex)
             End If
 
             '//Setup Budget order number Title
@@ -2491,6 +2505,7 @@ Public Class frmBG0430
             rng.Borders(Excel.XlBordersIndex.xlInsideVertical).LineStyle = Excel.XlLineStyle.xlContinuous
             rng.EntireColumn.AutoFit()
 
+
             '//Forecast MTP Budget
             If blnMTPBudget = True Then
 
@@ -2511,7 +2526,7 @@ Public Class frmBG0430
                 'excelApp.Range(excelApp.Cells(colStartIndex, 25), excelApp.Cells(rowMax, 25)).Borders(Excel.XlBordersIndex.xlEdgeBottom).LineStyle = 0
                 'excelApp.Range(excelApp.Cells(colStartIndex - 1, 25), excelApp.Cells(rowMax, 25)).Borders(Excel.XlBordersIndex.xlEdgeTop).LineStyle = 0
 
-                intAuthorizeStart = 24
+                intAuthorizeStart = 16
                 'intAuthorizeStart = 21
                 intFontStart = 1
                 intFontEnd = 30
@@ -2522,7 +2537,7 @@ Public Class frmBG0430
                 'System.Runtime.InteropServices.Marshal.ReleaseComObject(rng)
 
             Else
-                intAuthorizeStart = 24
+                intAuthorizeStart = 25
                 intFontStart = 1
                 intFontEnd = colMax
             End If
@@ -2558,7 +2573,7 @@ Public Class frmBG0430
 
             If blnMTPBudget = False Then
                 ws.Range(ws.Cells(colStartIndex, 15), ws.Cells(rowMax, 20)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                ws.Range(ws.Cells(colStartIndex, 21), ws.Cells(rowMax, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                ws.Range(ws.Cells(colStartIndex, 21), ws.Cells(rowMax, 25)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
             End If
             colStartIndex = colStartIndex + 1
