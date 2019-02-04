@@ -1162,7 +1162,7 @@ Public Class frmBG0410
                 SetupEstimateColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", arrCols, 7, 9, 10, 12)
 
             ElseIf strPeriod = "Forecast" Then
-                arrCols = New Integer() {3, 4, 5, 12, 13, 14, 21, 22, 23, 24} '// Two Row Merge Col
+                arrCols = New Integer() {3, 4, 5, 12, 13, 14, 21, 22, 23, 24, 25} '// Two Row Merge Col
 
                 If bMTPCheck = True Then
                     arrCols = New Integer() {3, 4, 5, 12, 13, 14, 15} '// Two Row Merge Col

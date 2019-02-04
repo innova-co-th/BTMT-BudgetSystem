@@ -622,14 +622,14 @@ Public Class frmBG0460
 
             ElseIf strPeriod = "Estimate" Then
 
-                arrCols = New Integer() {1, 2, 3, 4, 5, 6, 13, 14, 15}
+                arrCols = New Integer() {1, 2, 3, 4, 5, 6, 13, 14, 15, 16}
                 SetupEstimateColumnsCells(xSt, colStartIndex, 2, 3, "", arrCols, 7, 9, 10, 12, False)
 
             Else
 
-                arrCols = New Integer() {1, 2, 3, 4, 5, 12, 13, 14, 21, 22, 23, 24}
+                arrCols = New Integer() {1, 2, 3, 4, 5, 12, 13, 14, 21, 22, 23, 24, 25}
                 If bMTPCheck = True Then
-                    arrCols = New Integer() {1, 2, 3, 4, 5, 12, 13, 14, 15}
+                    arrCols = New Integer() {1, 2, 3, 4, 5, 12, 13, 14, 15, 16}
                 End If
                 SetupForecastColumnsCells(xSt, colStartIndex, bMTPCheck, 2, 3, "", arrCols, 6, 8, 9, 11, 15, 20, 6, 11, 25, 29, False)
             End If
@@ -777,8 +777,8 @@ Public Class frmBG0460
 
                 xSt.Range(xSt.Cells(2, 15), xSt.Cells(rowMax, 20)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).WrapText = True
+                xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 25)).Columns.ColumnWidth = 13
+                xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 25)).WrapText = True
 
                 If chkShowMTP.Checked = True Then
                     xSt.Range(xSt.Cells(2, 25), xSt.Cells(rowMax, 29)).Columns.ColumnWidth = 12
@@ -830,7 +830,7 @@ Public Class frmBG0460
                 xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 16)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
             ElseIf strPeriod = "Forecast" Then
 
@@ -844,7 +844,7 @@ Public Class frmBG0460
                 xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax, 14)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 If bMTPCheck = False Then
                     xSt.Range(xSt.Cells(colStartIndex, 15), xSt.Cells(rowMax, 20)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                    xSt.Range(xSt.Cells(colStartIndex, 21), xSt.Cells(rowMax, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                    xSt.Range(xSt.Cells(colStartIndex, 21), xSt.Cells(rowMax, 25)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
                 End If
 
             End If
@@ -1198,6 +1198,11 @@ Public Class frmBG0460
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
         dRow("Column_Name") = "DIFF_TOTAL_YEAR"
         dRow("Column_Title") = "Diff Year'" & strYear
         dtColumns.Rows.Add(dRow)
@@ -1331,6 +1336,11 @@ Public Class frmBG0460
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "REVISE_TOTAL_YEAR"
         dRow("Column_Title") = "Forecast Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1615,9 +1625,14 @@ Public Class frmBG0460
                 'Else
                 '    intImageIndex = 1220
                 'End If
-
-                intUnitPriceStart = 23
-                intUnitPriceEnd = 24
+                If bMTPCheck = False Then
+                    intUnitPriceStart = 24
+                    intUnitPriceEnd = 25
+                Else
+                    intUnitPriceStart = 15
+                    intUnitPriceEnd = 16
+                End If
+            
 
                 intAuthorizeStart = 21
                 intAuthorizeEnd = 22
