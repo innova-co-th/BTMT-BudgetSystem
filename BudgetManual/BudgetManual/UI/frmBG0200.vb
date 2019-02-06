@@ -711,6 +711,14 @@ Public Class frmBG0200
                     dtGrid.Columns.Add(dc)
                     dc = New DataColumn("EstTotal", GetType(Double))
                     dtGrid.Columns.Add(dc)
+                    dc = New DataColumn("OriginalTotal", GetType(Double))
+                    dtGrid.Columns.Add(dc)
+                    dc = New DataColumn("H1", GetType(Double))
+                    dtGrid.Columns.Add(dc)
+                    dc = New DataColumn("H2", GetType(Double))
+                    dtGrid.Columns.Add(dc)
+                    dc = New DataColumn("DiffOriginal", GetType(Double))
+                    dtGrid.Columns.Add(dc)
 
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then   '// Forecast Budget
 
@@ -1036,6 +1044,9 @@ Public Class frmBG0200
                         For i = 6 To 16
                             grvBudget2.Columns("g2col" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                         Next
+
+                        grvBudget2.Columns("g2col23").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
+                        grvBudget2.Columns("g2col24").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
                     End If
 
                     '// Hide MTP Budget
@@ -1650,6 +1661,8 @@ Public Class frmBG0200
                     Else
                         lblSum5Val.Text = "0.00"
                     End If
+
+                  
 
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then
                     Dim returnvalue As Object
@@ -2597,6 +2610,30 @@ Public Class frmBG0200
                                     End If
                                 Next
                             End If
+
+                            '// Original 1st Half
+                            If drBudgetData.Count > 0 Then
+                                If CDbl(Nz(drBudgetData(0).Item("H1"), 0)) = 0 Then
+                                    dtGridData.Rows(i).Item("H1") = DBNull.Value
+                                Else
+                                    dtGridData.Rows(i).Item("H1") = drBudgetData(0).Item("H1")
+                                End If
+
+                                blnGridChanged = True
+                            End If
+
+
+                            '// Original 2nd Half
+                            If drBudgetData.Count > 0 Then
+                                If CDbl(Nz(drBudgetData(0).Item("H2"), 0)) = 0 Then
+                                    dtGridData.Rows(i).Item("H2") = DBNull.Value
+                                Else
+                                    dtGridData.Rows(i).Item("H2") = drBudgetData(0).Item("H2")
+                                End If
+
+                                blnGridChanged = True
+                            End If
+
                         Next
                     End If
 
@@ -3182,6 +3219,25 @@ Public Class frmBG0200
                 Else
                     dtDat.Rows(intRowIndex)![EstTotal] = dblTotal
                 End If
+
+                '// Calc Original Total Year
+                dblTotal = CDbl(Nz(dtDat.Rows(intRowIndex)![H1], 0)) + CDbl(Nz(dtDat.Rows(intRowIndex)![H2], 0))
+                If dblTotal = 0 Then
+                    dtDat.Rows(intRowIndex)![OriginalTotal] = DBNull.Value
+                Else
+                    dtDat.Rows(intRowIndex)![OriginalTotal] = dblTotal
+                End If
+
+
+                '// Calc Diff Original
+                dblTotal = (CDbl(Nz(dtDat.Rows(intRowIndex)![IMP1], 0)) + CDbl(Nz(dtDat.Rows(intRowIndex)![Est2H], 0))) - (CDbl(Nz(dtDat.Rows(intRowIndex)![H1], 0)) + CDbl(Nz(dtDat.Rows(intRowIndex)![H2], 0)))
+                If dblTotal = 0 Then
+                    dtDat.Rows(intRowIndex)![DiffOriginal] = DBNull.Value
+                Else
+                    dtDat.Rows(intRowIndex)![DiffOriginal] = dblTotal
+                End If
+
+
             Next
 
             grvBudget2.DataSource = dtDat
@@ -3230,6 +3286,15 @@ Public Class frmBG0200
                 grvBudget2.Item("g2col16", intRowIndex).Value = DBNull.Value
             Else
                 grvBudget2.Item("g2col16", intRowIndex).Value = dblTotal
+            End If
+
+            '// Calc Diff Original
+            dblTotal = CDbl(Nz(grvBudget2.Item("g2col16", intRowIndex).Value, 0)) - _
+                        CDbl(Nz(grvBudget2.Item("g2col23", intRowIndex).Value, 0))
+            If dblTotal = 0 Then
+                grvBudget2.Item("g2col24", intRowIndex).Value = DBNull.Value
+            Else
+                grvBudget2.Item("g2col24", intRowIndex).Value = dblTotal
             End If
 
             Me.Cursor = Cursors.Default
@@ -4448,7 +4513,8 @@ Public Class frmBG0200
                 If (column.Name = "g2col6" Or _
                     column.Name = "g2col7" Or _
                     column.Name = "g2col14" Or _
-                    column.Name = "g2col16") Then
+                    column.Name = "g2col16" Or _
+                     column.Name = "g2col23") Then
                     column.HeaderCell.Style = style
                     column.Width = 80
                 End If
@@ -4458,6 +4524,7 @@ Public Class frmBG0200
             grvBudget2.Columns("g2col7").DefaultCellStyle.Font = font
             grvBudget2.Columns("g2col14").DefaultCellStyle.Font = font
             grvBudget2.Columns("g2col16").DefaultCellStyle.Font = font
+            grvBudget2.Columns("g2col23").DefaultCellStyle.Font = font
 
             'Set "Forecast" Header Font Bold 
             font = New Font(grvBudget3.DefaultCellStyle.Font.FontFamily, 8, FontStyle.Bold)
