@@ -570,9 +570,9 @@ Public Class frmBG0420
 
             ElseIf strPeriod = "Forecast" Then
 
-                arrCols = New Integer() {1, 4, 11, 12, 13, 20, 21, 22, 23}
+                arrCols = New Integer() {1, 4, 11, 12, 13, 20, 21, 22, 23, 24}
                 If bMTPCheck = True Then
-                    arrCols = New Integer() {1, 4, 11, 12, 13, 14}
+                    arrCols = New Integer() {1, 4, 11, 12, 13, 14, 15}
                 End If
                 SetupForecastColumnsCells(xSt, colStartIndex, bMTPCheck, 2, 3, "Person in Charge Section", arrCols, 5, 7, 8, 10, 14, 19, 5, 10, 24, 28)
 
@@ -797,7 +797,7 @@ Public Class frmBG0420
 
                 If bMTPCheck = False Then
                     xSt.Range(xSt.Cells(colStartIndex, 14), xSt.Cells(rowMax - 1, 19)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                    xSt.Range(xSt.Cells(colStartIndex, 20), xSt.Cells(rowMax - 1, 23)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                    xSt.Range(xSt.Cells(colStartIndex, 20), xSt.Cells(rowMax - 1, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
                 End If
 
             ElseIf strPeriod = "MTP" Then
