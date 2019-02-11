@@ -762,6 +762,16 @@ Public Class frmBG0410
         dRow("Column_Title") = "Estimate Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "DIFFERENCE_ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Difference Year'" & strYear
+        dtColumns.Rows.Add(dRow)
+
         Return True
 
     End Function
@@ -1158,7 +1168,7 @@ Public Class frmBG0410
 
             ElseIf strPeriod = "Estimate" Then
 
-                arrCols = New Integer() {3, 4, 5, 6, 13, 14, 15}
+                arrCols = New Integer() {3, 4, 5, 6, 13, 14, 15, 16, 17}
                 SetupEstimateColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", arrCols, 7, 9, 10, 12)
 
             ElseIf strPeriod = "Forecast" Then
@@ -1276,8 +1286,8 @@ Public Class frmBG0410
 
                 xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 12)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 15)).WrapText = True
+                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 17)).Columns.ColumnWidth = 13
+                xSt.Range(xSt.Cells(2, 13), xSt.Cells(rowMax, 17)).WrapText = True
             ElseIf strPeriod = "Forecast" Then
 
                 xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
@@ -1353,7 +1363,7 @@ Public Class frmBG0410
                 xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+                xSt.Range(xSt.Cells(colStartIndex, 13), xSt.Cells(rowMax, 17)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
 
             ElseIf strPeriod = "Forecast" Then
 
@@ -1428,8 +1438,8 @@ Public Class frmBG0410
 
             Case "Estimate"
 
-                intUnitPriceStart = 14
-                intUnitPriceEnd = 15
+                intUnitPriceStart = 16
+                intUnitPriceEnd = 17
 
                 intAuthorizeStart = 11
                 intAuthorizeEnd = 13
