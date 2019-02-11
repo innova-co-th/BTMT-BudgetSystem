@@ -237,6 +237,9 @@
     <Compile Include="Reports\DS001.vb">
       <DependentUpon>DS001.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\DS004.vb">
+      <DependentUpon>DS004.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DS008.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
