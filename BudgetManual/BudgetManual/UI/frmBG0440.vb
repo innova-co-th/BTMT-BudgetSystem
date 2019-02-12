@@ -1369,6 +1369,17 @@ Public Class frmBG0440
         row("Column_Title") = "Estimate Year'" & strYear
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original '" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "DIFFERENCE_ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Diff Original'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+
         '0 AS INVESTMENT_ACTUAL_1ST_HALF,
         '0 AS INVESTMENT_Forecast_2ND_HALF,
         '0 AS INVESTMENT_ACTUAL_JUL,
@@ -1617,8 +1628,11 @@ Public Class frmBG0440
 
                     'SUM(ISNULL(ACTUAL_DATA.H1,0) + ISNULL(ACTUAL_DATA.M7, 0) + ISNULL(ACTUAL_DATA.M8, 0) + ISNULL(ACTUAL_DATA.M9, 0) + ISNULL(MASTER_DATA.M10, 0) + ISNULL(MASTER_DATA.M11,0) + ISNULL(MASTER_DATA.M12, 0)) AS ESTIMATE_TOTAL_YEAR,
                     drInvestments("ESTIMATE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_JUL"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_AUG"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_SEP"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_OCT"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_NOV"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_DEC"), 0.0))
+                Case "INVESTMENT_ORIGINAL_FULL_YEAR"
+                    drInvestments("ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ORIGINAL_FULL_YEAR"), 0.0)))
 
-
+                Case "DIFFERENCE_ORIGINAL_FULL_YEAR"
+                    drInvestments("DIFFERENCE_ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_JUL"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_AUG"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ACTUAL_SEP"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_OCT"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_NOV"), 0.0)) + Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ESTIMATE_DEC"), 0.0))) - ((Convert.ToDecimal(Nz(drInvestments("INVESTMENT_ORIGINAL_FULL_YEAR"), 0.0))))
             End Select
 
         Next
@@ -1668,6 +1682,11 @@ Public Class frmBG0440
                 Case "ESTIMATE_FC_TOTAL_YEAR"
                     drManufacturingCost("ESTIMATE_TOTAL_YEAR") = returnValue
 
+                Case "FC_ORIGINAL_FULL_YEAR"
+                    drManufacturingCost("ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drManufacturingCost("FC_ORIGINAL_FULL_YEAR"), 0.0)))
+
+                Case "DIFFERENCE_ORIGINAL_FULL_YEAR"
+                    drManufacturingCost("DIFFERENCE_ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drManufacturingCost("ESTIMATE_TOTAL_YEAR"), 0.0))) - (Convert.ToDecimal(Nz(drManufacturingCost("FC_ORIGINAL_FULL_YEAR"), 0.0)))
 
             End Select
 
@@ -1716,6 +1735,14 @@ Public Class frmBG0440
                     drAdministrationCost("DIFFERENCE_2ND_HALF") = returnValue
                 Case "ESTIMATE_ADMIN_TOTAL_YEAR"
                     drAdministrationCost("ESTIMATE_TOTAL_YEAR") = returnValue
+                Case "ESTIMATE_ORIGINAL_FULL_YEAR"
+                    drAdministrationCost("ESTIMATE_ORIGINAL_FULL_YEAR") = returnValue
+
+                Case "ADMIN_ORIGINAL_FULL_YEAR"
+                    drAdministrationCost("ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drAdministrationCost("ADMIN_ORIGINAL_FULL_YEAR"), 0.0)))
+
+                Case "DIFFERENCE_ORIGINAL_FULL_YEAR"
+                    drAdministrationCost("DIFFERENCE_ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drAdministrationCost("ESTIMATE_ADMIN_TOTAL_YEAR"), 0.0))) - (Convert.ToDecimal(Nz(drAdministrationCost("ADMIN_ORIGINAL_FULL_YEAR"), 0.0)))
 
             End Select
 
@@ -1765,6 +1792,12 @@ Public Class frmBG0440
                     drWorkingBudget("DIFFERENCE_2ND_HALF") = Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_2ND_HALF"), 0.0)) - Convert.ToDecimal(Nz(drWorkingBudget("REVISE_2ND_HALF"), 0.0))
                 Case "WB_ESTIMATE_TOTAL_YEAR"
                     drWorkingBudget("ESTIMATE_TOTAL_YEAR") = Convert.ToDecimal(Nz(drWorkingBudget("ACTUAL_1ST_HALF"), 0.0)) + Convert.ToDecimal(Nz(drWorkingBudget("ESTIMATE_2ND_HALF"), 0.0))
+
+                Case "WB_ORIGINAL_FULL_YEAR"
+                    drWorkingBudget("ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drWorkingBudget("WB_ORIGINAL_FULL_YEAR"), 0.0)))
+
+                Case "DIFFERENCE_ORIGINAL_FULL_YEAR"
+                    drWorkingBudget("DIFFERENCE_ORIGINAL_FULL_YEAR") = (Convert.ToDecimal(Nz(drWorkingBudget("WB_ESTIMATE_TOTAL_YEAR"), 0.0))) - (Convert.ToDecimal(Nz(drWorkingBudget("WB_ORIGINAL_FULL_YEAR"), 0.0)))
             End Select
 
         Next
