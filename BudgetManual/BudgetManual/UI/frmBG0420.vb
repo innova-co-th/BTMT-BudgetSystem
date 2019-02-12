@@ -565,7 +565,7 @@ Public Class frmBG0420
 
             ElseIf strPeriod = "Estimate" Then
 
-                arrCols = New Integer() {1, 4, 5, 12, 13, 14}
+                arrCols = New Integer() {1, 4, 5, 12, 13, 14, 15, 16}
                 SetupEstimateColumnsCells(xSt, colStartIndex, 2, 3, "Person in Charge Section", arrCols, 6, 8, 9, 11)
 
             ElseIf strPeriod = "Forecast" Then
@@ -704,8 +704,8 @@ Public Class frmBG0420
 
                 xSt.Range(xSt.Cells(2, 6), xSt.Cells(rowMax, 11)).Columns.ColumnWidth = 12
 
-                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).Columns.ColumnWidth = 13
-                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 14)).WrapText = True
+                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
+                xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 16)).WrapText = True
 
             ElseIf strPeriod = "MTP" Then
 
@@ -843,8 +843,8 @@ Public Class frmBG0420
                 intImageIndex = 905
 
             Case "Estimate"
-                intUnitPriceStart = 13
-                intUnitPriceEnd = 14
+                intUnitPriceStart = 15
+                intUnitPriceEnd = 16
 
                 intAuthorizeStart = 10
                 intAuthorizeEnd = 12
@@ -1090,6 +1090,18 @@ Public Class frmBG0420
         dRow("Column_Name") = "ESTIMATE_TOTAL_YEAR"
         dRow("Column_Title") = "Estimate Year'" & strYear
         dtColumns.Rows.Add(dRow)
+
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Original'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
+        dRow = dtColumns.NewRow
+        dRow("Column_Name") = "DIFFERENCE_ORIGINAL_FULL_YEAR"
+        dRow("Column_Title") = "Difference Original'" & strHalfYear
+        dtColumns.Rows.Add(dRow)
+
 
 
         Return True
