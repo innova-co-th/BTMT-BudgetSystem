@@ -927,6 +927,17 @@ Public Class frmBG0450
         row("Column_Title") = "Estimate Year'" & strYear
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original '" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "DIFFERENCE_ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Diff Original'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
         Return True
     End Function
 
@@ -995,6 +1006,10 @@ Public Class frmBG0450
                             'ElseIf strColumnName = "ESTIMATE_BUDGET_TOTAL" Then
                             '{EstimateApplicant.ACTUAL_1ST_HALF} + {EstimateApplicant.ESTIMATE_BUDGET_2ND_HALF}
                             dtResult.Rows(m)![ESTIMATE_BUDGET_TOTAL] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ACTUAL_1ST_HALF], 0.0)) + Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_BUDGET_2ND_HALF], 0.0))
+
+                        ElseIf strColumnName = "DIFFERENCE_ORIGINAL_FULL_YEAR" Then
+
+                            dtResult.Rows(m)![DIFFERENCE_ORIGINAL_FULL_YEAR] = Convert.ToDecimal(Nz(dtResult.Rows(m)![ESTIMATE_BUDGET_TOTAL], 0.0)) - Convert.ToDecimal(Nz(dtResult.Rows(m)![ORIGINAL_FULL_YEAR], 0.0))
                         End If
                     Next
                 Next
