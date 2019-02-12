@@ -1048,6 +1048,17 @@ Public Class frmBG0430
         row("Column_Title") = "Estimate Year'" & strYear
         dtColumns.Rows.Add(row)
 
+        row = dtColumns.NewRow()
+        row("Column_Name") = "ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Original '" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+        row = dtColumns.NewRow()
+        row("Column_Name") = "DIFF_ORIGINAL_FULL_YEAR"
+        row("Column_Title") = "Diff Original'" & strHalfYear
+        dtColumns.Rows.Add(row)
+
+
         Return True
     End Function
 
@@ -1100,6 +1111,13 @@ Public Class frmBG0430
             col.DefaultValue = 0.0
             dtResult.Columns.Add(col)
 
+            ''//Add column 
+            Dim col2 As DataColumn = New DataColumn()
+            col2.ColumnName = "DIFF_ORIGINAL_FULL_YEAR"
+            col2.DataType = Type.GetType("System.Decimal")
+            col2.DefaultValue = 0.0
+            dtResult.Columns.Add(col2)
+
             '//Calculate Horizontal Column
             For m As Integer = 0 To dtResult.Rows.Count - 1
                 For n As Integer = intDataColumnIndex To dtResult.Columns.Count - 1
@@ -1111,6 +1129,8 @@ Public Class frmBG0430
                     ElseIf strColumnName = "ESTIMATE_BUDGET_TOTAL_YEAR" Then
                         '{EstimateBudget.ACTUAL_1ST_HALF} + {EstimateBudget.ESTIMATE_BUDGET_2ND_HALF}
                         dtResult.Rows(m)![ESTIMATE_BUDGET_TOTAL_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![ACTUAL_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![ESTIMATE_BUDGET_2ND_HALF])
+                    ElseIf strColumnName = "DIFF_ORIGINAL_FULL_YEAR" Then
+                        dtResult.Rows(m)![DIFF_ORIGINAL_FULL_YEAR] = Convert.ToDecimal(dtResult.Rows(m)![ACTUAL_1ST_HALF]) + Convert.ToDecimal(dtResult.Rows(m)![ESTIMATE_BUDGET_2ND_HALF]) - Convert.ToDecimal(dtResult.Rows(m)![ORIGINAL_FULL_YEAR])
                     End If
 
                 Next
@@ -1224,6 +1244,8 @@ Public Class frmBG0430
             MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 15, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 16, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 17, colStartIndex - 1, colStartIndex)
 
             '//Setup Budget order number Title
             ws.Range(ws.Cells(colStartIndex - 1, 1), ws.Cells(colStartIndex, 2)).ClearContents()
@@ -1304,7 +1326,7 @@ Public Class frmBG0430
 
             Dim rowMax As Integer = dsData.Tables(intSheetCount).Rows.Count + colStartIndex
             Dim colMax As Integer = dtColumns.Rows.Count
-            Dim intAuthorizeStart As Integer = 15
+            Dim intAuthorizeStart As Integer = 17
             'Dim intAuthorizeEnd As Integer
 
             '//Setup budget order name column to be left align
@@ -1380,7 +1402,7 @@ Public Class frmBG0430
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 7), ws.Cells(rowMax, 9)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 10), ws.Cells(rowMax, 12)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 13), ws.Cells(rowMax, 17)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
 
