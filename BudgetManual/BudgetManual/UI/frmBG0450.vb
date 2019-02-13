@@ -1125,6 +1125,8 @@ Public Class frmBG0450
             MergeColumnsCells(ws, 11, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 12, colStartIndex - 1, colStartIndex)
             MergeColumnsCells(ws, 13, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 14, colStartIndex - 1, colStartIndex)
+            MergeColumnsCells(ws, 15, colStartIndex - 1, colStartIndex)
 
             '//Setup Item
             ws.Cells(colStartIndex - 1, 1) = "Item"
@@ -1205,7 +1207,7 @@ Public Class frmBG0450
 
             Dim rowMax As Integer = dsData.Tables(intSheetCount).Rows.Count + colStartIndex
             Dim colMax As Integer = dtColumns.Rows.Count
-            Dim intAuthorizeStart As Integer = 13
+            Dim intAuthorizeStart As Integer = 15
 
             '//Setup Cost title
             Dim strCostTitle As String = dsData.Tables(intSheetCount).TableName
@@ -1266,7 +1268,7 @@ Public Class frmBG0450
             ws.Range(ws.Cells(colStartIndex, 3), ws.Cells(rowMax, 4)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 5), ws.Cells(rowMax, 7)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
             ws.Range(ws.Cells(colStartIndex, 8), ws.Cells(rowMax, 10)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
-            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 13)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
+            ws.Range(ws.Cells(colStartIndex, 11), ws.Cells(rowMax, 15)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
             colStartIndex = colStartIndex + 1
             '// End Add by Max 27/09/2012
 
