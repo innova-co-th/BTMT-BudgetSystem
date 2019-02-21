@@ -332,6 +332,49 @@ Public Class BG_T_BUDGET_COMMENT
         End Try
     End Function
 
+    Public Function Select003() As Boolean
+        Dim conn As SqlConnection = Nothing
+        Dim da As SqlDataAdapter
+        Dim dt As DataTable
+        Dim strSQL As String
+
+        Try
+            conn = New SqlConnection(My.Settings.ConnStr)
+            conn.Open()
+
+            strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_COMMENT", "SELECT003")
+            strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)
+            strSQL = strSQL.Replace("@PeriodType", Me.PeriodType)
+            strSQL = strSQL.Replace("@BudgetOrderNo", Me.BudgetOrderNo)
+            strSQL = strSQL.Replace("@RevNo", Me.RevNo)
+            strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
+
+            da = New SqlDataAdapter(strSQL, conn)
+            dt = New DataTable
+            da.Fill(dt)
+
+            Me.CommentList = dt
+
+            If conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return True
+
+        Catch ex As Exception
+            MessageBox.Show("[BG_T_BUDGET_COMMENT.Select003] Error: " & ex.Message, My.Settings.ProgramTitle, _
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            If conn IsNot Nothing AndAlso conn.State <> ConnectionState.Closed Then
+                conn.Close()
+            End If
+
+            Return False
+
+        End Try
+    End Function
+
+
 #Region "Update001"
     ''' <summary>
     ''' Update001

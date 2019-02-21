@@ -163,6 +163,32 @@ Public Class clsBG0201BL
         End If
     End Function
 
+    Public Function SearchDTComment() As Boolean
+        Dim clsBG_T_BUDGET_COMMENT As New BG_T_BUDGET_COMMENT
+        Dim rtn As Boolean
+
+        '// Set Parameters
+        clsBG_T_BUDGET_COMMENT.BudgetYear = Me.BudgetYear
+        clsBG_T_BUDGET_COMMENT.PeriodType = Me.PeriodType
+        clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
+        clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
+
+
+        rtn = clsBG_T_BUDGET_COMMENT.Select003()
+
+
+        '// Call Function
+        If rtn = True Then
+            Me.CommentList = clsBG_T_BUDGET_COMMENT.CommentList
+
+            Return True
+        Else
+            Me.CommentList = Nothing
+
+            Return False
+        End If
+    End Function
+
     Public Function CreateNewComment() As Boolean
         Dim clsBG_T_BUDGET_COMMENT As New BG_T_BUDGET_COMMENT
 
