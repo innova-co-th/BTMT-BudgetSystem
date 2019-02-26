@@ -1619,8 +1619,8 @@ Public Class frmBG0200
                     lblSum3.Text = "Actual 1st Half'" & Me.GetBudgetYear()
                     lblSum4.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
                     lblSum5.Text = "Estimate Year'" & Me.GetBudgetYear()
-                    lblSum6.Text = ""
-                    lblSum7.Text = ""
+                    lblSum6.Text = "Original Year'" & Me.GetBudgetYear()
+                    lblSum7.Text = "Diff Year'" & Me.GetBudgetYear()
                     lblSum8.Text = ""
                     lblSum9.Text = ""
 
@@ -1662,7 +1662,21 @@ Public Class frmBG0200
                         lblSum5Val.Text = "0.00"
                     End If
 
-                  
+
+                    returnvalue = dtTemp1.Compute("sum(OriginalTotal)", strFilter)
+                    If returnvalue.ToString <> "" Then
+                        lblSum6Val.Text = CDbl(returnvalue).ToString("#,##0.00")
+                    Else
+                        lblSum6Val.Text = "0.00"
+                    End If
+
+                    returnvalue = (CDbl(lblSum5Val.Text) - CDbl(lblSum6Val.Text)).ToString("#,##0.00")
+                    If returnvalue.ToString <> "" Then
+                        lblSum7Val.Text = CDbl(returnvalue).ToString("#,##0.00")
+                    Else
+                        lblSum7Val.Text = "0.00"
+                    End If
+
 
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then
                     Dim returnvalue As Object
@@ -2047,8 +2061,8 @@ Public Class frmBG0200
                 lblSum3.Text = "Actual 1st Half'" & Me.GetBudgetYear()
                 lblSum4.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
                 lblSum5.Text = "Estimate Year'" & Me.GetBudgetYear()
-                lblSum6.Text = ""
-                lblSum7.Text = ""
+                lblSum6.Text = "Original Year'" & Me.GetBudgetYear()
+                lblSum7.Text = "Diff Year'" & Me.GetBudgetYear()
                 lblSum8.Text = ""
                 lblSum9.Text = ""
 
@@ -2088,6 +2102,20 @@ Public Class frmBG0200
                     lblSum5Val.Text = CDbl(returnvalue).ToString("#,##0.00")
                 Else
                     lblSum5Val.Text = "0.00"
+                End If
+
+                returnvalue = CType(grvBudget2.DataSource, DataTable).DefaultView.Table.Compute("sum(OriginalTotal)", strFilter)
+                If returnvalue.ToString <> "" Then
+                    lblSum6Val.Text = CDbl(returnvalue).ToString("#,##0.00")
+                Else
+                    lblSum6Val.Text = "0.00"
+                End If
+
+                returnvalue = (CDbl(lblSum5Val.Text) - CDbl(lblSum6Val.Text)).ToString("#,##0.00")
+                If returnvalue.ToString <> "" Then
+                    lblSum7Val.Text = CDbl(returnvalue).ToString("#,##0.00")
+                Else
+                    lblSum7Val.Text = "0.00"
                 End If
 
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then
