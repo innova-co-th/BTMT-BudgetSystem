@@ -1050,12 +1050,12 @@ Public Class frmBG0430
 
         row = dtColumns.NewRow()
         row("Column_Name") = "ORIGINAL_FULL_YEAR"
-        row("Column_Title") = "Original '" & strHalfYear
+        row("Column_Title") = "Original Year'" & strYear
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
         row("Column_Name") = "DIFF_ORIGINAL_FULL_YEAR"
-        row("Column_Title") = "Diff Original'" & strHalfYear
+        row("Column_Title") = "Difference Year'" & strYear
         dtColumns.Rows.Add(row)
 
 

@@ -5258,6 +5258,12 @@
       AND ACTUAL_DATA.DATA_TYPE = 2
 
       WHERE ISNULL(ACTUAL_DATA.H1, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M1, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M2, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M3, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M4, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M5, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M6, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M7, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M8, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M9, 0) &lt;&gt; 0
@@ -5524,6 +5530,12 @@
       AND ACTUAL_DATA.DATA_TYPE = 2
 
       WHERE ISNULL(ACTUAL_DATA.H1, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M1, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M2, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M3, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M4, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M5, 0) &lt;&gt; 0
+      OR ISNULL(REVISE_BUDGET.M6, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M7, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M8, 0) &lt;&gt; 0
       OR ISNULL(REVISE_BUDGET.M9, 0) &lt;&gt; 0

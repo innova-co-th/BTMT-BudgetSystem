@@ -1797,6 +1797,11 @@ Public Class BG_T_BUDGET_DATA
             strZroFilter = " WHERE " & _
                            " ( " & _
                            " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M2, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M3, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M5, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M6, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
@@ -1884,6 +1889,12 @@ Public Class BG_T_BUDGET_DATA
             strZroFilter = " WHERE " & _
                            " ( " & _
                            " ISNULL(ACTUAL_DATA.H1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M1, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M2, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M3, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M4, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M5, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M6, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M8, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M9, 0) <> 0 " & _
