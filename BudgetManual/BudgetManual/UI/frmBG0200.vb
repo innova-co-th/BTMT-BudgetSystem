@@ -1618,7 +1618,7 @@ Public Class frmBG0200
                     lblSum2.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Forecast 2nd Half'" & Me.GetBudgetYear()
                     lblSum3.Text = "Actual 1st Half'" & Me.GetBudgetYear()
                     lblSum4.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
-                    lblSum5.Text = "Estimate Total Year'" & Me.GetBudgetYear()
+                    lblSum5.Text = "Estimate Year'" & Me.GetBudgetYear()
                     lblSum6.Text = ""
                     lblSum7.Text = ""
                     lblSum8.Text = ""
@@ -2046,7 +2046,7 @@ Public Class frmBG0200
                 lblSum2.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Forecast 2nd Half'" & Me.GetBudgetYear()
                 lblSum3.Text = "Actual 1st Half'" & Me.GetBudgetYear()
                 lblSum4.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
-                lblSum5.Text = "Estimate Total Year'" & Me.GetBudgetYear()
+                lblSum5.Text = "Estimate Year'" & Me.GetBudgetYear()
                 lblSum6.Text = ""
                 lblSum7.Text = ""
                 lblSum8.Text = ""
