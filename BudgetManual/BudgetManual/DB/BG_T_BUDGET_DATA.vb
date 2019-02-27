@@ -1812,6 +1812,7 @@ Public Class BG_T_BUDGET_DATA
                            " OR ISNULL(REVISE_BUDGET.M1, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M2, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M3, 0) <> 0 " & _
+                           " OR ISNULL(REVISE_BUDGET.M4, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M5, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M6, 0) <> 0 " & _
                            " OR ISNULL(REVISE_BUDGET.M7, 0) <> 0 " & _

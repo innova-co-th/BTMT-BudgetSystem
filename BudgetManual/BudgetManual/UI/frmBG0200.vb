@@ -1681,9 +1681,9 @@ Public Class frmBG0200
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then
                     Dim returnvalue As Object
 
-                    lblSum1.Text = "Estimate 1st Half'" & Me.GetBudgetYear()
+                    lblSum1.Text = "Forecast 1st Half'" & Me.GetBudgetYear()
                     lblSum2.Text = "Original 1st Half'" & Me.GetBudgetYear()
-                    lblSum3.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Forecast 2nd Half'" & Me.GetBudgetYear()
+                    lblSum3.Text = "Forecast 2nd Half'" & Me.GetBudgetYear() '"Forecast 2nd Half'" & Me.GetBudgetYear()
                     lblSum4.Text = "Original 2nd Half'" & Me.GetBudgetYear()
                     lblSum5.Text = "Diff 1st Half'" & Me.GetBudgetYear()
                     lblSum6.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
@@ -1694,7 +1694,7 @@ Public Class frmBG0200
                     lblSum1Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                     lblSum3Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                     lblSum7Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
-                    lblSum9Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
+                    'lblSum9Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
 
                     returnvalue = dtTemp1.Compute("sum(Est1H)", strFilter)
                     If returnvalue.ToString <> "" Then
@@ -2121,9 +2121,9 @@ Public Class frmBG0200
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then
                 Dim returnvalue As Object
 
-                lblSum1.Text = "Estimate 1st Half'" & Me.GetBudgetYear()
+                lblSum1.Text = "Forecast 1st Half'" & Me.GetBudgetYear()
                 lblSum2.Text = "Original 1st Half'" & Me.GetBudgetYear()
-                lblSum3.Text = "Original 2nd Half'" & Me.GetBudgetYear() '"Forecast 2nd Half'" & Me.GetBudgetYear()
+                lblSum3.Text = "Forecast 2nd Half'" & Me.GetBudgetYear() '"Forecast 2nd Half'" & Me.GetBudgetYear()
                 lblSum4.Text = "Original 2nd Half'" & Me.GetBudgetYear()
                 lblSum5.Text = "Diff 1st Half'" & Me.GetBudgetYear()
                 lblSum6.Text = "Diff 2nd Half'" & Me.GetBudgetYear()
@@ -2134,7 +2134,7 @@ Public Class frmBG0200
                 lblSum1Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                 lblSum3Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                 lblSum7Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
-                lblSum9Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
+                'lblSum9Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
 
                 returnvalue = CType(grvBudget3.DataSource, DataTable).DefaultView.Table.Compute("sum(Est1H)", strFilter)
                 If returnvalue.ToString <> "" Then
