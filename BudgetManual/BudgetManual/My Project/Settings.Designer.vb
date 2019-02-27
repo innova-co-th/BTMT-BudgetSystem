@@ -123,8 +123,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=PC-SIRIPORN;Initial Catalog=BUDGET_BTMT_DEV;Persist Security Info=Tru"& _ 
-            "e;User ID=sa;Password=abc123$1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=10.30.99.232;Initial Catalog=BUDGET;Persist Security Info=True;User I"& _ 
+            "D=sa;Password=P@ssw0rd")>  _
         Public ReadOnly Property BUDGETConnectionString() As String
             Get
                 Return CType(Me("BUDGETConnectionString"),String)
@@ -133,7 +133,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("MASHIMARO2\SQLEXPRESS2014")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10.30.99.232")>  _
         Public ReadOnly Property ServerName() As String
             Get
                 Return CType(Me("ServerName"),String)
@@ -142,7 +142,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("abc123$1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("P@ssw0rd")>  _
         Public ReadOnly Property Password() As String
             Get
                 Return CType(Me("Password"),String)
@@ -151,8 +151,8 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("user id=sa; data source=PC-SIRIPORN; persist security info=True; initial catalog="& _ 
-            "BUDGET_BTMT_DEV;password=abc123$1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("user id=sa; data source=10.30.99.232; persist security info=True; initial catalog"& _ 
+            "=BUDGET;password=P@ssw0rd")>  _
         Public ReadOnly Property ConnStr() As String
             Get
                 Return CType(Me("ConnStr"),String)
@@ -161,7 +161,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("BUDGET_BTMT_DEV")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("BUDGET")>  _
         Public ReadOnly Property DatabaseName() As String
             Get
                 Return CType(Me("DatabaseName"),String)
