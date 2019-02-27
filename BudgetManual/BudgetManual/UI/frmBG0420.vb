@@ -548,7 +548,12 @@ Public Class frmBG0420
             End If
 
             xSt = CType(xBk.ActiveSheet, Excel.Worksheet)
-            xSt.Name = dsData.Tables(intSheetCount).TableName
+            If dsData.Tables(intSheetCount).TableName = "REVISE_BUDGET" Then
+                xSt.Name = "Forecast Budget"
+            Else
+                xSt.Name = dsData.Tables(intSheetCount).TableName
+            End If
+
 
             '//Setup DataColumn
             For i As Integer = 0 To dtColumns.Rows.Count - 1
