@@ -74,15 +74,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Description :")>  _
-        Public ReadOnly Property ProgramDesc() As String
-            Get
-                Return CType(Me("ProgramDesc"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("sa")>  _
         Public ReadOnly Property Username() As String
             Get
@@ -165,6 +156,15 @@ Namespace My
         Public ReadOnly Property DatabaseName() As String
             Get
                 Return CType(Me("DatabaseName"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Description : Edit lines in a report (Summary by PIC)")>  _
+        Public ReadOnly Property ProgramDesc() As String
+            Get
+                Return CType(Me("ProgramDesc"),String)
             End Get
         End Property
     End Class
