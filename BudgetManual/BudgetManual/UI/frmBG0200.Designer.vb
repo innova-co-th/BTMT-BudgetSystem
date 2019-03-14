@@ -4149,17 +4149,23 @@ Partial Class frmBG0200
         '
         'g2col23
         '
+        Me.g2col23.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g2col23.DataPropertyName = "OriginalTotal"
         Me.g2col23.HeaderText = "Original Year"
+        Me.g2col23.MinimumWidth = 30
         Me.g2col23.Name = "g2col23"
-        Me.g2col23.Width = 85
+        Me.g2col23.ReadOnly = True
+        Me.g2col23.Width = 50
         '
         'g2col24
         '
+        Me.g2col24.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
         Me.g2col24.DataPropertyName = "DiffOriginal"
         Me.g2col24.HeaderText = "Diff Year"
+        Me.g2col24.MinimumWidth = 30
         Me.g2col24.Name = "g2col24"
-        Me.g2col24.Width = 68
+        Me.g2col24.ReadOnly = True
+        Me.g2col24.Width = 50
         '
         'g2col17
         '

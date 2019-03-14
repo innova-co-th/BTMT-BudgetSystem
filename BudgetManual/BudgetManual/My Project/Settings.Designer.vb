@@ -161,7 +161,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Description : Edit lines in a report (Summary by PIC)")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Description : Set autosize mode for Budget Journal Screen(Estimate Type)")>  _
         Public ReadOnly Property ProgramDesc() As String
             Get
                 Return CType(Me("ProgramDesc"),String)
