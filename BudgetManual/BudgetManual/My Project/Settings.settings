@@ -41,7 +41,7 @@
       <Value Profile="(Default)">BUDGET</Value>
     </Setting>
     <Setting Name="ProgramDesc" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Description : Set autosize mode for Budget Journal Screen(Estimate Type)</Value>
+      <Value Profile="(Default)">Description : Edit lines in a report (Summary by PIC)</Value>
     </Setting>
   </Settings>
 </SettingsFile>
