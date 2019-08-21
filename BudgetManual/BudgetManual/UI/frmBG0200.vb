@@ -1263,7 +1263,7 @@ Public Class frmBG0200
             lblRevNo.Text = myClsBG0200BL.RevNo
 
             If myClsBG0200BL.Status = CStr(enumBudgetStatus.Submit) Then
-                lblStatus.Text = "Summitted"
+                lblStatus.Text = "Submitted"
 
             ElseIf myClsBG0200BL.Status = CStr(enumBudgetStatus.Approve) Then
                 lblStatus.Text = "Approved"
