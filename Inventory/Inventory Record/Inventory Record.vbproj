@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F06AA397-5711-4D1F-9330-DD79ED289DD0}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>BigHouse.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Inventory Record</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>Inventory_Record</RootNamespace>
+    <StartupObject>Inventory_Record.FrmMain</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>Inventory Record.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>Inventory Record.xml</DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>none</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="Inventory Tag">
+      <Name>Inventory Tag</Name>
+      <HintPath>..\Inventory Tag\bin\Inventory Tag.dll</HintPath>
+    </Reference>
+    <Reference Include="Login">
+      <Name>Login</Name>
+      <HintPath>..\Inventory Tag\bin\Login.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Name>System.Web.Services</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Calculate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Class1.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="common.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Dataset1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dataset1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAddBSJ.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddCompound.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddCvt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddDept.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddGreenTire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddLoc.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddPerRHC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddPigment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddPreSemi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddRHC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddRM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddSemi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddTypeMaterial.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAddUnit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBSJ.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCALMaster.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompound.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCVT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDept.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEditPigment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGreenTire.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLevelCompound.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLOC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPerRHC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPIGMENT.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPreSemi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPvRptTag.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRHC.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRMPrice.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRMQty.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSemi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmType.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTypeMaterial.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmUnit.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Content Include="BigHouse.ico" />
+    <Content Include="Dataset1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Dataset1.Designer.vb</LastGenOutput>
+    </Content>
+    <Content Include="Tag.ico" />
+    <EmbeddedResource Include="Calculate.resx">
+      <DependentUpon>Calculate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddBSJ.resx">
+      <DependentUpon>FrmAddBSJ.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddCompound.resx">
+      <DependentUpon>FrmAddCompound.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddCvt.resx">
+      <DependentUpon>FrmAddCvt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddDept.resx">
+      <DependentUpon>FrmAddDept.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddGreenTire.resx">
+      <DependentUpon>FrmAddGreenTire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddLoc.resx">
+      <DependentUpon>FrmAddLoc.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddPerRHC.resx">
+      <DependentUpon>FrmAddPerRHC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddPigment.resx">
+      <DependentUpon>FrmAddPigment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddPreSemi.resx">
+      <DependentUpon>FrmAddPreSemi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddRHC.resx">
+      <DependentUpon>FrmAddRHC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddRM.resx">
+      <DependentUpon>FrmAddRM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddSemi.resx">
+      <DependentUpon>FrmAddSemi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddType.resx">
+      <DependentUpon>FrmAddType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddTypeMaterial.resx">
+      <DependentUpon>FrmAddTypeMaterial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAddUnit.resx">
+      <DependentUpon>FrmAddUnit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBSJ.resx">
+      <DependentUpon>FrmBSJ.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCALMaster.resx">
+      <DependentUpon>FrmCALMaster.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompound.resx">
+      <DependentUpon>FrmCompound.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCVT.resx">
+      <DependentUpon>FrmCVT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDept.resx">
+      <DependentUpon>FrmDept.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEditPigment.resx">
+      <DependentUpon>FrmEditPigment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGreenTire.resx">
+      <DependentUpon>FrmGreenTire.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLevelCompound.resx">
+      <DependentUpon>FrmLevelCompound.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLOC.resx">
+      <DependentUpon>FrmLOC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPerRHC.resx">
+      <DependentUpon>FrmPerRHC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPIGMENT.resx">
+      <DependentUpon>FrmPIGMENT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPreSemi.resx">
+      <DependentUpon>FrmPreSemi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPvRptTag.resx">
+      <DependentUpon>frmPvRptTag.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRHC.resx">
+      <DependentUpon>FrmRHC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRM.resx">
+      <DependentUpon>FrmRM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRMPrice.resx">
+      <DependentUpon>FrmRMPrice.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRMQty.resx">
+      <DependentUpon>FrmRMQty.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSemi.resx">
+      <DependentUpon>FrmSemi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmType.resx">
+      <DependentUpon>FrmType.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTypeMaterial.resx">
+      <DependentUpon>FrmTypeMaterial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmUnit.resx">
+      <DependentUpon>FrmUnit.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="Dataset1.xsc">
+      <DependentUpon>Dataset1.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset1.xss">
+      <DependentUpon>Dataset1.xsd</DependentUpon>
+    </None>
+    <None Include="Dataset1.xsx">
+      <DependentUpon>Dataset1.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{CF845C55-C321-4742-B673-E6212D061ED9}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

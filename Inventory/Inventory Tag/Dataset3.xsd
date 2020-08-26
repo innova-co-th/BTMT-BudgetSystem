@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="Dataset3" targetNamespace="http://tempuri.org/Dataset3.xsd" elementFormDefault="qualified"
+	attributeFormDefault="qualified" xmlns="http://tempuri.org/Dataset3.xsd" xmlns:mstns="http://tempuri.org/Dataset3.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xs:element name="Dataset3" msdata:IsDataSet="true">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="tbl_trx">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="tagno" type="xs:string" minOccurs="0" />
+							<xs:element name="period" type="xs:string" minOccurs="0" />
+							<xs:element name="trxyear" type="xs:string" minOccurs="0" />
+							<xs:element name="Typecode" type="xs:string" minOccurs="0" />
+							<xs:element name="Typename" type="xs:string" minOccurs="0" />
+							<xs:element name="location" type="xs:string" minOccurs="0" />
+							<xs:element name="DeptName" type="xs:string" minOccurs="0" />
+							<xs:element name="Userid" type="xs:string" minOccurs="0" />
+							<xs:element name="ename" type="xs:string" minOccurs="0" />
+							<xs:element name="code" type="xs:string" minOccurs="0" />
+							<xs:element name="Qty" type="xs:double" minOccurs="0" />
+							<xs:element name="uom" type="xs:string" minOccurs="0" />
+							<xs:element name="materialType" type="xs:string" minOccurs="0" />
+							<xs:element name="zQty" type="xs:double" minOccurs="0" />
+							<xs:element name="UQty" type="xs:double" minOccurs="0" />
+							<xs:element name="stdUt" type="xs:double" minOccurs="0" />
+							<xs:element name="actUt" type="xs:double" minOccurs="0" />
+							<xs:element name="astdUt" type="xs:double" minOccurs="0" />
+							<xs:element name="aactUt" type="xs:double" minOccurs="0" />
+							<xs:element name="kQty" type="xs:double" minOccurs="0" />
+							<xs:element name="stdKg" type="xs:double" minOccurs="0" />
+							<xs:element name="actKg" type="xs:double" minOccurs="0" />
+							<xs:element name="astdKg" type="xs:double" minOccurs="0" />
+							<xs:element name="aactKg" type="xs:double" minOccurs="0" />
+							<xs:element name="MName" type="xs:string" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

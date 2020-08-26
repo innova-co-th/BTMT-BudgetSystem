@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="Dataset4" targetNamespace="http://tempuri.org/Dataset4.xsd" elementFormDefault="qualified"
+	attributeFormDefault="qualified" xmlns="http://tempuri.org/Dataset4.xsd" xmlns:mstns="http://tempuri.org/Dataset4.xsd"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+	<xs:element name="Dataset4" msdata:IsDataSet="true">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="TBL_GROUP">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="code" type="xs:string" minOccurs="0" />
+							<xs:element name="typecode" type="xs:string" minOccurs="0" />
+							<xs:element name="typename" type="xs:string" minOccurs="0" />
+							<xs:element name="location" type="xs:string" minOccurs="0" />
+							<xs:element name="deptname" type="xs:string" minOccurs="0" />
+							<xs:element name="trxyear" type="xs:string" minOccurs="0" />
+							<xs:element name="Period" type="xs:string" minOccurs="0" />
+							<xs:element name="Uom" type="xs:string" minOccurs="0" />
+							<xs:element name="MName" type="xs:string" minOccurs="0" />
+							<xs:element name="UQty" type="xs:double" minOccurs="0" />
+							<xs:element name="zQty" type="xs:double" minOccurs="0" />
+							<xs:element name="stdut" type="xs:double" minOccurs="0" />
+							<xs:element name="actut" type="xs:double" minOccurs="0" />
+							<xs:element name="astdUt" type="xs:double" minOccurs="0" />
+							<xs:element name="aactut" type="xs:double" minOccurs="0" />
+							<xs:element name="kQty" type="xs:double" minOccurs="0" />
+							<xs:element name="stdkg" type="xs:double" minOccurs="0" />
+							<xs:element name="actkg" type="xs:double" minOccurs="0" />
+							<xs:element name="astdkg" type="xs:double" minOccurs="0" />
+							<xs:element name="aactkg" type="xs:double" minOccurs="0" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
