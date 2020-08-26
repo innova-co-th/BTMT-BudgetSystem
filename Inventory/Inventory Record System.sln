@@ -18,28 +18,52 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D74529A9-083B-4393-A1AD-78C37C58E6EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D74529A9-083B-4393-A1AD-78C37C58E6EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D74529A9-083B-4393-A1AD-78C37C58E6EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D74529A9-083B-4393-A1AD-78C37C58E6EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Debug|Any CPU.ActiveCfg = Debug
-		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Debug|Any CPU.Build.0 = Debug
-		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Release|Any CPU.ActiveCfg = Release
-		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Release|Any CPU.Build.0 = Release
-		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Debug|Any CPU.ActiveCfg = Debug
-		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Debug|Any CPU.Build.0 = Debug
-		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Release|Any CPU.ActiveCfg = Release
-		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Release|Any CPU.Build.0 = Release
 		{F06AA397-5711-4D1F-9330-DD79ED289DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F06AA397-5711-4D1F-9330-DD79ED289DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F06AA397-5711-4D1F-9330-DD79ED289DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F06AA397-5711-4D1F-9330-DD79ED289DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Debug|Any CPU.ActiveCfg = Debug
+		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Debug|Any CPU.Build.0 = Debug
+		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Release|Any CPU.ActiveCfg = Release
+		{0ABA3039-8997-4AFD-8BAC-813D1E758060}.Release|Any CPU.Build.0 = Release
+		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E82710ED-50AE-4571-8CB3-84C478859F1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Debug|Any CPU.ActiveCfg = Debug
+		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Debug|Any CPU.Build.0 = Debug
+		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Release|Any CPU.ActiveCfg = Release
+		{A3A396B1-D97D-4FE5-89B1-F57EF981B8AC}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2F3CDB2-3192-4B57-88DA-D96D21CAF48E}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.innova.co.th:8080/tfs/japanese
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Login\\Login.vbproj
+		SccProjectName1 = Login
+		SccLocalPath1 = Login
+		SccProjectUniqueName2 = Inventory\u0020Record\\Inventory\u0020Record.vbproj
+		SccProjectName2 = Inventory\u0020Record
+		SccLocalPath2 = Inventory\u0020Record
+		SccProjectUniqueName3 = Inventory\u0020Record\u0020Setup\\Inventory.vdproj
+		SccProjectName3 = Inventory\u0020Record\u0020Setup
+		SccLocalPath3 = Inventory\u0020Record\u0020Setup
+		SccProjectUniqueName4 = Inventory\u0020Tag\\Inventory\u0020Tag.vbproj
+		SccProjectName4 = Inventory\u0020Tag
+		SccLocalPath4 = Inventory\u0020Tag
+		SccProjectUniqueName5 = Inventory\u0020Tag\u0020Setup\\TAG.vdproj
+		SccProjectName5 = Inventory\u0020Tag\u0020Setup
+		SccLocalPath5 = Inventory\u0020Tag\u0020Setup
 	EndGlobalSection
 EndGlobal
