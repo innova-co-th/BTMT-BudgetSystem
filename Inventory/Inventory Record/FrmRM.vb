@@ -6,6 +6,7 @@ Imports System.Drawing.Color
 Imports System.Drawing.Image
 Imports System.Drawing.Printing
 Imports Inventory_Record.Common
+Imports Excel = Microsoft.Office.Interop.Excel
 #End Region
 
 Public Class FrmRM
@@ -66,21 +67,21 @@ Public Class FrmRM
     Friend WithEvents CmbType As System.Windows.Forms.ComboBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmRM))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridRM = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.TxtName = New System.Windows.Forms.TextBox
-        Me.CmdView = New System.Windows.Forms.Button
-        Me.BtDel = New System.Windows.Forms.Button
-        Me.Txtcode = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.ChkType = New System.Windows.Forms.CheckBox
-        Me.CmbType = New System.Windows.Forms.ComboBox
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridRM = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TxtName = New System.Windows.Forms.TextBox()
+        Me.CmdView = New System.Windows.Forms.Button()
+        Me.BtDel = New System.Windows.Forms.Button()
+        Me.Txtcode = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.ChkType = New System.Windows.Forms.CheckBox()
+        Me.CmbType = New System.Windows.Forms.ComboBox()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -88,8 +89,8 @@ Public Class FrmRM
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridRM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
@@ -277,6 +278,7 @@ Public Class FrmRM
     Dim StrSQL As String
     Dim oldrow As Integer
     Dim C1 As New SQLData("ACCINV")
+    Dim DialogFileExtension As String = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
 #End Region
 
 #Region "COMBOBOX"
@@ -301,27 +303,32 @@ Public Class FrmRM
         dt.TableName = TBL_Type
         GrdDVType = dt.DefaultView
         '************************************
-        cmbType.DisplayMember = "Typename"
-        cmbType.ValueMember = "TypeCode"
-        cmbType.DataSource = dt
+        CmbType.DisplayMember = "Typename"
+        CmbType.ValueMember = "TypeCode"
+        CmbType.DataSource = dt
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 #End Region
 
 #Region "Function_Load"
+    Private Sub FrmRM_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadCmbType()
+        LoadRM()
+    End Sub
+
     Private Sub LoadRM()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "   SELECT   rm.Typecode,Typename,rm.RMCode,descName,stdPrice,ActPrice,ut.unitcode, " & _
-                " shortUnitName,UnitName,isnull(RMQty,'0.000') as Qty ,isnull(Qty,'0.00') as Qunit " & _
-                " ,Qunit as unit  FROM   TBLRM rm " & _
-                " left outer join  TBLUNIT ut " & _
-                " on rm.unit = ut.unitcode " & _
-                " left outer join  TBLQTYUNIT qt " & _
-                "  on rm.RMCode = qt.RMCode" & _
-                " left outer join " & _
-                " TBLType t " & _
-                " on rm.Typecode = t.Typecode " & _
+        StrSQL = "   SELECT   rm.Typecode,Typename,rm.RMCode,descName,stdPrice,ActPrice,ut.unitcode, " &
+                " shortUnitName,UnitName,isnull(RMQty,'0.000') as Qty ,isnull(Qty,'0.00') as Qunit " &
+                " ,Qunit as unit  FROM   TBLRM rm " &
+                " left outer join  TBLUNIT ut " &
+                " on rm.unit = ut.unitcode " &
+                " left outer join  TBLQTYUNIT qt " &
+                "  on rm.RMCode = qt.RMCode" &
+                " left outer join " &
+                " TBLType t " &
+                " on rm.Typecode = t.Typecode " &
                 " order by Typename,descName,rm. Rmcode"
 
         If Not DT Is Nothing Then
@@ -471,7 +478,7 @@ Public Class FrmRM
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle0, grdColStyle1, grdColStyle2, grdColStyle5_0, grdColStyle5, _
+    {grdColStyle0, grdColStyle1, grdColStyle2, grdColStyle5_0, grdColStyle5,
     grdColStyle6, grdColStyle7, grdColStyle3, grdColStyle4})
 
         DataGridRM.TableStyles.Add(grdTableStyle1)
@@ -500,74 +507,6 @@ Public Class FrmRM
         End With
     End Sub
 #End Region
-
-    Private Sub FrmRM_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadCmbType()
-        LoadRM()
-    End Sub
-
-    Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
-        Me.Close()
-    End Sub
-
-    Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
-        Dim faddRM As New FrmAddRM
-        faddRM.CmdSave.Text = "Edit"
-        faddRM.TxtName.Text = GrdDV.Item(oldrow).Row("RMCode")
-        faddRM.TxtName.Enabled = False
-        faddRM.TxtDesc.Text = GrdDV.Item(oldrow).Row("DescName")
-        faddRM.TxtSPrice.Text = GrdDV.Item(oldrow).Row("StdPrice")
-        faddRM.TxtAPrice.Text = GrdDV.Item(oldrow).Row("ActPrice")
-        faddRM.unittext = GrdDV.Item(oldrow).Row("Unitname")
-        faddRM.unitcode = GrdDV.Item(oldrow).Row("Unitcode")
-        faddRM.TxtQty.Text = GrdDV.Item(oldrow).Row("QUnit")
-        faddRM.TxtRMQty.Text = GrdDV.Item(oldrow).Row("QTY")
-        faddRM.ShowDialog()
-        LoadRM()
-        View()
-    End Sub
-
-    Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
-        Dim faddRM As New FrmAddRM
-        faddRM.CmdSave.Text = "Save"
-        faddRM.ShowDialog()
-        LoadRM()
-        View()
-    End Sub
-
-    Private Sub DataGridRM_CurrentCellChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.CurrentCellChanged
-        oldrow = DataGridRM.CurrentCell.RowNumber
-    End Sub
-
-
-    Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
-        View()
-    End Sub
-
-    Private Sub BtDel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtDel.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
-        Dim response As MsgBoxResult
-        msg = "Delete R/M Meterial :" & GrdDV.Item(oldrow).Row("RMCode") ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "R/M Warehouse"   ' Define title.
-
-        response = MsgBox(msg, style, title)
-        If response = MsgBoxResult.Yes Then ' User chose Yes.
-            If ChkData() Then
-                MsgBox("It's have Usage , Can't Delete. Please contact IS.", MsgBoxStyle.Information, "Delete R/M ")
-            Else
-                DelRM()
-            End If
-        Else
-            Exit Sub
-        End If
-        LoadRM()
-        GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'"
-        DataGridRM.DataSource = GrdDV
-    End Sub
 
 #Region "RM"
     Private Function ChkData() As Boolean
@@ -633,6 +572,83 @@ Public Class FrmRM
     End Sub
 #End Region
 
+    Sub View()
+        If ChkType.Checked = True Then
+            GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'" _
+                            & " and RMcode like'%" & Txtcode.Text.Trim & "%'" _
+                            & " and Typecode like'%" & CmbType.SelectedValue & "%'"
+            DataGridRM.DataSource = GrdDV
+        Else
+            GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'" _
+                                       & " and RMcode like'%" & Txtcode.Text.Trim & "%'"
+            DataGridRM.DataSource = GrdDV
+        End If
+    End Sub
+
+#Region "Event"
+    Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
+        Me.Close()
+    End Sub
+
+    Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
+        Dim faddRM As New FrmAddRM
+        faddRM.CmdSave.Text = "Edit"
+        faddRM.TxtName.Text = GrdDV.Item(oldrow).Row("RMCode")
+        faddRM.TxtName.Enabled = False
+        faddRM.TxtDesc.Text = GrdDV.Item(oldrow).Row("DescName")
+        faddRM.TxtSPrice.Text = GrdDV.Item(oldrow).Row("StdPrice")
+        faddRM.TxtAPrice.Text = GrdDV.Item(oldrow).Row("ActPrice")
+        faddRM.unittext = GrdDV.Item(oldrow).Row("Unitname")
+        faddRM.unitcode = GrdDV.Item(oldrow).Row("Unitcode")
+        faddRM.TxtQty.Text = GrdDV.Item(oldrow).Row("QUnit")
+        faddRM.TxtRMQty.Text = GrdDV.Item(oldrow).Row("QTY")
+        faddRM.ShowDialog()
+        LoadRM()
+        View()
+    End Sub
+
+    Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
+        Dim faddRM As New FrmAddRM
+        faddRM.CmdSave.Text = "Save"
+        faddRM.ShowDialog()
+        LoadRM()
+        View()
+    End Sub
+
+    Private Sub DataGridRM_CurrentCellChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.CurrentCellChanged
+        oldrow = DataGridRM.CurrentCell.RowNumber
+    End Sub
+
+
+    Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
+        View()
+    End Sub
+
+    Private Sub BtDel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtDel.Click
+        Dim msg As String
+        Dim title As String
+        Dim style As MsgBoxStyle
+        Dim response As MsgBoxResult
+        msg = "Delete R/M Meterial :" & GrdDV.Item(oldrow).Row("RMCode") ' Define message.
+        style = MsgBoxStyle.DefaultButton2 Or
+           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        title = "R/M Warehouse"   ' Define title.
+
+        response = MsgBox(msg, style, title)
+        If response = MsgBoxResult.Yes Then ' User chose Yes.
+            If ChkData() Then
+                MsgBox("It's have Usage , Can't Delete. Please contact IS.", MsgBoxStyle.Information, "Delete R/M ")
+            Else
+                DelRM()
+            End If
+        Else
+            Exit Sub
+        End If
+        LoadRM()
+        GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'"
+        DataGridRM.DataSource = GrdDV
+    End Sub
+
     Private Sub DataGridRM_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.DoubleClick
         Dim faddRM As New FrmAddRM
         faddRM.CmdSave.Text = "Edit"
@@ -653,18 +669,6 @@ Public Class FrmRM
 
     Private Sub ChkType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkType.CheckedChanged
         View()
-    End Sub
-    Sub View()
-        If ChkType.Checked = True Then
-            GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'" _
-                            & " and RMcode like'%" & Txtcode.Text.Trim & "%'" _
-                            & " and Typecode like'%" & CmbType.SelectedValue & "%'"
-            DataGridRM.DataSource = GrdDV
-        Else
-            GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'" _
-                                       & " and RMcode like'%" & Txtcode.Text.Trim & "%'"
-            DataGridRM.DataSource = GrdDV
-        End If
     End Sub
 
     Private Sub CmbType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbType.SelectedIndexChanged
@@ -697,5 +701,83 @@ Public Class FrmRM
                 SendKeys.Send("{TAB}")
             Case Else
         End Select
+    End Sub
+
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim xlApp As Excel.Application = New Microsoft.Office.Interop.Excel.Application()
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = DialogFileExtension
+        }
+        Dim openFile As String = String.Empty
+
+        If xlApp Is Nothing Then
+            MessageBox.Show("Excel is not properly installed!!")
+            Return
+        End If
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            Dim xlWorkBook As Excel.Workbook
+            Dim xlWorkSheet As Excel.Worksheet
+
+            openFile = importDialog.FileName
+            xlWorkBook = xlApp.Workbooks.Open(openFile)
+            xlWorkSheet = xlWorkBook.Worksheets("sheet1")
+            'display the cells value B2
+            MsgBox(xlWorkSheet.Cells(2, 2).value)
+            'edit the cell with new value
+            xlWorkSheet.Cells(2, 2) = "http://vb.net-informations.com"
+            xlWorkBook.Close()
+
+            ReleaseObject(xlWorkBook)
+            ReleaseObject(xlWorkSheet)
+        End If
+
+        xlApp.Quit()
+        ReleaseObject(xlApp)
+    End Sub
+
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim xlApp As Excel.Application = New Microsoft.Office.Interop.Excel.Application()
+        Dim exportDialog As SaveFileDialog = New SaveFileDialog With {
+            .Filter = DialogFileExtension
+        }
+        Dim saveFile As String = String.Empty
+
+        If xlApp Is Nothing Then
+            MessageBox.Show("Excel is not properly installed!!")
+            Return
+        End If
+
+        If exportDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            Dim xlWorkBook As Excel.Workbook
+            Dim xlWorkSheet As Excel.Worksheet
+            Dim misValue As Object = System.Reflection.Missing.Value
+
+            saveFile = exportDialog.FileName
+            xlWorkBook = xlApp.Workbooks.Add(misValue)
+            xlWorkSheet = xlWorkBook.Sheets("sheet1")
+            xlWorkSheet.Cells(1, 1) = "Sheet 1 content"
+
+            'xlWorkBook.SaveAs("d:\csharp-Excel.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
+            xlWorkBook.Close(True, misValue, misValue)
+
+            ReleaseObject(xlWorkSheet)
+            ReleaseObject(xlWorkBook)
+        End If
+
+        xlApp.Quit()
+        releaseObject(xlApp)
+    End Sub
+#End Region
+
+    Private Sub ReleaseObject(ByVal obj As Object)
+        Try
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
+            obj = Nothing
+        Catch ex As Exception
+            obj = Nothing
+        Finally
+            GC.Collect()
+        End Try
     End Sub
 End Class
