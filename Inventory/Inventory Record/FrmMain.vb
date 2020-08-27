@@ -620,7 +620,17 @@ Public Class FrmMain
 
 #End Region
 
+    Private Delegate Sub DisposeDelegate()
+
     Private Sub FrmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        'Check splash screen
+        If My.Application.SplashScreen IsNot Nothing Then
+            Dim splashScreenDispose As New DisposeDelegate(AddressOf My.Application.SplashScreen.Dispose)
+            My.Application.SplashScreen.Invoke(splashScreenDispose)
+            Me.Activate() 'Focus main screen
+        End If
+
+        'Authentication
         Dim flog As New FrmLogin
         flog.ShowDialog()
         If flog.EmpID <> String.Empty Then
@@ -632,6 +642,7 @@ Public Class FrmMain
             Me.Close()
         End If
 
+        'Check level usage
         Select Case CurrentLevel
             Case "Administrator"
                 MenuCalculate.Visible = True

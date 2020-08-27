@@ -223,7 +223,17 @@ Public Class FrmInvTag
         Me.Close()
     End Sub
 
+    Private Delegate Sub DisposeDelegate()
+
     Private Sub FrmInvTag_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        'Check splash screen
+        If My.Application.SplashScreen IsNot Nothing Then
+            Dim splashScreenDispose As New DisposeDelegate(AddressOf My.Application.SplashScreen.Dispose)
+            My.Application.SplashScreen.Invoke(splashScreenDispose)
+            Me.Activate() 'Focus main screen
+        End If
+
+        'Authentication
         Dim flog As New FrmLogin
         flog.ShowDialog()
         If flog.EmpID <> String.Empty Then
