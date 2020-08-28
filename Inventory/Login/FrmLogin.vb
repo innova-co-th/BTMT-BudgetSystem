@@ -187,9 +187,21 @@ Public Class FrmLogin
 #End Region
 
 #Region "Property"
-    Public ReadOnly Property EmpIDValue As String
-    Public ReadOnly Property EmpNameValue As String
-    Public ReadOnly Property LevelUsageValue As String
+    Public ReadOnly Property EmpIDValue() As String
+        Get
+            Return EmpID
+        End Get
+    End Property
+    Public ReadOnly Property EmpNameValue() As String
+        Get
+            Return EmpName
+        End Get
+    End Property
+    Public ReadOnly Property LevelUsageValue() As String
+        Get
+            Return LevelUsage
+        End Get
+    End Property
 
 #End Region
     Private Sub BtmClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtmClose.Click
