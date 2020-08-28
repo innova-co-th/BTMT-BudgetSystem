@@ -5,6 +5,7 @@ Imports System.Windows.Forms
 Imports System.Drawing.Color
 Imports System.Drawing.Image
 Imports System.Drawing.Printing
+Imports System.Globalization
 Imports Inventory_Tag.Common
 Imports Inventory_Tag.FrmInvTag
 #End Region
@@ -1012,11 +1013,23 @@ Public Class FrmAdd
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction
         cmd.Transaction = t1
-        Dim strDate(), strDate2(), strDate3() As String
+        'Dim strDate(), strDate2(), strDate3() As String    'Comment Beam 28-Aug-2020
+        Dim strDate2(), strDate3() As String                'Add Beam 28-Aug-2020
         Dim strTime As String
-        strDate = Split(Date.Now.ToShortDateString, "/")
+
+        '//Modify date format Beam 28-Aug-2020 --------------------
+        'strDate = Split(Date.Now.ToShortDateString, "/")
+        'strTime = Date.Now.ToShortTimeString
+
+        Dim strDateEN As Date
+        strDateEN = Date.Now.ToShortDateString.ToString(New CultureInfo("en-US"))
+        Dim strTrxDate As String = String.Empty
+        strTrxDate = strDateEN.Year.ToString("D4") & strDateEN.Month.ToString("D2") & strDateEN.Day.ToString("D2")
+
+        strTime = Date.Now.ToString("HH:mm:ss")
+        '//End Modify date format Beam 28-Aug-2020 ----------------
+
         strDate2 = Split(DateTime1.Text.Trim, "/")
-        strTime = Date.Now.ToShortTimeString
         Dim Period As String
         Dim Ytrx As Integer
         If RB1.Checked = True Then
@@ -1054,7 +1067,10 @@ Public Class FrmAdd
                         strsql += "," & PrepareStr(Mid(cmbLoc.Text.Trim, 1, 4))
                         strsql += "," & PrepareStr(.Item("Qty"))
                         strsql += "," & PrepareStr(.Item("Unit"))
-                        strsql += "," & PrepareStr(strDate(2) + strDate(1) + strDate(0))
+
+                        'strsql += "," & PrepareStr(strDate(2) + strDate(1) + strDate(0))   'Comment by Beam 28-Aug-2020
+                        strsql += "," & PrepareStr(strTrxDate)                              'Change to this by Beam 28-Aug-2020
+
                         strsql += "," & PrepareStr(strTime)
                         strsql += "," & PrepareStr(CurrentIDUser.Trim)
                         strsql += "," & PrepareStr(TxtRemark.Text.Trim)
