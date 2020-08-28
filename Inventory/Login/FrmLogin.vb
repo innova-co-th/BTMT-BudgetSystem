@@ -186,6 +186,12 @@ Public Class FrmLogin
     Dim C1 As New SQLData()
 #End Region
 
+#Region "Property"
+    Public ReadOnly Property EmpIDValue As String
+    Public ReadOnly Property EmpNameValue As String
+    Public ReadOnly Property LevelUsageValue As String
+
+#End Region
     Private Sub BtmClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtmClose.Click
         Me.Close()
     End Sub
