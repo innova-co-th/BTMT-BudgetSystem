@@ -310,12 +310,14 @@ Public Class FrmRM
     End Sub
 #End Region
 
-#Region "Function_Load"
+#Region "Form Event"
     Private Sub FrmRM_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadCmbType()
         LoadRM()
     End Sub
+#End Region
 
+#Region "Function_Load"
     Private Sub LoadRM()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
@@ -476,11 +478,13 @@ Public Class FrmRM
             .ReadOnly = True
             .Alignment = HorizontalAlignment.Center
         End With
+
+        'Arrange column
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
     {grdColStyle0, grdColStyle1, grdColStyle2, grdColStyle5_0, grdColStyle5,
     grdColStyle6, grdColStyle7, grdColStyle3, grdColStyle4})
-
+        'Set column in DataGrid
         DataGridRM.TableStyles.Add(grdTableStyle1)
         Me.Cursor = System.Windows.Forms.Cursors.Default
 
@@ -585,7 +589,7 @@ Public Class FrmRM
         End If
     End Sub
 
-#Region "Event"
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -615,11 +619,6 @@ Public Class FrmRM
         View()
     End Sub
 
-    Private Sub DataGridRM_CurrentCellChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.CurrentCellChanged
-        oldrow = DataGridRM.CurrentCell.RowNumber
-    End Sub
-
-
     Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
         View()
     End Sub
@@ -647,6 +646,10 @@ Public Class FrmRM
         LoadRM()
         GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'"
         DataGridRM.DataSource = GrdDV
+    End Sub
+
+    Private Sub DataGridRM_CurrentCellChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.CurrentCellChanged
+        oldrow = DataGridRM.CurrentCell.RowNumber
     End Sub
 
     Private Sub DataGridRM_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.DoubleClick
@@ -704,7 +707,7 @@ Public Class FrmRM
     End Sub
 
     Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
-        Dim xlApp As Excel.Application = New Microsoft.Office.Interop.Excel.Application()
+        Dim xlApp As Excel.Application = New Excel.Application()
         Dim importDialog As OpenFileDialog = New OpenFileDialog With {
             .Filter = DialogFileExtension
         }
@@ -728,56 +731,104 @@ Public Class FrmRM
             xlWorkSheet.Cells(2, 2) = "http://vb.net-informations.com"
             xlWorkBook.Close()
 
-            ReleaseObject(xlWorkBook)
-            ReleaseObject(xlWorkSheet)
+            ExcelLib.ReleaseObject(xlWorkBook)
+            ExcelLib.ReleaseObject(xlWorkSheet)
         End If
 
         xlApp.Quit()
-        ReleaseObject(xlApp)
+        ExcelLib.ReleaseObject(xlApp)
     End Sub
 
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
-        Dim xlApp As Excel.Application = New Microsoft.Office.Interop.Excel.Application()
+        System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
+        Dim xlApp As Excel.Application = New Excel.Application()
+        Dim xlWorkBook As Excel.Workbook = xlApp.Workbooks.Add()
+        Dim xlWorkSheet As Excel.Worksheet = CType(xlWorkBook.Sheets("Sheet1"), Excel.Worksheet)
         Dim exportDialog As SaveFileDialog = New SaveFileDialog With {
             .Filter = DialogFileExtension
         }
-        Dim saveFile As String = String.Empty
+        Dim pathSaveFile As String = String.Empty
 
-        If xlApp Is Nothing Then
-            MessageBox.Show("Excel is not properly installed!!")
-            Return
-        End If
-
-        If exportDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            Dim xlWorkBook As Excel.Workbook
-            Dim xlWorkSheet As Excel.Worksheet
-            Dim misValue As Object = System.Reflection.Missing.Value
-
-            saveFile = exportDialog.FileName
-            xlWorkBook = xlApp.Workbooks.Add(misValue)
-            xlWorkSheet = xlWorkBook.Sheets("sheet1")
-            xlWorkSheet.Cells(1, 1) = "Sheet 1 content"
-
-            'xlWorkBook.SaveAs("d:\csharp-Excel.xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue)
-            xlWorkBook.Close(True, misValue, misValue)
-
-            ReleaseObject(xlWorkSheet)
-            ReleaseObject(xlWorkBook)
-        End If
-
-        xlApp.Quit()
-        releaseObject(xlApp)
-    End Sub
-#End Region
-
-    Private Sub ReleaseObject(ByVal obj As Object)
         Try
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
-            obj = Nothing
+            'Check number of record in DataGrid
+            If GrdDV.Count <= 0 Then
+                'Error
+                MessageBox.Show("Export error" & vbCrLf & "No data for export!!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Else
+                'Export excel
+                If exportDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                    Dim xlRange As Excel.Range
+                    Dim misValue As Object = Type.Missing
+                    Dim dtRec As DataTable = GrdDV.ToTable(TBL_RM)
+
+                    pathSaveFile = exportDialog.FileName
+                    xlWorkSheet.Name = "Master RM"
+
+                    Dim dtHead As DataGridTableStyle = DataGridRM.TableStyles(0) 'Header as DataGridRM
+                    Dim dtTemp As DataTable = New DataTable("RM Temp") 'Temporary datable
+
+                    'Create temporary datatable
+                    For j As Integer = 0 To dtHead.GridColumnStyles.OfType(Of DataGridColoredLine2).Count - 1
+                        If dtRec.Rows(0)(dtHead.GridColumnStyles.Item(j).MappingName).GetType().Equals(GetType(Decimal)) Then
+                            dtTemp.Columns.Add(dtHead.GridColumnStyles.Item(j).MappingName, GetType(Decimal))
+                        Else
+                            dtTemp.Columns.Add(dtHead.GridColumnStyles.Item(j).MappingName, GetType(String))
+                        End If
+                    Next
+
+                    'Set header
+                    For j As Integer = 1 To dtHead.GridColumnStyles.OfType(Of DataGridColoredLine2).Count
+                        xlWorkSheet.Cells(1, j) = dtHead.GridColumnStyles.Item(j - 1).HeaderText
+                    Next
+
+                    'Set data
+                    For i As Integer = 0 To dtRec.Rows.Count - 1
+                        Dim drData As DataRow = dtTemp.NewRow()
+                        For j As Integer = 0 To dtTemp.Columns.Count - 1
+                            drData(j) = dtRec.Rows(i)(dtTemp.Columns(j).ColumnName)
+                        Next
+                        dtTemp.Rows.Add(drData)
+                    Next i
+
+                    'Set range for data
+                    Dim c1 As Excel.Range = CType(xlWorkSheet.Cells(2, 1), Excel.Range)
+                    Dim c2 As Excel.Range = CType(xlWorkSheet.Cells(2 + dtTemp.Rows.Count - 1, dtTemp.Columns.Count), Excel.Range)
+                    xlRange = xlWorkSheet.Range(c1, c2)
+
+                    'Convert DataTable to Array Object
+                    xlRange.Value2 = ExcelLib.ConvertDatatableToObject(dtTemp)
+
+                    'Set autofit column
+                    c1 = CType(xlWorkSheet.Cells(1, 1), Excel.Range)
+                    c2 = CType(xlWorkSheet.Cells(1 + dtTemp.Rows.Count, dtTemp.Columns.Count), Excel.Range)
+                    xlRange = xlWorkSheet.Range(c1, c2)
+                    xlRange.Columns.AutoFit()
+
+                    'Set off for display alerts
+                    xlApp.DisplayAlerts = False
+                    'Save excel
+                    xlWorkBook.SaveAs(pathSaveFile, misValue, misValue, misValue, misValue, misValue, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, misValue, misValue, misValue, misValue, misValue)
+
+                    MessageBox.Show("Export complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+            End If 'If GrdDV.Count <= 0
+
         Catch ex As Exception
-            obj = Nothing
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
+            ExcelLib.ReleaseObject(xlWorkSheet)
+            xlWorkBook.Close(False)
+            ExcelLib.ReleaseObject(xlWorkBook)
+            xlApp.Quit()
+
+            Dim pid As Integer = 0
+            Dim a As Integer = ExcelLib.GetWindowThreadProcessId(xlApp.Hwnd, pid)
+            Dim p As Process = Process.GetProcessById(pid)
+            p.Kill()
+
+            ExcelLib.ReleaseObject(xlApp)
             GC.Collect()
         End Try
     End Sub
+#End Region
 End Class
