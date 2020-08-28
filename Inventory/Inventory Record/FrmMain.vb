@@ -633,7 +633,7 @@ Public Class FrmMain
         'Authentication
         Dim flog As New FrmLogin
         flog.ShowDialog()
-        If flog.EmpID <> String.Empty Then
+        If flog.EmpIDValue <> String.Empty Then
             Me.WindowState = FormWindowState.Maximized
             CurrentIDUser = Login.FrmLogin.EmpID
             CurrentName = Login.FrmLogin.EmpName
@@ -818,9 +818,9 @@ Public Class FrmMain
         Dim ftag As New FrmYearInvTag
         Dim finvtag As New FrmInvTag
         ftag.MdiParent = Me
-        finvtag.CurrentIDUser = Login.FrmLogin.EmpID
-        finvtag.CurrentName = Login.FrmLogin.EmpName
-        finvtag.CurrentLevel = Login.FrmLogin.LevelUsage
+        finvtag.CurrentIDUserValue = Login.FrmLogin.EmpID
+        finvtag.CurrentNameValue = Login.FrmLogin.EmpName
+        finvtag.CurrentLevelValue = Login.FrmLogin.LevelUsage
         ftag.Show()
     End Sub
 

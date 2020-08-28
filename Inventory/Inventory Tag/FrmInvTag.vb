@@ -27,6 +27,33 @@ Public Class FrmInvTag
     Public Shared CurrentLevel As String = String.Empty 'Variable for LevelUsage
 #End Region
 
+#Region "Property"
+    Public Property CurrentIDUserValue() As String
+        Get
+            Return CurrentIDUser
+        End Get
+        Set(value As String)
+            CurrentIDUser = value
+        End Set
+    End Property
+    Public Property CurrentNameValue() As String
+        Get
+            Return CurrentName
+        End Get
+        Set(value As String)
+            CurrentName = value
+        End Set
+    End Property
+    Public Property CurrentLevelValue() As String
+        Get
+            Return CurrentLevel
+        End Get
+        Set(value As String)
+            CurrentLevel = value
+        End Set
+    End Property
+#End Region
+
 #Region " Windows Form Designer generated code "
 
     Public Sub New()
@@ -226,7 +253,7 @@ Public Class FrmInvTag
     Private Delegate Sub DisposeDelegate()
 
     Private Sub FrmInvTag_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        'Check splash screen
+        'Check Splash screen
         If My.Application.SplashScreen IsNot Nothing Then
             Dim splashScreenDispose As New DisposeDelegate(AddressOf My.Application.SplashScreen.Dispose)
             My.Application.SplashScreen.Invoke(splashScreenDispose)
@@ -236,7 +263,7 @@ Public Class FrmInvTag
         'Authentication
         Dim flog As New FrmLogin
         flog.ShowDialog()
-        If flog.EmpID <> String.Empty Then
+        If flog.EmpIDValue <> String.Empty Then
             Me.WindowState = FormWindowState.Maximized
             CurrentIDUser = Login.FrmLogin.EmpID
             CurrentName = Login.FrmLogin.EmpName
@@ -271,7 +298,7 @@ Public Class FrmInvTag
             Me.Close()
         Else
             flog.ShowDialog()
-            If flog.EmpID <> "" Then
+            If flog.EmpIDValue <> "" Then
                 Me.WindowState = FormWindowState.Maximized
                 CurrentIDUser = Login.FrmLogin.EmpID
                 CurrentName = Login.FrmLogin.EmpName
