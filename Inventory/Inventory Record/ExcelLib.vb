@@ -18,6 +18,86 @@ Public Class ExcelLib
 
 #Region "Excel"
     ''' <summary>
+    ''' Import excel file to database
+    ''' </summary>
+    ''' <param name="pathOpenFile">Import file</param>
+    ''' <param name="frmParent">Parent form</param>
+    ''' <param name="DG">Data Grid</param>
+    ''' <param name="tableName">Table name</param>
+    Public Shared Sub Import(pathOpenFile As String, frmParent As Form, DG As DataGrid, tableName As String)
+        System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
+        Dim xlApp As Excel.Application = New Excel.Application()
+        Dim xlWorkBook As Excel.Workbook
+        Dim xlWorkSheet As Excel.Worksheet
+        Dim frmOverlay As New Form()
+
+        Try
+            'Create loading of overlay
+            Using frm As New Loading()
+                frmOverlay.StartPosition = FormStartPosition.Manual
+                frmOverlay.FormBorderStyle = FormBorderStyle.None
+                frmOverlay.Opacity = 0.5D
+                frmOverlay.BackColor = Color.Black
+                frmOverlay.WindowState = FormWindowState.Maximized
+                frmOverlay.TopMost = True
+                frmOverlay.Location = frmParent.Location
+                frmOverlay.ShowInTaskbar = False
+                'frmOverlay.Show()
+                frm.Owner = frmOverlay
+                ExcelLib.CenterForm(frm, frmParent)
+                frm.Show()
+
+                'Read data in Excel
+                xlWorkBook = xlApp.Workbooks.Open(pathOpenFile)
+                xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet) 'Get first sheet
+
+                Dim numRows As Integer = xlWorkSheet.UsedRange.Rows.Count
+                Dim numCols As Integer = xlWorkSheet.UsedRange.Columns.Count
+                Dim xlRange As Excel.Range
+                Dim arr As Object(,) = New Object(numRows, numCols) {}
+                Dim dtRec As New DataTable(tableName)
+
+                'Calculate the final column letter
+                Dim finalColLetter As String = String.Empty
+                Dim colCharset As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                Dim colCharsetLen As Integer = colCharset.Length
+
+                If numCols > colCharsetLen Then
+                    finalColLetter = colCharset.Substring((numCols - 1) \ colCharsetLen - 1, 1)
+                End If
+
+                finalColLetter += colCharset.Substring((numCols - 1) Mod colCharsetLen, 1)
+                xlRange = xlWorkSheet.Range("A1:" & finalColLetter & CStr(numCols))
+                arr(1, 1) = xlRange
+
+                '    'display the cells value B2
+                '    MsgBox(xlWorkSheet.Cells(2, 2).value)
+                '    'edit the cell with new value
+                '    xlWorkSheet.Cells(2, 2) = "http://vb.net-informations.com"
+
+                ReleaseObject(xlWorkSheet)
+                xlWorkBook.Close(False)
+                ReleaseObject(xlWorkBook)
+
+                frmOverlay.Dispose()
+            End Using 'Using frm
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            xlApp.Quit()
+            frmOverlay.Dispose()
+
+            Dim pid As Integer = 0
+            Dim a As Integer = GetWindowThreadProcessId(xlApp.Hwnd, pid)
+            Dim p As Process = Process.GetProcessById(pid)
+            p.Kill()
+
+            ReleaseObject(xlApp)
+            GC.Collect()
+        End Try
+    End Sub
+
+    ''' <summary>
     ''' Export data grid to export file
     ''' </summary>
     ''' <param name="frmParent">Parent Form</param>
@@ -161,7 +241,21 @@ Public Class ExcelLib
         Catch ex As Exception
             Return Nothing
         End Try
+    End Function
 
+    Private Shared Function ConvertArrayToDatatable(arr As Object(,)) As DataTable
+        Try
+            Dim dtRec As New DataTable()
+            For i As Integer = 0 To arr.GetLength(0)
+                For j As Integer = 0 To arr.GetLength(1)
+                    MsgBox(arr(i, j).ToString())
+                Next j
+            Next i
+
+            Return dtRec
+        Catch ex As Exception
+            Return Nothing
+        End Try
     End Function
 
     Private Shared Sub ReleaseObject(ByVal obj As Object)
