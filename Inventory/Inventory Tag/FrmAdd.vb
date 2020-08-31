@@ -522,7 +522,13 @@ Public Class FrmAdd
             cmbCode.Items.Add(objListType)
             i += 1
         Next
-        cmbCode.SelectedIndex = 0
+
+        'Modify error when cmbCode have no any item (By Beam 31-Aug-2020)------
+        'cmbCode.SelectedIndex = 0
+        If cmbCode.Items.Count > 0 Then
+            cmbCode.SelectedIndex = 0
+        End If
+        '----------------------------------------------------------------------
     End Sub
     Private Sub PopulateLocation()
         Dim objListType As ListType
@@ -547,6 +553,13 @@ Public Class FrmAdd
     End Sub
     Private Sub cmbType_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbType.SelectedIndexChanged
         PopulateTypeComboCode()
+
+        'Modify error when cmbCode have no any item (By Beam 31-Aug-2020)------
+        If cmbCode.Items.Count <= 0 Then
+            switch()
+            ShowData()
+        End If
+        '----------------------------------------------------------------------
     End Sub
 
     Private Sub cmbCode_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCode.SelectedIndexChanged
