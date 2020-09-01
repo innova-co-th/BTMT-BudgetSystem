@@ -543,16 +543,21 @@ Public Class FrmRM
         Dim cnSQL As SqlConnection
         Dim cmSQL As SqlCommand
         Dim strSQL As String
+
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Try
+            '1.Table TblRM
             strSQL = " Delete TblRM"
             strSQL &= " where RMCode = '" & GrdDV.Item(oldrow).Row("RMCode") & "'"
+            '2.Table TblQtyUnit
             strSQL &= "  "
             strSQL &= " Delete TblQtyUnit"
             strSQL &= " where RMCode = '" & GrdDV.Item(oldrow).Row("RMCode") & "'"
+            '3.Table TblGrup
             strSQL &= "  "
             strSQL &= " Delete TblGroup"
             strSQL &= " where Code = '" & GrdDV.Item(oldrow).Row("RMCode") & "'"
+            '4.Table TblConvert
             strSQL &= "  "
             strSQL &= " Delete TblConvert"
             strSQL &= " where Code = '" & GrdDV.Item(oldrow).Row("RMCode") & "'"

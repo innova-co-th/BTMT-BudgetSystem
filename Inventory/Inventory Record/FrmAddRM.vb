@@ -425,55 +425,61 @@ Public Class FrmAddRM
     End Function
     Sub RM()
         If CmdSave.Text = "Save" Then
+            'Insert
             Dim cnSQL As SqlConnection
             Dim cmSQL As SqlCommand
             Dim strSQL As String = String.Empty
+
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
             Try
+                '1.Table TblRM
                 strSQL &= " Insert  TblRM "
-                strSQL &= " values ( '" & TxtName.Text.Trim & " ',"
-                strSQL &= PrepareStr(TxtDesc.Text.Trim) & ","
-                strSQL &= PrepareStr(TxtSPrice.Text.Trim) & ","
-                strSQL &= PrepareStr(TxtAPrice.Text.Trim) & ","
-                strSQL &= PrepareStr(cmbType.SelectedValue) & ","
-                strSQL &= PrepareStr(CmbUnit.SelectedValue) & ","
-                strSQL &= PrepareStr(strDate) & ","
-                strSQL &= PrepareStr(iTime) & " )"
+                strSQL &= " values ( '" & TxtName.Text.Trim() & " '," 'Column RMcode(PK)
+                strSQL &= PrepareStr(TxtDesc.Text.Trim()) & "," 'Column DescName
+                strSQL &= PrepareStr(TxtSPrice.Text.Trim()) & "," 'Column StdPrice
+                strSQL &= PrepareStr(TxtAPrice.Text.Trim()) & "," 'Column ActPrice
+                strSQL &= PrepareStr(cmbType.SelectedValue) & "," 'Column TypeCode
+                strSQL &= PrepareStr(CmbUnit.SelectedValue) & "," 'Column Unit
+                strSQL &= PrepareStr(strDate) & "," 'Column UpdateDate
+                strSQL &= PrepareStr(iTime) & " )" 'Column UpdateTime
 
+                '2.Table TblGroup
                 strSQL &= ""
                 strSQL &= " Insert  TblGroup "
-                strSQL &= " values ( " & PrepareStr(cmbType.SelectedValue) & ","
-                strSQL &= PrepareStr(TxtName.Text.Trim) & ")"
+                strSQL &= " values ( " & PrepareStr(cmbType.SelectedValue) & "," 'Column TypeCode
+                strSQL &= PrepareStr(TxtName.Text.Trim()) & ")" 'Column Code
 
+                '3.Table TblConvert
                 strSQL &= ""
                 strSQL &= " Insert TBLConvert "
-                strSQL &= " Values(" & PrepareStr(cmbType.SelectedValue)
-                strSQL &= "," & PrepareStr("")
-                strSQL &= "," & PrepareStr(TxtName.Text.Trim)
-                strSQL &= "," & PrepareStr("")
-                strSQL &= "," & PrepareStr(CmbUnit.SelectedValue)
-                strSQL &= "," & PrepareStr("KG")
-                strSQL &= "," & PrepareStr(TxtRMQty.Text.Trim)
-                strSQL &= "," & PrepareStr(TxtQty.Text.Trim)
+                strSQL &= " Values(" & PrepareStr(cmbType.SelectedValue) 'Column Type
+                strSQL &= "," & PrepareStr("") 'Column Final
+                strSQL &= "," & PrepareStr(TxtName.Text.Trim()) 'Column Code
+                strSQL &= "," & PrepareStr("") 'Column Rev
+                strSQL &= "," & PrepareStr(CmbUnit.SelectedValue) 'Column UnitBig
+                strSQL &= "," & PrepareStr("KG") 'Column UnitSmall
+                strSQL &= "," & PrepareStr(TxtRMQty.Text.Trim()) 'Column BQty
+                strSQL &= "," & PrepareStr(TxtQty.Text.Trim()) 'Column SQty
                 strSQL &= ")"
 
+                '4.Table TblQtyUnit
                 If TxtQty.Text <> 0 Then
                     strSQL &= ""
                     strSQL &= " Insert  TblQtyUnit "
-                    strSQL &= " values ( '" & TxtName.Text.Trim & " ',"
-                    strSQL &= PrepareStr(TxtRMQty.Text.Trim) & ","
-                    strSQL &= PrepareStr(CmbUnit.SelectedValue) & ","
-                    strSQL &= PrepareStr(TxtQty.Text.Trim) & ","
-                    strSQL &= PrepareStr("KG") & ","
-                    strSQL &= PrepareStr(strDate) & ","
-                    strSQL &= PrepareStr(iTime) & " )"
+                    strSQL &= " values ( '" & TxtName.Text.Trim() & " '," 'Column RMCode(PK)
+                    strSQL &= PrepareStr(TxtRMQty.Text.Trim()) & "," 'Column RMQty
+                    strSQL &= PrepareStr(CmbUnit.SelectedValue) & "," 'Column UnitCode
+                    strSQL &= PrepareStr(TxtQty.Text.Trim()) & "," 'Column Qty
+                    strSQL &= PrepareStr("KG") & "," 'Column QUnit
+                    strSQL &= PrepareStr(strDate) & "," 'Column UpdateDate
+                    strSQL &= PrepareStr(iTime) & " )" 'UpdateTime
                 Else
                     strSQL &= ""
                     strSQL &= " Insert  TblQtyUnit "
-                    strSQL &= " values ( '" & TxtName.Text.Trim & " ',"
-                    strSQL &= PrepareStr(TxtRMQty.Text.Trim) & ","
+                    strSQL &= " values ( '" & TxtName.Text.Trim() & " ',"
+                    strSQL &= PrepareStr(TxtRMQty.Text.Trim()) & ","
                     strSQL &= PrepareStr(CmbUnit.SelectedValue) & ","
-                    strSQL &= PrepareStr(0) & ","
+                    strSQL &= PrepareStr(0) & "," 'Force 0
                     strSQL &= PrepareStr("KG") & " ,"
                     strSQL &= PrepareStr(strDate) & ","
                     strSQL &= PrepareStr(iTime) & " )"
@@ -496,32 +502,37 @@ Public Class FrmAddRM
             End Try
             Me.Cursor = System.Windows.Forms.Cursors.Default()
         ElseIf CmdSave.Text = "Edit" Then
+            'Update
             Dim cnSQL As SqlConnection
             Dim cmSQL As SqlCommand
             Dim strSQL As String = String.Empty
+
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
             Try
+                '1.Table TblRM
                 strSQL &= " Update TblRM"
-                strSQL &= " set descName = '" & TxtDesc.Text.Trim & "'"
-                strSQL &= " , StdPrice = '" & TxtSPrice.Text.Trim & "'"
-                strSQL &= " , ActPrice = '" & TxtAPrice.Text.Trim & "'"
+                strSQL &= " set descName = '" & TxtDesc.Text.Trim() & "'"
+                strSQL &= " , StdPrice = '" & TxtSPrice.Text.Trim() & "'"
+                strSQL &= " , ActPrice = '" & TxtAPrice.Text.Trim() & "'"
                 strSQL &= " , Unit = '" & CmbUnit.SelectedValue & "'"
-                strSQL &= " where RMCode = '" & TxtName.Text.Trim & "'"
+                strSQL &= " where RMCode = '" & TxtName.Text.Trim() & "'"
 
+                '2.Table TblQtyUnit
                 strSQL &= ""
                 strSQL &= " Update TblQtyUnit"
-                strSQL &= " set Qty = '" & TxtQty.Text.Trim & "'"
-                strSQL &= " , RMQty = '" & TxtRMQty.Text.Trim & "'"
+                strSQL &= " set Qty = '" & TxtQty.Text.Trim() & "'"
+                strSQL &= " , RMQty = '" & TxtRMQty.Text.Trim() & "'"
                 strSQL &= " , UnitCode = '" & CmbUnit.SelectedValue & "'"
-                strSQL &= " where RMCode = '" & TxtName.Text.Trim & "'"
+                strSQL &= " where RMCode = '" & TxtName.Text.Trim() & "'"
 
+                '3.Table TblConvert
                 strSQL &= ""
                 strSQL &= " Update TblConvert"
-                strSQL &= " set SQty = '" & TxtQty.Text.Trim & "'"
-                strSQL &= " , BQty = '" & TxtRMQty.Text.Trim & "'"
+                strSQL &= " set SQty = '" & TxtQty.Text.Trim() & "'"
+                strSQL &= " , BQty = '" & TxtRMQty.Text.Trim() & "'"
                 strSQL &= " , UnitBig = '" & CmbUnit.SelectedValue & "'"
-                strSQL &= " where Code = '" & TxtName.Text.Trim & "'"
-                strSQL &= " and  UnitBig = '" & unitcode.Trim & "'"
+                strSQL &= " where Code = '" & TxtName.Text.Trim() & "'"
+                strSQL &= " and  UnitBig = '" & unitcode.Trim() & "'"
 
                 cnSQL = New SqlConnection(C1.Strcon)
                 cnSQL.Open()
@@ -564,31 +575,33 @@ Public Class FrmAddRM
 
     Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
         Dim i, j As Double
-        i = TxtSPrice.Text.Trim
-        j = TxtAPrice.Text.Trim
+        i = TxtSPrice.Text.Trim()
+        j = TxtAPrice.Text.Trim()
         TxtSPrice.Text = Format(i, "##,###,###.00")
         TxtAPrice.Text = Format(j, "##,###,###.00")
-        TxtDesc.Text = TxtDesc.Text.ToUpper
-        TxtName.Text = TxtName.Text.ToUpper
+        TxtDesc.Text = TxtDesc.Text.ToUpper()
+        TxtName.Text = TxtName.Text.ToUpper()
         idate = Date.Now.Day
         im = Date.Now.Month
         iMonth = Format(im, "00")
         iYear = Date.Now.Year
-        STime = Split(Date.Now.ToShortTimeString, ":")
+        STime = Split(Date.Now.ToShortTimeString(), ":")
         strDate = iYear + iMonth + idate
         iTime = STime(0) + STime(1)
+
         Dim msg As String
         Dim title As String
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
         msg = "R/M Meterial" ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        style = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "R/M Warehouse"   ' Define title.
-        If TxtName.Text.Trim = "" Then
+
+        If TxtName.Text.Trim() = "" Then
             TxtName.Focus()
             Exit Sub
         Else
+            'Nothing
         End If
 
         If CmdSave.Text = "Save" Then
@@ -597,8 +610,10 @@ Public Class FrmAddRM
                 TxtName.Focus()
                 Exit Sub
             Else
+                'Nothing
             End If
         Else
+            'Nothing
         End If
 
         ' Display message.
@@ -611,11 +626,13 @@ Public Class FrmAddRM
     End Sub
 
     Private Sub FrmAddRM_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadCmbUnit()
-        LoadCmbType()
+        LoadCmbUnit() 'Load unit data from table TBLUnit
+        LoadCmbType() 'Load type data from table TBLType Where Typecode not in ('02','03','04','05','06')
+
         If CmdSave.Text = "Save" Then
+            'Nothing
         Else
-            CmbUnit.Text = unittext.Trim
+            CmbUnit.Text = unittext.Trim()
             cmbType.Enabled = False
         End If
     End Sub
