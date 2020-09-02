@@ -261,6 +261,7 @@ Public Class FrmRM
         Me.Controls.Add(Me.Txtcode)
         Me.Controls.Add(Me.Label2)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(912, 605)
         Me.Name = "FrmRM"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "R/M  WarehouseStock"
@@ -318,19 +319,18 @@ Public Class FrmRM
 
 #Region "Function_Load"
     Private Sub LoadRM()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "   SELECT   rm.Typecode,Typename,rm.RMCode,descName,stdPrice,ActPrice,ut.unitcode, " &
-                " shortUnitName,UnitName,isnull(RMQty,'0.000') as Qty ,isnull(Qty,'0.00') as Qunit " &
-                " ,Qunit as unit  FROM   TBLRM rm " &
-                " left outer join  TBLUNIT ut " &
-                " on rm.unit = ut.unitcode " &
-                " left outer join  TBLQTYUNIT qt " &
-                "  on rm.RMCode = qt.RMCode" &
-                " left outer join " &
-                " TBLType t " &
-                " on rm.Typecode = t.Typecode " &
-                " order by Typename,descName,rm. Rmcode"
+        sb.AppendLine("SELECT rm.TypeCode, t.TypeName, rm.RMCode, rm.DescName, rm.StdPrice, rm.ActPrice,")
+        sb.AppendLine(" ut.UnitCode, ut.shortUnitName, ut.UnitName,")
+        sb.AppendLine(" isnull(qt.RMQty,'0.000') as Qty ,isnull(qt.Qty,'0.00') as Qunit, qt.QUnit as unit ")
+        sb.AppendLine("FROM TBLRM rm ")
+        sb.AppendLine("LEFT OUTER JOIN TBLUNIT ut on rm.Unit = ut.UnitCode ")
+        sb.AppendLine("LEFT OUTER JOIN TBLQTYUNIT qt on rm.RMCode = qt.RMCode ")
+        sb.AppendLine("LEFT OUTER JOIN TBLType t on rm.TypeCode = t.TypeCode ")
+        sb.AppendLine("ORDER BY t.Typename, rm.DescName, rm.Rmcode")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -578,7 +578,6 @@ Public Class FrmRM
         End Try
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Sub
-#End Region
 
     Sub View()
         If ChkType.Checked = True Then
@@ -592,6 +591,7 @@ Public Class FrmRM
             DataGridRM.DataSource = GrdDV
         End If
     End Sub
+#End Region
 
 #Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
@@ -711,17 +711,235 @@ Public Class FrmRM
     End Sub
 
     Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_RM").ToString().Split(New Char() {","c})
         Dim importDialog As OpenFileDialog = New OpenFileDialog With {
             .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
         }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
 
         If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            ExcelLib.Import(importDialog.FileName, Me, DataGridRM, TBL_RM)
-        End If
+            'Create loading of overlay
+            Dim frm As New Loading()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            'Check RMCode
+                            Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString()
+                            Dim strTypeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString())
+                            Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString())
+                            Dim qty As String = PrepareStr(dtRec.Rows(i)("Qty"))
+                            Dim qUnit As String = PrepareStr(dtRec.Rows(i)("Qunit"))
+                            Dim isInsert As Boolean = ChkDataImport(rmCode)
+
+                            If isInsert Then
+                                'Insert
+                                sb.Clear()
+                                '1.Table TblRM
+                                sb.AppendLine(" Insert  TblRM ")
+                                sb.AppendLine(" Values (")
+                                sb.AppendLine(" '" & rmCode & " ',") 'Column RMCode(PK)
+                                sb.AppendLine(PrepareStr(dtRec.Rows(i)("DescName").ToString()) & ",") 'Column DescName
+                                sb.AppendLine(PrepareStr(dtRec.Rows(i)("StdPrice")) & ",") 'Column StdPrice
+                                sb.AppendLine(PrepareStr(dtRec.Rows(i)("ActPrice")) & ",") 'Column ActPrice
+                                sb.AppendLine(strTypeCode & ",") 'Column TypeCode
+                                sb.AppendLine(unitCode & ",") 'Column Unit
+                                sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column UpdateDate
+                                sb.AppendLine(PrepareStr(String.Empty)) 'Column UpdateTime
+                                sb.AppendLine(" )")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+
+                                sb.Clear()
+                                '2.Table TblGroup
+                                sb.AppendLine(" Insert  TblGroup ")
+                                sb.AppendLine(" Values (")
+                                sb.AppendLine(strTypeCode & ",") 'Column TypeCode
+                                sb.AppendLine(" '" & rmCode & " '") 'Column Code
+                                sb.AppendLine(" )")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+
+                                sb.Clear()
+                                '3.Table TblConvert
+                                sb.AppendLine(" Insert TBLConvert ")
+                                sb.AppendLine(" Values (")
+                                sb.AppendLine(strTypeCode & ",") 'Column Type
+                                sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Final
+                                sb.AppendLine(" '" & rmCode & " ',") 'Column Code
+                                sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Rev
+                                sb.AppendLine(unitCode & ",") 'Column UnitBig
+                                sb.AppendLine(PrepareStr("KG") & ",") 'Column UnitSmall
+                                sb.AppendLine(qty & ",") 'Column BQty
+                                sb.AppendLine(qUnit) 'Column SQty
+                                sb.AppendLine(" )")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+
+                                sb.Clear()
+                                '4.Table TblQtyUnit
+                                If CDec(dtRec.Rows(i)("Qunit")) <> 0 Then
+                                    sb.AppendLine(" Insert  TblQtyUnit ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(" '" & rmCode & " ',") 'Column RMCode(PK)
+                                    sb.AppendLine(qty & ",") 'Column RMQty
+                                    sb.AppendLine(unitCode & ",") 'Column UnitCode
+                                    sb.AppendLine(qUnit & ",") 'Column Qty
+                                    sb.AppendLine(PrepareStr("KG") & ",") 'Column QUnit
+                                    sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column UpdateDate
+                                    sb.AppendLine(PrepareStr(String.Empty)) 'UpdateTime
+                                    sb.AppendLine(" )")
+                                Else
+                                    sb.AppendLine(" Insert  TblQtyUnit ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(" '" & rmCode & " ',")
+                                    sb.AppendLine(qty & ",")
+                                    sb.AppendLine(unitCode & ",")
+                                    sb.AppendLine("0,") 'Force 0
+                                    sb.AppendLine(PrepareStr("KG") & ",")
+                                    sb.AppendLine(PrepareStr(String.Empty) & ",")
+                                    sb.AppendLine(PrepareStr(String.Empty))
+                                    sb.AppendLine(" )")
+                                End If
+
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+                            Else
+                                'Update
+                                sb.Clear()
+                                '1.Table TblRM
+                                sb.AppendLine(" Update TblRM")
+                                sb.AppendLine(" Set ")
+                                sb.AppendLine(" descName = '" & dtRec.Rows(i)("DescName").ToString() & "'")
+                                sb.AppendLine(" , StdPrice = '" & dtRec.Rows(i)("StdPrice") & "'")
+                                sb.AppendLine(" , ActPrice = '" & dtRec.Rows(i)("ActPrice") & "'")
+                                sb.AppendLine(" , Unit = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" Where RMCode = '" & rmCode & "'")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+
+                                sb.Clear()
+                                '2.Table TblQtyUnit
+                                sb.AppendLine(" Update TblQtyUnit")
+                                sb.AppendLine(" Set ")
+                                sb.AppendLine(" Qty = '" & dtRec.Rows(i)("Qunit") & "'")
+                                sb.AppendLine(" , RMQty = '" & dtRec.Rows(i)("Qty") & "'")
+                                sb.AppendLine(" , UnitCode = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" Where RMCode = '" & rmCode & "'")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+
+                                sb.Clear()
+                                '3.Table TblConvert
+                                sb.AppendLine(" Update TblConvert")
+                                sb.AppendLine(" Set ")
+                                sb.AppendLine(" SQty = '" & dtRec.Rows(i)("Qunit") & "'")
+                                sb.AppendLine(" , BQty = '" & dtRec.Rows(i)("Qty") & "'")
+                                sb.AppendLine(" , UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" Where Code = '" & rmCode & "'")
+                                sb.AppendLine(" And  UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+                            End If ' If isInsert
+                        Next i
+
+                        trans.Commit()
+                    Catch ex As SqlException
+                        MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
     End Sub
 
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
-        ExcelLib.Export(Me, DataGridRM, TBL_RM)
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_RM").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn)
     End Sub
+#End Region
+
+#Region "Import"
+    Private Function ChkDataImport(rmCode As String) As Boolean
+        Dim cnSQL As SqlConnection
+        Dim cmSQL As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+
+        Try
+            strSQL &= " SELECT count(*) "
+            strSQL &= " FROM TblRM "
+            strSQL &= " WHERE RMcode  = '" & rmCode & "'"
+            cnSQL = New SqlConnection(C1.Strcon)
+            cnSQL.Open()
+            cmSQL = New SqlCommand(strSQL, cnSQL)
+            Dim i As Long = cmSQL.ExecuteScalar()
+            If i <> 0 Then
+                ret = True
+            End If
+
+            cmSQL.Dispose()
+            cnSQL.Dispose()
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        End Try
+
+        Return ret
+    End Function
+
+    Private Function PrepareStr(ByVal strValue As String) As String
+        ' This function accepts a string and creates a string that can
+        ' be used in a SQL statement by adding single quotes around
+        ' it and handling empty values.
+        If strValue.Trim() = "" Then
+            Return "NULL"
+        Else
+            Return "'" & strValue.Trim() & "'"
+        End If
+    End Function
 #End Region
 End Class
