@@ -22,70 +22,70 @@ Public Class ExcelLib
     ''' </summary>
     ''' <param name="pathOpenFile">Import file</param>
     ''' <param name="frmParent">Parent form</param>
-    ''' <param name="DG">Data Grid</param>
+    ''' <param name="DV">Data View</param>
     ''' <param name="tableName">Table name</param>
-    Public Shared Sub Import(pathOpenFile As String, frmParent As Form, DG As DataGrid, tableName As String)
+    ''' <param name="arrColumn">Array column</param>
+    Public Shared Function Import(pathOpenFile As String, frmParent As Form, DV As DataView, tableName As String, arrColumn As String()) As DataTable
         System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
         Dim xlApp As Excel.Application = New Excel.Application()
         Dim xlWorkBook As Excel.Workbook
         Dim xlWorkSheet As Excel.Worksheet
-        Dim frmOverlay As New Form()
+        Dim dtTemp As DataTable = New DataTable("TempData") 'Temporary datable
 
         Try
-            'Create loading of overlay
-            Using frm As New Loading()
-                frmOverlay.StartPosition = FormStartPosition.Manual
-                frmOverlay.FormBorderStyle = FormBorderStyle.None
-                frmOverlay.Opacity = 0.5D
-                frmOverlay.BackColor = Color.Black
-                frmOverlay.WindowState = FormWindowState.Maximized
-                frmOverlay.TopMost = True
-                frmOverlay.Location = frmParent.Location
-                frmOverlay.ShowInTaskbar = False
-                'frmOverlay.Show()
-                frm.Owner = frmOverlay
-                ExcelLib.CenterForm(frm, frmParent)
-                frm.Show()
+            'Read data in Excel
+            xlWorkBook = xlApp.Workbooks.Open(pathOpenFile)
+            xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet) 'Get first sheet
 
-                'Read data in Excel
-                xlWorkBook = xlApp.Workbooks.Open(pathOpenFile)
-                xlWorkSheet = CType(xlWorkBook.Sheets(1), Excel.Worksheet) 'Get first sheet
+            Dim numRows As Integer = xlWorkSheet.UsedRange.Rows.Count
+            Dim numCols As Integer = xlWorkSheet.UsedRange.Columns.Count
+            Dim xlRange As Excel.Range = xlWorkSheet.UsedRange 'Set range
+            Dim arr As Object(,) = xlRange.Value2 'Load excel into array
+            Dim dtRec As New DataTable(tableName)
 
-                Dim numRows As Integer = xlWorkSheet.UsedRange.Rows.Count
-                Dim numCols As Integer = xlWorkSheet.UsedRange.Columns.Count
-                Dim xlRange As Excel.Range
-                Dim arr As Object(,) = New Object(numRows, numCols) {}
-                Dim dtRec As New DataTable(tableName)
+            'Check number of record in Excel
+            If numRows <= 1 Then
+                'It have only header
+                Throw New ApplicationException("Import error" & vbCrLf & "No data for import!!")
+            End If
 
-                'Calculate the final column letter
-                Dim finalColLetter As String = String.Empty
-                Dim colCharset As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                Dim colCharsetLen As Integer = colCharset.Length
+            'Check format of import file
+            If numCols <> arrColumn.Length Then
+                'Error
+                Throw New ApplicationException("Number columns of import is incorrect!!!")
+            End If
 
-                If numCols > colCharsetLen Then
-                    finalColLetter = colCharset.Substring((numCols - 1) \ colCharsetLen - 1, 1)
+            'Check column header
+            For i As Integer = 1 To numCols
+                'Error
+                If arr(1, i) <> arrColumn(i - 1) Then
+                    Throw New ApplicationException("Column : " & arr(1, i) & " is incorrect!!!")
                 End If
+            Next
 
-                finalColLetter += colCharset.Substring((numCols - 1) Mod colCharsetLen, 1)
-                xlRange = xlWorkSheet.Range("A1:" & finalColLetter & CStr(numCols))
-                arr(1, 1) = xlRange
+            'Create temporary datatable
+            For i As Integer = 1 To numCols
+                'Check second row
+                If arr(2, i).GetType().Equals(GetType(Double)) Then
+                    dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
+                ElseIf arr(2, i).GetType().Equals(GetType(Int32)) Then
+                    dtTemp.Columns.Add(arr(1, i), GetType(Int32))
+                Else
+                    dtTemp.Columns.Add(arr(1, i), GetType(String))
+                End If
+            Next
 
-                '    'display the cells value B2
-                '    MsgBox(xlWorkSheet.Cells(2, 2).value)
-                '    'edit the cell with new value
-                '    xlWorkSheet.Cells(2, 2) = "http://vb.net-informations.com"
+            'Convert Array to Datatable
+            dtTemp = ConvertArrayToDatatable(arr, dtTemp)
 
-                ReleaseObject(xlWorkSheet)
-                xlWorkBook.Close(False)
-                ReleaseObject(xlWorkBook)
-
-                frmOverlay.Dispose()
-            End Using 'Using frm
+            ReleaseObject(xlWorkSheet)
+            xlWorkBook.Close(False)
+            ReleaseObject(xlWorkBook)
         Catch ex As Exception
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            dtTemp = Nothing
         Finally
             xlApp.Quit()
-            frmOverlay.Dispose()
 
             Dim pid As Integer = 0
             Dim a As Integer = GetWindowThreadProcessId(xlApp.Hwnd, pid)
@@ -95,20 +95,22 @@ Public Class ExcelLib
             ReleaseObject(xlApp)
             GC.Collect()
         End Try
-    End Sub
+
+        Return dtTemp
+    End Function
 
     ''' <summary>
     ''' Export data grid to export file
     ''' </summary>
     ''' <param name="frmParent">Parent Form</param>
-    ''' <param name="DG">Data Grid</param>
+    ''' <param name="DV">Data View</param>
     ''' <param name="tableName">table name</param>
-    Public Shared Sub Export(frmParent As Form, DG As DataGrid, tableName As String)
+    ''' <param name="arrColumn">Array column</param>
+    Public Shared Sub Export(frmParent As Form, DV As DataView, tableName As String, arrColumn As String())
         System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
         Dim xlApp As Excel.Application = New Excel.Application()
         Dim xlWorkBook As Excel.Workbook = xlApp.Workbooks.Add()
         Dim xlWorkSheet As Excel.Worksheet = CType(xlWorkBook.Sheets("Sheet1"), Excel.Worksheet)
-        Dim dtGridView As DataView = CType(DG.DataSource, DataView)
         Dim exportDialog As SaveFileDialog = New SaveFileDialog With {
             .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
         }
@@ -116,19 +118,20 @@ Public Class ExcelLib
         Dim frmOverlay As New Form()
 
         Try
-            'Check number of record in DataGrid
-            If dtGridView.Count <= 0 Then
+            'Check number of record in DataView
+            If DV.Count <= 0 Then
                 'Error
-                MessageBox.Show("Export error" & vbCrLf & "No data for export!!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Throw New ApplicationException("Export error" & vbCrLf & "No data for export!!")
             Else
                 'Export excel
                 If exportDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
                     Dim xlRange As Excel.Range
                     Dim misValue As Object = Type.Missing
-                    Dim dtRec As DataTable = dtGridView.ToTable(tableName)
+                    Dim dtRec As DataTable = DV.ToTable(tableName) 'Get datatable by table name
 
-                    'Create loading of overlay
+                    'Get dataview into excel file
                     Using frm As New Loading()
+                        'Create loading of overlay
                         frmOverlay.StartPosition = FormStartPosition.Manual
                         frmOverlay.FormBorderStyle = FormBorderStyle.None
                         frmOverlay.Opacity = 0.5D
@@ -143,23 +146,25 @@ Public Class ExcelLib
                         frm.Show()
 
                         pathSaveFile = exportDialog.FileName
-                        xlWorkSheet.Name = tableName
+                        xlWorkSheet.Name = tableName 'Set sheet name
 
-                        Dim dtHead As DataGridTableStyle = DG.TableStyles(0) 'Header as DataGridRM
                         Dim dtTemp As DataTable = New DataTable("TempData") 'Temporary datable
 
                         'Create temporary datatable
-                        For j As Integer = 0 To dtHead.GridColumnStyles.OfType(Of DataGridColoredLine2).Count - 1
-                            If dtRec.Rows(0)(dtHead.GridColumnStyles.Item(j).MappingName).GetType().Equals(GetType(Decimal)) Then
-                                dtTemp.Columns.Add(dtHead.GridColumnStyles.Item(j).MappingName, GetType(Decimal))
+                        For Each col As String In arrColumn
+                            'Check type of first row
+                            If dtRec.Rows(0)(col).GetType().Equals(GetType(Decimal)) Then
+                                dtTemp.Columns.Add(col, GetType(Decimal))
+                            ElseIf dtRec.Columns.Item(col).GetType().Equals(GetType(Int32)) Then
+                                dtTemp.Columns.Add(col, GetType(Int32))
                             Else
-                                dtTemp.Columns.Add(dtHead.GridColumnStyles.Item(j).MappingName, GetType(String))
+                                dtTemp.Columns.Add(col, GetType(String))
                             End If
                         Next
 
                         'Set header
-                        For j As Integer = 1 To dtHead.GridColumnStyles.OfType(Of DataGridColoredLine2).Count
-                            xlWorkSheet.Cells(1, j) = dtHead.GridColumnStyles.Item(j - 1).HeaderText
+                        For j As Integer = 1 To arrColumn.Length
+                            xlWorkSheet.Cells(1, j) = arrColumn(j - 1) 'Excel start position at 1, Array start position at 0
                         Next
 
                         'Set data
@@ -243,17 +248,25 @@ Public Class ExcelLib
         End Try
     End Function
 
-    Private Shared Function ConvertArrayToDatatable(arr As Object(,)) As DataTable
+    Private Shared Function ConvertArrayToDatatable(arr As Object(,), dt As DataTable) As DataTable
         Try
-            Dim dtRec As New DataTable()
-            For i As Integer = 0 To arr.GetLength(0)
-                For j As Integer = 0 To arr.GetLength(1)
-                    MsgBox(arr(i, j).ToString())
+            For i As Integer = 2 To arr.GetLength(0)
+                Dim dr As DataRow = dt.NewRow()
+                For j As Integer = 1 To arr.GetLength(1)
+                    If arr(i, j).GetType().Equals(GetType(Double)) Then
+                        'Datatype Double
+                        dr(j - 1) = CDec(arr(i, j))
+                    Else
+                        'Other
+                        dr(j - 1) = arr(i, j)
+                    End If
                 Next j
+                dt.Rows.Add(dr)
             Next i
 
-            Return dtRec
+            Return dt
         Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return Nothing
         End Try
     End Function
