@@ -69,10 +69,8 @@ Public Class FrmYearInvTag
     Friend WithEvents ButtonClose As System.Windows.Forms.Button
     Friend WithEvents DateYear As System.Windows.Forms.DateTimePicker
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents RdbDate As System.Windows.Forms.RadioButton
     Friend WithEvents RdbYear As System.Windows.Forms.RadioButton
     Friend WithEvents RdbMonth As System.Windows.Forms.RadioButton
-    Friend WithEvents Datedate As System.Windows.Forms.DateTimePicker
     Friend WithEvents ButtonView As System.Windows.Forms.Button
     Friend WithEvents cmbLoc As System.Windows.Forms.ComboBox
     Friend WithEvents ChkLoc As System.Windows.Forms.CheckBox
@@ -105,12 +103,10 @@ Public Class FrmYearInvTag
         Me.ButtonClose = New System.Windows.Forms.Button()
         Me.DateYear = New System.Windows.Forms.DateTimePicker()
         Me.ButtonView = New System.Windows.Forms.Button()
-        Me.RdbDate = New System.Windows.Forms.RadioButton()
         Me.RdbYear = New System.Windows.Forms.RadioButton()
         Me.RdbMonth = New System.Windows.Forms.RadioButton()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Datemonth = New System.Windows.Forms.DateTimePicker()
-        Me.Datedate = New System.Windows.Forms.DateTimePicker()
         Me.cmbLoc = New System.Windows.Forms.ComboBox()
         Me.ChkLoc = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -143,9 +139,9 @@ Public Class FrmYearInvTag
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGrid1)
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 112)
+        Me.GroupBox1.Location = New System.Drawing.Point(10, 129)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(920, 440)
+        Me.GroupBox1.Size = New System.Drawing.Size(917, 411)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
@@ -154,9 +150,9 @@ Public Class FrmYearInvTag
         Me.DataGrid1.DataMember = ""
         Me.DataGrid1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText
-        Me.DataGrid1.Location = New System.Drawing.Point(3, 16)
+        Me.DataGrid1.Location = New System.Drawing.Point(3, 18)
         Me.DataGrid1.Name = "DataGrid1"
-        Me.DataGrid1.Size = New System.Drawing.Size(914, 421)
+        Me.DataGrid1.Size = New System.Drawing.Size(911, 390)
         Me.DataGrid1.TabIndex = 0
         '
         'ButtonDel
@@ -165,9 +161,9 @@ Public Class FrmYearInvTag
         Me.ButtonDel.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.ButtonDel.Image = CType(resources.GetObject("ButtonDel.Image"), System.Drawing.Image)
         Me.ButtonDel.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ButtonDel.Location = New System.Drawing.Point(8, 560)
+        Me.ButtonDel.Location = New System.Drawing.Point(10, 549)
         Me.ButtonDel.Name = "ButtonDel"
-        Me.ButtonDel.Size = New System.Drawing.Size(72, 56)
+        Me.ButtonDel.Size = New System.Drawing.Size(86, 65)
         Me.ButtonDel.TabIndex = 11
         Me.ButtonDel.Text = "DEL"
         Me.ButtonDel.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -178,9 +174,9 @@ Public Class FrmYearInvTag
         Me.ButtonAdd.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.ButtonAdd.Image = CType(resources.GetObject("ButtonAdd.Image"), System.Drawing.Image)
         Me.ButtonAdd.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ButtonAdd.Location = New System.Drawing.Point(712, 560)
+        Me.ButtonAdd.Location = New System.Drawing.Point(667, 549)
         Me.ButtonAdd.Name = "ButtonAdd"
-        Me.ButtonAdd.Size = New System.Drawing.Size(72, 56)
+        Me.ButtonAdd.Size = New System.Drawing.Size(87, 65)
         Me.ButtonAdd.TabIndex = 10
         Me.ButtonAdd.Text = "ADD"
         Me.ButtonAdd.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -191,9 +187,9 @@ Public Class FrmYearInvTag
         Me.ButtonClose.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.ButtonClose.Image = CType(resources.GetObject("ButtonClose.Image"), System.Drawing.Image)
         Me.ButtonClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ButtonClose.Location = New System.Drawing.Point(856, 560)
+        Me.ButtonClose.Location = New System.Drawing.Point(840, 549)
         Me.ButtonClose.Name = "ButtonClose"
-        Me.ButtonClose.Size = New System.Drawing.Size(72, 56)
+        Me.ButtonClose.Size = New System.Drawing.Size(87, 65)
         Me.ButtonClose.TabIndex = 12
         Me.ButtonClose.Text = "CLOSE"
         Me.ButtonClose.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -203,10 +199,10 @@ Public Class FrmYearInvTag
         Me.DateYear.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DateYear.CustomFormat = "yyyy"
         Me.DateYear.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.DateYear.Location = New System.Drawing.Point(80, 66)
+        Me.DateYear.Location = New System.Drawing.Point(96, 50)
         Me.DateYear.Name = "DateYear"
         Me.DateYear.ShowUpDown = True
-        Me.DateYear.Size = New System.Drawing.Size(104, 20)
+        Me.DateYear.Size = New System.Drawing.Size(125, 22)
         Me.DateYear.TabIndex = 14
         '
         'ButtonView
@@ -214,35 +210,27 @@ Public Class FrmYearInvTag
         Me.ButtonView.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ButtonView.Image = CType(resources.GetObject("ButtonView.Image"), System.Drawing.Image)
         Me.ButtonView.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ButtonView.Location = New System.Drawing.Point(768, 13)
+        Me.ButtonView.Location = New System.Drawing.Point(735, 15)
         Me.ButtonView.Name = "ButtonView"
-        Me.ButtonView.Size = New System.Drawing.Size(72, 56)
+        Me.ButtonView.Size = New System.Drawing.Size(86, 65)
         Me.ButtonView.TabIndex = 13
         Me.ButtonView.Text = "View"
         Me.ButtonView.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
-        'RdbDate
-        '
-        Me.RdbDate.Location = New System.Drawing.Point(16, 16)
-        Me.RdbDate.Name = "RdbDate"
-        Me.RdbDate.Size = New System.Drawing.Size(64, 24)
-        Me.RdbDate.TabIndex = 16
-        Me.RdbDate.Text = " Date"
-        '
         'RdbYear
         '
-        Me.RdbYear.Location = New System.Drawing.Point(16, 64)
+        Me.RdbYear.Location = New System.Drawing.Point(19, 48)
         Me.RdbYear.Name = "RdbYear"
-        Me.RdbYear.Size = New System.Drawing.Size(64, 24)
+        Me.RdbYear.Size = New System.Drawing.Size(77, 28)
         Me.RdbYear.TabIndex = 18
         Me.RdbYear.Text = " Year"
         '
         'RdbMonth
         '
         Me.RdbMonth.Checked = True
-        Me.RdbMonth.Location = New System.Drawing.Point(16, 40)
+        Me.RdbMonth.Location = New System.Drawing.Point(19, 20)
         Me.RdbMonth.Name = "RdbMonth"
-        Me.RdbMonth.Size = New System.Drawing.Size(64, 24)
+        Me.RdbMonth.Size = New System.Drawing.Size(77, 28)
         Me.RdbMonth.TabIndex = 19
         Me.RdbMonth.TabStop = True
         Me.RdbMonth.Text = "Month"
@@ -250,14 +238,12 @@ Public Class FrmYearInvTag
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.Datemonth)
-        Me.GroupBox2.Controls.Add(Me.Datedate)
-        Me.GroupBox2.Controls.Add(Me.RdbDate)
         Me.GroupBox2.Controls.Add(Me.RdbMonth)
         Me.GroupBox2.Controls.Add(Me.RdbYear)
         Me.GroupBox2.Controls.Add(Me.DateYear)
-        Me.GroupBox2.Location = New System.Drawing.Point(8, 8)
+        Me.GroupBox2.Location = New System.Drawing.Point(10, 9)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(216, 100)
+        Me.GroupBox2.Size = New System.Drawing.Size(259, 89)
         Me.GroupBox2.TabIndex = 20
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Select Tag"
@@ -267,38 +253,27 @@ Public Class FrmYearInvTag
         Me.Datemonth.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Datemonth.CustomFormat = "MM/yyyy"
         Me.Datemonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.Datemonth.Location = New System.Drawing.Point(80, 40)
+        Me.Datemonth.Location = New System.Drawing.Point(96, 20)
         Me.Datemonth.Name = "Datemonth"
         Me.Datemonth.ShowUpDown = True
-        Me.Datemonth.Size = New System.Drawing.Size(104, 20)
+        Me.Datemonth.Size = New System.Drawing.Size(125, 22)
         Me.Datemonth.TabIndex = 22
-        '
-        'Datedate
-        '
-        Me.Datedate.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Datedate.CustomFormat = "dd/MM/yyyy"
-        Me.Datedate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.Datedate.Location = New System.Drawing.Point(80, 16)
-        Me.Datedate.Name = "Datedate"
-        Me.Datedate.ShowUpDown = True
-        Me.Datedate.Size = New System.Drawing.Size(104, 20)
-        Me.Datedate.TabIndex = 21
         '
         'cmbLoc
         '
         Me.cmbLoc.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmbLoc.Location = New System.Drawing.Point(568, 16)
+        Me.cmbLoc.Location = New System.Drawing.Point(495, 18)
         Me.cmbLoc.Name = "cmbLoc"
-        Me.cmbLoc.Size = New System.Drawing.Size(184, 21)
+        Me.cmbLoc.Size = New System.Drawing.Size(220, 24)
         Me.cmbLoc.TabIndex = 21
         Me.cmbLoc.Text = "Select"
         '
         'ChkLoc
         '
         Me.ChkLoc.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ChkLoc.Location = New System.Drawing.Point(488, 18)
+        Me.ChkLoc.Location = New System.Drawing.Point(399, 21)
         Me.ChkLoc.Name = "ChkLoc"
-        Me.ChkLoc.Size = New System.Drawing.Size(72, 16)
+        Me.ChkLoc.Size = New System.Drawing.Size(86, 18)
         Me.ChkLoc.TabIndex = 22
         Me.ChkLoc.Text = "Location"
         '
@@ -306,9 +281,9 @@ Public Class FrmYearInvTag
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label1.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(88, 560)
+        Me.Label1.Location = New System.Drawing.Point(106, 549)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(104, 32)
+        Me.Label1.Size = New System.Drawing.Size(124, 37)
         Me.Label1.TabIndex = 23
         Me.Label1.Text = "Location :"
         '
@@ -316,18 +291,18 @@ Public Class FrmYearInvTag
         '
         Me.lblName.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblName.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblName.Location = New System.Drawing.Point(192, 560)
+        Me.lblName.Location = New System.Drawing.Point(230, 549)
         Me.lblName.Name = "lblName"
-        Me.lblName.Size = New System.Drawing.Size(232, 32)
+        Me.lblName.Size = New System.Drawing.Size(279, 37)
         Me.lblName.TabIndex = 24
         '
         'Label2
         '
         Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label2.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(88, 592)
+        Me.Label2.Location = New System.Drawing.Point(106, 586)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(136, 32)
+        Me.Label2.Size = New System.Drawing.Size(163, 37)
         Me.Label2.TabIndex = 25
         Me.Label2.Text = "Record Tag : "
         '
@@ -335,9 +310,9 @@ Public Class FrmYearInvTag
         '
         Me.lblTag.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblTag.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTag.Location = New System.Drawing.Point(224, 592)
+        Me.lblTag.Location = New System.Drawing.Point(269, 586)
         Me.lblTag.Name = "lblTag"
-        Me.lblTag.Size = New System.Drawing.Size(104, 32)
+        Me.lblTag.Size = New System.Drawing.Size(125, 37)
         Me.lblTag.TabIndex = 26
         Me.lblTag.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
@@ -345,27 +320,27 @@ Public Class FrmYearInvTag
         '
         Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label3.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(336, 592)
+        Me.Label3.Location = New System.Drawing.Point(403, 586)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(80, 32)
+        Me.Label3.Size = New System.Drawing.Size(96, 37)
         Me.Label3.TabIndex = 27
         Me.Label3.Text = "Record"
         '
         'ChkType
         '
         Me.ChkType.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ChkType.Location = New System.Drawing.Point(488, 42)
+        Me.ChkType.Location = New System.Drawing.Point(399, 48)
         Me.ChkType.Name = "ChkType"
-        Me.ChkType.Size = New System.Drawing.Size(56, 16)
+        Me.ChkType.Size = New System.Drawing.Size(67, 19)
         Me.ChkType.TabIndex = 29
         Me.ChkType.Text = "Type"
         '
         'cmbType
         '
         Me.cmbType.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmbType.Location = New System.Drawing.Point(568, 40)
+        Me.cmbType.Location = New System.Drawing.Point(495, 46)
         Me.cmbType.Name = "cmbType"
-        Me.cmbType.Size = New System.Drawing.Size(184, 21)
+        Me.cmbType.Size = New System.Drawing.Size(220, 24)
         Me.cmbType.TabIndex = 28
         Me.cmbType.Text = "Select"
         '
@@ -373,18 +348,18 @@ Public Class FrmYearInvTag
         '
         Me.lblType.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblType.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblType.Location = New System.Drawing.Point(488, 560)
+        Me.lblType.Location = New System.Drawing.Point(586, 549)
         Me.lblType.Name = "lblType"
-        Me.lblType.Size = New System.Drawing.Size(184, 32)
+        Me.lblType.Size = New System.Drawing.Size(220, 37)
         Me.lblType.TabIndex = 31
         '
         'Label5
         '
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label5.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(424, 560)
+        Me.Label5.Location = New System.Drawing.Point(509, 549)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(64, 32)
+        Me.Label5.Size = New System.Drawing.Size(77, 37)
         Me.Label5.TabIndex = 30
         Me.Label5.Text = "Type:"
         '
@@ -393,9 +368,9 @@ Public Class FrmYearInvTag
         Me.cmdPrint.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdPrint.Image = CType(resources.GetObject("cmdPrint.Image"), System.Drawing.Image)
         Me.cmdPrint.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.cmdPrint.Location = New System.Drawing.Point(848, 13)
+        Me.cmdPrint.Location = New System.Drawing.Point(831, 15)
         Me.cmdPrint.Name = "cmdPrint"
-        Me.cmdPrint.Size = New System.Drawing.Size(72, 56)
+        Me.cmdPrint.Size = New System.Drawing.Size(86, 65)
         Me.cmdPrint.TabIndex = 32
         Me.cmdPrint.Text = "Print"
         Me.cmdPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -403,18 +378,18 @@ Public Class FrmYearInvTag
         'ChkUser
         '
         Me.ChkUser.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.ChkUser.Location = New System.Drawing.Point(488, 66)
+        Me.ChkUser.Location = New System.Drawing.Point(399, 76)
         Me.ChkUser.Name = "ChkUser"
-        Me.ChkUser.Size = New System.Drawing.Size(56, 16)
+        Me.ChkUser.Size = New System.Drawing.Size(67, 19)
         Me.ChkUser.TabIndex = 34
         Me.ChkUser.Text = "User"
         '
         'cmbUser
         '
         Me.cmbUser.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cmbUser.Location = New System.Drawing.Point(568, 64)
+        Me.cmbUser.Location = New System.Drawing.Point(495, 74)
         Me.cmbUser.Name = "cmbUser"
-        Me.cmbUser.Size = New System.Drawing.Size(184, 21)
+        Me.cmbUser.Size = New System.Drawing.Size(220, 24)
         Me.cmbUser.TabIndex = 33
         Me.cmbUser.Text = "Select"
         '
@@ -424,9 +399,9 @@ Public Class FrmYearInvTag
         Me.CmdEdit.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.CmdEdit.Image = CType(resources.GetObject("CmdEdit.Image"), System.Drawing.Image)
         Me.CmdEdit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdEdit.Location = New System.Drawing.Point(784, 560)
+        Me.CmdEdit.Location = New System.Drawing.Point(754, 549)
         Me.CmdEdit.Name = "CmdEdit"
-        Me.CmdEdit.Size = New System.Drawing.Size(72, 56)
+        Me.CmdEdit.Size = New System.Drawing.Size(86, 65)
         Me.CmdEdit.TabIndex = 35
         Me.CmdEdit.Text = "EDIT"
         Me.CmdEdit.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -434,34 +409,34 @@ Public Class FrmYearInvTag
         'Chktag
         '
         Me.Chktag.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Chktag.Location = New System.Drawing.Point(488, 90)
+        Me.Chktag.Location = New System.Drawing.Point(399, 104)
         Me.Chktag.Name = "Chktag"
-        Me.Chktag.Size = New System.Drawing.Size(64, 16)
+        Me.Chktag.Size = New System.Drawing.Size(76, 18)
         Me.Chktag.TabIndex = 37
         Me.Chktag.Text = "TagNo"
         '
         'TxtNo1
         '
         Me.TxtNo1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtNo1.Location = New System.Drawing.Point(568, 88)
+        Me.TxtNo1.Location = New System.Drawing.Point(495, 102)
         Me.TxtNo1.Name = "TxtNo1"
-        Me.TxtNo1.Size = New System.Drawing.Size(72, 20)
+        Me.TxtNo1.Size = New System.Drawing.Size(86, 22)
         Me.TxtNo1.TabIndex = 38
         '
         'TxtNo2
         '
         Me.TxtNo2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtNo2.Location = New System.Drawing.Point(680, 88)
+        Me.TxtNo2.Location = New System.Drawing.Point(629, 102)
         Me.TxtNo2.Name = "TxtNo2"
-        Me.TxtNo2.Size = New System.Drawing.Size(72, 20)
+        Me.TxtNo2.Size = New System.Drawing.Size(86, 22)
         Me.TxtNo2.TabIndex = 39
         '
         'Label4
         '
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label4.Location = New System.Drawing.Point(648, 90)
+        Me.Label4.Location = New System.Drawing.Point(591, 104)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(24, 16)
+        Me.Label4.Size = New System.Drawing.Size(28, 18)
         Me.Label4.TabIndex = 40
         Me.Label4.Text = "to"
         '
@@ -471,16 +446,16 @@ Public Class FrmYearInvTag
         Me.ButtonImport.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.ButtonImport.Image = CType(resources.GetObject("ButtonImport.Image"), System.Drawing.Image)
         Me.ButtonImport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.ButtonImport.Location = New System.Drawing.Point(620, 560)
+        Me.ButtonImport.Location = New System.Drawing.Point(557, 549)
         Me.ButtonImport.Name = "ButtonImport"
-        Me.ButtonImport.Size = New System.Drawing.Size(72, 56)
+        Me.ButtonImport.Size = New System.Drawing.Size(86, 65)
         Me.ButtonImport.TabIndex = 41
         Me.ButtonImport.Text = "Import"
         Me.ButtonImport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'FrmYearInvTag
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(6, 15)
         Me.ClientSize = New System.Drawing.Size(936, 630)
         Me.Controls.Add(Me.ButtonImport)
         Me.Controls.Add(Me.Label4)
@@ -595,7 +570,7 @@ Public Class FrmYearInvTag
 
         Dim DA As SqlDataAdapter
         Try
-            DA = New SqlDataAdapter(StrSQL, C1.Strcon)
+            DA = New SqlDataAdapter(strSQL, C1.Strcon)
             Dim CBu As New SqlCommandBuilder(DA)
             dtType = New DataTable
             DA.Fill(dtType)
@@ -815,8 +790,8 @@ Public Class FrmYearInvTag
 
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle2, grdColStyle0_1, grdColStyle0_2, grdColStyle0_0, grdColStyle1, _
-    grdColStyle0, grdColStyle4, grdColStyle5, _
+    {grdColStyle2, grdColStyle0_1, grdColStyle0_2, grdColStyle0_0, grdColStyle1,
+    grdColStyle0, grdColStyle4, grdColStyle5,
     grdColStyle6_0, grdColStyle2_1, grdColStyle6, grdColStyle7})
 
         DataGrid1.TableStyles.Add(grdTableStyle1)
@@ -879,7 +854,7 @@ Public Class FrmYearInvTag
         Dim response As MsgBoxResult
 
         msg = "Inventory Delete TrxNo : " & GrdDV.Item(oldrow).Row("Tagno")  ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Inventory"   ' Define title.
         ' Display message.
@@ -952,13 +927,14 @@ Public Class FrmYearInvTag
         Else
             id = CurrentIDUser.Trim
         End If
-        If RdbDate.Checked = True Then
-            str = Split(Datedate.Text.Trim, "/")
-            strDate = str(2) + str(1) + str(0)
-            GrdDV.RowFilter = " TrxDate like  '" & strDate.Trim & "%'" _
-                                & " and UserId like '%" & id.Trim & "%'"
-            DataGrid1.DataSource = GrdDV
-        ElseIf RdbMonth.Checked = True Then
+        '// Comment out by Beam 02-Sep-2020
+        'If RdbDate.Checked = True Then
+        '    str = Split(Datedate.Text.Trim, "/")
+        '    strDate = str(2) + str(1) + str(0)
+        '    GrdDV.RowFilter = " TrxDate like  '" & strDate.Trim & "%'" _
+        '                        & " and UserId like '%" & id.Trim & "%'"
+        '    DataGrid1.DataSource = GrdDV
+        If RdbMonth.Checked = True Then
             str = Split(Datemonth.Text.Trim, "/")
             strMonth = str(1) + str(0)
             GrdDV.RowFilter = " TrxDate like  '%" & strMonth.Trim & "%'" _
@@ -977,7 +953,7 @@ Public Class FrmYearInvTag
     Private Sub Datemonth_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Datemonth.ValueChanged
         selectData()
     End Sub
-    Private Sub Datedate_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Datedate.ValueChanged
+    Private Sub Datedate_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         selectData()
     End Sub
 

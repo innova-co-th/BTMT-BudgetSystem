@@ -77,60 +77,48 @@ Public Class FrmView
     Friend WithEvents RBFrist As System.Windows.Forms.RadioButton
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents CHKYear As System.Windows.Forms.RadioButton
-    Friend WithEvents CHKMonth As System.Windows.Forms.RadioButton
     Friend WithEvents CHKSection As System.Windows.Forms.CheckBox
     Friend WithEvents CHKMatCode As System.Windows.Forms.CheckBox
     Friend WithEvents CHKTAG As System.Windows.Forms.CheckBox
     Friend WithEvents RBMat As System.Windows.Forms.RadioButton
     Friend WithEvents RBRAW As System.Windows.Forms.RadioButton
-    Friend WithEvents DPeriod1 As System.Windows.Forms.DateTimePicker
-    Friend WithEvents DPeriod2 As System.Windows.Forms.DateTimePicker
     Friend WithEvents lblType1 As System.Windows.Forms.Label
     Friend WithEvents cmbCode As System.Windows.Forms.ComboBox
     Friend WithEvents CHKMType As System.Windows.Forms.CheckBox
     Friend WithEvents CHKType As System.Windows.Forms.CheckBox
     Friend WithEvents TxtNo2 As System.Windows.Forms.TextBox
     Friend WithEvents TxtNo1 As System.Windows.Forms.TextBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents CHKWIP As System.Windows.Forms.CheckBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmView))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.CHKWIP = New System.Windows.Forms.CheckBox
-        Me.lblType1 = New System.Windows.Forms.Label
-        Me.CHKMType = New System.Windows.Forms.CheckBox
-        Me.CHKTAG = New System.Windows.Forms.CheckBox
-        Me.CHKMatCode = New System.Windows.Forms.CheckBox
-        Me.CHKType = New System.Windows.Forms.CheckBox
-        Me.CHKSection = New System.Windows.Forms.CheckBox
-        Me.RBMat = New System.Windows.Forms.RadioButton
-        Me.RBRAW = New System.Windows.Forms.RadioButton
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdView = New System.Windows.Forms.Button
-        Me.cmbTypeMaterial = New System.Windows.Forms.ComboBox
-        Me.TxtNo2 = New System.Windows.Forms.TextBox
-        Me.TxtNo1 = New System.Windows.Forms.TextBox
-        Me.cmbCode = New System.Windows.Forms.ComboBox
-        Me.cmbType = New System.Windows.Forms.ComboBox
-        Me.cmbSection1 = New System.Windows.Forms.ComboBox
-        Me.Label16 = New System.Windows.Forms.Label
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.DTPYear = New System.Windows.Forms.DateTimePicker
-        Me.RBSec = New System.Windows.Forms.RadioButton
-        Me.RBFrist = New System.Windows.Forms.RadioButton
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Panel1 = New System.Windows.Forms.Panel
-        Me.CHKMonth = New System.Windows.Forms.RadioButton
-        Me.CHKYear = New System.Windows.Forms.RadioButton
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.DPeriod1 = New System.Windows.Forms.DateTimePicker
-        Me.DPeriod2 = New System.Windows.Forms.DateTimePicker
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmView))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.CHKWIP = New System.Windows.Forms.CheckBox()
+        Me.lblType1 = New System.Windows.Forms.Label()
+        Me.CHKMType = New System.Windows.Forms.CheckBox()
+        Me.CHKTAG = New System.Windows.Forms.CheckBox()
+        Me.CHKMatCode = New System.Windows.Forms.CheckBox()
+        Me.CHKType = New System.Windows.Forms.CheckBox()
+        Me.CHKSection = New System.Windows.Forms.CheckBox()
+        Me.RBMat = New System.Windows.Forms.RadioButton()
+        Me.RBRAW = New System.Windows.Forms.RadioButton()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdView = New System.Windows.Forms.Button()
+        Me.cmbTypeMaterial = New System.Windows.Forms.ComboBox()
+        Me.TxtNo2 = New System.Windows.Forms.TextBox()
+        Me.TxtNo1 = New System.Windows.Forms.TextBox()
+        Me.cmbCode = New System.Windows.Forms.ComboBox()
+        Me.cmbType = New System.Windows.Forms.ComboBox()
+        Me.cmbSection1 = New System.Windows.Forms.ComboBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.DTPYear = New System.Windows.Forms.DateTimePicker()
+        Me.RBSec = New System.Windows.Forms.RadioButton()
+        Me.RBFrist = New System.Windows.Forms.RadioButton()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.CHKYear = New System.Windows.Forms.RadioButton()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -139,8 +127,8 @@ Public Class FrmView
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.CHKWIP)
         Me.GroupBox1.Controls.Add(Me.lblType1)
         Me.GroupBox1.Controls.Add(Me.CHKMType)
@@ -162,34 +150,34 @@ Public Class FrmView
         Me.GroupBox1.Controls.Add(Me.Label12)
         Me.GroupBox1.Controls.Add(Me.Label10)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 104)
+        Me.GroupBox1.Location = New System.Drawing.Point(10, 120)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(666, 192)
+        Me.GroupBox1.Size = New System.Drawing.Size(813, 219)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         '
         'CHKWIP
         '
         Me.CHKWIP.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKWIP.Location = New System.Drawing.Point(344, 24)
+        Me.CHKWIP.Location = New System.Drawing.Point(413, 28)
         Me.CHKWIP.Name = "CHKWIP"
-        Me.CHKWIP.Size = New System.Drawing.Size(72, 16)
+        Me.CHKWIP.Size = New System.Drawing.Size(86, 18)
         Me.CHKWIP.TabIndex = 45
         Me.CHKWIP.Text = " WIP"
         '
         'lblType1
         '
-        Me.lblType1.Location = New System.Drawing.Point(344, 88)
+        Me.lblType1.Location = New System.Drawing.Point(413, 102)
         Me.lblType1.Name = "lblType1"
-        Me.lblType1.Size = New System.Drawing.Size(296, 16)
+        Me.lblType1.Size = New System.Drawing.Size(355, 18)
         Me.lblType1.TabIndex = 44
         '
         'CHKMType
         '
         Me.CHKMType.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKMType.Location = New System.Drawing.Point(320, 58)
+        Me.CHKMType.Location = New System.Drawing.Point(384, 67)
         Me.CHKMType.Name = "CHKMType"
-        Me.CHKMType.Size = New System.Drawing.Size(115, 16)
+        Me.CHKMType.Size = New System.Drawing.Size(138, 18)
         Me.CHKMType.TabIndex = 43
         Me.CHKMType.Text = "Material  Type"
         Me.CHKMType.Visible = False
@@ -197,45 +185,45 @@ Public Class FrmView
         'CHKTAG
         '
         Me.CHKTAG.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKTAG.Location = New System.Drawing.Point(16, 120)
+        Me.CHKTAG.Location = New System.Drawing.Point(19, 138)
         Me.CHKTAG.Name = "CHKTAG"
-        Me.CHKTAG.Size = New System.Drawing.Size(80, 16)
+        Me.CHKTAG.Size = New System.Drawing.Size(96, 19)
         Me.CHKTAG.TabIndex = 8
         Me.CHKTAG.Text = "TagNo."
         '
         'CHKMatCode
         '
         Me.CHKMatCode.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKMatCode.Location = New System.Drawing.Point(16, 88)
+        Me.CHKMatCode.Location = New System.Drawing.Point(19, 102)
         Me.CHKMatCode.Name = "CHKMatCode"
-        Me.CHKMatCode.Size = New System.Drawing.Size(107, 16)
+        Me.CHKMatCode.Size = New System.Drawing.Size(129, 18)
         Me.CHKMatCode.TabIndex = 6
         Me.CHKMatCode.Text = "Material Code"
         '
         'CHKType
         '
         Me.CHKType.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKType.Location = New System.Drawing.Point(16, 56)
+        Me.CHKType.Location = New System.Drawing.Point(19, 65)
         Me.CHKType.Name = "CHKType"
-        Me.CHKType.Size = New System.Drawing.Size(131, 16)
+        Me.CHKType.Size = New System.Drawing.Size(157, 18)
         Me.CHKType.TabIndex = 3
         Me.CHKType.Text = "Type"
         '
         'CHKSection
         '
         Me.CHKSection.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKSection.Location = New System.Drawing.Point(16, 24)
+        Me.CHKSection.Location = New System.Drawing.Point(19, 28)
         Me.CHKSection.Name = "CHKSection"
-        Me.CHKSection.Size = New System.Drawing.Size(80, 16)
+        Me.CHKSection.Size = New System.Drawing.Size(96, 18)
         Me.CHKSection.TabIndex = 0
         Me.CHKSection.Text = "Section"
         '
         'RBMat
         '
         Me.RBMat.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.RBMat.Location = New System.Drawing.Point(320, 152)
+        Me.RBMat.Location = New System.Drawing.Point(384, 175)
         Me.RBMat.Name = "RBMat"
-        Me.RBMat.Size = New System.Drawing.Size(144, 24)
+        Me.RBMat.Size = New System.Drawing.Size(173, 28)
         Me.RBMat.TabIndex = 13
         Me.RBMat.Text = "Report by  Material"
         '
@@ -243,9 +231,9 @@ Public Class FrmView
         '
         Me.RBRAW.Checked = True
         Me.RBRAW.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.RBRAW.Location = New System.Drawing.Point(160, 152)
+        Me.RBRAW.Location = New System.Drawing.Point(192, 175)
         Me.RBRAW.Name = "RBRAW"
-        Me.RBRAW.Size = New System.Drawing.Size(160, 24)
+        Me.RBRAW.Size = New System.Drawing.Size(192, 28)
         Me.RBRAW.TabIndex = 12
         Me.RBRAW.TabStop = True
         Me.RBRAW.Text = "Report by R/M Material"
@@ -255,9 +243,9 @@ Public Class FrmView
         Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClose.Location = New System.Drawing.Point(570, 120)
+        Me.CmdClose.Location = New System.Drawing.Point(698, 135)
         Me.CmdClose.Name = "CmdClose"
-        Me.CmdClose.Size = New System.Drawing.Size(80, 56)
+        Me.CmdClose.Size = New System.Drawing.Size(96, 65)
         Me.CmdClose.TabIndex = 15
         Me.CmdClose.Text = "Close"
         Me.CmdClose.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -267,84 +255,82 @@ Public Class FrmView
         Me.CmdView.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdView.Image = CType(resources.GetObject("CmdView.Image"), System.Drawing.Image)
         Me.CmdView.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdView.Location = New System.Drawing.Point(490, 120)
+        Me.CmdView.Location = New System.Drawing.Point(602, 135)
         Me.CmdView.Name = "CmdView"
-        Me.CmdView.Size = New System.Drawing.Size(80, 56)
+        Me.CmdView.Size = New System.Drawing.Size(96, 65)
         Me.CmdView.TabIndex = 14
         Me.CmdView.Text = "View"
         Me.CmdView.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'cmbTypeMaterial
         '
-        Me.cmbTypeMaterial.Location = New System.Drawing.Point(464, 56)
+        Me.cmbTypeMaterial.Location = New System.Drawing.Point(557, 65)
         Me.cmbTypeMaterial.Name = "cmbTypeMaterial"
-        Me.cmbTypeMaterial.Size = New System.Drawing.Size(136, 21)
+        Me.cmbTypeMaterial.Size = New System.Drawing.Size(163, 24)
         Me.cmbTypeMaterial.TabIndex = 5
         Me.cmbTypeMaterial.Text = "Select"
         Me.cmbTypeMaterial.Visible = False
         '
         'TxtNo2
         '
-        Me.TxtNo2.Location = New System.Drawing.Point(376, 120)
+        Me.TxtNo2.Location = New System.Drawing.Point(451, 138)
         Me.TxtNo2.Name = "TxtNo2"
-        Me.TxtNo2.Size = New System.Drawing.Size(96, 20)
+        Me.TxtNo2.Size = New System.Drawing.Size(115, 22)
         Me.TxtNo2.TabIndex = 10
-        Me.TxtNo2.Text = ""
         '
         'TxtNo1
         '
-        Me.TxtNo1.Location = New System.Drawing.Point(160, 120)
+        Me.TxtNo1.Location = New System.Drawing.Point(192, 138)
         Me.TxtNo1.Name = "TxtNo1"
-        Me.TxtNo1.Size = New System.Drawing.Size(96, 20)
+        Me.TxtNo1.Size = New System.Drawing.Size(115, 22)
         Me.TxtNo1.TabIndex = 9
-        Me.TxtNo1.Text = ""
         '
         'cmbCode
         '
-        Me.cmbCode.Location = New System.Drawing.Point(160, 88)
+        Me.cmbCode.Location = New System.Drawing.Point(192, 102)
         Me.cmbCode.Name = "cmbCode"
-        Me.cmbCode.Size = New System.Drawing.Size(168, 21)
+        Me.cmbCode.Size = New System.Drawing.Size(202, 24)
         Me.cmbCode.TabIndex = 7
         Me.cmbCode.Text = "Select"
         '
         'cmbType
         '
-        Me.cmbType.Location = New System.Drawing.Point(160, 56)
+        Me.cmbType.Location = New System.Drawing.Point(192, 65)
         Me.cmbType.Name = "cmbType"
-        Me.cmbType.Size = New System.Drawing.Size(136, 21)
+        Me.cmbType.Size = New System.Drawing.Size(163, 24)
         Me.cmbType.TabIndex = 4
         Me.cmbType.Text = "Select"
         '
         'cmbSection1
         '
-        Me.cmbSection1.Location = New System.Drawing.Point(160, 22)
+        Me.cmbSection1.Location = New System.Drawing.Point(192, 25)
         Me.cmbSection1.Name = "cmbSection1"
-        Me.cmbSection1.Size = New System.Drawing.Size(168, 21)
+        Me.cmbSection1.Size = New System.Drawing.Size(202, 24)
         Me.cmbSection1.TabIndex = 1
         Me.cmbSection1.Text = "Select"
         '
         'Label16
         '
-        Me.Label16.Location = New System.Drawing.Point(344, 120)
+        Me.Label16.Location = New System.Drawing.Point(413, 138)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(24, 16)
+        Me.Label16.Size = New System.Drawing.Size(29, 19)
         Me.Label16.TabIndex = 15
         Me.Label16.Text = "To"
         '
         'Label12
         '
-        Me.Label12.Location = New System.Drawing.Point(120, 120)
+        Me.Label12.Location = New System.Drawing.Point(144, 138)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(40, 16)
+        Me.Label12.Size = New System.Drawing.Size(48, 19)
         Me.Label12.TabIndex = 12
         Me.Label12.Text = "from "
         '
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label10.Location = New System.Drawing.Point(32, 152)
+        Me.Label10.Location = New System.Drawing.Point(38, 175)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(80, 16)
+        Me.Label10.Size = New System.Drawing.Size(96, 19)
         Me.Label10.TabIndex = 11
         Me.Label10.Text = "Report"
         '
@@ -352,131 +338,67 @@ Public Class FrmView
         '
         Me.DTPYear.CustomFormat = "yyyy"
         Me.DTPYear.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.DTPYear.Location = New System.Drawing.Point(144, 8)
+        Me.DTPYear.Location = New System.Drawing.Point(173, 9)
         Me.DTPYear.Name = "DTPYear"
         Me.DTPYear.ShowUpDown = True
-        Me.DTPYear.Size = New System.Drawing.Size(64, 20)
+        Me.DTPYear.Size = New System.Drawing.Size(77, 22)
         Me.DTPYear.TabIndex = 41
         '
         'RBSec
         '
-        Me.RBSec.Location = New System.Drawing.Point(72, 8)
+        Me.RBSec.Location = New System.Drawing.Point(86, 9)
         Me.RBSec.Name = "RBSec"
-        Me.RBSec.Size = New System.Drawing.Size(64, 24)
+        Me.RBSec.Size = New System.Drawing.Size(77, 28)
         Me.RBSec.TabIndex = 40
         Me.RBSec.Text = "Second"
         '
         'RBFrist
         '
         Me.RBFrist.Checked = True
-        Me.RBFrist.Location = New System.Drawing.Point(8, 8)
+        Me.RBFrist.Location = New System.Drawing.Point(10, 9)
         Me.RBFrist.Name = "RBFrist"
-        Me.RBFrist.Size = New System.Drawing.Size(48, 24)
+        Me.RBFrist.Size = New System.Drawing.Size(57, 28)
         Me.RBFrist.TabIndex = 39
         Me.RBFrist.TabStop = True
         Me.RBFrist.Text = "Frist"
         '
         'GroupBox2
         '
-        Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Controls.Add(Me.Panel1)
-        Me.GroupBox2.Controls.Add(Me.CHKMonth)
         Me.GroupBox2.Controls.Add(Me.CHKYear)
-        Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.Label9)
-        Me.GroupBox2.Controls.Add(Me.DPeriod1)
-        Me.GroupBox2.Controls.Add(Me.DPeriod2)
         Me.GroupBox2.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox2.Location = New System.Drawing.Point(8, 8)
+        Me.GroupBox2.Location = New System.Drawing.Point(10, 9)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(664, 96)
+        Me.GroupBox2.Size = New System.Drawing.Size(810, 78)
         Me.GroupBox2.TabIndex = 0
         Me.GroupBox2.TabStop = False
-        '
-        'Label1
-        '
-        Me.Label1.BackColor = System.Drawing.Color.FloralWhite
-        Me.Label1.Location = New System.Drawing.Point(480, 64)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(80, 16)
-        Me.Label1.TabIndex = 45
-        Me.Label1.Text = "Scrap Report "
         '
         'Panel1
         '
         Me.Panel1.Controls.Add(Me.RBFrist)
         Me.Panel1.Controls.Add(Me.RBSec)
         Me.Panel1.Controls.Add(Me.DTPYear)
-        Me.Panel1.Location = New System.Drawing.Point(160, 16)
+        Me.Panel1.Location = New System.Drawing.Point(192, 18)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(312, 40)
+        Me.Panel1.Size = New System.Drawing.Size(374, 47)
         Me.Panel1.TabIndex = 44
-        '
-        'CHKMonth
-        '
-        Me.CHKMonth.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKMonth.Location = New System.Drawing.Point(16, 64)
-        Me.CHKMonth.Name = "CHKMonth"
-        Me.CHKMonth.Size = New System.Drawing.Size(104, 16)
-        Me.CHKMonth.TabIndex = 1
-        Me.CHKMonth.Text = "Period Month"
         '
         'CHKYear
         '
         Me.CHKYear.Checked = True
         Me.CHKYear.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.CHKYear.Location = New System.Drawing.Point(16, 28)
+        Me.CHKYear.Location = New System.Drawing.Point(19, 32)
         Me.CHKYear.Name = "CHKYear"
-        Me.CHKYear.Size = New System.Drawing.Size(104, 16)
+        Me.CHKYear.Size = New System.Drawing.Size(125, 19)
         Me.CHKYear.TabIndex = 0
         Me.CHKYear.TabStop = True
         Me.CHKYear.Text = "Period Year"
         '
-        'Label7
-        '
-        Me.Label7.BackColor = System.Drawing.Color.FloralWhite
-        Me.Label7.Location = New System.Drawing.Point(120, 64)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(40, 16)
-        Me.Label7.TabIndex = 6
-        Me.Label7.Text = "from "
-        '
-        'Label9
-        '
-        Me.Label9.BackColor = System.Drawing.Color.FloralWhite
-        Me.Label9.Location = New System.Drawing.Point(344, 64)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(24, 16)
-        Me.Label9.TabIndex = 8
-        Me.Label9.Text = "To"
-        '
-        'DPeriod1
-        '
-        Me.DPeriod1.CustomFormat = "MM/yyyy"
-        Me.DPeriod1.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.DPeriod1.Location = New System.Drawing.Point(160, 62)
-        Me.DPeriod1.Name = "DPeriod1"
-        Me.DPeriod1.ShowUpDown = True
-        Me.DPeriod1.Size = New System.Drawing.Size(96, 20)
-        Me.DPeriod1.TabIndex = 19
-        Me.DPeriod1.Value = New Date(2007, 5, 1, 0, 0, 0, 0)
-        '
-        'DPeriod2
-        '
-        Me.DPeriod2.CustomFormat = "MM/yyyy"
-        Me.DPeriod2.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.DPeriod2.Location = New System.Drawing.Point(376, 62)
-        Me.DPeriod2.Name = "DPeriod2"
-        Me.DPeriod2.ShowUpDown = True
-        Me.DPeriod2.Size = New System.Drawing.Size(96, 20)
-        Me.DPeriod2.TabIndex = 20
-        Me.DPeriod2.Value = New Date(2007, 5, 1, 0, 0, 0, 0)
-        '
         'FrmView
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(6, 15)
         Me.BackColor = System.Drawing.Color.FloralWhite
-        Me.ClientSize = New System.Drawing.Size(682, 312)
+        Me.ClientSize = New System.Drawing.Size(832, 357)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -485,6 +407,7 @@ Public Class FrmView
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "PHYSICAL INVENTORY  REPORT"
         Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -610,9 +533,10 @@ Public Class FrmView
     End Sub
 
     Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
-        If CHKMonth.Checked Then
-            selectMonth()
-        End If
+        '//Comment out by Beam 02-Sep-2020
+        'If CHKMonth.Checked Then
+        '    selectMonth()
+        'End If
         If CHKYear.Checked Then
             selectYear()
         End If
@@ -620,12 +544,13 @@ Public Class FrmView
 
     Sub selectMonth()
         Dim fview As New FrmReportScrap
+        '//Comment out by Beam 02-Sep-2020
         'เลือก Period
-        If DPeriod2.ToString < DPeriod1.ToString Then
-            MsgBox("Can't Select. Check Data Again.", MsgBoxStyle.OKOnly)
-            Exit Sub
-        Else
-        End If
+        'If DPeriod2.ToString < DPeriod1.ToString Then
+        '    MsgBox("Can't Select. Check Data Again.", MsgBoxStyle.OkOnly)
+        '    Exit Sub
+        'Else
+        'End If
 
         'ปรับ Tag 
         If CHKTAG.Checked Then
@@ -641,12 +566,13 @@ Public Class FrmView
             fview.sTrx2 = ""
         End If
 
+        '//Comment out by Beam 02-Sep-2020
         'เลือกรูปแบบของ Report ว่าจะเป็นแบบ รายเดือน หรือ รายครึ่งปี
-        If CHKMonth.Checked Then
-            fview.sTrxPeriod = "ML"
-        Else
-            fview.sTrxPeriod = ""
-        End If
+        'If CHKMonth.Checked Then
+        '    fview.sTrxPeriod = "ML"
+        'Else
+        fview.sTrxPeriod = ""
+        'End If
 
         ' เลือกรายงานเป็นแบบ RM  แตกเป็น material แต่ละตัว
         If RBRAW.Checked Then
@@ -662,16 +588,17 @@ Public Class FrmView
                 fview.sMType = ""
                 fview.sName = ""
             End If
-            If CHKMonth.Checked Then
-                Dim sdate1(), sdate2() As String
-                sdate1 = Split(DPeriod1.Text.Trim, "/")
-                sdate2 = Split(DPeriod2.Text.Trim, "/")
-                fview.sPeriod1 = sdate1(1) + sdate1(0)
-                fview.sPeriod2 = sdate2(1) + sdate2(0)
-            Else
-                fview.sPeriod1 = ""
+            '//Comment out by Beam 02-Sep-2020
+            'If CHKMonth.Checked Then
+            '    Dim sdate1(), sdate2() As String
+            '    sdate1 = Split(DPeriod1.Text.Trim, "/")
+            '    sdate2 = Split(DPeriod2.Text.Trim, "/")
+            '    fview.sPeriod1 = sdate1(1) + sdate1(0)
+            '    fview.sPeriod2 = sdate2(1) + sdate2(0)
+            'Else
+            fview.sPeriod1 = ""
                 fview.sPeriod2 = ""
-            End If
+            'End If
             If CHKSection.Checked Then
                 fview.sLoc = cmbSection1.SelectedValue
                 fview.sSec = cmbSection1.Text.Trim
@@ -694,9 +621,9 @@ Public Class FrmView
             fview.Show()
         End If
         If RBMat.Checked Then
-            MsgBox("don't Have Scarp Report.", MsgBoxStyle.OKOnly)
+            MsgBox("don't Have Scarp Report.", MsgBoxStyle.OkOnly)
         End If
- 
+
     End Sub
     Sub selectYear()
         Dim fview As New FrmPHYReport
@@ -821,7 +748,7 @@ Public Class FrmView
                 fmview.sPeriod1 = DTPYear.Text & "02"
                 fmview.sPeriod2 = DTPYear.Text & "02"
             End If
-             If CHKSection.Checked Then
+            If CHKSection.Checked Then
                 fmview.sLoc = cmbSection1.SelectedValue
                 fmview.sSec = cmbSection1.Text.Trim
                 fmview.sIdSec = cmbSection1.SelectedValue
@@ -879,7 +806,7 @@ Public Class FrmView
             cmbCode.Text = "Select"
         End If
 
-        If cmbType.SelectedValue = "04" Or _
+        If cmbType.SelectedValue = "04" Or
         cmbType.SelectedValue = "05" Then
             CHKMType.Visible = True
             cmbTypeMaterial.Visible = True
@@ -952,12 +879,13 @@ Public Class FrmView
         End If
     End Sub
 
-    Private Sub DPeriod2_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DPeriod2.ValueChanged
-        If DPeriod2.ToString < DPeriod1.ToString Then
-            MsgBox("Can't Select. Check Data Again.", MsgBoxStyle.OKOnly)
-        Else
-        End If
-    End Sub
+    '//Comment out by Beam 02-Sep-2020
+    'Private Sub DPeriod2_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    '    If DPeriod2.ToString < DPeriod1.ToString Then
+    '        MsgBox("Can't Select. Check Data Again.", MsgBoxStyle.OkOnly)
+    '    Else
+    '    End If
+    'End Sub
 
     Private Sub CHKWIP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CHKWIP.CheckedChanged
         If CHKWIP.Checked Then
@@ -965,9 +893,9 @@ Public Class FrmView
         End If
     End Sub
 
-    
-    Private Sub FrmView_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        DPeriod1.Value = Now.Date
-        DPeriod2.Value = Now.Date
-    End Sub
+    '//Comment out by Beam 02-Sep-2020
+    'Private Sub FrmView_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    '    DPeriod1.Value = Now.Date
+    '    DPeriod2.Value = Now.Date
+    'End Sub
 End Class
