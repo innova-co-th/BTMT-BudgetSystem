@@ -202,7 +202,7 @@ Public Class ExcelLib
             End If 'If GrdDV.Count <= 0
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Export error" & vbCrLf & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             ReleaseObject(xlWorkSheet)
             xlWorkBook.Close(False)
