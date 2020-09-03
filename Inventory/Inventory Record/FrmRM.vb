@@ -51,52 +51,52 @@ Public Class FrmRM
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents GbData As System.Windows.Forms.GroupBox
     Friend WithEvents DataGridRM As System.Windows.Forms.DataGrid
     Friend WithEvents CmdSave As System.Windows.Forms.Button
     Friend WithEvents CmdClose As System.Windows.Forms.Button
     Friend WithEvents CmdEdit As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents LblName As System.Windows.Forms.Label
     Friend WithEvents TxtName As System.Windows.Forms.TextBox
     Friend WithEvents CmdView As System.Windows.Forms.Button
     Friend WithEvents BtDel As System.Windows.Forms.Button
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents LblCode As System.Windows.Forms.Label
     Friend WithEvents Txtcode As System.Windows.Forms.TextBox
     Friend WithEvents ChkType As System.Windows.Forms.CheckBox
     Friend WithEvents CmbType As System.Windows.Forms.ComboBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmRM))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GbData = New System.Windows.Forms.GroupBox()
         Me.DataGridRM = New System.Windows.Forms.DataGrid()
         Me.CmdSave = New System.Windows.Forms.Button()
         Me.CmdClose = New System.Windows.Forms.Button()
         Me.CmdEdit = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.LblName = New System.Windows.Forms.Label()
         Me.TxtName = New System.Windows.Forms.TextBox()
         Me.CmdView = New System.Windows.Forms.Button()
         Me.BtDel = New System.Windows.Forms.Button()
         Me.Txtcode = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LblCode = New System.Windows.Forms.Label()
         Me.ChkType = New System.Windows.Forms.CheckBox()
         Me.CmbType = New System.Windows.Forms.ComboBox()
         Me.CmdImport = New System.Windows.Forms.Button()
         Me.CmdExport = New System.Windows.Forms.Button()
-        Me.GroupBox1.SuspendLayout()
+        Me.GbData.SuspendLayout()
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'GroupBox1
+        'GbData
         '
-        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.GbData.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox1.Controls.Add(Me.DataGridRM)
-        Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(880, 430)
-        Me.GroupBox1.TabIndex = 4
-        Me.GroupBox1.TabStop = False
+        Me.GbData.Controls.Add(Me.DataGridRM)
+        Me.GbData.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.GbData.Location = New System.Drawing.Point(8, 72)
+        Me.GbData.Name = "GbData"
+        Me.GbData.Size = New System.Drawing.Size(880, 430)
+        Me.GbData.TabIndex = 4
+        Me.GbData.TabStop = False
         '
         'DataGridRM
         '
@@ -144,14 +144,14 @@ Public Class FrmRM
         Me.CmdEdit.Text = "Edit"
         Me.CmdEdit.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
-        'Label1
+        'LblName
         '
-        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.Location = New System.Drawing.Point(558, 16)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(96, 16)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "R/M  DescName "
+        Me.LblName.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LblName.Location = New System.Drawing.Point(558, 16)
+        Me.LblName.Name = "LblName"
+        Me.LblName.Size = New System.Drawing.Size(96, 16)
+        Me.LblName.TabIndex = 4
+        Me.LblName.Text = "R/M  DescName "
         '
         'TxtName
         '
@@ -193,14 +193,14 @@ Public Class FrmRM
         Me.Txtcode.Size = New System.Drawing.Size(88, 20)
         Me.Txtcode.TabIndex = 2
         '
-        'Label2
+        'LblCode
         '
-        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.Location = New System.Drawing.Point(590, 48)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(64, 16)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "R/M Code"
+        Me.LblCode.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.LblCode.Location = New System.Drawing.Point(590, 48)
+        Me.LblCode.Name = "LblCode"
+        Me.LblCode.Size = New System.Drawing.Size(64, 16)
+        Me.LblCode.TabIndex = 8
+        Me.LblCode.Text = "R/M Code"
         '
         'ChkType
         '
@@ -253,19 +253,19 @@ Public Class FrmRM
         Me.Controls.Add(Me.BtDel)
         Me.Controls.Add(Me.CmdView)
         Me.Controls.Add(Me.TxtName)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.LblName)
         Me.Controls.Add(Me.CmdEdit)
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.CmdSave)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.GbData)
         Me.Controls.Add(Me.Txtcode)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.LblCode)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(912, 605)
         Me.Name = "FrmRM"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "R/M  WarehouseStock"
-        Me.GroupBox1.ResumeLayout(False)
+        Me.Text = "R/M  WarehouseStock -"
+        Me.GbData.ResumeLayout(False)
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -314,6 +314,7 @@ Public Class FrmRM
     Private Sub FrmRM_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadCmbType()
         LoadRM()
+        SetTotal() 'Set number of items
     End Sub
 #End Region
 
@@ -590,6 +591,15 @@ Public Class FrmRM
                                        & " and RMcode like'%" & Txtcode.Text.Trim & "%'"
             DataGridRM.DataSource = GrdDV
         End If
+
+        SetTotal() 'Set number of items
+    End Sub
+
+    Private Sub SetTotal()
+        'Set total
+        'Format: Form Text - xxx item(s)
+        Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
+        Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
     End Sub
 #End Region
 
@@ -650,6 +660,7 @@ Public Class FrmRM
         LoadRM()
         GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'"
         DataGridRM.DataSource = GrdDV
+        SetTotal() 'Set number of items
     End Sub
 
     Private Sub DataGridRM_CurrentCellChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridRM.CurrentCellChanged
@@ -672,6 +683,7 @@ Public Class FrmRM
         LoadRM()
         GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'"
         DataGridRM.DataSource = GrdDV
+        SetTotal() 'Set number of items
     End Sub
 
     Private Sub ChkType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkType.CheckedChanged
@@ -735,6 +747,7 @@ Public Class FrmRM
             ExcelLib.CenterForm(frm, Me)
             frm.Show()
 
+            'Read excel file
             dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
 
             'Save
@@ -748,29 +761,34 @@ Public Class FrmRM
                     cmSQL.Transaction = trans
 
                     Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             'Check RMCode
-                            Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString()
-                            Dim strTypeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString())
-                            Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString())
+                            Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+                            Dim strTypeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString().Trim())
+                            Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString().Trim())
                             Dim qty As String = PrepareStr(dtRec.Rows(i)("Qty"))
                             Dim qUnit As String = PrepareStr(dtRec.Rows(i)("Qunit"))
-                            Dim isInsert As Boolean = ChkDataImport(rmCode)
+                            Dim isExists As Boolean = ChkDataImport(rmCode)
 
-                            If isInsert Then
+                            'Refer sub RM() of FrmAddRM
+                            If Not isExists Then
                                 'Insert
                                 sb.Clear()
                                 '1.Table TblRM
                                 sb.AppendLine(" Insert  TblRM ")
                                 sb.AppendLine(" Values (")
-                                sb.AppendLine(" '" & rmCode & " ',") 'Column RMCode(PK)
-                                sb.AppendLine(PrepareStr(dtRec.Rows(i)("DescName").ToString()) & ",") 'Column DescName
+                                sb.AppendLine(" '" & rmCode & "',") 'Column RMCode(PK)
+                                sb.AppendLine(PrepareStr(dtRec.Rows(i)("DescName").ToString().Trim()) & ",") 'Column DescName
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("StdPrice")) & ",") 'Column StdPrice
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("ActPrice")) & ",") 'Column ActPrice
                                 sb.AppendLine(strTypeCode & ",") 'Column TypeCode
                                 sb.AppendLine(unitCode & ",") 'Column Unit
-                                sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column UpdateDate
-                                sb.AppendLine(PrepareStr(String.Empty)) 'Column UpdateTime
+                                sb.AppendLine(PrepareStr(strDate) & ",") 'Column UpdateDate
+                                sb.AppendLine(PrepareStr(iTime)) 'Column UpdateTime
                                 sb.AppendLine(" )")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
@@ -781,7 +799,7 @@ Public Class FrmRM
                                 sb.AppendLine(" Insert  TblGroup ")
                                 sb.AppendLine(" Values (")
                                 sb.AppendLine(strTypeCode & ",") 'Column TypeCode
-                                sb.AppendLine(" '" & rmCode & " '") 'Column Code
+                                sb.AppendLine(" '" & rmCode & "'") 'Column Code
                                 sb.AppendLine(" )")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
@@ -793,7 +811,7 @@ Public Class FrmRM
                                 sb.AppendLine(" Values (")
                                 sb.AppendLine(strTypeCode & ",") 'Column Type
                                 sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Final
-                                sb.AppendLine(" '" & rmCode & " ',") 'Column Code
+                                sb.AppendLine(" '" & rmCode & "',") 'Column Code
                                 sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Rev
                                 sb.AppendLine(unitCode & ",") 'Column UnitBig
                                 sb.AppendLine(PrepareStr("KG") & ",") 'Column UnitSmall
@@ -809,24 +827,24 @@ Public Class FrmRM
                                 If CDec(dtRec.Rows(i)("Qunit")) <> 0 Then
                                     sb.AppendLine(" Insert  TblQtyUnit ")
                                     sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '" & rmCode & " ',") 'Column RMCode(PK)
+                                    sb.AppendLine(" '" & rmCode & "',") 'Column RMCode(PK)
                                     sb.AppendLine(qty & ",") 'Column RMQty
                                     sb.AppendLine(unitCode & ",") 'Column UnitCode
                                     sb.AppendLine(qUnit & ",") 'Column Qty
                                     sb.AppendLine(PrepareStr("KG") & ",") 'Column QUnit
-                                    sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column UpdateDate
-                                    sb.AppendLine(PrepareStr(String.Empty)) 'UpdateTime
+                                    sb.AppendLine(PrepareStr(strDate) & ",") 'Column UpdateDate
+                                    sb.AppendLine(PrepareStr(iTime)) 'UpdateTime
                                     sb.AppendLine(" )")
                                 Else
                                     sb.AppendLine(" Insert  TblQtyUnit ")
                                     sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '" & rmCode & " ',")
+                                    sb.AppendLine(" '" & rmCode & "',")
                                     sb.AppendLine(qty & ",")
                                     sb.AppendLine(unitCode & ",")
                                     sb.AppendLine("0,") 'Force 0
                                     sb.AppendLine(PrepareStr("KG") & ",")
-                                    sb.AppendLine(PrepareStr(String.Empty) & ",")
-                                    sb.AppendLine(PrepareStr(String.Empty))
+                                    sb.AppendLine(PrepareStr(strDate) & ",")
+                                    sb.AppendLine(PrepareStr(iTime))
                                     sb.AppendLine(" )")
                                 End If
 
@@ -839,10 +857,10 @@ Public Class FrmRM
                                 '1.Table TblRM
                                 sb.AppendLine(" Update TblRM")
                                 sb.AppendLine(" Set ")
-                                sb.AppendLine(" descName = '" & dtRec.Rows(i)("DescName").ToString() & "'")
+                                sb.AppendLine(" descName = '" & dtRec.Rows(i)("DescName").ToString().Trim() & "'")
                                 sb.AppendLine(" , StdPrice = '" & dtRec.Rows(i)("StdPrice") & "'")
                                 sb.AppendLine(" , ActPrice = '" & dtRec.Rows(i)("ActPrice") & "'")
-                                sb.AppendLine(" , Unit = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" , Unit = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
                                 sb.AppendLine(" Where RMCode = '" & rmCode & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
@@ -854,7 +872,7 @@ Public Class FrmRM
                                 sb.AppendLine(" Set ")
                                 sb.AppendLine(" Qty = '" & dtRec.Rows(i)("Qunit") & "'")
                                 sb.AppendLine(" , RMQty = '" & dtRec.Rows(i)("Qty") & "'")
-                                sb.AppendLine(" , UnitCode = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" , UnitCode = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
                                 sb.AppendLine(" Where RMCode = '" & rmCode & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
@@ -866,21 +884,22 @@ Public Class FrmRM
                                 sb.AppendLine(" Set ")
                                 sb.AppendLine(" SQty = '" & dtRec.Rows(i)("Qunit") & "'")
                                 sb.AppendLine(" , BQty = '" & dtRec.Rows(i)("Qty") & "'")
-                                sb.AppendLine(" , UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" , UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
                                 sb.AppendLine(" Where Code = '" & rmCode & "'")
                                 sb.AppendLine(" And  UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
                                 cmSQL.ExecuteNonQuery()
-                            End If ' If isInsert
+                            End If ' If Not isExists
                         Next i
 
                         trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Catch ex As SqlException
-                        MsgBox(ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
                         trans.Rollback()
                     Catch ex As Exception
-                        MsgBox(ex.Message, MsgBoxStyle.Critical, "General Error")
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
                         trans.Rollback()
                     Finally
                         trans.Dispose()
@@ -891,6 +910,8 @@ Public Class FrmRM
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
+            LoadRM() 'ReQuery and set datagrid
+            View() 'Filter by condition
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
     End Sub
