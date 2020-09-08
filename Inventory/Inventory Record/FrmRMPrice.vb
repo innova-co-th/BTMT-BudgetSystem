@@ -647,4 +647,135 @@ Public Class FrmRMPrice
             Case Else
         End Select
     End Sub
+
+#Region "Export"
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_RM_PRICE").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn)
+    End Sub
+#End Region
+
+#Region "Import"
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_RM_PRICE").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create loading of overlay
+            Dim frm As New Loading()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            'Check RMCode
+                            Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+                            'Dim strTypeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString().Trim())
+                            'Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString().Trim())
+                            'Dim stdPrice As String = PrepareStr(dtRec.Rows(i)("StdPrice").ToString().Trim())
+                            'Dim acrPrice As String = PrepareStr(dtRec.Rows(i)("ActPrice").ToString().Trim())
+                            Dim isExists As Boolean = ChkDataImport(rmCode)
+
+                            'Refer sub RM() of FrmAddRM
+                            If isExists Then
+                                'Update
+                                sb.Clear()
+                                '1.Table TblRM
+                                sb.AppendLine(" Update TblRM")
+                                sb.AppendLine(" Set ")
+                                sb.AppendLine(" descName = '" & dtRec.Rows(i)("DescName").ToString().Trim() & "'")
+                                sb.AppendLine(" , StdPrice = '" & dtRec.Rows(i)("StdPrice") & "'")
+                                sb.AppendLine(" , ActPrice = '" & dtRec.Rows(i)("ActPrice") & "'")
+                                sb.AppendLine(" , Unit = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
+                                sb.AppendLine(" Where RMCode = '" & rmCode & "'")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+                            End If ' If Not isExists
+                        Next i
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            LoadRM() 'ReQuery and set datagrid
+            View() 'Filter by condition
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+
+    Private Function ChkDataImport(rmCode As String) As Boolean
+        Dim cnSQL As SqlConnection
+        Dim cmSQL As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+
+        Try
+            strSQL &= " SELECT count(*) "
+            strSQL &= " FROM TblRM "
+            strSQL &= " WHERE RMcode  = '" & rmCode & "'"
+            cnSQL = New SqlConnection(C1.Strcon)
+            cnSQL.Open()
+            cmSQL = New SqlCommand(strSQL, cnSQL)
+            Dim i As Long = cmSQL.ExecuteScalar()
+            If i <> 0 Then
+                ret = True
+            End If
+
+            cmSQL.Dispose()
+            cnSQL.Dispose()
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        End Try
+
+        Return ret
+    End Function
+#End Region
 End Class
