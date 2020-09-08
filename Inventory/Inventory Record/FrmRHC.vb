@@ -270,7 +270,7 @@ Public Class FrmRHC
         Me.MinimumSize = New System.Drawing.Size(1018, 671)
         Me.Name = "FrmRHC"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Compound  (C.RHC)"
+        Me.Text = "Compound  (C.RHC) -"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -287,28 +287,32 @@ Public Class FrmRHC
 
 #Region "Function_Load"
     Private Sub LoadCOM()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "   select * from "
-        StrSQL &= "  ( SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active"
-        StrSQL &= "   ,CompCode+','+Revision Code"
-        StrSQL &= "   ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty"
-        StrSQL &= "    FROM         TBLCompound"
-        StrSQL &= "   Union"
-        StrSQL &= "    SELECT Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active"
-        StrSQL &= "    ,CRev,Code,Rev,RMCode,mRHC,mQty"
-        StrSQL &= "    FROM         "
-        StrSQL &= "   (SELECT  seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active from  TBLCompound) c"
-        StrSQL &= "    left outer join "
-        StrSQL &= "    ( select mastercode code,Revision Rev"
-        StrSQL &= "   ,mastercode+','+Revision MRev,RMcode,RHC mRHC,Weight mQty from   TBLRHCDtl"
-        StrSQL &= "    where Mastercode in "
-        StrSQL &= "    ( SELECT  compcode"
-        StrSQL &= "     FROM         TBLCompound))m"
-        StrSQL &= "    on c.CRev = m.MRev"
-        StrSQL &= "     )aa"
-        StrSQL &= "    where seq = " & ComboBoxStage.Text.Trim
-        StrSQL &= "   order by code ,TQty desc"
+        sb.AppendLine("SELECT * ")
+        sb.AppendLine("FROM ( ")
+        sb.AppendLine("  SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
+        sb.AppendLine("  ,CompCode+','+Revision Code")
+        sb.AppendLine("  ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty")
+        sb.AppendLine("  FROM         TBLCompound")
+        sb.AppendLine("  UNION")
+        sb.AppendLine("  SELECT c.Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active")
+        sb.AppendLine("  ,c.CRev,m.Code,m.Rev,m.RMCode,m.mRHC,m.mQty")
+        sb.AppendLine("  FROM (        ")
+        sb.AppendLine("    SELECT  seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active")
+        sb.AppendLine("    FROM  TBLCompound")
+        sb.AppendLine("  ) c")
+        sb.AppendLine("  LEFT OUTER JOIN ( ")
+        sb.AppendLine("    SELECT MasterCode Code,Revision Rev")
+        sb.AppendLine("    ,mastercode+','+Revision MRev,RMcode,RHC mRHC,Weight mQty")
+        sb.AppendLine("    FROM   TBLRHCDtl")
+        sb.AppendLine("    WHERE Mastercode in ( SELECT  compcode FROM TBLCompound)")
+        sb.AppendLine("  ) m on c.CRev = m.MRev")
+        sb.AppendLine(") aa ")
+        sb.AppendLine("WHERE Seq = " & ComboBoxStage.Text.Trim())
+        sb.AppendLine("ORDER BY Code, TQty DESC")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -453,7 +457,7 @@ Public Class FrmRHC
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle0, grdColStyle1, grdColStyle1_1, grdColStyle2, _
+    {grdColStyle0, grdColStyle1, grdColStyle1_1, grdColStyle2,
      grdColStyle4_1, grdColStyle3_1, grdColStyle4, grdColStyle3})
 
         DataGridCOM.TableStyles.Add(grdTableStyle1)
@@ -534,13 +538,17 @@ Public Class FrmRHC
     End Sub
 #End Region
 
+#Region "Form Event"
     Private Sub FrmRHC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ComboBoxStage.SelectedIndex = 1
         LoadCOM()
         Loadgroup()
         LoadCompound()
+        SetTotal() 'Set number of items
     End Sub
+#End Region
 
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -589,33 +597,16 @@ Public Class FrmRHC
         '   LoadCompound()
         '    Loadgroup()
         LoadCOM()
-        chk()
+        Chk()
     End Sub
 
-    Sub chk()
-        If CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = False Then
-            GrdDV.RowFilter = " seq = '" & ComboBoxStage.Text.Trim & "'"
-            DataGridCOM.DataSource = GrdDV
-        ElseIf CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-            StrData = CmbGroup.Text.Trim
-        ElseIf CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-        Else : CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True
-            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'" _
-                            & " and Code like'%" & CmbCompound.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-        End If
-    End Sub
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
 
     Private Sub CheckBoxCompoud_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxCompoud.CheckedChanged
         If CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & _
+            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim &
                               "%' and  Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
             DataGridCOM.DataSource = GrdDV
             CmbCompound.Enabled = True
@@ -628,7 +619,7 @@ Public Class FrmRHC
             DataGridCOM.DataSource = GrdDV
             CmbCompound.Enabled = False
         End If
-        chk()
+        Chk()
     End Sub
 
     Private Sub CmbCompound_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbCompound.SelectedIndexChanged
@@ -637,7 +628,7 @@ Public Class FrmRHC
         End If
 
         If CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & _
+            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim &
                               "%' and  Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
             DataGridCOM.DataSource = GrdDV
             CmbCompound.Enabled = True
@@ -651,7 +642,7 @@ Public Class FrmRHC
             CmbCompound.Enabled = False
         End If
 
-        chk()
+        Chk()
         StrData = CmbGroup.Text.Trim
 
     End Sub
@@ -667,14 +658,73 @@ Public Class FrmRHC
             CmbGroup.Enabled = False
         End If
         StrData = CmbGroup.Text.Trim
-        chk()
+        Chk()
     End Sub
 
     Private Sub CmbGroup_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbGroup.SelectedIndexChanged
-        chk()
+        Chk()
         StrData = CmbGroup.Text.Trim
     End Sub
 
+    Private Sub CmdDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdDelete.Click
+        Dim msg As String
+        Dim title As String
+        Dim style As MsgBoxStyle
+        Dim response As MsgBoxResult
+        msg = "Delete Compound :" & GrdDV.Item(oldrow).Row("CompCode") ' Define message.
+        style = MsgBoxStyle.DefaultButton2 Or
+           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        title = "Compound"   ' Define title.
+
+        response = MsgBox(msg, style, title)
+        If response = MsgBoxResult.Yes Then ' User chose Yes.
+            If ChkData() Then
+                MsgBox("It's have Usage , Can't Delete. Please contact IS.", MsgBoxStyle.Information, "Delete R/M ")
+            Else
+                DelCompound()
+                LoadCompound()
+
+                If CheckBoxGP.Checked = True Then
+                    GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
+                    DataGridCOM.DataSource = GrdDV
+                    CmbGroup.Enabled = True
+                Else
+                    GrdDV.RowFilter = " "
+                    DataGridCOM.DataSource = GrdDV
+                    CmbGroup.Enabled = False
+                End If
+                StrData = CmbGroup.Text.Trim
+            End If
+        Else
+            Exit Sub
+        End If
+
+    End Sub
+
+    Private Sub ComboBoxStage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxStage.SelectedIndexChanged
+        If ComboBoxStage.Text <> "Select" Then
+            LoadCOM()
+            'Loadgroup()
+            'LoadCompound()
+            Chk()
+            StrData = CmbGroup.Text.Trim
+        Else
+        End If
+    End Sub
+
+    Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
+        If ComboBoxStage.Text <> "Select" Then
+            LoadCOM()
+            ' Loadgroup()
+            'LoadCompound()
+        Else
+        End If
+
+        Chk()
+        StrData = CmbGroup.Text.Trim
+
+    End Sub
+#End Region
 
 #Region "DelCompound"
     Private Function ChkData() As Boolean
@@ -731,64 +781,32 @@ Public Class FrmRHC
         End Try
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Sub
-#End Region
 
-    Private Sub CmdDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdDelete.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
-        Dim response As MsgBoxResult
-        msg = "Delete Compound :" & GrdDV.Item(oldrow).Row("CompCode") ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Compound"   ' Define title.
-
-        response = MsgBox(msg, style, title)
-        If response = MsgBoxResult.Yes Then ' User chose Yes.
-            If ChkData() Then
-                MsgBox("It's have Usage , Can't Delete. Please contact IS.", MsgBoxStyle.Information, "Delete R/M ")
-            Else
-                DelCompound()
-                LoadCompound()
-
-                If CheckBoxGP.Checked = True Then
-                    GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
-                    DataGridCOM.DataSource = GrdDV
-                    CmbGroup.Enabled = True
-                Else
-                    GrdDV.RowFilter = " "
-                    DataGridCOM.DataSource = GrdDV
-                    CmbGroup.Enabled = False
-                End If
-                StrData = CmbGroup.Text.Trim
-            End If
-        Else
-            Exit Sub
-        End If
-
-    End Sub
-
-    Private Sub ComboBoxStage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxStage.SelectedIndexChanged
-        If ComboBoxStage.Text <> "Select" Then
-            LoadCOM()
-            'Loadgroup()
-            'LoadCompound()
-            chk()
+    Sub Chk()
+        If CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = False Then
+            GrdDV.RowFilter = " seq = '" & ComboBoxStage.Text.Trim & "'"
+            DataGridCOM.DataSource = GrdDV
+        ElseIf CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = True Then
+            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
+            DataGridCOM.DataSource = GrdDV
             StrData = CmbGroup.Text.Trim
-        Else
-        End If
-    End Sub
-
-    Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
-        If ComboBoxStage.Text <> "Select" Then
-            LoadCOM()
-            ' Loadgroup()
-            'LoadCompound()
-        Else
+        ElseIf CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
+            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & "%'"
+            DataGridCOM.DataSource = GrdDV
+        Else : CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True
+            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'" _
+                            & " and Code like'%" & CmbCompound.Text.Trim & "%'"
+            DataGridCOM.DataSource = GrdDV
         End If
 
-        chk()
-        StrData = CmbGroup.Text.Trim
-
+        SetTotal() 'Set number of items
     End Sub
+
+    Private Sub SetTotal()
+        'Set total
+        'Format: Form Text - xxx item(s)
+        Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
+        Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
+    End Sub
+#End Region
 End Class
