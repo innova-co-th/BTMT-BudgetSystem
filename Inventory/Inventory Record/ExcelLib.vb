@@ -46,7 +46,7 @@ Public Class ExcelLib
             'Check number of record in Excel
             If numRows <= 1 Then
                 'It have only header
-                Throw New ApplicationException("Import error" & vbCrLf & "No data for import!!")
+                Throw New ApplicationException("No data for import!!")
             End If
 
             'Check format of import file
@@ -82,7 +82,7 @@ Public Class ExcelLib
             xlWorkBook.Close(False)
             ReleaseObject(xlWorkBook)
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Import error" & vbCrLf & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             dtTemp = Nothing
         Finally
             xlApp.Quit()
@@ -121,7 +121,7 @@ Public Class ExcelLib
             'Check number of record in DataView
             If DV.Count <= 0 Then
                 'Error
-                Throw New ApplicationException("Export error" & vbCrLf & "No data for export!!")
+                Throw New ApplicationException("No data for export!!")
             Else
                 'Export excel
                 If exportDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
