@@ -22,8 +22,6 @@ Public Class FrmCompound
 
     Protected DefaultGridBorderStyle As BorderStyle
     Dim C1 As New SQLData("ACCINV")
-    Friend WithEvents CmdImport As System.Windows.Forms.Button
-    Friend WithEvents CmdExport As System.Windows.Forms.Button
     Dim StrData As String
 #End Region
 
@@ -67,6 +65,8 @@ Public Class FrmCompound
     Friend WithEvents CmdDelete As System.Windows.Forms.Button
     Friend WithEvents cmdAvtive As System.Windows.Forms.Button
     Friend WithEvents ChkActive As System.Windows.Forms.CheckBox
+    Friend WithEvents CmdImport As System.Windows.Forms.Button
+    Friend WithEvents CmdExport As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCompound))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
@@ -274,28 +274,37 @@ Public Class FrmCompound
     Dim oldrow As Integer
 #End Region
 
+#Region "Form Event"
+    Private Sub FrmCompound_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Loadgroup()
+        LoadCompound()
+        LoadCOM()
+        SetTotal() 'Set number of items
+    End Sub
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadCOM()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = " select * from "
-        StrSQL &= " ( SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,Qty TQty,Active ,Active AC"
-        StrSQL &= " ,CompCode+','+Revision Code"
-        StrSQL &= " ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,'' RMRev,null Qty,'' Unit,null Per"
-        StrSQL &= " FROM         TBLCompound"
-        StrSQL &= " Union"
-        StrSQL &= "  SELECT null Seq,c.Finalcompound,'' code,'' rev,'' cc,null TQty,'' Active,Active AC"
-        StrSQL &= "   ,MasterCode+','+m.Revision Code,MasterCode,m.Revision,RMCode,isnull(RmRevision,'') RMRev,m.Qty,Unit,m.Per"
-        StrSQL &= "  FROM         "
-        StrSQL &= " TBLCompound c"
-        StrSQL &= " left outer join "
-        StrSQL &= " ( select * from   TBLMASTER"
-        StrSQL &= "  where Mastercode in "
-        StrSQL &= " ( SELECT  compcode"
-        StrSQL &= "  FROM         TBLCompound))m"
-        StrSQL &= " on c.compcode+c.Revision = m.Mastercode+m.Revision"
-        StrSQL &= " )aa"
-        StrSQL &= " order by code,seq desc"
+        sb.AppendLine(" SELECT * ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,Qty TQty, Active, Active AC")
+        sb.AppendLine("   ,CompCode+','+Revision Code, '' MasterCode, isnull(Revision,'') MRev,'' RMcode,'' RMRev,null Qty,'' Unit,null Per") 'Header from table TBLCompound
+        sb.AppendLine("   FROM TBLCompound")
+        sb.AppendLine("   UNION")
+        sb.AppendLine("   SELECT null Seq,c.Finalcompound,'' CompCode,'' Revision,'' cc,null TQty,'' Active, c.Active AC")
+        sb.AppendLine("   ,m.MasterCode+','+m.Revision Code, m.MasterCode, m.Revision, m.RMCode, isnull(m.RmRevision,'') RMRev, m.Qty, m.Unit, m.Per") 'Detail from table TBLMaster
+        sb.AppendLine("   FROM TBLCompound c ")
+        sb.AppendLine("   LEFT OUTER JOIN (")
+        sb.AppendLine("     SELECT * ")
+        sb.AppendLine("     FROM TBLMASTER ")
+        sb.AppendLine("     WHERE Mastercode in ( SELECT compcode FROM TBLCompound)")
+        sb.AppendLine("   ) m on c.CompCode+c.Revision = m.Mastercode+m.Revision ")
+        sb.AppendLine(" ) aa ")
+        sb.AppendLine(" ORDER BY Code, Seq DESC")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -465,8 +474,8 @@ Public Class FrmCompound
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle7, grdColStyle0, grdColStyle0_0, grdColStyle1, _
-    grdColStyle1_1, grdColStyle2, grdColStyle2_1, _
+    {grdColStyle7, grdColStyle0, grdColStyle0_0, grdColStyle1,
+    grdColStyle1_1, grdColStyle2, grdColStyle2_1,
      grdColStyle4, grdColStyle5, grdColStyle3, grdColStyle6})
 
         DataGridCOM.TableStyles.Add(grdTableStyle1)
@@ -547,12 +556,7 @@ Public Class FrmCompound
     End Sub
 #End Region
 
-    Private Sub FrmCompound_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Loadgroup()
-        LoadCompound()
-        LoadCOM()
-    End Sub
-
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -608,12 +612,64 @@ Public Class FrmCompound
         LoadCompound()
         LoadCOM()
         Loadgroup()
-        selectDatachange()
+        SelectDatachange()
     End Sub
 
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
+
+    Private Sub CmdDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdDelete.Click
+        Dim msg As String
+        Dim title As String
+        Dim style As MsgBoxStyle
+        Dim response As MsgBoxResult
+        msg = "Delete Compound :" & GrdDV.Item(oldrow).Row("CompCode") ' Define message.
+        style = MsgBoxStyle.DefaultButton2 Or
+           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        title = "Compound"   ' Define title.
+
+        response = MsgBox(msg, style, title)
+        If response = MsgBoxResult.Yes Then ' User chose Yes.
+            If ChkData() Or ChkData2() Then
+                MsgBox("It's have Usage , Can't Delete. Please contact IS.", MsgBoxStyle.Information, "Delete R/M ")
+            Else
+                DelCompound()
+                LoadCOM()
+                SelectDatachange()
+                oldrow = 0
+            End If
+        Else
+            Exit Sub
+        End If
+
+    End Sub
+
+    Private Sub cmdAvtive_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAvtive.Click
+        Dim msg As String
+        Dim title As String
+        Dim style As MsgBoxStyle
+        Dim response As MsgBoxResult
+        If GrdDV.Item(oldrow).Row("compcode") = "" Then
+            Exit Sub
+        End If
+        msg = "Change Active Semi(Material) : " & GrdDV.Item(oldrow).Row("Compcode") _
+        & "  Revision :" & GrdDV.Item(oldrow).Row("Revision") 'Define message.
+        style = MsgBoxStyle.DefaultButton2 Or
+           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        title = "Semi(Material)"   ' Define title.
+        ' Display message.
+        response = MsgBox(msg, style, title)
+        If response = MsgBoxResult.Yes Then ' User chose Yes.
+            UPCompound()
+            LoadCOM()
+            SelectDatachange()
+        Else
+            Exit Sub
+        End If
+    End Sub
+#End Region
+
 #Region "SelectData"
     Private Sub CheckBoxCompoud_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxCompoud.CheckedChanged
         If CheckBoxCompoud.Checked Then
@@ -621,15 +677,15 @@ Public Class FrmCompound
         Else
             CmbCompound.Enabled = False
         End If
-        selectDatachange()
+        SelectDatachange()
     End Sub
 
     Private Sub ChkActive_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkActive.CheckedChanged
-        selectDatachange()
+        SelectDatachange()
     End Sub
 
     Private Sub CmbCompound_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbCompound.SelectedIndexChanged
-        selectDatachange()
+        SelectDatachange()
     End Sub
 
     Private Sub CheckBoxGP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxGP.CheckedChanged
@@ -638,17 +694,18 @@ Public Class FrmCompound
         Else
             CmbGroup.Enabled = False
         End If
-        selectDatachange()
+        SelectDatachange()
     End Sub
 
     Private Sub CmbGroup_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbGroup.SelectedIndexChanged
-        selectDatachange()
+        SelectDatachange()
     End Sub
-    Sub selectDatachange()
+
+    Sub SelectDatachange()
         Dim strView As String
 
         If CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
-            strView = " Code like'%" & CmbCompound.Text.Trim & _
+            strView = " Code like'%" & CmbCompound.Text.Trim &
                               "%' and  Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
         ElseIf CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
             strView = " Code like'%" & CmbCompound.Text.Trim & "%'"
@@ -674,6 +731,7 @@ Public Class FrmCompound
         GrdDV.RowFilter = strView
         DataGridCOM.DataSource = GrdDV
 
+        SetTotal() 'Set number of items
     End Sub
 
 #End Region
@@ -812,56 +870,6 @@ Public Class FrmCompound
     End Sub
 #End Region
 
-    Private Sub CmdDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdDelete.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
-        Dim response As MsgBoxResult
-        msg = "Delete Compound :" & GrdDV.Item(oldrow).Row("CompCode") ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Compound"   ' Define title.
-
-        response = MsgBox(msg, style, title)
-        If response = MsgBoxResult.Yes Then ' User chose Yes.
-            If ChkData() Or ChkData2() Then
-                MsgBox("It's have Usage , Can't Delete. Please contact IS.", MsgBoxStyle.Information, "Delete R/M ")
-            Else
-                DelCompound()
-                LoadCOM()
-                selectDatachange()
-                oldrow = 0
-            End If
-        Else
-            Exit Sub
-        End If
-
-    End Sub
-
-    Private Sub cmdAvtive_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAvtive.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
-        Dim response As MsgBoxResult
-        If GrdDV.Item(oldrow).Row("compcode") = "" Then
-            Exit Sub
-        End If
-        msg = "Change Active Semi(Material) : " & GrdDV.Item(oldrow).Row("Compcode") _
-        & "  Revision :" & GrdDV.Item(oldrow).Row("Revision") 'Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Semi(Material)"   ' Define title.
-        ' Display message.
-        response = MsgBox(msg, style, title)
-        If response = MsgBoxResult.Yes Then ' User chose Yes.
-                UPCompound()
-            LoadCOM()
-            selectDatachange()
-        Else
-            Exit Sub
-        End If
-    End Sub
-
     Sub UPCompound()
         Dim cnSQL As SqlConnection
         Dim cmSQL As SqlCommand
@@ -894,5 +902,10 @@ Public Class FrmCompound
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Sub
 
-
+    Private Sub SetTotal()
+        'Set total
+        'Format: Form Text - xxx item(s)
+        Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
+        Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
+    End Sub
 End Class

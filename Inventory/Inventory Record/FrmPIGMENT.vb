@@ -14,10 +14,8 @@ Public Class FrmPIGMENT
     Inherits System.Windows.Forms.Form
     Public Shared GrdDV As New DataView
     Protected Const TBL_PIGMENT As String = "TBL_PIGMENT"
-    Public Shared GrdDVPigment As New DataView
+    Public Shared GrdDVPigment As New DataView 'Combobox Pigment
     Dim C1 As New SQLData("ACCINV")
-    Friend WithEvents CmdImport As System.Windows.Forms.Button
-    Friend WithEvents CmdExport As System.Windows.Forms.Button
 
     Protected DefaultGridBorderStyle As BorderStyle
 #End Region
@@ -58,6 +56,8 @@ Public Class FrmPIGMENT
     Friend WithEvents CmbPigment As System.Windows.Forms.ComboBox
     Friend WithEvents CheckBoxPigment As System.Windows.Forms.CheckBox
     Friend WithEvents CmdDelete As System.Windows.Forms.Button
+    Friend WithEvents CmdImport As System.Windows.Forms.Button
+    Friend WithEvents CmdExport As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPIGMENT))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -204,7 +204,7 @@ Public Class FrmPIGMENT
         Me.MinimumSize = New System.Drawing.Size(794, 650)
         Me.Name = "FrmPIGMENT"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "PIGMENT ( R/M Material)"
+        Me.Text = "PIGMENT (R/M Material) -"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridPigment, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -219,33 +219,71 @@ Public Class FrmPIGMENT
     Dim oldrow As Integer
 #End Region
 
+#Region "COMBOBOX"
+    Sub LoadCmbPigment()
+        Dim dtComp As DataTable = New DataTable()
+        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+
+        StrSQL = "SELECT  Code "
+        StrSQL &= "  FROM  TblGroup  where Typecode = '02'"
+
+        Dim C1 As New SQLData("ACCINV")
+        Dim DA As SqlDataAdapter
+        Try
+            DA = New SqlDataAdapter(StrSQL, C1.Strcon)
+            Dim CBu As New SqlCommandBuilder(DA)
+            dtComp = New DataTable
+            DA.Fill(dtComp)
+        Catch
+        Finally
+        End Try
+        dtComp.TableName = TBL_PIGMENT
+        GrdDVPigment = dtComp.DefaultView
+        '************************************
+        CmbPigment.DisplayMember = "Code"
+        CmbPigment.ValueMember = "Code"
+        CmbPigment.DataSource = dtComp
+        Me.Cursor = System.Windows.Forms.Cursors.Default
+    End Sub
+#End Region
+
+#Region "Form Event"
+    Private Sub FrmPIGMENT_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadCmbPigment() 'Get Pigment Code
+        LoadPIGMENT()
+        SetTotal() 'Set number of items
+    End Sub
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadPIGMENT()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " select code,Pigmentcode,Revision,Qty,Unit,Per"
-        StrSQL &= " ,PType,Pigmentcode+','+Revision as PCode,rmCode, RmRevision"
-        StrSQL &= "  ,RmQty,RMUnit ,Typecode from (select code,Pigmentcode,Revision,Qty,Unit,null Per"
-        StrSQL &= " ,'H' PType,Pigmentcode+','+Revision as PCode,'' rmCode,'' RmRevision"
-        StrSQL &= " ,null RmQty,'' RMUnit ,Typecode from (  "
-        StrSQL &= " select t.Typecode,TypeName,code,'H' PType"
-        StrSQL &= "  from TBLType t"
-        StrSQL &= "  left outer join  "
-        StrSQL &= "  TBLGroup G "
-        StrSQL &= "  on t.typecode = g.typecode"
-        StrSQL &= " where t.typecode = '02' ) H"
-        StrSQL &= " Right outer join"
-        StrSQL &= " TBLPigment p"
-        StrSQL &= " on p.Pigmentcode = h.code) aa"
-        StrSQL &= " union"
-        StrSQL &= " select * from ("
-        StrSQL &= " select  '' code,'' Pigmentcode,'' Revision,null Qty,'' Unit,Per"
-        StrSQL &= " ,'D' PType,Mastercode+','+Revision as pCode,rmCode,RmRevision,Qty RMQty,Unit RMUnit,Typecode"
-        StrSQL &= "  from TBLMASTER t"
-        StrSQL &= "  left outer join  "
-        StrSQL &= "  TBLGroup G "
-        StrSQL &= "  on t.MasterCode = g.Code"
-        StrSQL &= "  where g.typecode = '02')bb"
-        StrSQL &= " order by pcode,ptype desc"
+
+        sb.AppendLine(" SELECT aa.Code, aa.PigmentCode, aa.Revision, aa.Qty, aa.Unit, aa.Per")
+        sb.AppendLine(" ,aa.PType, aa.PigmentCode + ',' + aa.Revision as PCode, aa.rmCode, aa.RmRevision, aa.RmQty, aa.RMUnit, aa.TypeCode")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT H.Code, p.PigmentCode, p.Revision, p.Qty, p.Unit, null Per")
+        sb.AppendLine("   ,'H' PType, p.PigmentCode + ',' + p.Revision as PCode,'' rmCode,'' RmRevision, null RmQty,'' RMUnit, H.Typecode ") 'Header from table TBLPigment
+        sb.AppendLine("   FROM TBLPigment p ")
+        sb.AppendLine("   LEFT OUTER JOIN (")
+        sb.AppendLine("     SELECT t.Typecode,t.TypeName,G.Code,'H' PType")
+        sb.AppendLine("     FROM TBLType t")
+        sb.AppendLine("     LEFT OUTER JOIN TBLGroup G on t.TypeCode = g.TypeCode ")
+        sb.AppendLine("     WHERE t.TypeCode = '02'")
+        sb.AppendLine("   ) H on p.PIGMENTCode = H.Code")
+        sb.AppendLine(" ) aa") 'Header
+        sb.AppendLine(" UNION")
+        sb.AppendLine(" SELECT * ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT '' code,'' Pigmentcode,'' Revision,null Qty,'' Unit, t.Per")
+        sb.AppendLine("   ,'D' PType, t.MasterCode + ',' + Revision as PCode, t.RMCode, t.RmRevision, t.Qty RMQty, t.Unit RMUnit, g.TypeCode") 'Detail from table TBLMaster
+        sb.AppendLine("   FROM TBLMASTER t")
+        sb.AppendLine("   LEFT OUTER JOIN TBLGroup G on t.MasterCode = g.Code")
+        sb.AppendLine("   WHERE g.TypeCode = '02'")
+        sb.AppendLine(" ) bb") 'Detail
+        sb.AppendLine(" ORDER BY PCode, PType DESC")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -392,7 +430,7 @@ Public Class FrmPIGMENT
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
         (New DataGridColumnStyle() _
-        {grdColStyle1, grdColStyle2, grdColStyle3, grdColStyle4, _
+        {grdColStyle1, grdColStyle2, grdColStyle3, grdColStyle4,
         grdColStyle5, grdColStyle6, grdColStyle7})
 
         DataGridPigment.TableStyles.Add(grdTableStyle1)
@@ -434,39 +472,7 @@ Public Class FrmPIGMENT
 
 #End Region
 
-#Region "COMBOBOX"
-    Sub LoadCmbPigment()
-        Dim dtComp As DataTable = New DataTable()
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-
-        StrSQL = "SELECT  Code "
-        StrSQL &= "  FROM  TblGroup  where Typecode = '02'"
-
-        Dim C1 As New SQLData("ACCINV")
-        Dim DA As SqlDataAdapter
-        Try
-            DA = New SqlDataAdapter(StrSQL, C1.Strcon)
-            Dim CBu As New SqlCommandBuilder(DA)
-            dtComp = New DataTable
-            DA.Fill(dtComp)
-        Catch
-        Finally
-        End Try
-        dtComp.TableName = TBL_PIGMENT
-        GrdDVPigment = dtComp.DefaultView
-        '************************************
-        CmbPigment.DisplayMember = "Code"
-        CmbPigment.ValueMember = "Code"
-        CmbPigment.DataSource = dtComp
-        Me.Cursor = System.Windows.Forms.Cursors.Default
-    End Sub
-#End Region
-
-    Private Sub FrmPIGMENT_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadCmbPigment()
-        LoadPIGMENT()
-    End Sub
-
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -482,7 +488,7 @@ Public Class FrmPIGMENT
             faddPigment.ShowDialog()
             LoadPIGMENT()
         End If
-      changedata
+        Changedata()
     End Sub
 
     Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
@@ -491,7 +497,7 @@ Public Class FrmPIGMENT
         faddPigment.ShowDialog()
         LoadCmbPigment()
         LoadPIGMENT()
-      changedata
+        Changedata()
     End Sub
 
     Private Sub DataGridPigment_CurrentCellChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridPigment.CurrentCellChanged
@@ -529,23 +535,11 @@ Public Class FrmPIGMENT
 
     Private Sub CheckBoxPigment_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxPigment.CheckedChanged
         LoadCmbPigment()
-        changedata()
-    End Sub
-
-    Sub changedata()
-        If CheckBoxPigment.Checked = True Then
-            GrdDV.RowFilter = " Pcode like '%" & CmbPigment.Text.Trim & "%'"
-            DataGridPigment.DataSource = GrdDV
-            CmbPigment.Enabled = True
-        Else
-            GrdDV.RowFilter = ""
-            DataGridPigment.DataSource = GrdDV
-            CmbPigment.Enabled = False
-        End If
+        Changedata()
     End Sub
 
     Private Sub CmbPigment_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbPigment.SelectedIndexChanged
-        changedata()
+        Changedata()
     End Sub
 
     Private Sub CmdDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdDelete.Click
@@ -554,7 +548,7 @@ Public Class FrmPIGMENT
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
         msg = "Delete pigmant :" & GrdDV.Item(oldrow).Row("PigmentCode") ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Pigment "   ' Define title.
 
@@ -569,8 +563,10 @@ Public Class FrmPIGMENT
             Exit Sub
         End If
         LoadPIGMENT()
-        changedata()
+        Changedata()
     End Sub
+#End Region
+
 #Region "DelPigment"
     Private Function ChkData() As Boolean
         Dim cnSQL As SqlConnection
@@ -667,6 +663,27 @@ Public Class FrmPIGMENT
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
         End Try
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+    End Sub
+
+    Private Sub Changedata()
+        If CheckBoxPigment.Checked = True Then
+            GrdDV.RowFilter = " Pcode like '%" & CmbPigment.Text.Trim & "%'"
+            DataGridPigment.DataSource = GrdDV
+            CmbPigment.Enabled = True
+        Else
+            GrdDV.RowFilter = ""
+            DataGridPigment.DataSource = GrdDV
+            CmbPigment.Enabled = False
+        End If
+
+        SetTotal() 'Set number of items
+    End Sub
+
+    Private Sub SetTotal()
+        'Set total
+        'Format: Form Text - xxx item(s)
+        Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
+        Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
     End Sub
 #End Region
 End Class

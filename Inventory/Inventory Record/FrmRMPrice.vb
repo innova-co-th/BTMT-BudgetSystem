@@ -292,18 +292,17 @@ Public Class FrmRMPrice
 
 #Region "Function_Load"
     Private Sub LoadRM()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "  SELECT    rm.Typecode,TypeName,rm.RMCode,descName,stdPrice,ActPrice,ut.unitcode,  " & _
-                 "  ut.shortUnitName,ut.UnitName,1 as Qty ," & _
-                 " stdPrice as SPrice,ActPrice as APrice" & _
-                 "  FROM   TBLRM rm  " & _
-                 "  left outer join  TBLUNIT ut  " & _
-                 "  on rm.unit = ut.unitcode  " & _
-                 " left outer join " & _
-                 " TBLTYPE t " & _
-                 " on rm.Typecode = t.Typecode " & _
-                 " order by TypeName,descName,rm. Rmcode"
+        sb.AppendLine(" SELECT  rm.Typecode,TypeName,rm.RMCode,descName,stdPrice,ActPrice,ut.unitcode,  ")
+        sb.AppendLine(" ut.shortUnitName,ut.UnitName,1 as Qty ,")
+        sb.AppendLine(" stdPrice as SPrice,ActPrice as APrice")
+        sb.AppendLine(" FROM   TBLRM rm  ")
+        sb.AppendLine(" LEFT OUTER JOIN TBLUNIT ut on rm.unit = ut.unitcode  ")
+        sb.AppendLine(" LEFT OUTER JOIN TBLTYPE t on rm.Typecode = t.Typecode ")
+        sb.AppendLine(" ORDER BY TypeName,descName,rm. Rmcode")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -439,7 +438,7 @@ Public Class FrmRMPrice
 
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle0, grdColStyle1, grdColStyle2, _
+    {grdColStyle0, grdColStyle1, grdColStyle2,
  grdColStyle0_6, grdColStyle6, grdColStyle0_7, grdColStyle7})
 
         DataGridRM.TableStyles.Add(grdTableStyle1)
