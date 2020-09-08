@@ -70,21 +70,21 @@ Public Class FrmPerRHC
     Friend WithEvents RbAll As System.Windows.Forms.RadioButton
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPerRHC))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridCOM = New System.Windows.Forms.DataGrid
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.CheckBoxGP = New System.Windows.Forms.CheckBox
-        Me.CmbGroup = New System.Windows.Forms.ComboBox
-        Me.CmdDelete = New System.Windows.Forms.Button
-        Me.ComboBoxStage = New System.Windows.Forms.ComboBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.RbP100 = New System.Windows.Forms.RadioButton
-        Me.RbNP100 = New System.Windows.Forms.RadioButton
-        Me.CheckBoxFinal = New System.Windows.Forms.CheckBox
-        Me.RbAll = New System.Windows.Forms.RadioButton
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridCOM = New System.Windows.Forms.DataGrid()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.CheckBoxGP = New System.Windows.Forms.CheckBox()
+        Me.CmbGroup = New System.Windows.Forms.ComboBox()
+        Me.CmdDelete = New System.Windows.Forms.Button()
+        Me.ComboBoxStage = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.RbP100 = New System.Windows.Forms.RadioButton()
+        Me.RbNP100 = New System.Windows.Forms.RadioButton()
+        Me.CheckBoxFinal = New System.Windows.Forms.CheckBox()
+        Me.RbAll = New System.Windows.Forms.RadioButton()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -92,8 +92,8 @@ Public Class FrmPerRHC
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridCOM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 64)
@@ -260,7 +260,9 @@ Public Class FrmPerRHC
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(906, 671)
         Me.Name = "FrmPerRHC"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Compound  ( % )"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).EndInit()

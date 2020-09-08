@@ -72,22 +72,22 @@ Public Class FrmGreenTire
     Friend WithEvents cmdActive As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmGreenTire))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridCOM = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.CmbTire = New System.Windows.Forms.ComboBox
-        Me.CheckBoxTire = New System.Windows.Forms.CheckBox
-        Me.CmdDel = New System.Windows.Forms.Button
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.txtsize = New System.Windows.Forms.TextBox
-        Me.cmdView = New System.Windows.Forms.Button
-        Me.CHKActive = New System.Windows.Forms.CheckBox
-        Me.cmdActive = New System.Windows.Forms.Button
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridCOM = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.CmbTire = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxTire = New System.Windows.Forms.CheckBox()
+        Me.CmdDel = New System.Windows.Forms.Button()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtsize = New System.Windows.Forms.TextBox()
+        Me.cmdView = New System.Windows.Forms.Button()
+        Me.CHKActive = New System.Windows.Forms.CheckBox()
+        Me.cmdActive = New System.Windows.Forms.Button()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,13 +96,13 @@ Public Class FrmGreenTire
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridCOM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(824, 542)
+        Me.GroupBox1.Size = New System.Drawing.Size(1068, 575)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
@@ -113,7 +113,7 @@ Public Class FrmGreenTire
         Me.DataGridCOM.HeaderForeColor = System.Drawing.SystemColors.ControlText
         Me.DataGridCOM.Location = New System.Drawing.Point(3, 16)
         Me.DataGridCOM.Name = "DataGridCOM"
-        Me.DataGridCOM.Size = New System.Drawing.Size(818, 523)
+        Me.DataGridCOM.Size = New System.Drawing.Size(1062, 556)
         Me.DataGridCOM.TabIndex = 0
         '
         'CmdSave
@@ -121,7 +121,7 @@ Public Class FrmGreenTire
         Me.CmdSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdSave.Image = CType(resources.GetObject("CmdSave.Image"), System.Drawing.Image)
         Me.CmdSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdSave.Location = New System.Drawing.Point(600, 616)
+        Me.CmdSave.Location = New System.Drawing.Point(844, 649)
         Me.CmdSave.Name = "CmdSave"
         Me.CmdSave.Size = New System.Drawing.Size(80, 56)
         Me.CmdSave.TabIndex = 1
@@ -133,7 +133,7 @@ Public Class FrmGreenTire
         Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClose.Location = New System.Drawing.Point(752, 616)
+        Me.CmdClose.Location = New System.Drawing.Point(996, 649)
         Me.CmdClose.Name = "CmdClose"
         Me.CmdClose.Size = New System.Drawing.Size(75, 56)
         Me.CmdClose.TabIndex = 2
@@ -145,7 +145,7 @@ Public Class FrmGreenTire
         Me.CmdEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdEdit.Image = CType(resources.GetObject("CmdEdit.Image"), System.Drawing.Image)
         Me.CmdEdit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdEdit.Location = New System.Drawing.Point(680, 616)
+        Me.CmdEdit.Location = New System.Drawing.Point(924, 649)
         Me.CmdEdit.Name = "CmdEdit"
         Me.CmdEdit.Size = New System.Drawing.Size(75, 56)
         Me.CmdEdit.TabIndex = 3
@@ -174,7 +174,7 @@ Public Class FrmGreenTire
         Me.CmdDel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.CmdDel.Image = CType(resources.GetObject("CmdDel.Image"), System.Drawing.Image)
         Me.CmdDel.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdDel.Location = New System.Drawing.Point(8, 614)
+        Me.CmdDel.Location = New System.Drawing.Point(8, 647)
         Me.CmdDel.Name = "CmdDel"
         Me.CmdDel.Size = New System.Drawing.Size(80, 56)
         Me.CmdDel.TabIndex = 21
@@ -242,7 +242,7 @@ Public Class FrmGreenTire
         Me.CmdImport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdImport.Image = CType(resources.GetObject("CmdImport.Image"), System.Drawing.Image)
         Me.CmdImport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdImport.Location = New System.Drawing.Point(402, 616)
+        Me.CmdImport.Location = New System.Drawing.Point(646, 649)
         Me.CmdImport.Name = "CmdImport"
         Me.CmdImport.Size = New System.Drawing.Size(80, 56)
         Me.CmdImport.TabIndex = 28
@@ -254,7 +254,7 @@ Public Class FrmGreenTire
         Me.CmdExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdExport.Image = CType(resources.GetObject("CmdExport.Image"), System.Drawing.Image)
         Me.CmdExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdExport.Location = New System.Drawing.Point(482, 616)
+        Me.CmdExport.Location = New System.Drawing.Point(726, 649)
         Me.CmdExport.Name = "CmdExport"
         Me.CmdExport.Size = New System.Drawing.Size(80, 56)
         Me.CmdExport.TabIndex = 29
@@ -264,7 +264,7 @@ Public Class FrmGreenTire
         'FrmGreenTire
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(840, 678)
+        Me.ClientSize = New System.Drawing.Size(1084, 711)
         Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
         Me.Controls.Add(Me.CHKActive)
@@ -281,7 +281,9 @@ Public Class FrmGreenTire
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.cmdActive)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(1100, 750)
         Me.Name = "FrmGreenTire"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Tire"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).EndInit()

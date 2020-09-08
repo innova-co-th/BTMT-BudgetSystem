@@ -60,16 +60,16 @@ Public Class FrmPIGMENT
     Friend WithEvents CmdDelete As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPIGMENT))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridPigment = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.CmbPigment = New System.Windows.Forms.ComboBox
-        Me.CheckBoxPigment = New System.Windows.Forms.CheckBox
-        Me.CmdDelete = New System.Windows.Forms.Button
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridPigment = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.CmbPigment = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxPigment = New System.Windows.Forms.CheckBox()
+        Me.CmdDelete = New System.Windows.Forms.Button()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridPigment, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -77,13 +77,13 @@ Public Class FrmPIGMENT
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridPigment)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 48)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(762, 440)
+        Me.GroupBox1.Size = New System.Drawing.Size(762, 499)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
@@ -94,7 +94,7 @@ Public Class FrmPIGMENT
         Me.DataGridPigment.HeaderForeColor = System.Drawing.SystemColors.ControlText
         Me.DataGridPigment.Location = New System.Drawing.Point(3, 16)
         Me.DataGridPigment.Name = "DataGridPigment"
-        Me.DataGridPigment.Size = New System.Drawing.Size(756, 421)
+        Me.DataGridPigment.Size = New System.Drawing.Size(756, 480)
         Me.DataGridPigment.TabIndex = 0
         '
         'CmdSave
@@ -102,7 +102,7 @@ Public Class FrmPIGMENT
         Me.CmdSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdSave.Image = CType(resources.GetObject("CmdSave.Image"), System.Drawing.Image)
         Me.CmdSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdSave.Location = New System.Drawing.Point(616, 490)
+        Me.CmdSave.Location = New System.Drawing.Point(616, 549)
         Me.CmdSave.Name = "CmdSave"
         Me.CmdSave.Size = New System.Drawing.Size(72, 56)
         Me.CmdSave.TabIndex = 1
@@ -114,7 +114,7 @@ Public Class FrmPIGMENT
         Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClose.Location = New System.Drawing.Point(688, 490)
+        Me.CmdClose.Location = New System.Drawing.Point(688, 549)
         Me.CmdClose.Name = "CmdClose"
         Me.CmdClose.Size = New System.Drawing.Size(75, 56)
         Me.CmdClose.TabIndex = 2
@@ -127,7 +127,7 @@ Public Class FrmPIGMENT
         Me.CmdEdit.Enabled = False
         Me.CmdEdit.Image = CType(resources.GetObject("CmdEdit.Image"), System.Drawing.Image)
         Me.CmdEdit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdEdit.Location = New System.Drawing.Point(544, 490)
+        Me.CmdEdit.Location = New System.Drawing.Point(544, 549)
         Me.CmdEdit.Name = "CmdEdit"
         Me.CmdEdit.Size = New System.Drawing.Size(72, 56)
         Me.CmdEdit.TabIndex = 3
@@ -156,7 +156,7 @@ Public Class FrmPIGMENT
         Me.CmdDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.CmdDelete.Image = CType(resources.GetObject("CmdDelete.Image"), System.Drawing.Image)
         Me.CmdDelete.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdDelete.Location = New System.Drawing.Point(8, 488)
+        Me.CmdDelete.Location = New System.Drawing.Point(8, 547)
         Me.CmdDelete.Name = "CmdDelete"
         Me.CmdDelete.Size = New System.Drawing.Size(80, 56)
         Me.CmdDelete.TabIndex = 7
@@ -168,7 +168,7 @@ Public Class FrmPIGMENT
         Me.CmdImport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdImport.Image = CType(resources.GetObject("CmdImport.Image"), System.Drawing.Image)
         Me.CmdImport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdImport.Location = New System.Drawing.Point(443, 491)
+        Me.CmdImport.Location = New System.Drawing.Point(443, 550)
         Me.CmdImport.Name = "CmdImport"
         Me.CmdImport.Size = New System.Drawing.Size(72, 56)
         Me.CmdImport.TabIndex = 8
@@ -180,7 +180,7 @@ Public Class FrmPIGMENT
         Me.CmdExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdExport.Image = CType(resources.GetObject("CmdExport.Image"), System.Drawing.Image)
         Me.CmdExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdExport.Location = New System.Drawing.Point(515, 491)
+        Me.CmdExport.Location = New System.Drawing.Point(515, 550)
         Me.CmdExport.Name = "CmdExport"
         Me.CmdExport.Size = New System.Drawing.Size(72, 56)
         Me.CmdExport.TabIndex = 9
@@ -190,7 +190,7 @@ Public Class FrmPIGMENT
         'FrmPIGMENT
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(778, 552)
+        Me.ClientSize = New System.Drawing.Size(778, 611)
         Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
         Me.Controls.Add(Me.CmdDelete)
@@ -201,7 +201,9 @@ Public Class FrmPIGMENT
         Me.Controls.Add(Me.CmdSave)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(794, 650)
         Me.Name = "FrmPIGMENT"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "PIGMENT ( R/M Material)"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridPigment, System.ComponentModel.ISupportInitialize).EndInit()

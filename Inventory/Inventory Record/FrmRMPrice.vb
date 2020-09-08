@@ -64,19 +64,19 @@ Public Class FrmRMPrice
     Friend WithEvents Label2 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmRMPrice))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridRM = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.TxtName = New System.Windows.Forms.TextBox
-        Me.CmdView = New System.Windows.Forms.Button
-        Me.CmbType = New System.Windows.Forms.ComboBox
-        Me.ChkType = New System.Windows.Forms.CheckBox
-        Me.Txtcode = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridRM = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TxtName = New System.Windows.Forms.TextBox()
+        Me.CmdView = New System.Windows.Forms.Button()
+        Me.CmbType = New System.Windows.Forms.ComboBox()
+        Me.ChkType = New System.Windows.Forms.CheckBox()
+        Me.Txtcode = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -84,8 +84,8 @@ Public Class FrmRMPrice
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridRM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
@@ -231,7 +231,9 @@ Public Class FrmRMPrice
         Me.Controls.Add(Me.CmdSave)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(968, 645)
         Me.Name = "FrmRMPrice"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "R/M  WarehouseStock"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).EndInit()
