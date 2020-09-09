@@ -234,7 +234,7 @@ Public Class FrmRMPrice
         Me.MinimumSize = New System.Drawing.Size(968, 645)
         Me.Name = "FrmRMPrice"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "R/M  WarehouseStock"
+        Me.Text = "R/M  WarehouseStock -"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -486,18 +486,22 @@ Public Class FrmRMPrice
     End Sub
 #End Region
 
+#Region "Form Event"
     Private Sub FrmRMPrice_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         LoadRM()
         LoadCmbType()
+        SetTotal() 'Set number of items
     End Sub
+#End Region
 
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Dim msg As String
         Dim title As String
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
         msg = "Do you want to Close. R/M Meterial Price." ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Price(KG) "   ' Define title.
         ' Display message.
@@ -515,7 +519,7 @@ Public Class FrmRMPrice
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
         msg = "R/M Meterial Price" ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Price (KG) "   ' Define title.
         ' Display message.
@@ -538,6 +542,42 @@ Public Class FrmRMPrice
         View()
     End Sub
 
+    Private Sub ChkType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkType.CheckedChanged
+        View()
+    End Sub
+
+    Private Sub CmbType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbType.SelectedIndexChanged
+        View()
+    End Sub
+
+    Private Sub Txtcode_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Txtcode.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 8
+            Case 13
+                e.Handled = True
+                Txtcode.Text = Txtcode.Text.ToUpper
+                SendKeys.Send("{TAB}")
+            Case 32 ' space bar
+                e.Handled = True
+                SendKeys.Send("{TAB}")
+            Case Else
+        End Select
+    End Sub
+
+    Private Sub TxtName_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtName.KeyPress
+        Select Case Asc(e.KeyChar)
+            Case 8
+            Case 13
+                e.Handled = True
+                TxtName.Text = TxtName.Text.ToUpper
+                SendKeys.Send("{TAB}")
+            Case 32 ' space bar
+                e.Handled = True
+                SendKeys.Send("{TAB}")
+            Case Else
+        End Select
+    End Sub
+#End Region
 #Region "RM"
     Sub RM()
         Dim strsql As String = String.Empty
@@ -600,9 +640,6 @@ Public Class FrmRMPrice
 
 #End Region
 
-    Private Sub ChkType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkType.CheckedChanged
-        View()
-    End Sub
     Sub View()
         If ChkType.Checked = True Then
             GrdDV.RowFilter = " descname like'%" & TxtName.Text.Trim & "%'" _
@@ -614,38 +651,15 @@ Public Class FrmRMPrice
                                        & " and RMcode like'%" & Txtcode.Text.Trim & "%'"
             DataGridRM.DataSource = GrdDV
         End If
+
+        SetTotal() 'Set number of items
     End Sub
 
-    Private Sub CmbType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbType.SelectedIndexChanged
-        View()
-    End Sub
-
-    Private Sub Txtcode_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Txtcode.KeyPress
-        Select Case Asc(e.KeyChar)
-            Case 8
-            Case 13
-                e.Handled = True
-                Txtcode.Text = Txtcode.Text.ToUpper
-                SendKeys.Send("{TAB}")
-            Case 32 ' space bar
-                e.Handled = True
-                SendKeys.Send("{TAB}")
-            Case Else
-        End Select
-    End Sub
-
-    Private Sub TxtName_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtName.KeyPress
-        Select Case Asc(e.KeyChar)
-            Case 8
-            Case 13
-                e.Handled = True
-                TxtName.Text = TxtName.Text.ToUpper
-                SendKeys.Send("{TAB}")
-            Case 32 ' space bar
-                e.Handled = True
-                SendKeys.Send("{TAB}")
-            Case Else
-        End Select
+    Private Sub SetTotal()
+        'Set total
+        'Format: Form Text - xxx item(s)
+        Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
+        Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
     End Sub
 
 #Region "Export"
