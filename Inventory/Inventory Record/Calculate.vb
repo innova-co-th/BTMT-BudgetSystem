@@ -11,6 +11,8 @@ Imports Inventory_Record.Common
 Public Class Calculate
     Inherits System.Windows.Forms.Form
     Dim C1 As New SQLData("ACCINV")
+    Dim StrDate, StrTime As String
+    Dim StrType As String
 
 #Region " Windows Form Designer generated code "
 
@@ -41,7 +43,7 @@ Public Class Calculate
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents CmdCalculate As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents CKPigment As System.Windows.Forms.CheckBox
     Friend WithEvents CKRM As System.Windows.Forms.CheckBox
@@ -50,19 +52,21 @@ Public Class Calculate
     Friend WithEvents CKPresemi As System.Windows.Forms.CheckBox
     Friend WithEvents CKSemi As System.Windows.Forms.CheckBox
     Friend WithEvents CKGT As System.Windows.Forms.CheckBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(Calculate))
-        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.CKGT = New System.Windows.Forms.CheckBox
-        Me.CKSemi = New System.Windows.Forms.CheckBox
-        Me.CKPresemi = New System.Windows.Forms.CheckBox
-        Me.CKCompound = New System.Windows.Forms.CheckBox
-        Me.CKRM = New System.Windows.Forms.CheckBox
-        Me.CKPigment = New System.Windows.Forms.CheckBox
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Calculate))
+        Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.CmdCalculate = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.CKGT = New System.Windows.Forms.CheckBox()
+        Me.CKSemi = New System.Windows.Forms.CheckBox()
+        Me.CKPresemi = New System.Windows.Forms.CheckBox()
+        Me.CKCompound = New System.Windows.Forms.CheckBox()
+        Me.CKRM = New System.Windows.Forms.CheckBox()
+        Me.CKPigment = New System.Windows.Forms.CheckBox()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -73,12 +77,13 @@ Public Class Calculate
         Me.ProgressBar1.Size = New System.Drawing.Size(312, 23)
         Me.ProgressBar1.TabIndex = 0
         '
-        'Button1
+        'CmdCalculate
         '
-        Me.Button1.Location = New System.Drawing.Point(112, 136)
-        Me.Button1.Name = "Button1"
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Calculate"
+        Me.CmdCalculate.Location = New System.Drawing.Point(112, 136)
+        Me.CmdCalculate.Name = "CmdCalculate"
+        Me.CmdCalculate.Size = New System.Drawing.Size(75, 23)
+        Me.CmdCalculate.TabIndex = 1
+        Me.CmdCalculate.Text = "Calculate"
         '
         'GroupBox1
         '
@@ -88,7 +93,7 @@ Public Class Calculate
         Me.GroupBox1.Controls.Add(Me.CKCompound)
         Me.GroupBox1.Controls.Add(Me.CKRM)
         Me.GroupBox1.Controls.Add(Me.CKPigment)
-        Me.GroupBox1.Controls.Add(Me.Button1)
+        Me.GroupBox1.Controls.Add(Me.CmdCalculate)
         Me.GroupBox1.Location = New System.Drawing.Point(8, 8)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(312, 168)
@@ -101,6 +106,7 @@ Public Class Calculate
         Me.CKGT.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CKGT.Location = New System.Drawing.Point(176, 88)
         Me.CKGT.Name = "CKGT"
+        Me.CKGT.Size = New System.Drawing.Size(104, 24)
         Me.CKGT.TabIndex = 5
         Me.CKGT.Text = "Green Tire"
         '
@@ -110,6 +116,7 @@ Public Class Calculate
         Me.CKSemi.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CKSemi.Location = New System.Drawing.Point(176, 56)
         Me.CKSemi.Name = "CKSemi"
+        Me.CKSemi.Size = New System.Drawing.Size(104, 24)
         Me.CKSemi.TabIndex = 4
         Me.CKSemi.Text = "Semi"
         '
@@ -119,6 +126,7 @@ Public Class Calculate
         Me.CKPresemi.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CKPresemi.Location = New System.Drawing.Point(176, 24)
         Me.CKPresemi.Name = "CKPresemi"
+        Me.CKPresemi.Size = New System.Drawing.Size(104, 24)
         Me.CKPresemi.TabIndex = 3
         Me.CKPresemi.Text = "Presemi"
         '
@@ -128,6 +136,7 @@ Public Class Calculate
         Me.CKCompound.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CKCompound.Location = New System.Drawing.Point(32, 88)
         Me.CKCompound.Name = "CKCompound"
+        Me.CKCompound.Size = New System.Drawing.Size(104, 24)
         Me.CKCompound.TabIndex = 2
         Me.CKCompound.Text = "Compound"
         '
@@ -137,6 +146,7 @@ Public Class Calculate
         Me.CKRM.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CKRM.Location = New System.Drawing.Point(32, 24)
         Me.CKRM.Name = "CKRM"
+        Me.CKRM.Size = New System.Drawing.Size(104, 24)
         Me.CKRM.TabIndex = 1
         Me.CKRM.Text = "R/M (Material)"
         '
@@ -146,8 +156,14 @@ Public Class Calculate
         Me.CKPigment.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CKPigment.Location = New System.Drawing.Point(32, 56)
         Me.CKPigment.Name = "CKPigment"
+        Me.CKPigment.Size = New System.Drawing.Size(104, 24)
         Me.CKPigment.TabIndex = 0
         Me.CKPigment.Text = "Pigment"
+        '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
         'Calculate
         '
@@ -158,6 +174,7 @@ Public Class Calculate
         Me.Controls.Add(Me.ProgressBar1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "Calculate"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Calculate"
@@ -167,49 +184,23 @@ Public Class Calculate
     End Sub
 
 #End Region
-    Dim StrDate, Str(), StrTime As String
-    Dim strType As String
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
 
-        If CKRM.Checked And CKPigment.Checked And CKCompound.Checked And CKPresemi.Checked And CKSemi.Checked And CKGT.Checked Then
-            DelPrice(strType)
-        End If
-
-        If Progress() Then
-            MsgBox(" Calculate Complete. ", MsgBoxStyle.OKOnly, "Calculate")
-            Me.Close()
-        Else
-            MsgBox(" Calculate Not Complete. Please Check Data. Calculate by Process ", MsgBoxStyle.OKOnly, "Calculate")
-        End If
-    End Sub
-    Sub CKdata()
-        If CKRM.Checked Then
-            strType &= "'01'"
-        End If
-        If CKPigment.Checked Then
-            strType &= "'02'"
-        End If
-        If CKCompound.Checked Then
-            strType &= "'03'"
-        End If
-        If CKPresemi.Checked Then
-            strType &= "'04'"
-        End If
-        If CKSemi.Checked Then
-            strType &= "'05'"
-        End If
-        If CKGT.Checked Then
-            strType &= "'06'"
-        End If
-    End Sub
+#Region "Form Event"
     Private Sub Calculate_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Str = Split(Now.Date.ToShortDateString, "/")
-        StrDate = Str(2) & Str(1) & Str(0)
-        StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+        'Get datetime
+        StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+        StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
     End Sub
+#End Region
 
-    Function Progress(ByVal ParamArray filenames As String()) As Boolean
-        Progress = False
+#Region "Control Event"
+    Private Sub CmdCalculate_Click(sender As Object, e As EventArgs) Handles CmdCalculate.Click
+        If CKRM.Checked And CKPigment.Checked And CKCompound.Checked And CKPresemi.Checked And CKSemi.Checked And CKGT.Checked Then
+            'If if is selected all
+            DelPrice() 'Delete data in Table TBLMasterPrice and TBLMasterPriceRM
+        End If
+
+        'Start to process
         ' Display the ProgressBar control.
         ProgressBar1.Visible = True
         ' Set Minimum to 1 to represent the first file being copied.
@@ -221,91 +212,34 @@ Public Class Calculate
         ' Set the Step property to a value of 1 to represent each file being copied.
         ProgressBar1.Step = 1
 
-        ' Loop through all files to copy.
-        Dim x As Integer
-        For x = 1 To 100
+        'Call method DoWork
+        BackgroundWorker1.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        e.Result = Progress()
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        'Update step
+        If e.UserState Then
+            'PerformStep
             ProgressBar1.PerformStep()
-            If x = 1 Then
-                If CKRM.Checked Then
-                    CalRM(StrDate, StrTime)
-                Else
-                    x = 10
-                End If
-            Else
-            End If
+        Else
+            'Skip
+            ProgressBar1.Value = e.ProgressPercentage
+        End If
+    End Sub
 
-            If x = 10 Then
-                If CKPigment.Checked Then
-                    CalPigment(StrDate, StrTime)
-                Else
-                    x = 20
-                End If
-            End If
-
-            If x = 20 Then
-                If CKCompound.Checked Then
-                    CalCompound(StrDate, StrTime)
-                    CalCompound2(StrDate, StrTime)
-                Else
-                    x = 30
-                End If
-            End If
-
-            If x = 30 Then
-                If CKPresemi.Checked Then
-                    CalCoatedcord2(StrDate, StrTime)
-                    CalCoatedcord3(StrDate, StrTime)
-                    CalCoatedcord(StrDate, StrTime)
-                Else
-                    x = 40
-                End If
-            End If
-
-            If x = 40 Then
-                If CKPresemi.Checked Then
-                    PreSemi(StrDate, StrTime)
-                    SteelCord(StrDate, StrTime)
-                Else
-                    x = 50
-                End If
-            End If
-
-            If x = 50 Then
-                If CKSemi.Checked Then
-                    Tread(StrDate, StrTime)
-                    BF(StrDate, StrTime)
-                    BF2(StrDate, StrTime)
-                Else
-                    x = 70
-                End If
-            End If
-
-            If x = 70 Then
-                If CKSemi.Checked Then
-                    BElT(StrDate, StrTime) 'Type Material:Belt-1, Belt-2, Belt-3, Belt-4 to Table TBLMASTERPRICE
-                    BElT2(StrDate, StrTime) 'Type Material:Belt-1, Belt-2, Belt-3, Belt-4 to Table TBLMASTERPRICERM
-                    SIC(StrDate, StrTime) 'Type Material:Cussion, Side, Innerliner
-                    Chafer(StrDate, StrTime) 'Type Material:Body Ply, Wire Chafer, Nylon Chafer to Table TBLMASTERPRICE
-                    Chafer2(StrDate, StrTime) 'Type Material:Body Ply, Wire Chafer, Nylon Chafer to Table TBLMASTERPRICERM
-                Else
-                    x = 90
-                End If
-            End If
-
-            If x = 90 Then
-                If CKGT.Checked Then
-                    GT(StrDate, StrTime)
-                Else
-                    x = 100
-                End If
-            End If
-            If x = 100 Then
-                Progress = True
-            Else
-                Progress = False
-            End If
-        Next x
-    End Function
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        If e.Result Then
+            MsgBox(" Calculate Complete. ", MsgBoxStyle.OkOnly, "Calculate")
+            Me.Close()
+        Else
+            MsgBox(" Calculate Not Complete. Please Check Data. Calculate by Process ", MsgBoxStyle.OkOnly, "Calculate")
+        End If
+    End Sub
+#End Region
 
 #Region "Call Store"
 
@@ -1343,7 +1277,7 @@ Public Class Calculate
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Function
 #End Region
-#End Region
+#End Region 'CalSemi Price
 
 #Region "CALGT Price"
     Private Function GT(ByVal dateup As String, ByVal Timeup As String) As Boolean
@@ -1407,17 +1341,152 @@ Public Class Calculate
     End Function
 #End Region
 
-#End Region
+#End Region 'Call Store
 
-    Sub DelPrice(ByVal strType As String)
+#Region "Function"
+    Sub CKdata()
+        If CKRM.Checked Then
+            StrType &= "'01'"
+        End If
+        If CKPigment.Checked Then
+            StrType &= "'02'"
+        End If
+        If CKCompound.Checked Then
+            StrType &= "'03'"
+        End If
+        If CKPresemi.Checked Then
+            StrType &= "'04'"
+        End If
+        If CKSemi.Checked Then
+            StrType &= "'05'"
+        End If
+        If CKGT.Checked Then
+            StrType &= "'06'"
+        End If
+    End Sub
+
+    Function Progress(ByVal ParamArray filenames As String()) As Boolean
+        Dim ret As Boolean = False
+
+        ' Loop through all files to copy.
+        For x As Integer = 1 To 100
+            UpdateProgress(x, True)
+
+            If x = 1 Then
+                'R/M Material
+                If CKRM.Checked Then
+                    CalRM(StrDate, StrTime)
+                Else
+                    x = 10 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 10 Then
+                'Pigment
+                If CKPigment.Checked Then
+                    CalPigment(StrDate, StrTime)
+                Else
+                    x = 20 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 20 Then
+                'Compound
+                If CKCompound.Checked Then
+                    CalCompound(StrDate, StrTime)
+                    CalCompound2(StrDate, StrTime)
+                Else
+                    x = 30 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 30 Then
+                'Pre Semi
+                If CKPresemi.Checked Then
+                    CalCoatedcord2(StrDate, StrTime)
+                    CalCoatedcord3(StrDate, StrTime)
+                    CalCoatedcord(StrDate, StrTime)
+                Else
+                    x = 40 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 40 Then
+                'Pre Semi
+                If CKPresemi.Checked Then
+                    PreSemi(StrDate, StrTime)
+                    SteelCord(StrDate, StrTime)
+                Else
+                    x = 50 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 50 Then
+                'Semi
+                If CKSemi.Checked Then
+                    Tread(StrDate, StrTime)
+                    BF(StrDate, StrTime)
+                    BF2(StrDate, StrTime)
+                Else
+                    x = 70 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 70 Then
+                'Semi
+                If CKSemi.Checked Then
+                    BElT(StrDate, StrTime) 'Type Material:Belt-1, Belt-2, Belt-3, Belt-4 to Table TBLMASTERPRICE
+                    BElT2(StrDate, StrTime) 'Type Material:Belt-1, Belt-2, Belt-3, Belt-4 to Table TBLMASTERPRICERM
+                    SIC(StrDate, StrTime) 'Type Material:Cussion, Side, Innerliner
+                    Chafer(StrDate, StrTime) 'Type Material:Body Ply, Wire Chafer, Nylon Chafer to Table TBLMASTERPRICE
+                    Chafer2(StrDate, StrTime) 'Type Material:Body Ply, Wire Chafer, Nylon Chafer to Table TBLMASTERPRICERM
+                Else
+                    x = 90 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 90 Then
+                'Green Tire
+                If CKGT.Checked Then
+                    GT(StrDate, StrTime)
+                Else
+                    x = 100
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            If x = 100 Then
+                ret = True
+            Else
+                ret = False
+            End If
+        Next x
+
+        Return ret
+    End Function
+
+    Protected Sub UpdateProgress(x As Integer, isPerformStep As Boolean)
+        BackgroundWorker1.ReportProgress(x, isPerformStep)
+    End Sub
+
+    Sub DelPrice()
         Dim cnSQL As SqlConnection
         Dim cmSQL As SqlCommand
-        Dim strSQL As String
+        Dim strSQL As String = String.Empty
+        Dim sb As New System.Text.StringBuilder()
+
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Try
-            strSQL = "   Delete TBLMasterPrice"
-            strSQL += ""
-            strSQL += "   Delete TBLMasterPriceRM"
+            sb.AppendLine("   Delete TBLMasterPrice")
+            sb.AppendLine("   Delete TBLMasterPriceRM")
+            strSQL = sb.ToString()
 
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
@@ -1435,4 +1504,5 @@ Public Class Calculate
         End Try
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Sub
+#End Region
 End Class
