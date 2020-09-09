@@ -65,14 +65,34 @@ Public Class ExcelLib
 
             'Create temporary datatable
             For i As Integer = 1 To numCols
-                'Check second row
-                If arr(2, i).GetType().Equals(GetType(Double)) Then
-                    dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
-                ElseIf arr(2, i).GetType().Equals(GetType(Int32)) Then
-                    dtTemp.Columns.Add(arr(1, i), GetType(Int32))
+                'Check third row when second row nothing
+                If IsNothing(arr(2, i)) Then
+                    If arr(3, i).GetType().Equals(GetType(Double)) Then
+                        dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
+                    ElseIf arr(3, i).GetType().Equals(GetType(Int32)) Then
+                        dtTemp.Columns.Add(arr(1, i), GetType(Int32))
+                    Else
+                        dtTemp.Columns.Add(arr(1, i), GetType(String))
+                    End If
                 Else
-                    dtTemp.Columns.Add(arr(1, i), GetType(String))
+                    'Check second row
+                    If arr(2, i).GetType().Equals(GetType(Double)) Then
+                        dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
+                    ElseIf arr(2, i).GetType().Equals(GetType(Int32)) Then
+                        dtTemp.Columns.Add(arr(1, i), GetType(Int32))
+                    Else
+                        dtTemp.Columns.Add(arr(1, i), GetType(String))
+                    End If
                 End If
+
+                ''Check second row
+                'If arr(2, i).GetType().Equals(GetType(Double)) Then
+                '    dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
+                'ElseIf arr(2, i).GetType().Equals(GetType(Int32)) Then
+                '    dtTemp.Columns.Add(arr(1, i), GetType(Int32))
+                'Else
+                '    dtTemp.Columns.Add(arr(1, i), GetType(String))
+                'End If
             Next
 
             'Convert Array to Datatable
@@ -253,13 +273,26 @@ Public Class ExcelLib
             For i As Integer = 2 To arr.GetLength(0)
                 Dim dr As DataRow = dt.NewRow()
                 For j As Integer = 1 To arr.GetLength(1)
-                    If arr(i, j).GetType().Equals(GetType(Double)) Then
-                        'Datatype Double
-                        dr(j - 1) = CDec(arr(i, j))
+                    'Check third row when second row nothing
+                    If IsNothing(arr(i, j)) Then
+                        dr(j - 1) = ""
                     Else
-                        'Other
-                        dr(j - 1) = arr(i, j)
+                        If arr(i, j).GetType().Equals(GetType(Double)) Then
+                            'Datatype Double
+                            dr(j - 1) = CDec(arr(i, j))
+                        Else
+                            'Other
+                            dr(j - 1) = arr(i, j)
+                        End If
                     End If
+
+                    'If arr(i, j).GetType().Equals(GetType(Double)) Then
+                    '    'Datatype Double
+                    '    dr(j - 1) = CDec(arr(i, j))
+                    'Else
+                    '    'Other
+                    '    dr(j - 1) = arr(i, j)
+                    'End If
                 Next j
                 dt.Rows.Add(dr)
             Next i
