@@ -1122,22 +1122,23 @@ Public Class FrmMain
 
 #Region "CalRM Price"
     Private Sub MenuCalRM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalRM.Click
-        Dim msg As String
+        Dim msg As String = "Calculate RM Price " ' Define message.
         Dim title As String
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
 
-        msg = "Calculate RM Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        style = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
+
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
             If CalRM(StrDate, StrTime) Then
                 MsgBox("Update RM Price .")
             Else
