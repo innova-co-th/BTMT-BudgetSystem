@@ -213,6 +213,8 @@ Public Class Calculate
         ProgressBar1.Step = 1
 
         'Call method DoWork
+        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+        CmdCalculate.Enabled = False
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -232,6 +234,9 @@ Public Class Calculate
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        CmdCalculate.Enabled = True
+        Me.Cursor = System.Windows.Forms.Cursors.Default
+
         If e.Result Then
             MsgBox(" Calculate Complete. ", MsgBoxStyle.OkOnly, "Calculate")
             Me.Close()
@@ -245,7 +250,6 @@ Public Class Calculate
 
 #Region "CalRM Price"
     Private Function CalRM(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         CalRM = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
@@ -301,7 +305,6 @@ Public Class Calculate
             CalRM = False
         End Try
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Function
 #End Region
 
@@ -1370,7 +1373,7 @@ Public Class Calculate
 
         ' Loop through all files to copy.
         For x As Integer = 1 To 100
-            UpdateProgress(x, True)
+            UpdateProgress(x, False)
 
             If x = 1 Then
                 'R/M Material
