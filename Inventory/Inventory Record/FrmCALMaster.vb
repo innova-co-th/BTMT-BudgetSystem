@@ -259,7 +259,7 @@ Public Class FrmCALMaster
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmCALMaster"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Price Master (Material)"
+        Me.Text = "Price Master (Material) -"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridCAL, System.ComponentModel.ISupportInitialize).EndInit()
@@ -277,19 +277,51 @@ Public Class FrmCALMaster
     Dim oldrow As Integer
 #End Region
 
+#Region "Form Event"
+    Private Sub FrmCALMaster_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        If txtname.Trim().Equals("RM") Then
+            LoadRM()
+        ElseIf txtname.Trim().Equals("Pigment") Then
+            LoadPigment()
+        ElseIf txtname.Trim().Equals("Compound") Then
+            LoadCompound()
+            LoadGroup()
+            GroupCompound.Visible = True 'Show groupbox compound
+        ElseIf txtname.Trim().Equals("PreSemi") Then
+            LoadPresemi()
+            LoadMaterialType()
+            GType.Visible = True 'Show groupbox material type
+        ElseIf txtname.Trim().Equals("Semi") Then
+            Loadsemi()
+            LoadMaterialType()
+            GType.Visible = True 'Show groupbox material type
+        ElseIf txtname.Trim().Equals("Green Tire") Then
+            LoadTire()
+        Else
+            'Nothing
+        End If
+
+        vBal = False
+        SetTotal() 'Set number of items
+    End Sub
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadRM()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = " select * from TblRM r"
-        StrSQL &= " left outer join  "
-        StrSQL &= " ( select Mastercode,StdPrice,ActPrice"
-        StrSQL &= "  ,substring(dateup,7,2)+'/'+substring(dateup,5,2)+'/'+substring(dateup,1,4) DateUp"
-        StrSQL &= " ,substring(Timeup,1,2)+':'+substring(Timeup,3,2) Timeup"
-        StrSQL &= "  from TBLMasterPrice "
-        StrSQL &= " where Typecode in ('01','07','08','09'))m"
-        StrSQL &= " on r.rmcode = m.mastercode"
-        StrSQL &= " order by descName,mastercode"
+        sb.AppendLine(" SELECT *")
+        sb.AppendLine(" FROM TblRM r")
+        sb.AppendLine(" LEFT OUTER JOIN ( ")
+        sb.AppendLine("   SELECT Mastercode,StdPrice,ActPrice")
+        sb.AppendLine("   ,substring(dateup,7,2)+'/'+substring(dateup,5,2)+'/'+substring(dateup,1,4) DateUp")
+        sb.AppendLine("   ,substring(Timeup,1,2)+':'+substring(Timeup,3,2) Timeup")
+        sb.AppendLine("   FROM TBLMasterPrice ")
+        sb.AppendLine("   WHERE Typecode IN ('01','07','08','09')") 'R/M Material, IDM, Test and Other
+        sb.AppendLine(" ) m on r.rmcode = m.mastercode")
+        sb.AppendLine(" ORDER BY descName, mastercode")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -418,17 +450,21 @@ Public Class FrmCALMaster
 
     End Sub
     Private Sub LoadPigment()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " select *,bb.Qty*stdPrice STD,bb.Qty*actPrice Act from ("
-        StrSQL &= "  select Mastercode,StdPrice,ActPrice"
-        StrSQL &= "  ,substring(dateup,7,2)+'/'+substring(dateup,5,2)+'/'+substring(dateup,1,4) DateUp"
-        StrSQL &= "  ,substring(Timeup,1,2)+':'+substring(Timeup,3,2) Timeup"
-        StrSQL &= "   from TBLMasterPrice "
-        StrSQL &= "   where Typecode = '02') aa"
-        StrSQL &= " left outer join "
-        StrSQL &= "  TBLPigment bb"
-        StrSQL &= " on aa.mastercode = bb.pigmentcode"
-        StrSQL &= " Order by Mastercode    "
+
+        sb.AppendLine(" SELECT *,bb.Qty*stdPrice STD,bb.Qty*actPrice Act")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT Mastercode,StdPrice,ActPrice")
+        sb.AppendLine("   ,substring(dateup,7,2)+'/'+substring(dateup,5,2)+'/'+substring(dateup,1,4) DateUp")
+        sb.AppendLine("   ,substring(Timeup,1,2)+':'+substring(Timeup,3,2) Timeup")
+        sb.AppendLine("   FROM TBLMasterPrice ")
+        sb.AppendLine("   WHERE Typecode = '02'")
+        sb.AppendLine(" ) aa")
+        sb.AppendLine(" LEFT OUTER JOIN TBLPigment bb on aa.mastercode = bb.pigmentcode ")
+        sb.AppendLine(" Order by Mastercode")
+        StrSQL = sb.ToString()
+
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
@@ -572,25 +608,26 @@ Public Class FrmCALMaster
 
     End Sub
     Private Sub LoadCompound()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL &= " select aa.FinalCompound,aa.Compcode,aa.Revision,STD,ACT,aa.dateup,Timeup"
-        StrSQL &= "  ,aa.active, bb.Qty*STD STDBT,bb.Qty*ACT ACTBT from ("
-        StrSQL &= " SELECT    FinalCompound,c.Compcode,c.Revision,StdPrice STD,ActPrice ACT"
-        StrSQL &= "   ,substring(p.DateUp,7,2)+'/'+substring(p.DateUp,5,2)+'/'+substring(p.DateUp,1,4) dateup"
-        StrSQL &= "   ,substring(p.TimeUp,1,2)+':'+substring(p.TimeUp,3,2) Timeup"
-        StrSQL &= "  ,active FROM         TBLCompound c"
-        StrSQL &= "  left outer join "
-        StrSQL &= "   ("
-        StrSQL &= "   SELECT    *"
-        StrSQL &= "   FROM         TBLMASTERPRICE"
-        StrSQL &= "   where Mastercode+revision in("
-        StrSQL &= "   SELECT    Compcode+revision"
-        StrSQL &= "   FROM         TBLCompound))p"
-        StrSQL &= "    on c.Compcode+c.Revision = p.Mastercode+p.Revision) aa"
-        StrSQL &= " left outer join "
-        StrSQL &= " TBLcompound bb"
-        StrSQL &= " on aa.compcode+aa.Revision = bb.Compcode+bb.Revision"
-        StrSQL &= " order by aa.Finalcompound,aa.Compcode "
+
+        sb.AppendLine(" SELECT aa.FinalCompound,aa.Compcode,aa.Revision,STD,ACT,aa.dateup,Timeup")
+        sb.AppendLine(" ,aa.active, bb.Qty*STD STDBT,bb.Qty*ACT ACTBT")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT    FinalCompound,c.Compcode,c.Revision,StdPrice STD,ActPrice ACT")
+        sb.AppendLine("   ,substring(p.DateUp,7,2)+'/'+substring(p.DateUp,5,2)+'/'+substring(p.DateUp,1,4) dateup")
+        sb.AppendLine("   ,substring(p.TimeUp,1,2)+':'+substring(p.TimeUp,3,2) Timeup, active")
+        sb.AppendLine("   FROM         TBLCompound c")
+        sb.AppendLine("   LEFT OUTER JOIN (")
+        sb.AppendLine("     SELECT    *")
+        sb.AppendLine("     FROM         TBLMASTERPRICE")
+        sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT Compcode+revision FROM TBLCompound )")
+        sb.AppendLine("   ) p on c.Compcode+c.Revision = p.Mastercode+p.Revision ")
+        sb.AppendLine(" ) aa")
+        sb.AppendLine(" LEFT OUTER JOIN TBLcompound bb on aa.compcode+aa.Revision = bb.Compcode+bb.Revision")
+        sb.AppendLine(" ORDER BY aa.Finalcompound,aa.Compcode ")
+        StrSQL = sb.ToString()
+
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
@@ -752,115 +789,132 @@ Public Class FrmCALMaster
 
     End Sub
     Private Sub LoadPresemi()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " select * from (   "
-        StrSQL &= "  select Pre.Mastercode, std, Act,Width WLN"
-        StrSQL &= " ,round(std/(width/1000),4) STDM, round(Act/(width/1000),4) ACTM"
-        StrSQL &= ",Pre.DateUp,active,MaterialType MT from ( "
-        StrSQL &= " SELECT    Mastercode,Revision,StdPrice std,ActPrice Act"
-        StrSQL &= " ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup "
-        StrSQL &= " ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup"
-        StrSQL &= " FROM         TBLMASTERPRICE"
-        StrSQL &= " where Mastercode+revision in("
-        StrSQL &= "  SELECT    Psemicode+revision"
-        StrSQL &= " FROM         TBLPresemi)) pre"
-        StrSQL &= " left outer join TBLPresemi se"
-        StrSQL &= "   on pre.Mastercode+pre.Revision = se.psemicode+se.Revision"
-        StrSQL &= " where MaterialType in ('02')"
-        StrSQL &= "  union "
-        StrSQL &= "  select Pre.Mastercode, std, Act,Length WLN"
-        StrSQL &= " ,round(std,4) STDM, round(Act,4) ACTM"
-        StrSQL &= ",Pre.DateUp,active,MaterialType MT from ( "
-        StrSQL &= " SELECT    Mastercode,Revision,StdPrice std,ActPrice Act"
-        StrSQL &= " ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup "
-        StrSQL &= " ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup"
-        StrSQL &= " FROM         TBLMASTERPRICE"
-        StrSQL &= " where Mastercode+revision in("
-        StrSQL &= "  SELECT    Psemicode+revision"
-        StrSQL &= " FROM         TBLPresemi)) pre"
-        StrSQL &= " left outer join TBLPresemi se"
-        StrSQL &= "   on pre.Mastercode+pre.Revision = se.psemicode+se.Revision"
-        StrSQL &= " where MaterialType in ('01')"
-        StrSQL &= "    union "
-        StrSQL &= "  select Pre.Mastercode, std, Act,n WLN"
-        StrSQL &= "  ,round(std*n,4) STDM, round(Act*n,4) ACTM"
-        StrSQL &= "  ,Pre.DateUp,active,MaterialType from ( "
-        StrSQL &= "   SELECT    Mastercode,Revision,StdPrice std,ActPrice Act"
-        StrSQL &= "   ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup "
-        StrSQL &= "  ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup"
-        StrSQL &= "   FROM         TBLMASTERPRICE"
-        StrSQL &= "    where Mastercode+revision in("
-        StrSQL &= "   SELECT    Psemicode+revision"
-        StrSQL &= "   FROM         TBLPresemi)) pre"
-        StrSQL &= "  left outer join TBLPresemi se"
-        StrSQL &= "   on pre.Mastercode+pre.Revision = se.psemicode+se.Revision"
-        StrSQL &= "  where MaterialType  in ('19')"
-        StrSQL &= " union "
-        StrSQL &= "  select Pre.Mastercode, std, Act,Length WLN"
-        StrSQL &= " ,round(std*(Length/1000),3,1) STDM, round(Act*(Length/1000),3,1) ACTM"
-        StrSQL &= "  ,Pre.DateUp,active,MaterialType from ( "
-        StrSQL &= "    SELECT    Mastercode,Revision,StdPrice std,ActPrice Act"
-        StrSQL &= "  ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup "
-        StrSQL &= "    ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup"
-        StrSQL &= "      FROM         TBLMASTERPRICE"
-        StrSQL &= "    where Mastercode+revision in("
-        StrSQL &= "    SELECT    Psemicode+revision"
-        StrSQL &= "    FROM         TBLPresemi)) pre"
-        StrSQL &= "   left outer join TBLPresemi se"
-        StrSQL &= "   on pre.Mastercode+pre.Revision = se.psemicode+se.Revision"
-        StrSQL &= "  where MaterialType  not in ('19','02','01')"
-        StrSQL &= " )PM"
-        StrSQL &= " left outer join "
-        StrSQL &= " ("
-        StrSQL &= " select code,Rev,std stdKG,act actKG from ("
-        StrSQL &= " select code,Rev,MaterialType,n,cn,Qty,Round(std/qty,3,1) STD,Round(act/qty,3,1) ACT"
-        StrSQL &= " from (select * from TBLPresemi where active = 1)  p"
-        StrSQL &= " left outer join ("
-        StrSQL &= " select code,Rev,isnull(width,'1000')/1000 wt"
-        StrSQL &= " ,Round(sum(Qty)/1000,3,1) Qty,Round(sum(STD),4,1)STD,sum(ACT) ACT from TBLMasterPriceRM"
-        StrSQL &= " where code+Rev in "
-        StrSQL &= " (select psemicode+Revision from TBLPresemi)"
-        StrSQL &= " group by code,Rev,width,length)m"
-        StrSQL &= " on p.psemicode+p.Revision = m.code+m.rev"
-        StrSQL &= " where materialType  in ('19') )xx"
 
-        StrSQL &= " union"
+        sb.AppendLine(" SELECT *   ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT Pre.Mastercode, std, Act,Width WLN")
+        sb.AppendLine("   ,round(std/(width/1000),4) STDM, round(Act/(width/1000),4) ACTM")
+        sb.AppendLine("   ,Pre.DateUp,active,MaterialType MT")
+        sb.AppendLine("   FROM ( ")
+        sb.AppendLine("     SELECT    Mastercode,Revision,StdPrice std,ActPrice Act")
+        sb.AppendLine("     ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup ")
+        sb.AppendLine("     ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup")
+        sb.AppendLine("     FROM         TBLMASTERPRICE")
+        sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi)")
+        sb.AppendLine("   ) pre")
+        sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
+        sb.AppendLine("   WHERE MaterialType IN ('02')")
+        sb.AppendLine("   UNION ")
+        sb.AppendLine("   SELECT Pre.Mastercode, std, Act,Length WLN")
+        sb.AppendLine("   ,round(std,4) STDM, round(Act,4) ACTM")
+        sb.AppendLine("   ,Pre.DateUp,active,MaterialType MT ")
+        sb.AppendLine("   FROM (")
+        sb.AppendLine("     SELECT    Mastercode,Revision,StdPrice std,ActPrice Act")
+        sb.AppendLine("     ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup ")
+        sb.AppendLine("     ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup")
+        sb.AppendLine("     FROM         TBLMASTERPRICE")
+        sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi )")
+        sb.AppendLine("   ) pre")
+        sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
+        sb.AppendLine("   WHERE MaterialType IN ('01')")
+        sb.AppendLine("   UNION ")
+        sb.AppendLine("   SELECT Pre.Mastercode, std, Act,n WLN")
+        sb.AppendLine("   ,round(std*n,4) STDM, round(Act*n,4) ACTM")
+        sb.AppendLine("   ,Pre.DateUp,active,MaterialType")
+        sb.AppendLine("   FROM ( ")
+        sb.AppendLine("     SELECT    Mastercode,Revision,StdPrice std,ActPrice Act")
+        sb.AppendLine("     ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup ")
+        sb.AppendLine("     ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup")
+        sb.AppendLine("     FROM         TBLMASTERPRICE")
+        sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi )")
+        sb.AppendLine("   ) pre")
+        sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
+        sb.AppendLine("   WHERE MaterialType IN ('19')")
+        sb.AppendLine("   UNION ")
+        sb.AppendLine("   SELECT Pre.Mastercode, std, Act,Length WLN")
+        sb.AppendLine("   ,round(std*(Length/1000),3,1) STDM, round(Act*(Length/1000),3,1) ACTM")
+        sb.AppendLine("   ,Pre.DateUp,active,MaterialType")
+        sb.AppendLine("   FROM ( ")
+        sb.AppendLine("     SELECT    Mastercode,Revision,StdPrice std,ActPrice Act")
+        sb.AppendLine("     ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup ")
+        sb.AppendLine("     ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup")
+        sb.AppendLine("     FROM         TBLMASTERPRICE")
+        sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi )")
+        sb.AppendLine("   ) pre")
+        sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
+        sb.AppendLine("   WHERE MaterialType NOT IN ('19','02','01')")
+        sb.AppendLine(" ) PM ")
+        sb.AppendLine(" LEFT OUTER JOIN (")
+        sb.AppendLine("   SELECT code, Rev, std stdKG, act actKG ")
+        sb.AppendLine("   FROM (")
+        sb.AppendLine("     SELECT code,Rev,MaterialType,n,cn,Qty,Round(std/qty,3,1) STD,Round(act/qty,3,1) ACT")
+        sb.AppendLine("     FROM (")
+        sb.AppendLine("       SELECT * ")
+        sb.AppendLine("       FROM TBLPresemi ")
+        sb.AppendLine("       WHERE active = 1")
+        sb.AppendLine("     ) p")
+        sb.AppendLine("     LEFT OUTER JOIN (")
+        sb.AppendLine("       SELECT code,Rev,isnull(width,'1000')/1000 wt")
+        sb.AppendLine("       ,Round(sum(Qty)/1000,3,1) Qty,Round(sum(STD),4,1)STD,sum(ACT) ACT ")
+        sb.AppendLine("       FROM TBLMasterPriceRM")
+        sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi)")
+        sb.AppendLine("       GROUP BY code,Rev,width,length")
+        sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
+        sb.AppendLine("     WHERE materialType IN ('19')")
+        sb.AppendLine("   ) xx")
+        sb.AppendLine("   UNION")
+        sb.AppendLine("   SELECT code, Rev, round(sum(std)/1000,3,1) STD, round(sum(Act)/1000,3,1) ACT")
+        sb.AppendLine("   FROM (")
+        sb.AppendLine("     SELECT code,rev,materialType,rmcode,Qty*lt Qty,StdPrice*Qty*lt std,ActPrice*Qty*lt act ")
+        sb.AppendLine("     FROM (")
+        sb.AppendLine("       SELECT code,rev,materialType,p.length/1000 lt,n,cn,rmcode,Qty,stdprice,actprice  ")
+        sb.AppendLine("       FROM TBLPresemi p")
+        sb.AppendLine("       LEFT OUTER JOIN ( ")
+        sb.AppendLine("         SELECT * ")
+        sb.AppendLine("         FROM TBLMasterPriceRM")
+        sb.AppendLine("         WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi)")
+        sb.AppendLine("       ) m on p.psemicode+p.Revision = m.code+m.Rev")
+        sb.AppendLine("       WHERE materialtype NOT IN ('01','02','19') AND active = 1")
+        sb.AppendLine("     ) xx")
+        sb.AppendLine("   ) xxx")
+        sb.AppendLine("   GROUP BY code,Rev")
+        sb.AppendLine("   UNION")
+        sb.AppendLine("   SELECT code,Rev,round(std*(wt)/Qty,4,1) STDKG,round(act*(wt)/Qty,4,1) ACTKG ")
+        sb.AppendLine("   FROM (")
+        sb.AppendLine("     SELECT code,Rev,MaterialType,Width/1000 wt,Qty,std/(Width/1000) std,act/(Width/1000) act")
+        sb.AppendLine("     FROM (")
+        sb.AppendLine("       SELECT * ")
+        sb.AppendLine("       FROM TBLPresemi ")
+        sb.AppendLine("       WHERE active = 1")
+        sb.AppendLine("     ) p")
+        sb.AppendLine("     LEFT OUTER JOIN (")
+        sb.AppendLine("       SELECT code,Rev,isnull(width,'1000')/1000 wt")
+        sb.AppendLine("       ,sum(Qty)/1000 Qty,sum(STD)STD,sum(ACT) ACT ")
+        sb.AppendLine("       FROM TBLMasterPriceRM")
+        sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi)")
+        sb.AppendLine("       GROUP BY code,Rev,width,length")
+        sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
+        sb.AppendLine("     WHERE materialType in ('02') ")
+        sb.AppendLine("     UNION")
+        sb.AppendLine("     SELECT code,Rev,MaterialType,Length/1000 wt,Qty,std/(Length/1000) std,act/(Length/1000) act")
+        sb.AppendLine("     FROM (")
+        sb.AppendLine("       SELECT * ")
+        sb.AppendLine("       FROM TBLPresemi ")
+        sb.AppendLine("     ) p")
+        sb.AppendLine("     LEFT OUTER JOIN (")
+        sb.AppendLine("       SELECT code,Rev,isnull(Length,'1000')/1000 wt")
+        sb.AppendLine("       ,sum(Qty) Qty,sum(STD)STD,sum(ACT) ACT ")
+        sb.AppendLine("       FROM TBLMasterPriceRM")
+        sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi) ")
+        sb.AppendLine("       GROUP BY code,Rev,width,length")
+        sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
+        sb.AppendLine("     WHERE materialType IN ('01') ")
+        sb.AppendLine("   ) xx ")
+        sb.AppendLine(" ) KG on pm.mastercode = kg.code")
+        StrSQL = sb.ToString()
 
-        StrSQL &= " select code,Rev,round(sum(std)/1000,3,1) STD,round(sum(Act)/1000,3,1) ACT from ("
-        StrSQL &= " select code,rev,materialType,rmcode,Qty*lt Qty,StdPrice*Qty*lt std,ActPrice*Qty*lt act from ("
-        StrSQL &= " select code,rev,materialType,p.length/1000 lt,n,cn,rmcode,Qty,stdprice,actprice  from TBLPresemi p"
-        StrSQL &= " left outer join "
-        StrSQL &= " (select * from TBLMasterPriceRM"
-        StrSQL &= " where code+Rev in "
-        StrSQL &= " (select psemicode+Revision from TBLPresemi))m"
-        StrSQL &= " on p.psemicode+p.Revision = m.code+m.Rev"
-        StrSQL &= " where materialtype not in ('01','02','19') and active =1)xx)xxx"
-        StrSQL &= " group by code,Rev"
-        StrSQL &= " union"
-
-        StrSQL &= " select code,Rev,round(std*(wt)/Qty,4,1) STDKG,round(act*(wt)/Qty,4,1) ACTKG from ("
-        StrSQL &= " select code,Rev,MaterialType,Width/1000 wt,Qty,std/(Width/1000) std,act/(Width/1000) act"
-        StrSQL &= " from (select * from TBLPresemi where active = 1)  p"
-        StrSQL &= " left outer join ("
-        StrSQL &= " select code,Rev,isnull(width,'1000')/1000 wt"
-        StrSQL &= " ,sum(Qty)/1000 Qty,sum(STD)STD,sum(ACT) ACT from TBLMasterPriceRM"
-        StrSQL &= " where code+Rev in "
-        StrSQL &= " (select psemicode+Revision from TBLPresemi)"
-        StrSQL &= " group by code,Rev,width,length)m"
-        StrSQL &= " on p.psemicode+p.Revision = m.code+m.rev"
-        StrSQL &= " where materialType in ('02') "
-        StrSQL &= " union "
-        StrSQL &= "  select code,Rev,MaterialType,Length/1000 wt,Qty,std/(Length/1000) std,act/(Length/1000) act"
-        StrSQL &= "    from (select * from TBLPresemi )  p"
-        StrSQL &= "    left outer join ("
-        StrSQL &= "    select code,Rev,isnull(Length,'1000')/1000 wt"
-        StrSQL &= "    ,sum(Qty) Qty,sum(STD)STD,sum(ACT) ACT from TBLMasterPriceRM"
-        StrSQL &= "    where code+Rev in "
-        StrSQL &= "   (select psemicode+Revision from TBLPresemi)"
-        StrSQL &= "   group by code,Rev,width,length)m"
-        StrSQL &= "  on p.psemicode+p.Revision = m.code+m.rev"
-        StrSQL &= "  where materialType in ('01') )xx ) KG"
-        StrSQL &= " on pm.mastercode = kg.code "
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
@@ -1028,7 +1082,7 @@ Public Class FrmCALMaster
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle1, grdColStyle10, grdColStyle11, grdColStyle3, grdColStyle4, _
+    {grdColStyle1, grdColStyle10, grdColStyle11, grdColStyle3, grdColStyle4,
         grdColStyle6, grdColStyle7, grdColStyle8, grdColStyle9, grdColStyle5})
 
         DataGridCAL.TableStyles.Add(grdTableStyle1)
@@ -1036,41 +1090,52 @@ Public Class FrmCALMaster
 
     End Sub
     Private Sub Loadsemi()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = "   select final,MT,Qpu,StdPrice,ActPrice,wln,std,act,dateup,timeup ,std/qpu*1000 stdKG,act/qpu*1000 actKG from ("
-        StrSQL &= "    select se.Final,MaterialType MT,QPU*num QPU,StdPrice,ActPrice,num WLN"
-        StrSQL &= "    ,StdPrice*num STD,ActPrice*num ACT"
-        StrSQL &= "    ,substring(mp.DateUp,7,2)+'/'+substring(mp.DateUp,5,2)+'/'+substring(mp.DateUp,1,4) dateup "
-        StrSQL &= "    ,substring(mp.TimeUp,1,2)+':'+substring(mp.TimeUp,3,2) Timeup"
-        StrSQL &= "    from TBLsemi se"
-        StrSQL &= "    left outer join "
-        StrSQL &= "    (select * from TBLMasterPrice"
-        StrSQL &= "    where Typecode = '05')mp"
-        StrSQL &= "     on se.semicode+se.Revision =mp.mastercode+mp.revision"
-        StrSQL &= "     where active = 1 and materialType in ('13','14')"
-        StrSQL &= "     union "
-        StrSQL &= "      select se.Final,MaterialType,QPU*length/1000 Qpu,StdPrice,ActPrice,Length WLN"
-        StrSQL &= "      ,Round(StdPrice*(Length/1000),3) STD,Round(ActPrice*(Length/1000),3) ACT"
-        StrSQL &= "      ,substring(mp.DateUp,7,2)+'/'+substring(mp.DateUp,5,2)+'/'+substring(mp.DateUp,1,4) dateup "
-        StrSQL &= "      ,substring(mp.TimeUp,1,2)+':'+substring(mp.TimeUp,3,2) Timeup"
-        StrSQL &= "     from TBLsemi se"
-        StrSQL &= "     left outer join "
-        StrSQL &= "     (select * from TBLMasterPrice"
-        StrSQL &= "    where Typecode = '05')mp"
-        StrSQL &= "     on se.semicode+se.Revision =mp.mastercode+mp.revision"
-        StrSQL &= "     where active = 1 and materialType not in ('13','14','10'))xx"
-        StrSQL &= "   union "
-        StrSQL &= "   select final,materialType,Qpu,StdPrice,ActPrice,wln,std,act,dateup,timeup ,std/qpu*1000 stdKG,act/qpu*1000 actKG from ("
-        StrSQL &= "   select se.Final,MaterialType,QPU*Length/1000 QPU,StdPrice,ActPrice,Length WLN"
-        StrSQL &= "     ,StdPrice*(QPU/1000)*(Length/1000) STD,ActPrice*Qpu/1000*Length/1000 ACT"
-        StrSQL &= "    ,substring(se.DateUp,7,2)+'/'+substring(se.DateUp,5,2)+'/'+substring(se.DateUp,1,4) dateup "
-        StrSQL &= "    ,'00:00'Timeup"
-        StrSQL &= "      from TBLsemi se"
-        StrSQL &= "    left outer join "
-        StrSQL &= "     (select * from TBLMasterPrice"
-        StrSQL &= "    where Typecode = '05')mp"
-        StrSQL &= "     on se.semicode+se.Revision =mp.mastercode+mp.revision"
-        StrSQL &= "     where active = 1 and materialType in ('10'))xx"
+
+        sb.AppendLine(" SELECT final,MT,Qpu,StdPrice,ActPrice,wln,std,act,dateup,timeup ,std/qpu*1000 stdKG,act/qpu*1000 actKG ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT se.Final,MaterialType MT,QPU*num QPU,StdPrice,ActPrice,num WLN")
+        sb.AppendLine("   ,StdPrice*num STD,ActPrice*num ACT")
+        sb.AppendLine("   ,substring(mp.DateUp,7,2)+'/'+substring(mp.DateUp,5,2)+'/'+substring(mp.DateUp,1,4) dateup ")
+        sb.AppendLine("   ,substring(mp.TimeUp,1,2)+':'+substring(mp.TimeUp,3,2) Timeup")
+        sb.AppendLine("   FROM TBLsemi se")
+        sb.AppendLine("   LEFT OUTER JOIN ( ")
+        sb.AppendLine("     SELECT * ")
+        sb.AppendLine("     FROM TBLMasterPrice")
+        sb.AppendLine("     WHERE Typecode = '05'")
+        sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
+        sb.AppendLine("   WHERE active = 1 AND materialType IN ('13','14')")
+        sb.AppendLine("   UNION ")
+        sb.AppendLine("   SELECT se.Final,MaterialType,QPU*length/1000 Qpu,StdPrice,ActPrice,Length WLN")
+        sb.AppendLine("   ,Round(StdPrice*(Length/1000),3) STD,Round(ActPrice*(Length/1000),3) ACT")
+        sb.AppendLine("   ,substring(mp.DateUp,7,2)+'/'+substring(mp.DateUp,5,2)+'/'+substring(mp.DateUp,1,4) dateup ")
+        sb.AppendLine("   ,substring(mp.TimeUp,1,2)+':'+substring(mp.TimeUp,3,2) Timeup")
+        sb.AppendLine("   FROM TBLsemi se")
+        sb.AppendLine("   LEFT OUTER JOIN ( ")
+        sb.AppendLine("     SELECT * ")
+        sb.AppendLine("     FROM TBLMasterPrice")
+        sb.AppendLine("     WHERE Typecode = '05'")
+        sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
+        sb.AppendLine("   WHERE active = 1 AND materialType NOT IN ('13','14','10')")
+        sb.AppendLine(" ) xx")
+        sb.AppendLine(" UNION ")
+        sb.AppendLine(" SELECT final,materialType,Qpu,StdPrice,ActPrice,wln,std,act,dateup,timeup ,std/qpu*1000 stdKG,act/qpu*1000 actKG ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT se.Final,MaterialType,QPU*Length/1000 QPU,StdPrice,ActPrice,Length WLN")
+        sb.AppendLine("   ,StdPrice*(QPU/1000)*(Length/1000) STD,ActPrice*Qpu/1000*Length/1000 ACT")
+        sb.AppendLine("   ,substring(se.DateUp,7,2)+'/'+substring(se.DateUp,5,2)+'/'+substring(se.DateUp,1,4) dateup ")
+        sb.AppendLine("   ,'00:00'Timeup")
+        sb.AppendLine("   FROM TBLsemi se")
+        sb.AppendLine("   LEFT OUTER JOIN ( ")
+        sb.AppendLine("     SELECT * ")
+        sb.AppendLine("     FROM TBLMasterPrice")
+        sb.AppendLine("     WHERE Typecode = '05'")
+        sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
+        sb.AppendLine("   WHERE active = 1 AND materialType IN ('10')")
+        sb.AppendLine(" ) xx")
+        StrSQL = sb.ToString()
+
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
@@ -1238,7 +1303,7 @@ Public Class FrmCALMaster
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle1, grdColStyle10, grdColStyle11, grdColStyle3, grdColStyle4, _
+    {grdColStyle1, grdColStyle10, grdColStyle11, grdColStyle3, grdColStyle4,
         grdColStyle6, grdColStyle7, grdColStyle8, grdColStyle9, grdColStyle5})
 
         DataGridCAL.TableStyles.Add(grdTableStyle1)
@@ -1246,21 +1311,26 @@ Public Class FrmCALMaster
 
     End Sub
     Private Sub LoadTire()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "  select MasterCode,Revision,Tiresize,Typecode"
-        StrSQL &= "  ,(StdPrice/Qty)*1000 STDK,(ActPrice/Qty)*1000 ACTK"
-        StrSQL &= "  ,StdPrice,ActPrice,Qty,bb.dateup,bb.Timeup from "
-        StrSQL &= "  (select * from TBLGTHdr where active = 1  ) aa"
-        StrSQL &= "  left outer join "
-        StrSQL &= "  ("
-        StrSQL &= "   select Mastercode,Revision, Typecode,StdPrice,ActPrice"
-        StrSQL &= "  ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup "
-        StrSQL &= "  ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup"
-        StrSQL &= "   from TBLMasterPrice where Typecode ='06'"
-        StrSQL &= "  ) bb"
-        StrSQL &= "  on aa.Tirecode+Rev = bb.Mastercode+bb.Revision"
-        StrSQL &= "  order by Mastercode    "
+        sb.AppendLine(" SELECT MasterCode,Revision,Tiresize,Typecode")
+        sb.AppendLine(" ,(StdPrice/Qty)*1000 STDK,(ActPrice/Qty)*1000 ACTK")
+        sb.AppendLine(" ,StdPrice,ActPrice,Qty,bb.dateup,bb.Timeup ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT * ")
+        sb.AppendLine("   FROM TBLGTHdr ")
+        sb.AppendLine("   WHERE active = 1 ")
+        sb.AppendLine(" ) aa")
+        sb.AppendLine(" LEFT OUTER JOIN ( ")
+        sb.AppendLine("   SELECT Mastercode,Revision, Typecode,StdPrice,ActPrice")
+        sb.AppendLine("   ,substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup ")
+        sb.AppendLine("   ,substring(TimeUp,1,2)+':'+substring(TimeUp,3,2) Timeup")
+        sb.AppendLine("   FROM TBLMasterPrice ")
+        sb.AppendLine("   WHERE Typecode ='06'")
+        sb.AppendLine(" ) bb on aa.Tirecode+Rev = bb.Mastercode+bb.Revision")
+        sb.AppendLine(" ORDER BY Mastercode    ")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -1417,7 +1487,7 @@ Public Class FrmCALMaster
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle1, grdColStyle1_1, grdColStyle1_2, grdColStyle2_0, _
+    {grdColStyle1, grdColStyle1_1, grdColStyle1_2, grdColStyle2_0,
     grdColStyle2_1, grdColStyle3_0, grdColStyle3_1, grdColStyle4_0, grdColStyle4, grdColStyle5})
 
         DataGridCAL.TableStyles.Add(grdTableStyle1)
@@ -1476,7 +1546,7 @@ Public Class FrmCALMaster
         Dim dt As DataTable = New DataTable()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
         StrSQL = " SELECT   Materialcode,MaterialName"
-        StrSQL &= " FROM  TBLTypeMaterial where Descname like '" & txtname.Trim & "'"
+        StrSQL &= " FROM  TBLTypeMaterial where Descname like '" & txtname.Trim() & "'"
         Dim DA As SqlDataAdapter
         Try
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
@@ -1496,34 +1566,11 @@ Public Class FrmCALMaster
     End Sub
 #End Region
 
-    Private Sub FrmCALMaster_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        If txtname.Trim = "Pigment" Then
-            LoadPigment()
-        ElseIf txtname.Trim = "Compound" Then
-            LoadCompound()
-            LoadGroup()
-            GroupCompound.Visible = True
-        ElseIf txtname.Trim = "RM" Then
-            LoadRM()
-        ElseIf txtname.Trim = "PreSemi" Then
-            LoadPresemi()
-            LoadMaterialType()
-            GType.Visible = True
-        ElseIf txtname.Trim = "Semi" Then
-            Loadsemi()
-            LoadMaterialType()
-            GType.Visible = True
-        ElseIf txtname.Trim = "Green Tire" Then
-            LoadTire()
-        Else
-        End If
-        vBal = False
-    End Sub
-
+#Region "Control Event"
     Private Sub ButtonClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonClose.Click
         Me.Close()
     End Sub
-
+#End Region
 
 #Region "PrepareStr"
     Private Function PrepareStr(ByVal strValue As String) As String
@@ -1550,15 +1597,19 @@ Public Class FrmCALMaster
 
     Sub SelectCompound()
         If CheckCompound.Checked = True And CheckCompGroup.Checked = True Then
+            'If check Final and Group
             GrdDV.RowFilter = " Active = 1 and Finalcompound = '" & ComboBoxComp.Text.Trim & "'"
             DataGridCAL.DataSource = GrdDV
         ElseIf CheckCompound.Checked = True And CheckCompGroup.Checked = False Then
+            'If check Final
             GrdDV.RowFilter = " Active = 1"
             DataGridCAL.DataSource = GrdDV
         ElseIf CheckCompound.Checked = False And CheckCompGroup.Checked = True Then
+            'If check Group
             GrdDV.RowFilter = " Finalcompound = '" & ComboBoxComp.Text.Trim & "'"
             DataGridCAL.DataSource = GrdDV
         Else
+            'If not check
             GrdDV.RowFilter = " "
             DataGridCAL.DataSource = GrdDV
         End If
@@ -1572,13 +1623,17 @@ Public Class FrmCALMaster
 
 
     Private Sub CheckType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckType.CheckedChanged
-        selectSemi()
+        SelectSemi()
     End Sub
 
     Private Sub cmbType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbType.SelectedIndexChanged
-        selectSemi()
+        SelectSemi()
     End Sub
-    Sub selectSemi()
+
+    ''' <summary>
+    ''' For Material Type Semi or PreSemi
+    ''' </summary>
+    Sub SelectSemi()
         If CheckType.Checked = True Then
             GrdDV.RowFilter = " MT  = '" & cmbType.SelectedValue & "'"
             DataGridCAL.DataSource = GrdDV
@@ -1588,24 +1643,45 @@ Public Class FrmCALMaster
         End If
     End Sub
 
+    Private Sub SetTotal()
+        'Set total
+        'Format: Form Text - xxx item(s)
+        Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
+        Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
+    End Sub
+
     Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
         If GroupCompound.Visible = True Then
+            'Compound Type
             SelectCompound()
-         End If
-        If GType.Visible = True Then
-            selectSemi()
         End If
+
+        If GType.Visible = True Then
+            'PreSemi or Semi Type
+            SelectSemi()
+        End If
+
         If GType.Visible = True And GroupCompound.Visible = True Then
-            GrdDV.RowFilter &= " and dateUP like '" & DateTime.Text.Trim & "'"
+            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
             DataGridCAL.DataSource = GrdDV
         ElseIf GType.Visible = False And GroupCompound.Visible = False Then
-            GrdDV.RowFilter = " dateUP like '" & DateTime.Text.Trim & "'"
+            'Material Type R/M, Pigment and Green Tire
+            GrdDV.RowFilter = " dateUP LIKE '" & DateTime.Text.Trim() & "'"
             DataGridCAL.DataSource = GrdDV
         ElseIf GType.Visible = False And GroupCompound.Visible = True Then
-            GrdDV.RowFilter &= " and dateUP like '" & DateTime.Text.Trim & "'"
+            'Material Type Compound
+            If Not CheckCompound.Checked And Not CheckCompGroup.Checked Then
+                'If not check
+                GrdDV.RowFilter &= " dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            Else
+                'If check Final or Group
+                GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            End If
+
             DataGridCAL.DataSource = GrdDV
         ElseIf GType.Visible = True And GroupCompound.Visible = False Then
-            GrdDV.RowFilter &= " and dateUP like '" & DateTime.Text.Trim & "'"
+            'Material Type PreSemi and Semi
+            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
             DataGridCAL.DataSource = GrdDV
         Else
             GrdDV.RowFilter &= " "
