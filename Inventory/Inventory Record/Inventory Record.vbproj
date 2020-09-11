@@ -146,7 +146,7 @@
     <Compile Include="Calculate.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Class1.vb">
+    <Compile Include="Class\SQLData.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="common.vb">
@@ -268,10 +268,10 @@
     <Compile Include="FrmUnit.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loading.Designer.vb">
+    <Compile Include="Notification\Loading.Designer.vb">
       <DependentUpon>Loading.vb</DependentUpon>
     </Compile>
-    <Compile Include="Loading.vb">
+    <Compile Include="Notification\Loading.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\Application.Designer.vb">
@@ -284,11 +284,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ExcelLib.vb" />
-    <Compile Include="Splash.Designer.vb">
+    <Compile Include="Class\ExcelLib.vb" />
+    <Compile Include="Notification\Exporting.Designer.vb">
+      <DependentUpon>Exporting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Notification\Exporting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notification\Importing.Designer.vb">
+      <DependentUpon>Importing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Notification\Importing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notification\Splash.Designer.vb">
       <DependentUpon>Splash.vb</DependentUpon>
     </Compile>
-    <Compile Include="Splash.vb">
+    <Compile Include="Notification\Splash.vb">
       <SubType>Form</SubType>
     </Compile>
     <Content Include="BigHouse.ico" />
@@ -415,7 +427,7 @@
     <EmbeddedResource Include="FrmUnit.resx">
       <DependentUpon>FrmUnit.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Loading.resx">
+    <EmbeddedResource Include="Notification\Loading.resx">
       <DependentUpon>Loading.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -423,7 +435,13 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Splash.resx">
+    <EmbeddedResource Include="Notification\Exporting.resx">
+      <DependentUpon>Exporting.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Notification\Importing.resx">
+      <DependentUpon>Importing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Notification\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
