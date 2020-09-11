@@ -150,7 +150,7 @@ Public Class ExcelLib
                     Dim dtRec As DataTable = DV.ToTable(tableName) 'Get datatable by table name
 
                     'Get dataview into excel file
-                    Using frm As New Loading()
+                    Using frm As New Exporting()
                         'Create loading of overlay
                         frmOverlay.StartPosition = FormStartPosition.Manual
                         frmOverlay.FormBorderStyle = FormBorderStyle.None

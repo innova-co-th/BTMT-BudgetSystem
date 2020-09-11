@@ -733,7 +733,7 @@ Public Class FrmRM
 
         If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
             'Create loading of overlay
-            Dim frm As New Loading()
+            Dim frm As New Importing()
             frmOverlay.StartPosition = FormStartPosition.Manual
             frmOverlay.FormBorderStyle = FormBorderStyle.None
             frmOverlay.Opacity = 0.5D
