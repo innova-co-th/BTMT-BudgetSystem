@@ -121,8 +121,8 @@ Public Class FrmMain
     Friend WithEvents MenuItem14 As System.Windows.Forms.MenuItem
     Friend WithEvents MenuPCOM As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalRM As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuCalStage1 As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuCalStage2 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCalCompoundStage1 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCalCompoundStage2 As System.Windows.Forms.MenuItem
     Friend WithEvents Menuitem15 As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalCoatedCord As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCALSteel As System.Windows.Forms.MenuItem
@@ -177,8 +177,8 @@ Public Class FrmMain
         Me.MenuCalRM = New System.Windows.Forms.MenuItem()
         Me.MenuCALPigment = New System.Windows.Forms.MenuItem()
         Me.MenuCALCompound = New System.Windows.Forms.MenuItem()
-        Me.MenuCalStage1 = New System.Windows.Forms.MenuItem()
-        Me.MenuCalStage2 = New System.Windows.Forms.MenuItem()
+        Me.MenuCalCompoundStage1 = New System.Windows.Forms.MenuItem()
+        Me.MenuCalCompoundStage2 = New System.Windows.Forms.MenuItem()
         Me.Menuitem15 = New System.Windows.Forms.MenuItem()
         Me.MenuCALSteel = New System.Windows.Forms.MenuItem()
         Me.MenuCalCoatedCord = New System.Windows.Forms.MenuItem()
@@ -413,18 +413,18 @@ Public Class FrmMain
         'MenuCALCompound
         '
         Me.MenuCALCompound.Index = 2
-        Me.MenuCALCompound.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalStage1, Me.MenuCalStage2})
+        Me.MenuCALCompound.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalCompoundStage1, Me.MenuCalCompoundStage2})
         Me.MenuCALCompound.Text = "Compound"
         '
-        'MenuCalStage1
+        'MenuCalCompoundStage1
         '
-        Me.MenuCalStage1.Index = 0
-        Me.MenuCalStage1.Text = "Stage  1  "
+        Me.MenuCalCompoundStage1.Index = 0
+        Me.MenuCalCompoundStage1.Text = "Stage  1  "
         '
-        'MenuCalStage2
+        'MenuCalCompoundStage2
         '
-        Me.MenuCalStage2.Index = 1
-        Me.MenuCalStage2.Text = "Stage  2 "
+        Me.MenuCalCompoundStage2.Index = 1
+        Me.MenuCalCompoundStage2.Text = "Stage  2 "
         '
         'Menuitem15
         '
@@ -723,7 +723,7 @@ Public Class FrmMain
         Dim fCompound As New FrmCompound
         '  fCompound.MdiParent = Me
         fCompound.Show()
-     End Sub
+    End Sub
 
     Private Sub MenuPreSemi_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuPreSemi.Click
         Dim fPreSemi As New FrmPreSemi
@@ -952,7 +952,7 @@ Public Class FrmMain
 
     End Sub
 
-    Private Function CalPercent(ByVal final As String, ByVal Mastercode As String, _
+    Private Function CalPercent(ByVal final As String, ByVal Mastercode As String,
   ByVal Rev As String, ByVal RMcode As String, ByVal Weight As Double, ByVal RHC As Double) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         CalPercent = False
@@ -1049,7 +1049,7 @@ Public Class FrmMain
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Function
 
-    Private Function CalTotalPercent(ByVal final As String, ByVal Mastercode As String, _
+    Private Function CalTotalPercent(ByVal final As String, ByVal Mastercode As String,
    ByVal Rev As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         CalTotalPercent = False
@@ -1123,12 +1123,10 @@ Public Class FrmMain
 #Region "CalRM Price"
     Private Sub MenuCalRM_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalRM.Click
         Dim msg As String = "Calculate RM Price " ' Define message.
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        style = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
 
@@ -1140,9 +1138,9 @@ Public Class FrmMain
             StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
 
             If CalRM(StrDate, StrTime) Then
-                MsgBox("Update RM Price .")
+                MessageBox.Show("Update RM Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update RM Price .")
+                MessageBox.Show("Don't Update RM Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1150,7 +1148,7 @@ Public Class FrmMain
     End Sub
     Private Function CalRM(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalRM = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1193,44 +1191,44 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalRM = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalRM = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "Pigment CAL"
+#Region "CalPigment Price"
     Private Sub MenuCALPigment_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCALPigment.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate Pigment Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Pigment Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) + Str(1) + Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
             If CalPigment(StrDate, StrTime) Then
-                MsgBox("Update Pigment Price .")
+                MessageBox.Show("Update Pigment Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update Pigment Price .")
+                MessageBox.Show("Don't Update Pigment Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1238,7 +1236,7 @@ Public Class FrmMain
     End Sub
     Private Function CalPigment(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalPigment = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1281,23 +1279,25 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalPigment = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalPigment = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "Calcompound Price"
+#Region "CalCompound Price"
     Private Function CalCompound(ByVal dateup As String, ByVal timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         CalCompound = False
@@ -1416,55 +1416,49 @@ Public Class FrmMain
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Function
-    Private Sub MenuCalStage1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalStage1.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+
+    Private Sub MenuCalCompoundStage1_Click(sender As Object, e As EventArgs) Handles MenuCalCompoundStage1.Click
+        Dim msg As String = "Calculate Compound Stage-1 Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Compound Stage-1 Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) + Str(1) + Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
             If CalCompound(StrDate, StrTime) Then
-                MsgBox("Update Compound Price.")
+                MessageBox.Show("Update Compound Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update Compound Price.")
+                MessageBox.Show("Don't Update Compound Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
         End If
-
-
     End Sub
-    Private Sub MenuCalStage2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalStage2.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+
+    Private Sub MenuCalCompoundStage2_Click(sender As Object, e As EventArgs) Handles MenuCalCompoundStage2.Click
+        Dim msg As String = "Calculate Compound Stage-2 Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Compound Stage-2 Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) + Str(1) + Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
             If CalCompound2(StrDate, StrTime) Then
-                MsgBox("Update Compound Price.")
+                MessageBox.Show("Update Compound Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update Compound Price.")
+                MessageBox.Show("Don't Update Compound Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1480,7 +1474,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate Coated Cord Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -1688,7 +1682,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate PreSemi Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -1777,7 +1771,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate SteelCord Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -1867,7 +1861,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate Tread Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -1956,7 +1950,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate BF Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -2108,7 +2102,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate BELT 1-4  Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -2260,7 +2254,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate SIDE,CUSSION,INNERLINER Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -2349,7 +2343,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate Wire Chafer,Nylon Chafer,Body Ply Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
@@ -2502,7 +2496,7 @@ Public Class FrmMain
         Dim response As MsgBoxResult
 
         msg = "Calculate Green Tire Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.

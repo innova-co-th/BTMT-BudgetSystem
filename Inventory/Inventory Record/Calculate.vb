@@ -238,10 +238,10 @@ Public Class Calculate
         Me.Cursor = System.Windows.Forms.Cursors.Default
 
         If e.Result Then
-            MsgBox(" Calculate Complete. ", MsgBoxStyle.OkOnly, "Calculate")
+            MessageBox.Show(" Calculate Complete. ", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Close()
         Else
-            MsgBox(" Calculate Not Complete. Please Check Data. Calculate by Process ", MsgBoxStyle.OkOnly, "Calculate")
+            MessageBox.Show(" Calculate Not Complete. Please Check Data. Calculate by Process ", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
     End Sub
 #End Region
@@ -250,7 +250,7 @@ Public Class Calculate
 
 #Region "CalRM Price"
     Private Function CalRM(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        CalRM = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -293,25 +293,26 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalRM = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalRM = False
+            ret = False
         End Try
+
         cnn.Close()
+        Return ret
     End Function
 #End Region
 
-#Region "Pigment CAL"
+#Region "CalPigment Price"
     Private Function CalPigment(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalPigment = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -354,26 +355,26 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalPigment = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalPigment = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "Calcompound Price"
+#Region "CalCompound Price"
     Private Function CalCompound(ByVal dateup As String, ByVal timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalCompound = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -416,23 +417,23 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalCompound = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalCompound = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function CalCompound2(ByVal dateup As String, ByVal timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalCompound2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -475,23 +476,24 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalCompound2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalCompound2 = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "CalCoatedcord"
+#Region "CalCoatedcord (PreSemi Price)"
     Private Function CalCoatedcord(ByVal dateup As String, ByVal timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         CalCoatedcord = False
@@ -552,7 +554,6 @@ Public Class Calculate
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Function
     Private Function CalCoatedcord2(ByVal dateup As String, ByVal timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -604,9 +605,8 @@ Public Class Calculate
         Catch ex As Exception
             MsgBox(ex.Message, 48)
         End Try
-        cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
 
+        cnn.Close()
         Return True
     End Function
     Private Function CalCoatedcord3(ByVal dateup As String, ByVal timeup As String) As Boolean
@@ -731,7 +731,7 @@ Public Class Calculate
     End Function
 #End Region
 
-#Region "CalPreSemi Price"
+#Region "CalSteelCord (PreSemi Price)"
     Private Function SteelCord(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         SteelCord = False
