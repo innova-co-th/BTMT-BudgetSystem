@@ -495,8 +495,7 @@ Public Class Calculate
 
 #Region "CalCoatedcord (PreSemi Price)"
     Private Function CalCoatedcord(ByVal dateup As String, ByVal timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalCoatedcord = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -539,19 +538,20 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalCoatedcord = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalCoatedcord = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function CalCoatedcord2(ByVal dateup As String, ByVal timeup As String) As Boolean
         Dim cnn As New SqlConnection(C1.Strcon)
@@ -596,8 +596,8 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
@@ -610,7 +610,6 @@ Public Class Calculate
         Return True
     End Function
     Private Function CalCoatedcord3(ByVal dateup As String, ByVal timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -653,8 +652,8 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
@@ -662,17 +661,15 @@ Public Class Calculate
         Catch ex As Exception
             MsgBox(ex.Message, 48)
         End Try
-        cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
 
+        cnn.Close()
         Return True
     End Function
 #End Region
 
 #Region "CalPreSemi Price"
     Private Function PreSemi(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        PreSemi = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -715,26 +712,26 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            PreSemi = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            PreSemi = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
 #Region "CalSteelCord (PreSemi Price)"
     Private Function SteelCord(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        SteelCord = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -777,27 +774,27 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            SteelCord = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            SteelCord = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
 #Region "CalSemi Price"
-#Region "TT"
+#Region "TREAD Semi Price"
     Private Function Tread(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        Tread = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -840,26 +837,26 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            Tread = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            Tread = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "BF"
+#Region "BF Semi Price"
     Private Function BF(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BF = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -902,19 +899,20 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BF = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BF = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function BF2(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
@@ -977,17 +975,16 @@ Public Class Calculate
     End Function
 #End Region
 
-#Region "BElT 1-4"
+#Region "BELT 1-4 Semi Price"
     Private Function BElT(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BElT = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
         cmd2 = New SqlClient.SqlCommand
         cmd2.CommandTimeout = 0
         cmd2.CommandType = CommandType.StoredProcedure
-        cmd2.CommandText = "CALBElT"
+        cmd2.CommandText = "CALBELT"
         cmd2.Connection = cnn
 
         Dim sparam0 As SqlClient.SqlParameter
@@ -1023,30 +1020,30 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BElT = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BElT = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function BElT2(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BElT2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
         cmd2 = New SqlClient.SqlCommand
         cmd2.CommandTimeout = 0
         cmd2.CommandType = CommandType.StoredProcedure
-        cmd2.CommandText = "CALBElT2"
+        cmd2.CommandText = "CALBELT2"
         cmd2.Connection = cnn
 
         Dim sparam0 As SqlClient.SqlParameter
@@ -1082,26 +1079,26 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BElT2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BElT2 = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "SIDE CUSSION INNERLINER"
+#Region "SIDE CUSSION INNERLINER Semi Price"
     Private Function SIC(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        SIC = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1144,26 +1141,26 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            SIC = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            SIC = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "Wire Chafer,Nylon Chafer,Body Ply"
+#Region "WIRE CHAFER,Nylon CHAFER,BODY PLY Semi Price"
     Private Function Chafer(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        Chafer = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1206,23 +1203,23 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            Chafer = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            Chafer = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function Chafer2(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        Chafer2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1271,13 +1268,14 @@ Public Class Calculate
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            Chafer2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            Chafer2 = False
+            ret = False
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 #End Region 'CalSemi Price
@@ -1378,7 +1376,7 @@ Public Class Calculate
             If x = 1 Then
                 'R/M Material
                 If CKRM.Checked Then
-                    CalRM(StrDate, StrTime)
+                    CalRM(StrDate, StrTime) 'Call Store Procedure CALRM
                 Else
                     x = 10 'Skip to next process
                     UpdateProgress(x, False)
@@ -1388,7 +1386,7 @@ Public Class Calculate
             If x = 10 Then
                 'Pigment
                 If CKPigment.Checked Then
-                    CalPigment(StrDate, StrTime)
+                    CalPigment(StrDate, StrTime) 'Call Store Procedure CALPigment
                 Else
                     x = 20 'Skip to next process
                     UpdateProgress(x, False)
@@ -1398,8 +1396,8 @@ Public Class Calculate
             If x = 20 Then
                 'Compound
                 If CKCompound.Checked Then
-                    CalCompound(StrDate, StrTime)
-                    CalCompound2(StrDate, StrTime)
+                    CalCompound(StrDate, StrTime) 'Call Store Procedure CALCompound (Insert Table TBLMasterPriceRM)
+                    CalCompound2(StrDate, StrTime) 'Call Store Procedure CALCompound2 (Insert Table TBLMasterPrice)
                 Else
                     x = 30 'Skip to next process
                     UpdateProgress(x, False)
@@ -1409,9 +1407,9 @@ Public Class Calculate
             If x = 30 Then
                 'Pre Semi
                 If CKPresemi.Checked Then
-                    CalCoatedcord2(StrDate, StrTime)
-                    CalCoatedcord3(StrDate, StrTime)
-                    CalCoatedcord(StrDate, StrTime)
+                    CalCoatedcord2(StrDate, StrTime) 'Call Store Procedure CALCoatedCord2 (Insert Table TBLMasterPriceRM Exclude TBLRM)
+                    CalCoatedcord3(StrDate, StrTime) 'Call Store Procedure CALCoatedCord3 (Insert Table TBLMasterPriceRM Include TBLRM)
+                    CalCoatedcord(StrDate, StrTime) 'Call Store Procedure CALCoatedCord (Insert Table TBLMasterPrice)
                 Else
                     x = 40 'Skip to next process
                     UpdateProgress(x, False)
@@ -1421,8 +1419,8 @@ Public Class Calculate
             If x = 40 Then
                 'Pre Semi
                 If CKPresemi.Checked Then
-                    PreSemi(StrDate, StrTime)
-                    SteelCord(StrDate, StrTime)
+                    PreSemi(StrDate, StrTime) 'Call Store Procedure CALPreSemi (Material Type is not STEEL CORD and COATED CORD)
+                    SteelCord(StrDate, StrTime) 'Call Store Procedure CALSteelCord (Material Type is STEEL CORD)
                 Else
                     x = 50 'Skip to next process
                     UpdateProgress(x, False)
@@ -1432,9 +1430,9 @@ Public Class Calculate
             If x = 50 Then
                 'Semi
                 If CKSemi.Checked Then
-                    Tread(StrDate, StrTime)
-                    BF(StrDate, StrTime)
-                    BF2(StrDate, StrTime)
+                    Tread(StrDate, StrTime) 'Call Store Procedure CALTT (Material Type is TREAD)
+                    BF(StrDate, StrTime) 'Call Store Procedure CALBF (Material Type is BF)(Insert Table TBLMasterPrice)
+                    BF2(StrDate, StrTime) 'Call Store Procedure CALBF2 (Material Type is BF)(Insert Table TBLMasterPriceRM)
                 Else
                     x = 70 'Skip to next process
                     UpdateProgress(x, False)
@@ -1444,11 +1442,11 @@ Public Class Calculate
             If x = 70 Then
                 'Semi
                 If CKSemi.Checked Then
-                    BElT(StrDate, StrTime) 'Type Material:Belt-1, Belt-2, Belt-3, Belt-4 to Table TBLMASTERPRICE
-                    BElT2(StrDate, StrTime) 'Type Material:Belt-1, Belt-2, Belt-3, Belt-4 to Table TBLMASTERPRICERM
-                    SIC(StrDate, StrTime) 'Type Material:Cussion, Side, Innerliner
-                    Chafer(StrDate, StrTime) 'Type Material:Body Ply, Wire Chafer, Nylon Chafer to Table TBLMASTERPRICE
-                    Chafer2(StrDate, StrTime) 'Type Material:Body Ply, Wire Chafer, Nylon Chafer to Table TBLMASTERPRICERM
+                    BElT(StrDate, StrTime) 'Call Store Procedure CALBELT (Type Material:BELT-1, BELT-2, BELT-3, BELT-4 to Table TBLMASTERPRICE)
+                    BElT2(StrDate, StrTime) 'Call Store Procedure CALBELT2 (Type Material:BELT-1, BELT-2, BELT-3, BELT-4 to Table TBLMASTERPRICERM)
+                    SIC(StrDate, StrTime) 'Call Store Procedure CALSIC (Type Material:CUSSION, SIDE, INNERLINER)
+                    Chafer(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICE)
+                    Chafer2(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICERM)
                 Else
                     x = 90 'Skip to next process
                     UpdateProgress(x, False)
