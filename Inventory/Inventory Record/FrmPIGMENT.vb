@@ -261,10 +261,10 @@ Public Class FrmPIGMENT
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
         sb.AppendLine(" SELECT aa.Code, aa.PigmentCode, aa.Revision, aa.Qty, aa.Unit, aa.Per")
-        sb.AppendLine(" ,aa.PType, aa.PigmentCode + ',' + aa.Revision as PCode, aa.rmCode, aa.RmRevision, aa.RmQty, aa.RMUnit, aa.TypeCode")
+        sb.AppendLine(" ,aa.PType, aa.PigmentCode + ',' + aa.Revision as PCode, aa.rmCode, aa.RmRevision, aa.RmQty, aa.RMUnit, aa.TypeCode, aa.EachRevision, aa.EachPigmentCode")
         sb.AppendLine(" FROM (")
-        sb.AppendLine("   SELECT H.Code, p.PigmentCode, p.Revision, p.Qty, p.Unit, null Per")
-        sb.AppendLine("   ,'H' PType, p.PigmentCode + ',' + p.Revision as PCode,'' rmCode,'' RmRevision, null RmQty,'' RMUnit, H.Typecode ") 'Header from table TBLPigment
+        sb.AppendLine("   SELECT Code, p.PigmentCode, p.Revision, p.Qty, p.Unit, null Per")
+        sb.AppendLine("   ,'H' PType, p.PigmentCode + ',' + p.Revision as PCode,'' rmCode,'' RmRevision, null RmQty,'' RMUnit, H.Typecode, '' as EachRevision, '' as EachPigmentCode") 'Header from table TBLPigment
         sb.AppendLine("   FROM TBLPigment p ")
         sb.AppendLine("   LEFT OUTER JOIN (")
         sb.AppendLine("     SELECT t.Typecode,t.TypeName,G.Code,'H' PType")
@@ -276,8 +276,8 @@ Public Class FrmPIGMENT
         sb.AppendLine(" UNION")
         sb.AppendLine(" SELECT * ")
         sb.AppendLine(" FROM (")
-        sb.AppendLine("   SELECT '' code,'' Pigmentcode,'' Revision,null Qty,'' Unit, t.Per")
-        sb.AppendLine("   ,'D' PType, t.MasterCode + ',' + Revision as PCode, t.RMCode, t.RmRevision, t.Qty RMQty, t.Unit RMUnit, g.TypeCode") 'Detail from table TBLMaster
+        sb.AppendLine("   SELECT '' as code, '' as PigmentCode,'' Revision,null Qty,'' Unit, t.Per")
+        sb.AppendLine("   ,'D' PType, t.MasterCode + ',' + Revision as PCode, t.RMCode, t.RmRevision, t.Qty RMQty, t.Unit RMUnit, g.TypeCode, t.Revision as EachRevision, t.MasterCode as EachPigmentCode") 'Detail from table TBLMaster
         sb.AppendLine("   FROM TBLMASTER t")
         sb.AppendLine("   LEFT OUTER JOIN TBLGroup G on t.MasterCode = g.Code")
         sb.AppendLine("   WHERE g.TypeCode = '02'")
@@ -565,6 +565,350 @@ Public Class FrmPIGMENT
         LoadPIGMENT()
         Changedata()
     End Sub
+
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_PIGMENT").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create Importing of overlay
+            Dim frm As New Importing()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_PIGMENT, arrColumn)
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim chkSamePigmentCode As String = String.Empty
+                        'Dim totalQty As Double = 0
+
+                        '//Sort Data from Excel
+                        dtRec.DefaultView.Sort = "EachPigmentCode DESC, EachRevision DESC"
+                        dtRec = dtRec.DefaultView.ToTable
+
+                        '//Check RMCode on Master
+                        If ChkRMCodeMaster(dtRec) = False Then
+                            Exit Sub
+                        End If
+
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            Dim strEachPigmentCode As String = dtRec.Rows(i)("EachPigmentCode").ToString().Trim()
+
+                            If strEachPigmentCode.Length > 0 Then
+                                Dim strEachRevision As String = dtRec.Rows(i)("EachRevision").ToString().Trim()
+                                Dim strRMCode As String = dtRec.Rows(i)("rmCode").ToString().Trim()
+                                Dim dblRMQty As Double = dtRec.Rows(i)("RmQty")
+                                Dim totalQty As Double = 0
+
+                                Dim DTRow As DataRow()          '//Grid Data
+                                Dim dtRecRow As DataRow()       '//Excel Data
+
+                                DTRow = DT.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
+
+                                '//Sum QTY each PigmentCode and Revision
+                                dtRecRow = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
+                                For j As Integer = 0 To dtRecRow.Count - 1
+                                    totalQty = totalQty + dtRecRow(j)(3)
+                                Next j
+                                'totalQty = DT.Compute("SUM(RmQTY)", 0)
+
+                                '//Check matching between Excel and Grid
+                                If DTRow.Count > 0 Then 'Have data on Grid
+                                    '//Check RMCode each PigmentCode and Revision.
+                                    DTRow = DT.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' AND rmCode = '" & strRMCode & "' ")
+                                    If DTRow.Count > 0 AndAlso CDbl(DTRow(0)("RmQty")) <> dblRMQty Then
+                                        '//Update TBLMaster [Qty(dblRMQty), Per(dblRMQty * 100) / totalQty)]
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Qty = '" & dblRMQty & "'")
+                                        'sb.AppendLine(" , Per = '" & ((dblRMQty * 100) / totalQty) & "'")
+                                        sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision) & " AND RMCode = " & PrepareStr(strRMCode))
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                        '//Update All Per in TBLMASTER***********
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                        '//Update TBLPigment [Qty(totalQty), DateUp(strDate)]
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLPigment")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Qty = '" & totalQty & "'")
+                                        sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                        sb.AppendLine(" Where PIGMENTCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
+                                        'StrSQL = sb.ToString()
+                                        'cmSQL.CommandText = StrSQL
+                                        'cmSQL.ExecuteNonQuery()
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLConvert [SQty(totalQty)]
+                                        sb.AppendLine(" Update TblConvert")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" SQty = '" & totalQty & "'")
+                                        sb.AppendLine(" Where Code = " & PrepareStr(strEachPigmentCode) & " AND Rev = " & PrepareStr(strEachRevision) & " AND Type = '02'")
+
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                    ElseIf DTRow.Count <= 0 Then
+                                        '//Insert TBLMaster
+                                        sb.Clear()
+                                        sb.AppendLine(" Insert  TBLMASTER ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(PrepareStr(strEachPigmentCode) & ", ")        'Column MasterCode
+                                        sb.AppendLine(PrepareStr(strEachRevision) & ", ")           'Column Revision
+                                        sb.AppendLine(PrepareStr(strRMCode) & ", ")                 'Column RMCode
+                                        sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
+                                        sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
+                                        sb.AppendLine("'KG', ")                                     'Column Unit
+                                        sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                        sb.AppendLine(" )")
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                        '//Update All Per in TBLMASTER***********
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                        '//Update TBLPigment [Qty(totalQty), DateUp(strDate)]
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLPigment")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Qty = '" & totalQty & "'")
+                                        sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                        sb.AppendLine(" Where PIGMENTCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
+                                        'StrSQL = sb.ToString()
+                                        'cmSQL.CommandText = StrSQL
+                                        'cmSQL.ExecuteNonQuery()
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLConvert [SQty(totalQty)]
+                                        sb.AppendLine(" Update TblConvert")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" SQty = '" & totalQty & "'")
+                                        sb.AppendLine(" Where Code = " & PrepareStr(strEachPigmentCode) & " AND Rev = " & PrepareStr(strEachRevision) & " AND Type = '02'")
+
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+                                    End If
+                                Else 'Have no data on Grid
+                                    '//Check is same {Pigmentcode} as above excel row
+                                    Dim chkSameEachPigmentCodeBefore As String = String.Empty
+                                    Dim chkSameEachRevisionBefore As String = String.Empty
+                                    If i > 0 Then
+                                        chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString
+                                        chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString
+                                    Else
+                                        chkSameEachPigmentCodeBefore = ""
+                                        chkSameEachRevisionBefore = ""
+                                    End If
+                                    If strEachPigmentCode = chkSameEachPigmentCodeBefore Then
+                                        '//Check is same {Revision} as above excel row
+                                        If strEachRevision = chkSameEachRevisionBefore Then
+                                            '//Insert TBLMaster
+                                            sb.Clear()
+                                            sb.AppendLine(" Insert  TBLMASTER ")
+                                            sb.AppendLine(" Values (")
+                                            sb.AppendLine(PrepareStr(strEachPigmentCode) & ", ")        'Column MasterCode
+                                            sb.AppendLine(PrepareStr(strEachRevision) & ", ")           'Column Revision
+                                            sb.AppendLine(PrepareStr(strRMCode) & ", ")                 'Column RMCode
+                                            sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
+                                            sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
+                                            sb.AppendLine("'KG', ")                                     'Column Unit
+                                            sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                            sb.AppendLine(" )")
+                                            StrSQL = sb.ToString()
+                                            cmSQL.CommandText = StrSQL
+                                            cmSQL.ExecuteNonQuery()
+
+                                            '//Update All Per in TBLMASTER***********
+                                            sb.Clear()
+                                            sb.AppendLine(" Update TBLMASTER")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                            sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
+                                            StrSQL = sb.ToString()
+                                            cmSQL.CommandText = StrSQL
+                                            cmSQL.ExecuteNonQuery()
+                                        Else
+                                            '//Insert TBLPigment
+                                            sb.Clear()
+                                            sb.AppendLine(" Insert TBLPigment ")
+                                            sb.AppendLine(" Values (")
+                                            sb.AppendLine(PrepareStr(strEachPigmentCode) & ", ")     'Column PIGMENTCode
+                                            sb.AppendLine(PrepareStr(strEachRevision) & ", ")        'Column Revision
+                                            sb.AppendLine(" '" & totalQty & "', ")       'Column Qty
+                                            sb.AppendLine("'KG' , ")                     'Column Unit
+                                            sb.AppendLine(" '" & strDate & "' ")         'Column Dateup
+                                            sb.AppendLine(" )")
+
+                                            sb.AppendLine(" ")
+
+                                            '//Insert TBLConvert
+                                            sb.AppendLine(" Insert TblConvert ")
+                                            sb.AppendLine(" Values (")
+                                            sb.AppendLine("'02' , ")                     'Column Type
+                                            sb.AppendLine(PrepareStr("") & " , ")        'Column Final
+                                            sb.AppendLine(PrepareStr(strEachPigmentCode) & " , ")    'Column Code
+                                            sb.AppendLine(PrepareStr(strEachRevision) & " , ")       'Column Rev
+                                            sb.AppendLine("'BT' , ")                     'Column UnitBig
+                                            sb.AppendLine("'KG' , ")                     'Column UnitSmall
+                                            sb.AppendLine("'1' , ")                      'Column BQty
+                                            sb.AppendLine(" '" & totalQty & "' ")        'Column SQty
+                                            sb.AppendLine(" )")
+
+                                            sb.AppendLine(" ")
+
+                                            '//Insert TBLMASTER
+                                            sb.AppendLine(" Insert  TBLMASTER ")
+                                            sb.AppendLine(" Values (")
+                                            sb.AppendLine(PrepareStr(strEachPigmentCode) & ", ")        'Column MasterCode
+                                            sb.AppendLine(PrepareStr(strEachRevision) & ", ")           'Column Revision
+                                            sb.AppendLine(PrepareStr(strRMCode) & ", ")                 'Column RMCode
+                                            sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
+                                            sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
+                                            sb.AppendLine("'KG', ")                                     'Column Unit
+                                            sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                            sb.AppendLine(" )")
+
+                                            StrSQL = sb.ToString()
+                                            cmSQL.CommandText = StrSQL
+                                            cmSQL.ExecuteNonQuery()
+                                        End If
+                                    Else 'Have no data (pigmentcode and revision) on any Table
+                                        '//Insert TBLGroup
+                                        sb.Clear()
+                                        sb.AppendLine(" Insert  TBLGroup ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine("'02' , ")                 'Column TypeCode
+                                        sb.AppendLine(PrepareStr(strEachPigmentCode))       'Column Code
+                                        sb.AppendLine(" )")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Insert TBLPigment
+                                        sb.AppendLine(" Insert  TBLPigment ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(PrepareStr(strEachPigmentCode) & ", ")     'Column PIGMENTCode
+                                        sb.AppendLine(PrepareStr(strEachRevision) & ", ")        'Column Revision
+                                        sb.AppendLine(" '" & totalQty & "', ")       'Column Qty
+                                        sb.AppendLine("'KG' , ")                     'Column Unit
+                                        sb.AppendLine(" '" & strDate & "' ")         'Column Dateup
+                                        sb.AppendLine(" )")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Insert TblConvert
+                                        sb.AppendLine(" Insert  TblConvert ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine("'02' , ")                     'Column Type
+                                        sb.AppendLine(PrepareStr("") & " , ")        'Column Final
+                                        sb.AppendLine(PrepareStr(strEachPigmentCode) & " , ")    'Column Code
+                                        sb.AppendLine(PrepareStr(strEachRevision) & " , ")       'Column Rev
+                                        sb.AppendLine("'BT' , ")                     'Column UnitBig
+                                        sb.AppendLine("'KG' , ")                     'Column UnitSmall
+                                        sb.AppendLine("'1' , ")                      'Column BQty
+                                        sb.AppendLine(" '" & totalQty & "' ")        'Column SQty
+                                        sb.AppendLine(" )")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Insert TblMaster
+                                        sb.AppendLine(" Insert  TBLMASTER ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(PrepareStr(strEachPigmentCode) & ", ")        'Column MasterCode
+                                        sb.AppendLine(PrepareStr(strEachRevision) & ", ")           'Column Revision
+                                        sb.AppendLine(PrepareStr(strRMCode) & ", ")                 'Column RMCode
+                                        sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
+                                        sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
+                                        sb.AppendLine("'KG', ")                                     'Column Unit
+                                        sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                        sb.AppendLine(" )")
+
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+                                    End If
+                                End If
+                            End If
+                        Next i
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            LoadPIGMENT() 'ReQuery and set datagrid
+            'View() 'Filter by condition
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_PIGMENT").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_PIGMENT, arrColumn)
+    End Sub
 #End Region
 
 #Region "DelPigment"
@@ -685,5 +1029,74 @@ Public Class FrmPIGMENT
         Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
         Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
     End Sub
+#End Region
+
+#Region "Import"
+    Private Function ChkRMCodeMaster(ByVal ImportTable As DataTable) As Boolean
+        Dim cnSQLRM As SqlConnection
+        Dim cmSQLRM As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+        Dim strRmcodeBefore As String = String.Empty
+        Dim distinctImportTabale As New DataTable
+
+        Try
+            ImportTable.DefaultView.Sort = "rmCode DESC"
+            ImportTable = ImportTable.DefaultView.ToTable
+            ImportTable = ImportTable.DefaultView.ToTable(True, "rmCode")
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim rmCode As String = ImportTable.Rows(x)("rmCode").ToString().Trim()
+                strSQL = ""
+
+                If x = 0 Then
+                    strRmcodeBefore = ""
+                Else
+                    strRmcodeBefore = ImportTable.Rows(x - 1)("rmCode").ToString().Trim()
+                End If
+                If rmCode.Length > 0 Then
+                    If rmCode <> strRmcodeBefore Then
+                        strSQL &= " SELECT count(*) "
+                        strSQL &= " FROM TBLRM "
+                        strSQL &= " WHERE RMcode  = '" & rmCode & "'"
+                        cnSQLRM = New SqlConnection(C1.Strcon)
+                        cnSQLRM.Open()
+                        cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                        Dim i As Long = cmSQLRM.ExecuteScalar()
+                        If i = 0 Then
+                            cmSQLRM.Dispose()
+                            cnSQLRM.Dispose()
+                            Throw New System.Exception("This RM Code '" & rmCode & "' have no data on RM Master")
+                        Else
+                            cmSQLRM.Dispose()
+                            cnSQLRM.Dispose()
+                        End If
+                    End If
+                End If
+            Next x
+
+            ret = True
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        Finally
+            cnSQLRM.Close()
+            cmSQLRM.Dispose()
+            cnSQLRM.Dispose()
+        End Try
+
+        Return ret
+    End Function
+
+    Private Function PrepareStr(ByVal strValue As String) As String
+        ' This function accepts a string and creates a string that can
+        ' be used in a SQL statement by adding single quotes around
+        ' it and handling empty values.
+        If strValue.Trim() = "" Then
+            Return "NULL"
+        Else
+            Return "'" & strValue.Trim() & "'"
+        End If
+    End Function
 #End Region
 End Class
