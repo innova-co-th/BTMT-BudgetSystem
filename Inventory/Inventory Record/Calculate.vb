@@ -1283,7 +1283,7 @@ Public Class Calculate
 #Region "CALGT Price"
     Private Function GT(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        GT = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1326,19 +1326,21 @@ Public Class Calculate
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            GT = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            GT = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
@@ -1447,6 +1449,7 @@ Public Class Calculate
                     SIC(StrDate, StrTime) 'Call Store Procedure CALSIC (Type Material:CUSSION, SIDE, INNERLINER)
                     Chafer(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICE)
                     Chafer2(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICERM)
+                    'Call Store Procedure (Type Material:Flipper)
                 Else
                     x = 90 'Skip to next process
                     UpdateProgress(x, False)
@@ -1456,7 +1459,7 @@ Public Class Calculate
             If x = 90 Then
                 'Green Tire
                 If CKGT.Checked Then
-                    GT(StrDate, StrTime)
+                    GT(StrDate, StrTime) 'Call Store Procedure CALGT
                 Else
                     x = 100
                     UpdateProgress(x, False)
