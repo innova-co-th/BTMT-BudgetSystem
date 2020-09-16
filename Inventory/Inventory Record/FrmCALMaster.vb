@@ -1570,6 +1570,79 @@ Public Class FrmCALMaster
     Private Sub ButtonClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonClose.Click
         Me.Close()
     End Sub
+
+    Private Sub CheckType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckType.CheckedChanged
+        SelectSemi()
+    End Sub
+
+    Private Sub cmbType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbType.SelectedIndexChanged
+        SelectSemi()
+    End Sub
+
+    Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
+        If GroupCompound.Visible = True Then
+            'Compound Type
+            SelectCompound()
+        End If
+
+        If GType.Visible = True Then
+            'PreSemi or Semi Type
+            SelectSemi()
+        End If
+
+        If GType.Visible = True And GroupCompound.Visible = True Then
+            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            DataGridCAL.DataSource = GrdDV
+        ElseIf GType.Visible = False And GroupCompound.Visible = False Then
+            'Material Type R/M, Pigment and Green Tire
+            GrdDV.RowFilter = " dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            DataGridCAL.DataSource = GrdDV
+        ElseIf GType.Visible = False And GroupCompound.Visible = True Then
+            'Material Type Compound
+            If Not CheckCompound.Checked And Not CheckCompGroup.Checked Then
+                'If not check
+                GrdDV.RowFilter &= " dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            Else
+                'If check Final or Group
+                GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            End If
+
+            DataGridCAL.DataSource = GrdDV
+        ElseIf GType.Visible = True And GroupCompound.Visible = False Then
+            'Material Type PreSemi and Semi
+            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            DataGridCAL.DataSource = GrdDV
+        Else
+            GrdDV.RowFilter &= " "
+            DataGridCAL.DataSource = GrdDV
+        End If
+    End Sub
+
+    Private Sub ButtonExport_Click(sender As Object, e As EventArgs) Handles ButtonExport.Click
+        If txtname.Trim().Equals("RM") Then
+            'LoadRM()
+            Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_PRICE_RM").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn)
+        ElseIf txtname.Trim().Equals("Pigment") Then
+            'LoadPigment()
+        ElseIf txtname.Trim().Equals("Compound") Then
+            'LoadCompound()
+            'LoadGroup()
+            'GroupCompound.Visible = True 'Show groupbox compound
+        ElseIf txtname.Trim().Equals("PreSemi") Then
+            'LoadPresemi()
+            'LoadMaterialType()
+            'GType.Visible = True 'Show groupbox material type
+        ElseIf txtname.Trim().Equals("Semi") Then
+            'Loadsemi()
+            'LoadMaterialType()
+            'GType.Visible = True 'Show groupbox material type
+        ElseIf txtname.Trim().Equals("Green Tire") Then
+            'LoadTire()
+        Else
+            'Nothing
+        End If
+    End Sub
 #End Region
 
 #Region "PrepareStr"
@@ -1621,15 +1694,6 @@ Public Class FrmCALMaster
 
 #End Region
 
-
-    Private Sub CheckType_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckType.CheckedChanged
-        SelectSemi()
-    End Sub
-
-    Private Sub cmbType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbType.SelectedIndexChanged
-        SelectSemi()
-    End Sub
-
     ''' <summary>
     ''' For Material Type Semi or PreSemi
     ''' </summary>
@@ -1648,44 +1712,5 @@ Public Class FrmCALMaster
         'Format: Form Text - xxx item(s)
         Dim frmTitle As String() = Me.Text.Split(New Char() {"-"c})
         Me.Text = frmTitle(0) & "- " & GrdDV.Count & " item(s)"
-    End Sub
-
-    Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
-        If GroupCompound.Visible = True Then
-            'Compound Type
-            SelectCompound()
-        End If
-
-        If GType.Visible = True Then
-            'PreSemi or Semi Type
-            SelectSemi()
-        End If
-
-        If GType.Visible = True And GroupCompound.Visible = True Then
-            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
-            DataGridCAL.DataSource = GrdDV
-        ElseIf GType.Visible = False And GroupCompound.Visible = False Then
-            'Material Type R/M, Pigment and Green Tire
-            GrdDV.RowFilter = " dateUP LIKE '" & DateTime.Text.Trim() & "'"
-            DataGridCAL.DataSource = GrdDV
-        ElseIf GType.Visible = False And GroupCompound.Visible = True Then
-            'Material Type Compound
-            If Not CheckCompound.Checked And Not CheckCompGroup.Checked Then
-                'If not check
-                GrdDV.RowFilter &= " dateUP LIKE '" & DateTime.Text.Trim() & "'"
-            Else
-                'If check Final or Group
-                GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
-            End If
-
-            DataGridCAL.DataSource = GrdDV
-        ElseIf GType.Visible = True And GroupCompound.Visible = False Then
-            'Material Type PreSemi and Semi
-            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
-            DataGridCAL.DataSource = GrdDV
-        Else
-            GrdDV.RowFilter &= " "
-            DataGridCAL.DataSource = GrdDV
-        End If
     End Sub
 End Class
