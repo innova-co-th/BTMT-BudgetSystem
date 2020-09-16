@@ -123,11 +123,11 @@ Public Class FrmMain
     Friend WithEvents MenuCalRM As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalCompoundStage1 As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalCompoundStage2 As System.Windows.Forms.MenuItem
-    Friend WithEvents Menuitem15 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCALPreSemi As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalCoatedCord As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCALSteel As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuCALPreSemi As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuCalsemi As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCALALLPreSemi As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCalSemi As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalTT As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalBF As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalBelt As System.Windows.Forms.MenuItem
@@ -179,11 +179,11 @@ Public Class FrmMain
         Me.MenuCALCompound = New System.Windows.Forms.MenuItem()
         Me.MenuCalCompoundStage1 = New System.Windows.Forms.MenuItem()
         Me.MenuCalCompoundStage2 = New System.Windows.Forms.MenuItem()
-        Me.Menuitem15 = New System.Windows.Forms.MenuItem()
+        Me.MenuCALPreSemi = New System.Windows.Forms.MenuItem()
         Me.MenuCALSteel = New System.Windows.Forms.MenuItem()
         Me.MenuCalCoatedCord = New System.Windows.Forms.MenuItem()
-        Me.MenuCALPreSemi = New System.Windows.Forms.MenuItem()
-        Me.MenuCalsemi = New System.Windows.Forms.MenuItem()
+        Me.MenuCALALLPreSemi = New System.Windows.Forms.MenuItem()
+        Me.MenuCalSemi = New System.Windows.Forms.MenuItem()
         Me.MenuCalTT = New System.Windows.Forms.MenuItem()
         Me.MenuCalBF = New System.Windows.Forms.MenuItem()
         Me.MenuCalBelt = New System.Windows.Forms.MenuItem()
@@ -397,7 +397,7 @@ Public Class FrmMain
         'MenuCAL
         '
         Me.MenuCAL.Index = 2
-        Me.MenuCAL.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalRM, Me.MenuCALPigment, Me.MenuCALCompound, Me.Menuitem15, Me.MenuCalsemi, Me.MenuCalGT})
+        Me.MenuCAL.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalRM, Me.MenuCALPigment, Me.MenuCALCompound, Me.MenuCALPreSemi, Me.MenuCalSemi, Me.MenuCalGT})
         Me.MenuCAL.Text = "CAL Master Price "
         '
         'MenuCalRM
@@ -426,11 +426,11 @@ Public Class FrmMain
         Me.MenuCalCompoundStage2.Index = 1
         Me.MenuCalCompoundStage2.Text = "Stage  2 "
         '
-        'Menuitem15
+        'MenuCALPreSemi
         '
-        Me.Menuitem15.Index = 3
-        Me.Menuitem15.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCALSteel, Me.MenuCalCoatedCord, Me.MenuCALPreSemi})
-        Me.Menuitem15.Text = "PreSemi"
+        Me.MenuCALPreSemi.Index = 3
+        Me.MenuCALPreSemi.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCALSteel, Me.MenuCalCoatedCord, Me.MenuCALALLPreSemi})
+        Me.MenuCALPreSemi.Text = "PreSemi"
         '
         'MenuCALSteel
         '
@@ -442,16 +442,16 @@ Public Class FrmMain
         Me.MenuCalCoatedCord.Index = 1
         Me.MenuCalCoatedCord.Text = "COATED CORD"
         '
-        'MenuCALPreSemi
+        'MenuCALALLPreSemi
         '
-        Me.MenuCALPreSemi.Index = 2
-        Me.MenuCALPreSemi.Text = "All PreSemi"
+        Me.MenuCALALLPreSemi.Index = 2
+        Me.MenuCALALLPreSemi.Text = "All PreSemi"
         '
-        'MenuCalsemi
+        'MenuCalSemi
         '
-        Me.MenuCalsemi.Index = 4
-        Me.MenuCalsemi.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalTT, Me.MenuCalBF, Me.MenuCalBelt, Me.MenuCalSIC, Me.MenuCalChafer})
-        Me.MenuCalsemi.Text = "Semi"
+        Me.MenuCalSemi.Index = 4
+        Me.MenuCalSemi.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalTT, Me.MenuCalBF, Me.MenuCalBelt, Me.MenuCalSIC, Me.MenuCalChafer})
+        Me.MenuCalSemi.Text = "Semi"
         '
         'MenuCalTT
         '
@@ -1300,7 +1300,7 @@ Public Class FrmMain
 #Region "CalCompound Price"
     Private Function CalCompound(ByVal dateup As String, ByVal timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalCompound = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1343,23 +1343,25 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalCompound = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalCompound = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function CalCompound2(ByVal dateup As String, ByVal timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalCompound2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1402,19 +1404,21 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalCompound2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalCompound2 = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 
     Private Sub MenuCalCompoundStage1_Click(sender As Object, e As EventArgs) Handles MenuCalCompoundStage1.Click
@@ -1431,6 +1435,7 @@ Public Class FrmMain
             StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
             StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
 
+            'Call Store Procedure CALCompound (Insert Table TBLMasterPriceRM)
             If CalCompound(StrDate, StrTime) Then
                 MessageBox.Show("Update Compound Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -1455,6 +1460,7 @@ Public Class FrmMain
             StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
             StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
 
+            'Call Store Procedure CALCompound2 (Insert Table TBLMasterPrice)
             If CalCompound2(StrDate, StrTime) Then
                 MessageBox.Show("Update Compound Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
@@ -1466,31 +1472,29 @@ Public Class FrmMain
     End Sub
 #End Region
 
-#Region "CalCoatedcord"
+#Region "CalPreSemi Price (CoatedCord)"
     Private Sub MenuCalCoatedCord_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalCoatedCord.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate Coated Cord Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Coated Cord Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) + Str(1) + Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
-            CalCoatedcord2(StrDate, StrTime)
-            CalCoatedcord3(StrDate, StrTime)
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
 
+            CalCoatedcord2(StrDate, StrTime) 'Call Store Procedure CALCoatedCord2 (Insert Table TBLMasterPriceRM Exclude TBLRM)
+            CalCoatedcord3(StrDate, StrTime) 'Call Store Procedure CALCoatedCord3 (Insert Table TBLMasterPriceRM Include TBLRM)
+
+            'Call Store Procedure CALCoatedCord (Insert Table TBLMasterPrice)
             If CalCoatedcord(StrDate, StrTime) Then
-                MsgBox("Update Coated Cord Price .")
+                MessageBox.Show("Update Coated Cord Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update Coated Cord Price .")
+                MessageBox.Show("Don't Update Coated Cord Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1499,7 +1503,7 @@ Public Class FrmMain
     End Sub
     Private Function CalCoatedcord(ByVal dateup As String, ByVal timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        CalCoatedcord = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1542,19 +1546,21 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            CalCoatedcord = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            CalCoatedcord = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function CalCoatedcord2(ByVal dateup As String, ByVal timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
@@ -1600,8 +1606,8 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
@@ -1609,9 +1615,9 @@ Public Class FrmMain
         Catch ex As Exception
             MsgBox(ex.Message, 48)
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
-
         Return True
     End Function
     Private Function CalCoatedcord3(ByVal dateup As String, ByVal timeup As String) As Boolean
@@ -1658,8 +1664,8 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = timeup.Trim()
 
         cnn.Open()
         Try
@@ -1667,44 +1673,41 @@ Public Class FrmMain
         Catch ex As Exception
             MsgBox(ex.Message, 48)
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
-
         Return True
     End Function
 #End Region
 
 #Region "CalPreSemi Price"
-    Private Sub MenuCALPreSemi_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCALPreSemi.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+    Private Sub MenuCALALLPreSemi_Click(sender As Object, e As EventArgs) Handles MenuCALALLPreSemi.Click
+        Dim msg As String = "Calculate PreSemi Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate PreSemi Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALPreSemi (Material Type is not STEEL CORD and COATED CORD)
             If PreSemi(StrDate, StrTime) Then
-                MsgBox("Update PreSemi Price.")
+                MessageBox.Show("Update PreSemi Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update PreSemi Price.")
+                MessageBox.Show("Don't Update PreSemi Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
         End If
-
     End Sub
     Private Function PreSemi(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        PreSemi = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1747,44 +1750,44 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            PreSemi = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            PreSemi = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
-#Region "CalPreSemi Price"
+#Region "CalPreSemi Price (SteelCord)"
     Private Sub MenuCALSteel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCALSteel.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate SteelCord Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate SteelCord Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALSteelCord (Material Type is STEEL CORD)
             If SteelCord(StrDate, StrTime) Then
-                MsgBox("Update SteelCord Price.")
+                MessageBox.Show("Update SteelCord Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update SteelCord Price.")
+                MessageBox.Show("Don't Update SteelCord Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1793,7 +1796,7 @@ Public Class FrmMain
     End Sub
     Private Function SteelCord(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        SteelCord = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1836,45 +1839,45 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            SteelCord = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            SteelCord = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
 #Region "CalSemi Price"
 #Region "TT"
     Private Sub MenuCalTT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalTT.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate Tread Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Tread Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALTT (Material Type is TREAD)
             If Tread(StrDate, StrTime) Then
-                MsgBox("Update Tread Price.")
+                MessageBox.Show("Update Tread Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update Tread Price.")
+                MessageBox.Show("Don't Update Tread Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1883,7 +1886,7 @@ Public Class FrmMain
     End Sub
     Private Function Tread(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        Tread = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -1926,48 +1929,51 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            Tread = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            Tread = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
 #Region "BF"
     Private Sub MenuCalBF_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalBF.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate BF Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate BF Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALBF (Material Type is BF)(Insert Table TBLMasterPrice)
             If BF(StrDate, StrTime) Then
+                'Nothing
             Else
                 Exit Sub
             End If
+
+            'Call Store Procedure CALBF2 (Material Type is BF)(Insert Table TBLMasterPriceRM)
             If BF2(StrDate, StrTime) Then
-                MsgBox("Update BF Price .")
+                MessageBox.Show("Update BF Price .", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Else
-                MsgBox("Update BF Price. Not Complete")
+                MessageBox.Show("Update BF Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -1976,7 +1982,7 @@ Public Class FrmMain
     End Sub
     Private Function BF(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BF = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2019,23 +2025,25 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BF = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BF = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function BF2(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BF2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2078,48 +2086,54 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BF2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BF2 = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
 #Region "BElT 1-4"
     Private Sub MenuCalBelt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalBelt.Click
-        Dim msg As String
+        Dim msg As String = "Calculate BELT 1-4  Price " ' Define message.
         Dim title As String
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
 
-        msg = "Calculate BELT 1-4  Price " ' Define message.
         style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALBELT (Type Material:BELT-1, BELT-2, BELT-3, BELT-4 to Table TBLMASTERPRICE)
             If BElT(StrDate, StrTime) Then
+                'Nothing
             Else
                 Exit Sub
             End If
+
+            'Call Store Procedure CALBELT2 (Type Material:BELT-1, BELT-2, BELT-3, BELT-4 to Table TBLMASTERPRICERM)
             If BElT2(StrDate, StrTime) Then
-                MsgBox("Update BELT 1-4 Price.")
+                MessageBox.Show("Update BELT 1-4 Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Update BELT 1-4 Price. Not Complete")
+                MessageBox.Show("Update BELT 1-4 Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -2128,7 +2142,7 @@ Public Class FrmMain
     End Sub
     Private Function BElT(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BElT = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2171,23 +2185,25 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BElT = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BElT = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function BElT2(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BElT2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2230,19 +2246,21 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BElT2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BElT2 = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
@@ -2260,14 +2278,16 @@ Public Class FrmMain
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALSIC (Type Material:CUSSION, SIDE, INNERLINER)
             If SIC(StrDate, StrTime) Then
-                MsgBox("Update SIDE,CUSSION,INNERLINER Price.")
+                MessageBox.Show("Update SIDE,CUSSION,INNERLINER Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Update SIDE,CUSSION,INNERLINER Price. Not Complete")
+                MessageBox.Show("Update SIDE,CUSSION,INNERLINER Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -2276,7 +2296,7 @@ Public Class FrmMain
     End Sub
     Private Function SIC(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        SIC = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2319,48 +2339,51 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            SIC = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            SIC = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
 #Region "Wire Chafer,Nylon Chafer,Body Ply"
     Private Sub MenuCalChafer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalChafer.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate Wire Chafer,Nylon Chafer,Body Ply Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Wire Chafer,Nylon Chafer,Body Ply Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICE)
             If Chafer(StrDate, StrTime) Then
+                'Nothing
             Else
                 Exit Sub
             End If
+
+            'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICERM)
             If Chafer2(StrDate, StrTime) Then
-                MsgBox("Update Wire Chafer,Nylon Chafer,Body Ply Price")
+                MessageBox.Show("Update Wire Chafer,Nylon Chafer,Body Ply Price", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Update Wire Chafer,Nylon Chafer,Body Ply Price. Not Complete")
+                MessageBox.Show("Update Wire Chafer,Nylon Chafer,Body Ply Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
@@ -2369,7 +2392,7 @@ Public Class FrmMain
     End Sub
     Private Function Chafer(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        Chafer = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2412,23 +2435,25 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            Chafer = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            Chafer = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
     Private Function Chafer2(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        Chafer2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2471,45 +2496,45 @@ Public Class FrmMain
         cmd2.Parameters.Add(sparam3)
 
         Dim Reader As SqlClient.SqlDataReader
-        cmd2.Parameters("@Date").Value = dateup.Trim
-        cmd2.Parameters("@Time").Value = Timeup.Trim
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
 
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            Chafer2 = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            Chafer2 = False
+            ret = False
         End Try
+
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return False
     End Function
 #End Region
 #End Region
 
 #Region "CALGT Price"
     Private Sub MenuCalGT_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalGT.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+        Dim msg As String = "Calculate Green Tire Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Calculate Green Tire Price " ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Calculate"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            Dim StrDate, Str(), StrTime As String
-            Str = Split(Now.Date.ToShortDateString, "/")
-            StrDate = Str(2) & Str(1) & Str(0)
-            StrTime = Format(Now.TimeOfDay.Hours, "00") & Format(Now.TimeOfDay.Minutes, "00")
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure CALGT
             If GT(StrDate, StrTime) Then
-                MsgBox("Update Green Tire Price.")
+                MessageBox.Show("Update Green Tire Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MsgBox("Don't Update Green Tire Price.")
+                MessageBox.Show("Don't Update Green Tire Price.", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
