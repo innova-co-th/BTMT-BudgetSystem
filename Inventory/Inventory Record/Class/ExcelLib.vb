@@ -190,7 +190,7 @@ Public Class ExcelLib
                         'Set data ++ Add Special Case for Pigment
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             'Check empty entire rows
-                            If tableName = "TBL_PIGMENT" Then
+                            If tableName = "TBL_PIGMENT" Or tableName = "TBL_Comp" Then
                                 If dtRec.Rows(i)(dtTemp.Columns(0).ColumnName) = "" Then
                                     Continue For
                                 End If
@@ -202,12 +202,6 @@ Public Class ExcelLib
                             Next
                             dtTemp.Rows.Add(drData)
                         Next i
-
-                        ''Special case for TBLPIGMENT
-                        'If tableName = "TBL_PIGMENT" Then
-                        '    dtTemp.DefaultView.Sort = "EachPigmentCode ASC, EachRevision ASC"
-                        '    dtTemp = dtTemp.DefaultView.ToTable
-                        'End If
 
                         'Set range for data
                         Dim c1 As Excel.Range = CType(xlWorkSheet.Cells(2, 1), Excel.Range)
