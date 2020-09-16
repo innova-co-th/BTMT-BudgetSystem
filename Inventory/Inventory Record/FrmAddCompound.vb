@@ -78,34 +78,34 @@ Public Class FrmAddCompound
     Friend WithEvents TxtRmCode As System.Windows.Forms.TextBox
     Friend WithEvents CHKAll As System.Windows.Forms.CheckBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmAddCompound))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridRM = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.TxtName = New System.Windows.Forms.TextBox
-        Me.CmdView = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.TxtCode = New System.Windows.Forms.TextBox
-        Me.CmdClear = New System.Windows.Forms.Button
-        Me.lblError = New System.Windows.Forms.Label
-        Me.CheckAll = New System.Windows.Forms.CheckBox
-        Me.CheckBoxPigment = New System.Windows.Forms.CheckBox
-        Me.ComboBoxPigment = New System.Windows.Forms.ComboBox
-        Me.TxtRev = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.TxtCompound = New System.Windows.Forms.TextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.lblerror2 = New System.Windows.Forms.Label
-        Me.CheckBoxFinalCompound = New System.Windows.Forms.CheckBox
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.txtStep = New System.Windows.Forms.TextBox
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.TxtRmCode = New System.Windows.Forms.TextBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.CHKAll = New System.Windows.Forms.CheckBox
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmAddCompound))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridRM = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TxtName = New System.Windows.Forms.TextBox()
+        Me.CmdView = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TxtCode = New System.Windows.Forms.TextBox()
+        Me.CmdClear = New System.Windows.Forms.Button()
+        Me.lblError = New System.Windows.Forms.Label()
+        Me.CheckAll = New System.Windows.Forms.CheckBox()
+        Me.CheckBoxPigment = New System.Windows.Forms.CheckBox()
+        Me.ComboBoxPigment = New System.Windows.Forms.ComboBox()
+        Me.TxtRev = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TxtCompound = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lblerror2 = New System.Windows.Forms.Label()
+        Me.CheckBoxFinalCompound = New System.Windows.Forms.CheckBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtStep = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TxtRmCode = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.CHKAll = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -113,13 +113,13 @@ Public Class FrmAddCompound
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridRM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 88)
+        Me.GroupBox1.Location = New System.Drawing.Point(10, 102)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(762, 472)
+        Me.GroupBox1.Size = New System.Drawing.Size(912, 577)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         '
@@ -128,9 +128,9 @@ Public Class FrmAddCompound
         Me.DataGridRM.DataMember = ""
         Me.DataGridRM.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridRM.HeaderForeColor = System.Drawing.SystemColors.ControlText
-        Me.DataGridRM.Location = New System.Drawing.Point(3, 16)
+        Me.DataGridRM.Location = New System.Drawing.Point(3, 18)
         Me.DataGridRM.Name = "DataGridRM"
-        Me.DataGridRM.Size = New System.Drawing.Size(756, 453)
+        Me.DataGridRM.Size = New System.Drawing.Size(906, 556)
         Me.DataGridRM.TabIndex = 0
         '
         'CmdSave
@@ -138,9 +138,9 @@ Public Class FrmAddCompound
         Me.CmdSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdSave.Image = CType(resources.GetObject("CmdSave.Image"), System.Drawing.Image)
         Me.CmdSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdSave.Location = New System.Drawing.Point(608, 562)
+        Me.CmdSave.Location = New System.Drawing.Point(728, 681)
         Me.CmdSave.Name = "CmdSave"
-        Me.CmdSave.Size = New System.Drawing.Size(80, 56)
+        Me.CmdSave.Size = New System.Drawing.Size(96, 65)
         Me.CmdSave.TabIndex = 10
         Me.CmdSave.Text = "Save"
         Me.CmdSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -150,9 +150,9 @@ Public Class FrmAddCompound
         Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClose.Location = New System.Drawing.Point(688, 562)
+        Me.CmdClose.Location = New System.Drawing.Point(824, 681)
         Me.CmdClose.Name = "CmdClose"
-        Me.CmdClose.Size = New System.Drawing.Size(80, 56)
+        Me.CmdClose.Size = New System.Drawing.Size(96, 65)
         Me.CmdClose.TabIndex = 11
         Me.CmdClose.Text = "Close"
         Me.CmdClose.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -160,56 +160,55 @@ Public Class FrmAddCompound
         'Label1
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label1.Location = New System.Drawing.Point(520, 18)
+        Me.Label1.Location = New System.Drawing.Point(622, 46)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(64, 16)
+        Me.Label1.Size = New System.Drawing.Size(77, 18)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "R/M Name "
         '
         'TxtName
         '
         Me.TxtName.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtName.Location = New System.Drawing.Point(592, 16)
+        Me.TxtName.Location = New System.Drawing.Point(708, 43)
         Me.TxtName.Name = "TxtName"
-        Me.TxtName.Size = New System.Drawing.Size(96, 20)
+        Me.TxtName.Size = New System.Drawing.Size(116, 22)
         Me.TxtName.TabIndex = 3
-        Me.TxtName.Text = ""
         '
         'CmdView
         '
         Me.CmdView.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdView.Image = CType(resources.GetObject("CmdView.Image"), System.Drawing.Image)
         Me.CmdView.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdView.Location = New System.Drawing.Point(696, 11)
+        Me.CmdView.Location = New System.Drawing.Point(833, 38)
         Me.CmdView.Name = "CmdView"
-        Me.CmdView.Size = New System.Drawing.Size(72, 57)
+        Me.CmdView.Size = New System.Drawing.Size(87, 65)
         Me.CmdView.TabIndex = 5
         Me.CmdView.Text = "View"
         Me.CmdView.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(8, 10)
+        Me.Label2.Location = New System.Drawing.Point(10, 12)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(64, 16)
+        Me.Label2.Size = New System.Drawing.Size(76, 18)
         Me.Label2.TabIndex = 5
         Me.Label2.Text = "Compound "
         '
         'TxtCode
         '
-        Me.TxtCode.Location = New System.Drawing.Point(80, 8)
+        Me.TxtCode.Location = New System.Drawing.Point(96, 9)
         Me.TxtCode.Name = "TxtCode"
+        Me.TxtCode.Size = New System.Drawing.Size(120, 22)
         Me.TxtCode.TabIndex = 0
-        Me.TxtCode.Text = ""
         '
         'CmdClear
         '
         Me.CmdClear.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.CmdClear.Image = CType(resources.GetObject("CmdClear.Image"), System.Drawing.Image)
         Me.CmdClear.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClear.Location = New System.Drawing.Point(8, 562)
+        Me.CmdClear.Location = New System.Drawing.Point(10, 681)
         Me.CmdClear.Name = "CmdClear"
-        Me.CmdClear.Size = New System.Drawing.Size(80, 56)
+        Me.CmdClear.Size = New System.Drawing.Size(96, 65)
         Me.CmdClear.TabIndex = 12
         Me.CmdClear.Text = "Clear"
         Me.CmdClear.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -218,9 +217,9 @@ Public Class FrmAddCompound
         '
         Me.lblError.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.lblError.ForeColor = System.Drawing.Color.Red
-        Me.lblError.Location = New System.Drawing.Point(184, 14)
+        Me.lblError.Location = New System.Drawing.Point(221, 16)
         Me.lblError.Name = "lblError"
-        Me.lblError.Size = New System.Drawing.Size(24, 8)
+        Me.lblError.Size = New System.Drawing.Size(29, 9)
         Me.lblError.TabIndex = 8
         Me.lblError.Text = "***"
         Me.lblError.Visible = False
@@ -228,59 +227,60 @@ Public Class FrmAddCompound
         'CheckAll
         '
         Me.CheckAll.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.CheckAll.Location = New System.Drawing.Point(104, 602)
+        Me.CheckAll.Location = New System.Drawing.Point(125, 728)
         Me.CheckAll.Name = "CheckAll"
-        Me.CheckAll.Size = New System.Drawing.Size(112, 16)
+        Me.CheckAll.Size = New System.Drawing.Size(134, 18)
         Me.CheckAll.TabIndex = 13
         Me.CheckAll.Text = "Show All"
         Me.CheckAll.Visible = False
         '
         'CheckBoxPigment
         '
-        Me.CheckBoxPigment.Location = New System.Drawing.Point(16, 64)
+        Me.CheckBoxPigment.Location = New System.Drawing.Point(19, 74)
         Me.CheckBoxPigment.Name = "CheckBoxPigment"
-        Me.CheckBoxPigment.Size = New System.Drawing.Size(72, 24)
+        Me.CheckBoxPigment.Size = New System.Drawing.Size(87, 28)
         Me.CheckBoxPigment.TabIndex = 6
         Me.CheckBoxPigment.Text = "Pigment "
+        Me.CheckBoxPigment.Visible = False
         '
         'ComboBoxPigment
         '
         Me.ComboBoxPigment.Enabled = False
-        Me.ComboBoxPigment.Location = New System.Drawing.Point(96, 64)
+        Me.ComboBoxPigment.Location = New System.Drawing.Point(115, 74)
         Me.ComboBoxPigment.Name = "ComboBoxPigment"
-        Me.ComboBoxPigment.Size = New System.Drawing.Size(120, 21)
+        Me.ComboBoxPigment.Size = New System.Drawing.Size(144, 24)
         Me.ComboBoxPigment.TabIndex = 7
         Me.ComboBoxPigment.Text = "Select"
+        Me.ComboBoxPigment.Visible = False
         '
         'TxtRev
         '
-        Me.TxtRev.Location = New System.Drawing.Point(80, 32)
+        Me.TxtRev.Location = New System.Drawing.Point(96, 37)
         Me.TxtRev.Name = "TxtRev"
-        Me.TxtRev.Size = New System.Drawing.Size(40, 20)
+        Me.TxtRev.Size = New System.Drawing.Size(48, 22)
         Me.TxtRev.TabIndex = 13
         Me.TxtRev.Text = "001"
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(8, 34)
+        Me.Label3.Location = New System.Drawing.Point(10, 39)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(64, 16)
+        Me.Label3.Size = New System.Drawing.Size(76, 19)
         Me.Label3.TabIndex = 12
         Me.Label3.Text = " Rev."
         '
         'TxtCompound
         '
-        Me.TxtCompound.Location = New System.Drawing.Point(336, 8)
+        Me.TxtCompound.Location = New System.Drawing.Point(403, 9)
         Me.TxtCompound.Name = "TxtCompound"
-        Me.TxtCompound.Size = New System.Drawing.Size(80, 20)
+        Me.TxtCompound.Size = New System.Drawing.Size(96, 22)
         Me.TxtCompound.TabIndex = 1
-        Me.TxtCompound.Text = ""
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(232, 10)
+        Me.Label4.Location = New System.Drawing.Point(278, 12)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(104, 16)
+        Me.Label4.Size = New System.Drawing.Size(125, 18)
         Me.Label4.TabIndex = 14
         Me.Label4.Text = "Group  Compound"
         '
@@ -288,87 +288,84 @@ Public Class FrmAddCompound
         '
         Me.lblerror2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.lblerror2.ForeColor = System.Drawing.Color.Red
-        Me.lblerror2.Location = New System.Drawing.Point(424, 14)
+        Me.lblerror2.Location = New System.Drawing.Point(509, 16)
         Me.lblerror2.Name = "lblerror2"
-        Me.lblerror2.Size = New System.Drawing.Size(24, 8)
+        Me.lblerror2.Size = New System.Drawing.Size(29, 9)
         Me.lblerror2.TabIndex = 15
         Me.lblerror2.Text = "***"
         Me.lblerror2.Visible = False
         '
         'CheckBoxFinalCompound
         '
-        Me.CheckBoxFinalCompound.Location = New System.Drawing.Point(328, 64)
+        Me.CheckBoxFinalCompound.Location = New System.Drawing.Point(394, 74)
         Me.CheckBoxFinalCompound.Name = "CheckBoxFinalCompound"
-        Me.CheckBoxFinalCompound.Size = New System.Drawing.Size(112, 24)
+        Me.CheckBoxFinalCompound.Size = New System.Drawing.Size(134, 28)
         Me.CheckBoxFinalCompound.TabIndex = 8
         Me.CheckBoxFinalCompound.Text = "Final Compound"
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(272, 64)
+        Me.TextBox1.Location = New System.Drawing.Point(326, 74)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(40, 20)
+        Me.TextBox1.Size = New System.Drawing.Size(48, 22)
         Me.TextBox1.TabIndex = 18
-        Me.TextBox1.Text = ""
         Me.TextBox1.Visible = False
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(224, 66)
+        Me.Label5.Location = New System.Drawing.Point(269, 76)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(40, 16)
+        Me.Label5.Size = New System.Drawing.Size(48, 19)
         Me.Label5.TabIndex = 17
         Me.Label5.Text = " Rev."
         Me.Label5.Visible = False
         '
         'txtStep
         '
-        Me.txtStep.Location = New System.Drawing.Point(336, 32)
+        Me.txtStep.Location = New System.Drawing.Point(403, 37)
         Me.txtStep.Name = "txtStep"
-        Me.txtStep.Size = New System.Drawing.Size(40, 20)
+        Me.txtStep.Size = New System.Drawing.Size(48, 22)
         Me.txtStep.TabIndex = 2
-        Me.txtStep.Text = ""
         Me.txtStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Label6
         '
-        Me.Label6.Location = New System.Drawing.Point(288, 34)
+        Me.Label6.Location = New System.Drawing.Point(346, 39)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(40, 16)
+        Me.Label6.Size = New System.Drawing.Size(48, 19)
         Me.Label6.TabIndex = 19
         Me.Label6.Text = "Stage"
         '
         'TxtRmCode
         '
         Me.TxtRmCode.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TxtRmCode.Location = New System.Drawing.Point(592, 48)
+        Me.TxtRmCode.Location = New System.Drawing.Point(708, 80)
         Me.TxtRmCode.Name = "TxtRmCode"
-        Me.TxtRmCode.Size = New System.Drawing.Size(96, 20)
+        Me.TxtRmCode.Size = New System.Drawing.Size(116, 22)
         Me.TxtRmCode.TabIndex = 4
-        Me.TxtRmCode.Text = ""
         '
         'Label7
         '
         Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.Location = New System.Drawing.Point(520, 50)
+        Me.Label7.Location = New System.Drawing.Point(622, 83)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(64, 16)
+        Me.Label7.Size = New System.Drawing.Size(77, 18)
         Me.Label7.TabIndex = 22
         Me.Label7.Text = "R/M Code"
         '
         'CHKAll
         '
-        Me.CHKAll.Location = New System.Drawing.Point(520, 602)
+        Me.CHKAll.Location = New System.Drawing.Point(624, 695)
         Me.CHKAll.Name = "CHKAll"
-        Me.CHKAll.Size = New System.Drawing.Size(88, 16)
+        Me.CHKAll.Size = New System.Drawing.Size(106, 18)
         Me.CHKAll.TabIndex = 23
         Me.CHKAll.Text = "Add Check"
         '
         'FrmAddCompound
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(778, 624)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(6, 15)
+        Me.ClientSize = New System.Drawing.Size(932, 753)
         Me.Controls.Add(Me.CHKAll)
         Me.Controls.Add(Me.TxtRmCode)
         Me.Controls.Add(Me.Label7)
@@ -403,6 +400,7 @@ Public Class FrmAddCompound
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridRM, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
