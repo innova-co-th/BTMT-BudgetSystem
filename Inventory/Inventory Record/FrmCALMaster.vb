@@ -805,7 +805,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi)")
         sb.AppendLine("   ) pre")
         sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
-        sb.AppendLine("   WHERE MaterialType IN ('02')")
+        sb.AppendLine("   WHERE MaterialType IN ('02')") 'Material Type COATED CORD
         sb.AppendLine("   UNION ")
         sb.AppendLine("   SELECT Pre.Mastercode, std, Act,Length WLN")
         sb.AppendLine("   ,round(std,4) STDM, round(Act,4) ACTM")
@@ -818,7 +818,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi )")
         sb.AppendLine("   ) pre")
         sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
-        sb.AppendLine("   WHERE MaterialType IN ('01')")
+        sb.AppendLine("   WHERE MaterialType IN ('01')") 'Material Type STEEL CORD
         sb.AppendLine("   UNION ")
         sb.AppendLine("   SELECT Pre.Mastercode, std, Act,n WLN")
         sb.AppendLine("   ,round(std*n,4) STDM, round(Act*n,4) ACTM")
@@ -831,7 +831,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi )")
         sb.AppendLine("   ) pre")
         sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
-        sb.AppendLine("   WHERE MaterialType IN ('19')")
+        sb.AppendLine("   WHERE MaterialType IN ('19')") 'Material Type HEX BEAD
         sb.AppendLine("   UNION ")
         sb.AppendLine("   SELECT Pre.Mastercode, std, Act,Length WLN")
         sb.AppendLine("   ,round(std*(Length/1000),3,1) STDM, round(Act*(Length/1000),3,1) ACTM")
@@ -844,7 +844,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     WHERE Mastercode+revision IN ( SELECT    Psemicode+revision FROM         TBLPresemi )")
         sb.AppendLine("   ) pre")
         sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
-        sb.AppendLine("   WHERE MaterialType NOT IN ('19','02','01')")
+        sb.AppendLine("   WHERE MaterialType NOT IN ('19','02','01')") 'Material Type which is not COATED CORD, STEEL CORD and HEX BEAD
         sb.AppendLine(" ) PM ")
         sb.AppendLine(" LEFT OUTER JOIN (")
         sb.AppendLine("   SELECT code, Rev, std stdKG, act actKG ")
@@ -1105,7 +1105,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     FROM TBLMasterPrice")
         sb.AppendLine("     WHERE Typecode = '05'")
         sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
-        sb.AppendLine("   WHERE active = 1 AND materialType IN ('13','14')")
+        sb.AppendLine("   WHERE active = 1 AND materialType IN ('13','14')") 'Material Type TREAD and BF
         sb.AppendLine("   UNION ")
         sb.AppendLine("   SELECT se.Final,MaterialType,QPU*length/1000 Qpu,StdPrice,ActPrice,Length WLN")
         sb.AppendLine("   ,Round(StdPrice*(Length/1000),3) STD,Round(ActPrice*(Length/1000),3) ACT")
@@ -1117,7 +1117,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     FROM TBLMasterPrice")
         sb.AppendLine("     WHERE Typecode = '05'")
         sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
-        sb.AppendLine("   WHERE active = 1 AND materialType NOT IN ('13','14','10')")
+        sb.AppendLine("   WHERE active = 1 AND materialType NOT IN ('13','14','10')") 'Material Type is not TREAD, BF and Nylon Chafer
         sb.AppendLine(" ) xx")
         sb.AppendLine(" UNION ")
         sb.AppendLine(" SELECT final,materialType,Qpu,StdPrice,ActPrice,wln,std,act,dateup,timeup ,std/qpu*1000 stdKG,act/qpu*1000 actKG ")
@@ -1132,7 +1132,7 @@ Public Class FrmCALMaster
         sb.AppendLine("     FROM TBLMasterPrice")
         sb.AppendLine("     WHERE Typecode = '05'")
         sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
-        sb.AppendLine("   WHERE active = 1 AND materialType IN ('10')")
+        sb.AppendLine("   WHERE active = 1 AND materialType IN ('10')") 'Material Type Nylon Chafer
         sb.AppendLine(" ) xx")
         StrSQL = sb.ToString()
 
@@ -1610,36 +1610,57 @@ Public Class FrmCALMaster
             DataGridCAL.DataSource = GrdDV
         ElseIf GType.Visible = True And GroupCompound.Visible = False Then
             'Material Type PreSemi and Semi
-            GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            If Not CheckType.Checked Then
+                'If not check
+                GrdDV.RowFilter &= " dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            Else
+                'If check Type
+                GrdDV.RowFilter &= " AND dateUP LIKE '" & DateTime.Text.Trim() & "'"
+            End If
+
             DataGridCAL.DataSource = GrdDV
         Else
             GrdDV.RowFilter &= " "
             DataGridCAL.DataSource = GrdDV
         End If
+
+        SetTotal() 'Set number of items
     End Sub
 
     Private Sub ButtonExport_Click(sender As Object, e As EventArgs) Handles ButtonExport.Click
+        Dim arrColumn As String()
+        Dim arrColumnHeader As String()
+
         If txtname.Trim().Equals("RM") Then
             'LoadRM()
-            Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_RM").ToString().Split(New Char() {","c})
-            Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_RM").ToString().Split(New Char() {","c})
+            arrColumn = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_RM").ToString().Split(New Char() {","c})
+            arrColumnHeader = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_RM").ToString().Split(New Char() {","c})
             ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         ElseIf txtname.Trim().Equals("Pigment") Then
-            LoadPigment()
+            'LoadPigment()
+            arrColumn = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_PIGMENT").ToString().Split(New Char() {","c})
+            arrColumnHeader = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_PIGMENT").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         ElseIf txtname.Trim().Equals("Compound") Then
             'LoadCompound()
-            'LoadGroup()
-            'GroupCompound.Visible = True 'Show groupbox compound
+            arrColumn = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_COMPOUND").ToString().Split(New Char() {","c})
+            arrColumnHeader = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_COMPOUND").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         ElseIf txtname.Trim().Equals("PreSemi") Then
             'LoadPresemi()
-            'LoadMaterialType()
-            'GType.Visible = True 'Show groupbox material type
+            arrColumn = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_PRESEMI").ToString().Split(New Char() {","c})
+            arrColumnHeader = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_PRESEMI").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         ElseIf txtname.Trim().Equals("Semi") Then
             'Loadsemi()
-            'LoadMaterialType()
-            'GType.Visible = True 'Show groupbox material type
+            arrColumn = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_SEMI").ToString().Split(New Char() {","c})
+            arrColumnHeader = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_SEMI").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         ElseIf txtname.Trim().Equals("Green Tire") Then
             'LoadTire()
+            arrColumn = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_GT").ToString().Split(New Char() {","c})
+            arrColumnHeader = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_GT").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         Else
             'Nothing
         End If
@@ -1687,13 +1708,13 @@ Public Class FrmCALMaster
             GrdDV.RowFilter = " "
             DataGridCAL.DataSource = GrdDV
         End If
+
+        SetTotal() 'Set number of items
     End Sub
 
     Private Sub ComboBoxComp_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxComp.SelectedIndexChanged
         SelectCompound()
     End Sub
-
-#End Region
 
     ''' <summary>
     ''' For Material Type Semi or PreSemi
@@ -1706,7 +1727,10 @@ Public Class FrmCALMaster
             GrdDV.RowFilter = " "
             DataGridCAL.DataSource = GrdDV
         End If
+
+        SetTotal() 'Set number of items
     End Sub
+#End Region
 
     Private Sub SetTotal()
         'Set total
