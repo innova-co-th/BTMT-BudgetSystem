@@ -172,6 +172,8 @@ Public Class ExcelLib
                         Dim dtTemp As DataTable = New DataTable("TempData") 'Temporary datable
 
                         'Create temporary datatable
+
+
                         For Each col As String In arrColumn
                             'Check type of first row
                             If dtRec.Rows(0)(col).GetType().Equals(GetType(Decimal)) Then
@@ -184,7 +186,7 @@ Public Class ExcelLib
                         Next
 
                         'Set header
-                        For j As Integer = 1 To arrColumn.Length
+                        For j As Integer = 1 To arrColumnHeader.Length
                             xlWorkSheet.Cells(1, j) = arrColumnHeader(j - 1) 'Excel start position at 1, Array start position at 0
                         Next
 
