@@ -125,8 +125,9 @@ Public Class ExcelLib
     ''' <param name="frmParent">Parent Form</param>
     ''' <param name="DV">Data View</param>
     ''' <param name="tableName">table name</param>
-    ''' <param name="arrColumn">Array column</param>
-    Public Shared Sub Export(frmParent As Form, DV As DataView, tableName As String, arrColumn As String())
+    ''' <param name="arrColumn">Array column map with datatable</param>
+    ''' <param name="arrColumnHeader">Array column header</param>
+    Public Shared Sub Export(frmParent As Form, DV As DataView, tableName As String, arrColumn As String(), arrColumnHeader As String())
         System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
         Dim xlApp As Excel.Application = New Excel.Application()
         Dim xlWorkBook As Excel.Workbook = xlApp.Workbooks.Add()
@@ -184,8 +185,12 @@ Public Class ExcelLib
 
                         'Set header
                         For j As Integer = 1 To arrColumn.Length
-                            xlWorkSheet.Cells(1, j) = arrColumn(j - 1) 'Excel start position at 1, Array start position at 0
+                            xlWorkSheet.Cells(1, j) = arrColumnHeader(j - 1) 'Excel start position at 1, Array start position at 0
                         Next
+
+                        'Set font bold of header
+                        xlRange = xlWorkSheet.Range(CType(xlWorkSheet.Cells(1, 1), Excel.Range), CType(xlWorkSheet.Cells(1, arrColumn.Length), Excel.Range))
+                        xlRange.Font.Bold = True
 
                         'Set data ++ Add Special Case for Pigment
                         For i As Integer = 0 To dtRec.Rows.Count - 1
