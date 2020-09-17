@@ -1621,10 +1621,11 @@ Public Class FrmCALMaster
     Private Sub ButtonExport_Click(sender As Object, e As EventArgs) Handles ButtonExport.Click
         If txtname.Trim().Equals("RM") Then
             'LoadRM()
-            Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_PRICE_RM").ToString().Split(New Char() {","c})
-            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn)
+            Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_PRICE_RM").ToString().Split(New Char() {","c})
+            Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_PRICE_RM").ToString().Split(New Char() {","c})
+            ExcelLib.Export(Me, GrdDV, TBL_Cal, arrColumn, arrColumnHeader)
         ElseIf txtname.Trim().Equals("Pigment") Then
-            'LoadPigment()
+            LoadPigment()
         ElseIf txtname.Trim().Equals("Compound") Then
             'LoadCompound()
             'LoadGroup()

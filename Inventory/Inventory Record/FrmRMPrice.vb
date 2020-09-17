@@ -664,8 +664,9 @@ Public Class FrmRMPrice
 
 #Region "Export"
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
-        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_RM_PRICE").ToString().Split(New Char() {","c})
-        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn)
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_MASTER_RM_PRICE").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_MASTER_RM_PRICE").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn, arrColumnHeader)
     End Sub
 #End Region
 

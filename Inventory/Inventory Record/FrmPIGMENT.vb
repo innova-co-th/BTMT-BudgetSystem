@@ -906,8 +906,9 @@ Public Class FrmPIGMENT
     End Sub
 
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
-        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_PIGMENT").ToString().Split(New Char() {","c})
-        ExcelLib.Export(Me, GrdDV, TBL_PIGMENT, arrColumn)
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_MASTER_PIGMENT").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_MASTER_PIGMENT").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_PIGMENT, arrColumn, arrColumnHeader)
     End Sub
 #End Region
 
