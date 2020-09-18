@@ -1196,9 +1196,8 @@ Public Class FrmAddRHC
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction
         cmd.Transaction = t1
-        Dim strDate, SD() As String
-        SD = Split(Date.Now.ToShortDateString, "/")
-        strDate = SD(2) + SD(1) + SD(0)
+        'Set datetime
+        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
         Try
             'Dim aDr() As DataRow
             'GrdDV.RowFilter = " Qty <> 0.000"
