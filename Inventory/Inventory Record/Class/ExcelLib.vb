@@ -194,15 +194,8 @@ Public Class ExcelLib
                         xlRange = xlWorkSheet.Range(CType(xlWorkSheet.Cells(1, 1), Excel.Range), CType(xlWorkSheet.Cells(1, arrColumn.Length), Excel.Range))
                         xlRange.Font.Bold = True
 
-                        'Set data ++ Add Special Case for Pigment
+                        'Set data
                         For i As Integer = 0 To dtRec.Rows.Count - 1
-                            'Check empty entire rows
-                            If tableName = "TBL_PIGMENT" Or tableName = "TBL_Comp" Then
-                                If dtRec.Rows(i)(dtTemp.Columns(0).ColumnName) = "" Then
-                                    Continue For
-                                End If
-                            End If
-
                             Dim drData As DataRow = dtTemp.NewRow()
                             For j As Integer = 0 To dtTemp.Columns.Count - 1
                                 drData(j) = dtRec.Rows(i)(dtTemp.Columns(j).ColumnName)
