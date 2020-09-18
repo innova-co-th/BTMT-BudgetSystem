@@ -316,6 +316,24 @@ Public Class FrmSemi
     Dim oldrow As Integer
 #End Region
 
+#Region "Form Event"
+    Private Sub FrmSemi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadSemi() 'Load data for DataGrid
+        LoadPSemi() 'Load data of Table Semi
+        LoadType() 'Load data of Table TypeMaterial
+        LoadTire()
+        If CheckBoxType.Checked = False Then
+            GrdDV.RowFilter = " "
+            DataGridCOM.DataSource = GrdDV
+        End If
+
+        If CheckBoxPreSemi.Checked = False Then
+            GrdDV.RowFilter = " "
+            DataGridCOM.DataSource = GrdDV
+        End If
+    End Sub
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadSemi()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
@@ -706,23 +724,7 @@ Public Class FrmSemi
     End Sub
 #End Region
 
-    Private Sub FrmSemi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadSemi() 'Load data for DataGrid
-        LoadPSemi() 'Load data of Table Semi
-        LoadType() 'Load data of Table TypeMaterial
-        LoadTire()
-        If CheckBoxType.Checked = False Then
-            GrdDV.RowFilter = " "
-            DataGridCOM.DataSource = GrdDV
-        End If
-
-        If CheckBoxPreSemi.Checked = False Then
-            GrdDV.RowFilter = " "
-            DataGridCOM.DataSource = GrdDV
-        End If
-
-    End Sub
-
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -775,6 +777,7 @@ Public Class FrmSemi
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
+#End Region
 
 #Region "SelectData"
     Private Sub CmbSemi_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbSemi.SelectedIndexChanged
