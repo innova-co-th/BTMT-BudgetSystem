@@ -638,9 +638,8 @@ Public Class FrmAddPigment
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction
         cmd.Transaction = t1
-        Dim strDate, SD() As String
-        SD = Split(Now.ToShortDateString, "/")
-        strDate = SD(2) + SD(1) + SD(0)
+        'Set datetime
+        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
         If CmdSave.Text = "Save" Then
             Try
                 Dim aDr() As DataRow
