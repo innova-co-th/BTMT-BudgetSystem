@@ -301,23 +301,45 @@ Public Class FrmGreenTire
     Dim oldrow As Integer
 #End Region
 
+#Region "Form Event"
+    Private Sub FrmGreenTire_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadTire()
+        LoadTireGroup()
+        'If CheckBoxType.Checked = False Then
+        '    GrdDV.RowFilter = " "
+        '    DataGridCOM.DataSource = GrdDV
+        'End If
+
+        'If CheckBoxTire.Checked = False Then
+        '    GrdDV.RowFilter = " "
+        '    DataGridCOM.DataSource = GrdDV
+        'End If
+
+    End Sub
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadTire()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " select * from ("
-        StrSQL &= " select final,TireSize,Round(Qty,1) TQty,"
-        StrSQL &= "  substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'"
-        StrSQL &= "  +substring(DateUp,1,4) dateup,TireSize TSize,Tirecode,Rev,null MaterialName"
-        StrSQL &= "  ,null Semicode,null Length,null number,null QTU,null Unit,Remark,Active,Active AC from TblGtHdr"
-        StrSQL &= "  union"
-        StrSQL &= "  select null final,null TireSize,null TQty,null dateup,tiresize TSize,dt.Tirecode,dt.Rev,MaterialName"
-        StrSQL &= "  ,isnull(Semicode,'No Use') Semicode,Length,number, round(QTU,3) Qty, Unit ,null Remark ,null Active,Active AC from TblGtDtl dt"
-        StrSQL &= "   left outer join TBLTypeMaterial tm"
-        StrSQL &= "   on dt.MaterialType = tm.MaterialCode"
-        StrSQL &= " left outer join  TBLGTHdr hd"
-        StrSQL &= " on dt.tirecode+dt.Rev = hd.Tirecode+hd.Rev"
-        StrSQL &= "   ) Tire"
-        StrSQL &= "   order by Tirecode,Rev,Final Desc"
+
+        sb.AppendLine("SELECT * ")
+        sb.AppendLine("FROM (")
+        sb.AppendLine("  SELECT final,TireSize,Round(Qty,1) TQty,")
+        sb.AppendLine("  substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'")
+        sb.AppendLine("  +substring(DateUp,1,4) dateup,TireSize TSize,Tirecode,Rev,null MaterialName")
+        sb.AppendLine("  ,null Semicode,null Length,null number,null QTU,null Unit,Remark,Active,Active AC ")
+        sb.AppendLine("  FROM TblGtHdr")
+        sb.AppendLine("  UNION")
+        sb.AppendLine("  SELECT null final,null TireSize,null TQty,null dateup,tiresize TSize,dt.Tirecode,dt.Rev,MaterialName")
+        sb.AppendLine("  ,isnull(Semicode,'No Use') Semicode,Length,number, round(QTU,3) Qty, Unit ,null Remark ,null Active,Active AC ")
+        sb.AppendLine("  FROM TblGtDtl dt")
+        sb.AppendLine("  LEFT OUTER JOIN TBLTypeMaterial tm on dt.MaterialType = tm.MaterialCode")
+        sb.AppendLine("  LEFT OUTER JOIN TBLGTHdr hd on dt.tirecode+dt.Rev = hd.Tirecode+hd.Rev")
+        sb.AppendLine(") Tire")
+        sb.AppendLine("ORDER BY Tirecode,Rev,Final DESC")
+        StrSQL = sb.ToString()
+
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
@@ -509,8 +531,8 @@ Public Class FrmGreenTire
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle0_2, grdColStyle0, grdColStyle0_1, grdColStyle1, grdColStyle2, grdColStyle3, _
-     grdColStyle12, grdColStyle11, grdColStyle9, grdColStyle6, _
+    {grdColStyle0_2, grdColStyle0, grdColStyle0_1, grdColStyle1, grdColStyle2, grdColStyle3,
+     grdColStyle12, grdColStyle11, grdColStyle9, grdColStyle6,
      grdColStyle5, grdColStyle13, grdColStyle14})
 
         DataGridCOM.TableStyles.Add(grdTableStyle1)
@@ -542,21 +564,21 @@ Public Class FrmGreenTire
 
 #Region "COMBOBOX"
     Sub LoadTireGroup()
+        Dim sb As New System.Text.StringBuilder()
         Dim dtPSemi As DataTable = New DataTable()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "   SELECT Code,MaterialName"
-        StrSQL &= "   FROM  TblGroup g"
-        StrSQL &= "  left outer join "
-        StrSQL &= "  ("
-        StrSQL &= "  SELECT  semiCode,MaterialName"
-        StrSQL &= "   FROM  TblSemi p"
-        StrSQL &= "  left outer join  TblTypeMaterial t"
-        StrSQL &= "  on p.MaterialType = t.MaterialCode"
-        StrSQL &= "  )semi"
-        StrSQL &= "  on g.code = semi.semicode"
-        StrSQL &= "  where Typecode = '06'"
-        StrSQL &= "  order by Code"
+        sb.AppendLine("  SELECT Code,MaterialName")
+        sb.AppendLine("  FROM  TblGroup g")
+        sb.AppendLine("  LEFT OUTER JOIN (")
+        sb.AppendLine("    SELECT  semiCode,MaterialName")
+        sb.AppendLine("    FROM  TblSemi p")
+        sb.AppendLine("    LEFT OUTER JOIN  TblTypeMaterial t on p.MaterialType = t.MaterialCode")
+        sb.AppendLine("  ) semi on g.code = semi.semicode")
+        sb.AppendLine("  WHERE Typecode = '06'")
+        sb.AppendLine("  ORDER BY Code")
+        StrSQL = sb.ToString()
+
         Dim DA As SqlDataAdapter
         Try
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
@@ -576,21 +598,7 @@ Public Class FrmGreenTire
     End Sub
 #End Region
 
-    Private Sub FrmGreenTire_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadTire()
-        LoadTireGroup()
-        'If CheckBoxType.Checked = False Then
-        '    GrdDV.RowFilter = " "
-        '    DataGridCOM.DataSource = GrdDV
-        'End If
-
-        'If CheckBoxTire.Checked = False Then
-        '    GrdDV.RowFilter = " "
-        '    DataGridCOM.DataSource = GrdDV
-        'End If
-
-    End Sub
-
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -705,6 +713,7 @@ Public Class FrmGreenTire
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
+#End Region
 
 #Region "SelectData"
     Private Sub CmbTire_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbTire.SelectedIndexChanged
