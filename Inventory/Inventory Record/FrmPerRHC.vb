@@ -284,14 +284,14 @@ Public Class FrmPerRHC
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
         sb.AppendLine(" SELECT    seq,finalcompound,Compcode,Revision,Qty,RHC,Per,per Tper,Active")
-        sb.AppendLine(" ,finalcompound Final,Compcode+Revision CRev,null rmcode,null mQty,null mRHC,null mPer")
+        sb.AppendLine(" ,finalcompound Final,Compcode+Revision CRev,null rmcode,null mQty,null mRHC,null mPer, CompCode as mCompCode, Revision as mRev")
         sb.AppendLine(" FROM     TBLCompound  ")
         sb.AppendLine(" UNION")
         sb.AppendLine(" SELECT  seq,null finalcompound,null Compcode,null Revision,null Qty,null RHC,null Per,Tper,Active")
-        sb.AppendLine(" ,final,mastercode+Revision MRev,rmcode,weight mQty,RHC mRHC,per mPer")
+        sb.AppendLine(" ,final,mastercode+Revision MRev,rmcode,weight mQty,RHC mRHC,per mPer, mCompCode, mRev ")
         sb.AppendLine(" FROM (")
         sb.AppendLine("   SELECT dt.seq,dt.final,dt.mastercode,dt.revision,dt.rmcode,dt.weight,dt.RHC,dt.per,")
-        sb.AppendLine("   c.Per Tper,c.Active")
+        sb.AppendLine("   c.Per Tper,c.Active, dt.MasterCode as mCompCode, dt.Revision as mRev")
         sb.AppendLine("   FROM         TBLRHCDtl dt")
         sb.AppendLine("   LEFT OUTER JOIN TBLcompound c on dt.final+dt.Mastercode+dt.Revision = c.Finalcompound+c.compcode+c.revision ")
         sb.AppendLine(" ) xxx")
@@ -534,13 +534,13 @@ Public Class FrmPerRHC
         Me.Close()
     End Sub
 
-    Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
+Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
 
         Dim fAddpRHC As New FrmAddPerRHC
         fAddpRHC.CmdSave.Text = "Edit"
         fAddpRHC.TCompound = GrdDV.Item(oldrow).Row("Final")
-        fAddpRHC.TCode = GrdDV.Item(oldrow).Row("CompCode")
-        fAddpRHC.TRev = GrdDV.Item(oldrow).Row("Revision")
+        fAddpRHC.TCode = GrdDV.Item(oldrow).Row("mCompCode")
+        fAddpRHC.TRev = GrdDV.Item(oldrow).Row("mRev")
         fAddpRHC.TStep = GrdDV.Item(oldrow).Row("seq")
         fAddpRHC.ShowDialog()
         LoadCOM()
@@ -606,6 +606,224 @@ Public Class FrmPerRHC
     Private Sub RbNP100_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RbNP100.CheckedChanged
         Selectcompcound()
     End Sub
+
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_MASTER_COMPOUND_RHC_PER").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_MASTER_COMPOUND_RHC_PER").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn, arrColumnHeader)
+    End Sub
+
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("IMP_EXCEL_COLUMN_MASTER_COMPOUND_RHC_PER").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+        Dim totalPer As Double = 0
+        Dim totalRHC As Double = 0
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create Importing of overlay
+            Dim frm As New Importing()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim chkSamePigmentCode As String = String.Empty
+
+                        '//Sort Data from Excel
+                        dtRec.DefaultView.Sort = "FinalCompound_Code DESC, Compound_Code DESC, Revision_No DESC"
+                        dtRec = dtRec.DefaultView.ToTable
+
+                        '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
+                        If ChkAvailableFromTBLRHCDtl(dtRec) = False Then
+                            LoadCOM() 'ReQuery and set datagrid
+                            frmOverlay.Dispose()
+                            Exit Sub
+                        End If
+
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            If strFinalCompoundCode.Length > 0 Then
+                                Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
+                                Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
+                                Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+                                Dim dblPer As Double
+                                Dim dblRHC As Double
+                                If dtRec.Rows(i)("Percent").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("Percent"), dblPer) Then
+                                        Throw New System.Exception("Please input Percent data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input Percent data as Number")
+                                End If
+                                If dtRec.Rows(i)("RHC").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("RHC"), dblRHC) Then
+                                        Throw New System.Exception("Please input RHC data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input RHC data as Number")
+                                End If
+
+                                Dim GridRow As DataRow()        '//Grid Data
+                                Dim ExcelRow As DataRow()       '//Excel Data
+
+                                '//Get Data on above row on Excel ------------------------
+                                Dim chkSameFinalCompoundCodeBefore As String = String.Empty
+                                Dim chkSameCompoundCodeBefore As String = String.Empty
+                                Dim chkSameRevisionBefore As String = String.Empty
+                                If i > 0 Then
+                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString
+                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString
+                                Else
+                                    chkSameFinalCompoundCodeBefore = ""
+                                    chkSameCompoundCodeBefore = ""
+                                    chkSameRevisionBefore = ""
+                                End If
+                                '//-------------------------------------------------------
+
+                                '//Sum QTY each Compound Code and Revision
+                                If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
+                                    totalPer = 0
+                                    totalRHC = 0
+                                    ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    For j As Integer = 0 To ExcelRow.Count - 1
+                                        totalPer = totalPer + ExcelRow(j)("Percent")
+                                        totalRHC = totalRHC + ExcelRow(j)("RHC")
+                                    Next j
+                                End If
+
+                                '//Case 1 : Start With Check FinalCompoundCode, CompoundCode, Revision and RMCode on Grid (TBLRHCDtl, TBLCompound)
+                                GridRow = DT.Select("Final = '" & strFinalCompoundCode & "' AND mCompCode = '" & strCompoundCode & "' AND mRev = '" & strRevision & "' AND rmcode = '" & strRMCode & "'")
+
+                                If GridRow.Count > 0 Then '//Case 1.1 : [Found] Check Null of RHC and Per form Excel // Then check RHC and Per same as Grid or not?
+                                    '//Update TBLRHCDtl (RHC and Per each RMCode)
+                                    sb.Clear()
+                                    sb.AppendLine(" Update TBLRHCDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" PER = '" & totalPer & "'")
+                                    sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                    sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                    sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Update TBLCompound ((totalRHC and TotalPer each RMCode))
+                                    sb.AppendLine(" Update TBLCompound")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" PER = '" & totalPer & "'")
+                                    sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                    sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                    sb.AppendLine(" Where FinalCompound = '" & strFinalCompoundCode & "' AND CompCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+                                End If
+                            End If
+                        Next i
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            LoadCOM() 'ReQuery and set datagrid
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+#End Region
+
+#Region "Import"
+    Private Function ChkAvailableFromTBLRHCDtl(ByVal ImportTable As DataTable) As Boolean
+        Dim cnSQLRM As SqlConnection
+        Dim cmSQLRM As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+        Dim strRmcodeBefore As String = String.Empty
+        Dim distinctImportTabale As New DataTable
+        Try
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
+                Dim Final As String = ImportTable.Rows(x)("FinalCompound_Code").ToString().Trim()
+                Dim Comp As String = ImportTable.Rows(x)("Compound_Code").ToString().Trim()
+                Dim Rev As String = ImportTable.Rows(x)("Revision_No").ToString().Trim()
+                strSQL = ""
+
+                If rmCode.Length > 0 Then
+                    strSQL &= " SELECT COUNT(*) "
+                    strSQL &= " FROM (SELECT R.Final,R.MasterCode,R.Revision,RMCode FROM TBLRHCDtl as R "
+                    strSQL &= " left outer join TBLCompound as C  "
+                    strSQL &= " on R.Final+R.MasterCode+R.Revision = C.FinalCompound+C.CompCode+C.Revision) RC "
+                    strSQL &= " WHERE Final = '" & Final & "' and MasterCode = '" & Comp & "' and Revision = '" & Rev & "' and RMCode = '" & rmCode & "' "
+                    cnSQLRM = New SqlConnection(C1.Strcon)
+                    cnSQLRM.Open()
+                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                    Dim i As Long = cmSQLRM.ExecuteScalar()
+                    If i = 0 Then
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                        Throw New System.Exception("This Group(" & Final & "), Compound(" & Comp & "), Revision(" & Rev & ") and RMCode(" & rmCode & ") is not available on RHC data")
+                    Else
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                    End If
+                End If
+            Next x
+
+            ret = True
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        Finally
+            cnSQLRM.Close()
+            cmSQLRM.Dispose()
+            cnSQLRM.Dispose()
+        End Try
+
+        Return ret
+    End Function
 #End Region
 
 #Region "DelCompound"

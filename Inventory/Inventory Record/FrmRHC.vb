@@ -759,7 +759,7 @@ Public Class FrmRHC
             frm.Show()
 
             'Read excel file
-            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_Comp, arrColumn)
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
 
             'Save
             If dtRec IsNot Nothing Then
