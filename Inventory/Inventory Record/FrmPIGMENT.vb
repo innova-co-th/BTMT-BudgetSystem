@@ -574,6 +574,7 @@ Public Class FrmPIGMENT
         Dim dtRec As DataTable
         Dim sb As New System.Text.StringBuilder()
         Dim frmOverlay As New Form()
+        Dim totalQty As Double = 0
 
         If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
             'Create Importing of overlay
@@ -626,20 +627,40 @@ Public Class FrmPIGMENT
                             If strEachPigmentCode.Length > 0 Then
                                 Dim strEachRevision As String = dtRec.Rows(i)("EachRevision").ToString().Trim()
                                 Dim strRMCode As String = dtRec.Rows(i)("rmCode").ToString().Trim()
-                                Dim dblRMQty As Double = dtRec.Rows(i)("RmQty")
-                                Dim totalQty As Double = 0
+                                Dim dblRMQty As Double
+
+                                If dtRec.Rows(i)("RmQty").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("RmQty"), dblRMQty) Then
+                                        Throw New System.Exception("Please input Qty data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input Qty data as Number")
+                                End If
 
                                 Dim DTRow As DataRow()          '//Grid Data
                                 Dim dtRecRow As DataRow()       '//Excel Data
 
+                                '//Check is same {Pigmentcode} as above excel row
+                                Dim chkSameEachPigmentCodeBefore As String = String.Empty
+                                Dim chkSameEachRevisionBefore As String = String.Empty
+                                If i > 0 Then
+                                    chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString
+                                    chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString
+                                Else
+                                    chkSameEachPigmentCodeBefore = ""
+                                    chkSameEachRevisionBefore = ""
+                                End If
+
                                 DTRow = DT.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
 
                                 '//Sum QTY each PigmentCode and Revision
-                                dtRecRow = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
-                                For j As Integer = 0 To dtRecRow.Count - 1
-                                    totalQty = totalQty + dtRecRow(j)(3)
-                                Next j
-                                'totalQty = DT.Compute("SUM(RmQTY)", 0)
+                                If strEachRevision <> chkSameEachPigmentCodeBefore Or strRMCode <> chkSameEachRevisionBefore Then
+                                    totalQty = 0
+                                    dtRecRow = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
+                                    For j As Integer = 0 To dtRecRow.Count - 1
+                                        totalQty = totalQty + dtRecRow(j)("RmQty")
+                                    Next j
+                                End If
 
                                 '//Check matching between Excel and Grid
                                 If DTRow.Count > 0 Then 'Have data on Grid
@@ -741,16 +762,6 @@ Public Class FrmPIGMENT
                                         cmSQL.ExecuteNonQuery()
                                     End If
                                 Else 'Have no data on Grid
-                                    '//Check is same {Pigmentcode} as above excel row
-                                    Dim chkSameEachPigmentCodeBefore As String = String.Empty
-                                    Dim chkSameEachRevisionBefore As String = String.Empty
-                                    If i > 0 Then
-                                        chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString
-                                        chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString
-                                    Else
-                                        chkSameEachPigmentCodeBefore = ""
-                                        chkSameEachRevisionBefore = ""
-                                    End If
                                     If strEachPigmentCode = chkSameEachPigmentCodeBefore Then
                                         '//Check is same {Revision} as above excel row
                                         If strEachRevision = chkSameEachRevisionBefore Then

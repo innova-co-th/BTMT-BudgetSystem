@@ -672,8 +672,9 @@ Public Class FrmCompound
     End Sub
 
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
-        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_COMPOUND_WEIGHT").ToString().Split(New Char() {","c})
-        ExcelLib.Export(Me, GrdDV, TBL_Comp, arrColumn)
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_COMPOUND_WEIGHT").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_COMPOUND_WEIGHT").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn, arrColumnHeader)
     End Sub
 
     Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
@@ -749,10 +750,18 @@ Public Class FrmCompound
                                 Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
                                 Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
                                 Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                                Dim dblRMQty As Double = dtRec.Rows(i)("Qty")
+                                Dim dblRMQty As Double
                                 Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
                                 Dim GridRow As DataRow()        '//Grid Data
                                 Dim ExcelRow As DataRow()       '//Excel Data
+
+                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
+                                        Throw New System.Exception("Please input Qty data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input Qty data as Number")
+                                End If
 
                                 '//Case Special [Check Duplicate CompoundCode and Revision on Excel]
                                 Dim ImportTable As New DataTable
@@ -781,7 +790,8 @@ Public Class FrmCompound
                                 '//-------------------------------------------------------
 
                                 '//Sum QTY each Compound Code and Revision
-                                If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore And strCompoundCode <> chkSameCompoundCodeBefore And strRevision <> chkSameRevisionBefore Then
+                                If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
+                                    totalQty = 0
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
                                         totalQty = totalQty + ExcelRow(j)("Qty")

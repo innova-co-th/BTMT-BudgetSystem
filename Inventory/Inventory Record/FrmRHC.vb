@@ -294,11 +294,11 @@ Public Class FrmRHC
         sb.AppendLine("FROM ( ")
         sb.AppendLine("  SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
         sb.AppendLine("  ,CompCode+','+Revision Code")
-        sb.AppendLine("  ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty")
+        sb.AppendLine("  ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty,'' as FinalCompound_Code,'' as Revision_No,'' as Seq_No")
         sb.AppendLine("  FROM         TBLCompound")
         sb.AppendLine("  UNION")
         sb.AppendLine("  SELECT c.Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active")
-        sb.AppendLine("  ,c.CRev,m.Code,m.Rev,m.RMCode,m.mRHC,m.mQty")
+        sb.AppendLine("  ,c.CRev,m.Code,m.Rev,m.RMCode,m.mRHC,m.mQty,c.FinalCompound as FinalCompound_Code,c.Revision as Revision_No,c.Seq as Seq_No")
         sb.AppendLine("  FROM (        ")
         sb.AppendLine("    SELECT  seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active")
         sb.AppendLine("    FROM  TBLCompound")
@@ -724,6 +724,415 @@ Public Class FrmRHC
         StrData = CmbGroup.Text.Trim
 
     End Sub
+
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_COMPOUND_RHC").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_COMPOUND_RHC").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn, arrColumnHeader)
+    End Sub
+
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_COMPOUND_RHC").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+        Dim totalQty As Double = 0
+        Dim totalRHC As Double = 0
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create Importing of overlay
+            Dim frm As New Importing()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_Comp, arrColumn)
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim chkSamePigmentCode As String = String.Empty
+
+                        '//Sort Data from Excel
+                        dtRec.DefaultView.Sort = "FinalCompound_Code DESC, Compound_Code DESC, Revision_No DESC"
+                        dtRec = dtRec.DefaultView.ToTable
+
+                        '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
+                        If ChkRMCodeEachCompound(dtRec) = False Then
+                            LoadCOM() 'ReQuery and set datagrid
+                            frmOverlay.Dispose()
+                            Exit Sub
+                        End If
+
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+
+                            Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            If strFinalCompoundCode.Length > 0 Then
+                                Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
+                                Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
+                                Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+                                Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
+                                Dim dblRMQty As Double
+                                Dim dblRHC As Double
+                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
+                                        Throw New System.Exception("Please input Qty data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input Qty data as Number")
+                                End If
+                                If dtRec.Rows(i)("RHC").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("RHC"), dblRHC) Then
+                                        Throw New System.Exception("Please input RHC data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input RHC data as Number")
+                                End If
+
+                                Dim GridRow As DataRow()        '//Grid Data
+                                Dim ExcelRow As DataRow()       '//Excel Data
+
+                                '//Get Data on above row on Excel ------------------------
+                                Dim chkSameFinalCompoundCodeBefore As String = String.Empty
+                                Dim chkSameCompoundCodeBefore As String = String.Empty
+                                Dim chkSameRevisionBefore As String = String.Empty
+                                If i > 0 Then
+                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString
+                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString
+                                Else
+                                    chkSameFinalCompoundCodeBefore = ""
+                                    chkSameCompoundCodeBefore = ""
+                                    chkSameRevisionBefore = ""
+                                End If
+                                '//-------------------------------------------------------
+
+                                '//Sum QTY each Compound Code and Revision
+                                If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
+                                    totalQty = 0
+                                    totalRHC = 0
+                                    ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    For j As Integer = 0 To ExcelRow.Count - 1
+                                        totalQty = totalQty + ExcelRow(j)("Qty")
+                                        totalRHC = totalRHC + ExcelRow(j)("RHC")
+                                    Next j
+                                End If
+
+                                '//Case 1 : Start With Check FinalCompoundCode, CompoundCode and Revision on Grid (TBLRHCDtl, TBLCompound)
+                                '//Case 1.1 : [Found] Final,Comp,Rev So Next Check RMCode
+                                '//Case 1.1.1 : [Found] RMCode So Next Check RHC and QTY
+                                '//Case 1.1.1.1 : Do not change any RHC and QTY So Finish
+                                '//Case 1.1.1.2 : Found some value changed RHC and QTY So next Update TBLRHCDtl, TBLCompound
+                                '//Case 1.1.2 : [Found No] RMCode 
+                                '//Case 1.2 : [Found No] Final,Comp,Rev on TBLRHCDtl So Next Add data to TBLRHCDtl
+
+                                '//Case 1 : Start With Check FinalCompoundCode, CompoundCode and Revision on Grid (TBLRHCDtl, TBLCompound)
+                                GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+
+                                If GridRow.Count > 0 Then '//Case 1.1 : [Found] Final,Comp,Rev So Next Check RMCode
+
+                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & strRMCode & "'")
+
+                                    If GridRow.Count > 0 Then '//Case 1.1.1 : [Found] RMCode So Next Check RHC and QTY
+
+                                        '//Case 1.1.1.2 : Found some value changed RHC and QTY So next Update TBLRHCDtl, TBLCompound
+                                        If CDbl(GridRow(0)("Qty")) = dblRMQty Then
+                                            If CDbl(GridRow(0)("mRHC")) <> dblRHC Then
+
+                                                '//Update TBLRHCDtl (RHC each RMCode)
+                                                sb.Clear()
+                                                sb.AppendLine(" Update TBLRHCDtl")
+                                                sb.AppendLine(" Set ")
+                                                sb.AppendLine(" Weight = '" & totalQty & "'")
+                                                sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                                sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                                sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+
+                                                sb.AppendLine(" ")
+
+                                                '//Update TBLCompound ((RHC each RMCode))
+                                                sb.AppendLine(" Update TBLCompound")
+                                                sb.AppendLine(" Set ")
+                                                sb.AppendLine(" Qty = '" & totalQty & "'")
+                                                sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                                sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                                sb.AppendLine(" Where FinalCompound = '" & strFinalCompoundCode & "' AND CompCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+                                                StrSQL = sb.ToString()
+                                                cmSQL.CommandText = StrSQL
+                                                cmSQL.ExecuteNonQuery()
+
+                                            End If
+                                        Else
+
+                                            '//Update TBLRHCDtl (QTY total, RHC total)
+                                            sb.Clear()
+                                            sb.AppendLine(" Update TBLRHCDtl")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Weight = '" & totalQty & "'")
+                                            sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                            sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                            sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+
+                                            sb.AppendLine(" ")
+
+                                            '//Update TBLCompound (QTY total, RHC total)
+                                            sb.AppendLine(" Update TBLCompound")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Qty = '" & totalQty & "'")
+                                            sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                            sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                            sb.AppendLine(" Where FinalCompound = '" & strFinalCompoundCode & "' AND CompCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+
+                                            sb.AppendLine(" ")
+
+                                            '//Update TBLMASTER (QTY each RMCode)
+                                            sb.AppendLine(" Update TBLMASTER")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Qty = '" & dblRMQty & "'")
+                                            sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
+
+                                            sb.AppendLine(" ")
+
+                                            '//Update TBLConvert [SQty(totalQty)]
+                                            sb.AppendLine(" Update TblConvert")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" SQty = '" & totalQty & "'")
+                                            sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND Code = '" & strCompoundCode & "' AND Rev = '" & strRevision & "' AND Type = '03'")
+                                            StrSQL = sb.ToString()
+                                            cmSQL.CommandText = StrSQL
+                                            cmSQL.ExecuteNonQuery()
+
+                                            '//Update All Per in TBLMASTER***********
+                                            sb.Clear()
+                                            sb.AppendLine(" Update TBLMASTER")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                            sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+                                            StrSQL = sb.ToString()
+                                            cmSQL.CommandText = StrSQL
+                                            cmSQL.ExecuteNonQuery()
+
+                                        End If
+                                    Else '//Case 1.1.2 : [Found No] RMCode 
+
+                                        '//Add TBLRHCDtl (RHC each RMCode)
+                                        sb.Clear()
+                                        sb.AppendLine(" Insert TBLRHCDtl ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(intSeq & ", ")               'Column MasterCode
+                                        sb.AppendLine(" '" & strFinalCompoundCode & "', ")                   'Column Revision
+                                        sb.AppendLine(" '" & strCompoundCode & "', ")                     'Column RMCode
+                                        sb.AppendLine(" '" & strRevision & "', ")                                   'Column RmRevision
+                                        sb.AppendLine(" '" & strRMCode & "', ")                      'Column Qty
+                                        sb.AppendLine(" '" & dblRMQty & "', ")                                     'Column Unit
+                                        sb.AppendLine(" '" & dblRHC & "', ")   'Column Per
+                                        sb.AppendLine(" NULL, ")   'Column Per
+                                        sb.AppendLine(" '" & strDate & "' ")   'Column Per
+                                        sb.AppendLine(" )")
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                        '//Update TBLCompound (QTY total, RHC total)
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLCompound")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Qty = '" & totalQty & "'")
+                                        sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                        sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                        sb.AppendLine(" Where FinalCompound = '" & strFinalCompoundCode & "' AND CompCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLMASTER (QTY each RMCode)
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Qty = '" & dblRMQty & "'")
+                                        sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLConvert [SQty(totalQty)]
+                                        sb.AppendLine(" Update TblConvert")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" SQty = '" & totalQty & "'")
+                                        sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND Code = '" & strCompoundCode & "' AND Rev = '" & strRevision & "' AND Type = '03'")
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                        '//Update All Per in TBLMASTER***********
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                    End If
+
+                                Else '//Case 1.2 : [Found No] Final,Comp,Rev on TBLRHCDtl So Next Add data to TBLRHCDtl
+
+                                    '//Add TBLRHCDtl (RHC each RMCode)
+                                    sb.Clear()
+                                    sb.AppendLine(" Insert TBLRHCDtl ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(intSeq & ", ")               'Column MasterCode
+                                    sb.AppendLine(" '" & strFinalCompoundCode & "', ")                   'Column Revision
+                                    sb.AppendLine(" '" & strCompoundCode & "', ")                     'Column RMCode
+                                    sb.AppendLine(" '" & strRevision & "', ")                                   'Column RmRevision
+                                    sb.AppendLine(" '" & strRMCode & "', ")                      'Column Qty
+                                    sb.AppendLine(" '" & dblRMQty & "', ")                                     'Column Unit
+                                    sb.AppendLine(" '" & dblRHC & "', ")   'Column Per
+                                    sb.AppendLine(" NULL, ")   'Column Per
+                                    sb.AppendLine(" '" & strDate & "' ")   'Column Per
+                                    sb.AppendLine(" )")
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+
+                                    '//Update TBLCompound (QTY total, RHC total)
+                                    sb.Clear()
+                                    sb.AppendLine(" Update TBLCompound")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Qty = '" & totalQty & "'")
+                                    sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                    sb.AppendLine(" , Dateup = '" & strDate & "'")
+                                    sb.AppendLine(" Where FinalCompound = '" & strFinalCompoundCode & "' AND CompCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Update TBLMASTER (QTY each RMCode)
+                                    sb.AppendLine(" Update TBLMASTER")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Qty = '" & dblRMQty & "'")
+                                    sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Update TBLConvert [SQty(totalQty)]
+                                    sb.AppendLine(" Update TblConvert")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" SQty = '" & totalQty & "'")
+                                    sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND Code = '" & strCompoundCode & "' AND Rev = '" & strRevision & "' AND Type = '03'")
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+
+                                    '//Update All Per in TBLMASTER***********
+                                    sb.Clear()
+                                    sb.AppendLine(" Update TBLMASTER")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                    sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+                                End If
+                            End If
+                        Next i
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            LoadCOM() 'ReQuery and set datagrid
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+#End Region
+
+#Region "Import"
+    Private Function ChkRMCodeEachCompound(ByVal ImportTable As DataTable) As Boolean
+        Dim cnSQLRM As SqlConnection
+        Dim cmSQLRM As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+        Dim strRmcodeBefore As String = String.Empty
+        Dim distinctImportTabale As New DataTable
+
+        Try
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
+                Dim Final As String = ImportTable.Rows(x)("FinalCompound_Code").ToString().Trim()
+                Dim Comp As String = ImportTable.Rows(x)("Compound_Code").ToString().Trim()
+                Dim Rev As String = ImportTable.Rows(x)("Revision_No").ToString().Trim()
+                strSQL = ""
+
+                If rmCode.Length > 0 Then
+                    strSQL &= " SELECT COUNT(*) "
+                    strSQL &= " FROM (SELECT c.seq,c.FinalCompound,Compcode,c.Revision,RMCode"
+                    strSQL &= "   FROM TBLCompound C "
+                    strSQL &= " left outer join (select * from TBLMaster) M on C.compcode+C.Revision = M.MasterCode+M.Revision )zzz "
+                    strSQL &= " WHERE RMCode in (select rmcode from TBLRM) "
+                    strSQL &= " AND FinalCompound = '" & Final & "' AND CompCode = '" & Comp & "' AND Revision = '" & Rev & "' AND RMCode = '" & rmCode & "' "
+                    cnSQLRM = New SqlConnection(C1.Strcon)
+                    cnSQLRM.Open()
+                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                    Dim i As Long = cmSQLRM.ExecuteScalar()
+                    If i = 0 Then
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                        Throw New System.Exception("This RM Code '" & rmCode & "' not match with Group(" & Final & "), Compound(" & Comp & ") and Revision(" & Rev & ")")
+                    Else
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                    End If
+                End If
+            Next x
+
+            ret = True
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        Finally
+            cnSQLRM.Close()
+            cmSQLRM.Dispose()
+            cnSQLRM.Dispose()
+        End Try
+
+        Return ret
+    End Function
 #End Region
 
 #Region "DelCompound"
