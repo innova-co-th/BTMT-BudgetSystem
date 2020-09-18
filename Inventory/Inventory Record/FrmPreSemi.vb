@@ -66,23 +66,23 @@ Public Class FrmPreSemi
     Friend WithEvents cmdDel As System.Windows.Forms.Button
     Friend WithEvents DataGridCom As System.Windows.Forms.DataGrid
     Friend WithEvents ChkAvtive As System.Windows.Forms.CheckBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents CmdActive As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPreSemi))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridCom = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.CmbPreSemi = New System.Windows.Forms.ComboBox
-        Me.CheckBoxPreSemi = New System.Windows.Forms.CheckBox
-        Me.CmbMaterial = New System.Windows.Forms.ComboBox
-        Me.CheckBoxType = New System.Windows.Forms.CheckBox
-        Me.cmdDel = New System.Windows.Forms.Button
-        Me.ChkAvtive = New System.Windows.Forms.CheckBox
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridCom = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.CmbPreSemi = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxPreSemi = New System.Windows.Forms.CheckBox()
+        Me.CmbMaterial = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxType = New System.Windows.Forms.CheckBox()
+        Me.cmdDel = New System.Windows.Forms.Button()
+        Me.ChkAvtive = New System.Windows.Forms.CheckBox()
+        Me.CmdActive = New System.Windows.Forms.Button()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -90,8 +90,8 @@ Public Class FrmPreSemi
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridCom)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
@@ -203,16 +203,16 @@ Public Class FrmPreSemi
         Me.ChkAvtive.TabIndex = 22
         Me.ChkAvtive.Text = " Active"
         '
-        'Button1
+        'CmdActive
         '
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button1.Location = New System.Drawing.Point(376, 8)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(80, 56)
-        Me.Button1.TabIndex = 23
-        Me.Button1.Text = " Active"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.CmdActive.Image = CType(resources.GetObject("CmdActive.Image"), System.Drawing.Image)
+        Me.CmdActive.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.CmdActive.Location = New System.Drawing.Point(376, 8)
+        Me.CmdActive.Name = "CmdActive"
+        Me.CmdActive.Size = New System.Drawing.Size(80, 56)
+        Me.CmdActive.TabIndex = 23
+        Me.CmdActive.Text = " Active"
+        Me.CmdActive.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'CmdImport
         '
@@ -244,7 +244,7 @@ Public Class FrmPreSemi
         Me.ClientSize = New System.Drawing.Size(1162, 640)
         Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.CmdActive)
         Me.Controls.Add(Me.ChkAvtive)
         Me.Controls.Add(Me.cmdDel)
         Me.Controls.Add(Me.CheckBoxType)
@@ -274,91 +274,113 @@ Public Class FrmPreSemi
     Dim oldrow As Integer
 #End Region
 
+#Region "Form Event"
+    Private Sub FrmPreSemi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        LoadSemi()
+        LoadPreSemi()
+        LoadType()
+
+        'If CheckBoxType.Checked = False Then
+        '    GrdDV.RowFilter = " "
+        '    DataGridCom.DataSource = GrdDV
+        'End If
+
+        'If CheckBoxPreSemi.Checked = False Then
+        '    GrdDV.RowFilter = " "
+        '    DataGridCom.DataSource = GrdDV
+        'End If
+        CheckBox()
+    End Sub
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadSemi()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "  select Typecode,TypeName,Pcode,Revision,mm,MaterialType,MaterialName"
-        StrSQL &= "  ,TQty,N,Length,gmeter,Width,Gauge,Active,cn"
-        StrSQL &= "  ,code,Mastercode,MRev,RMCode,RmRev,Qty,Qty *(nm /cntn)*(lm/1000) Qty2,Unit"
-        StrSQL &= "  ,nm,lm,wm,QPU,Ac,cntn , per      from "
-        StrSQL &= "  ("
-        StrSQL &= "  SELECT  Typecode,TypeName,Code Pcode,Revision,MaterialName mm,MaterialType,MaterialName"
-        StrSQL &= "  ,QPU TQty,N,Length,gmeter,Width,Gauge,Active,cn"
-        StrSQL &= "  ,code+','+Revision code,'' Mastercode,'' MRev,'' RMCode,'' RmRev,null Qty,'' Unit"
-        StrSQL &= "   ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU ,Active Ac,cn cntn ,null per      "
-        StrSQL &= "   FROM  (select Psemicode,Revision,MaterialType,MaterialName"
-        StrSQL &= "  ,QPU,N,Length,gmeter,width,gauge,Active,cn from  TBLPreSemi p"
-        StrSQL &= "  left outer join "
-        StrSQL &= "   TBLTypeMaterial  t"
-        StrSQL &= "  on p.MaterialType = t.MaterialCode) ps"
-        StrSQL &= "   left outer join  ("
-        StrSQL &= "    select t.TypeCode,TypeName,Code from TBLType t"
-        StrSQL &= "    left outer join  TBLGroup g"
-        StrSQL &= "    on t.typecode = g.typecode) gp"
-        StrSQL &= "    on ps.psemicode = code"
+        sb.AppendLine("  SELECT Typecode,TypeName,Pcode,Revision,mm,MaterialType,MaterialName")
+        sb.AppendLine("  ,TQty,N,Length,gmeter,Width,Gauge,Active,cn")
+        sb.AppendLine("  ,code,Mastercode,MRev,RMCode,RmRev,Qty,Qty *(nm /cntn)*(lm/1000) Qty2,Unit")
+        sb.AppendLine("  ,nm,lm,wm,QPU,Ac,cntn , per")
+        sb.AppendLine("  FROM (")
+        sb.AppendLine("    SELECT  Typecode,TypeName,Code Pcode,Revision,MaterialName mm,MaterialType,MaterialName")
+        sb.AppendLine("    ,QPU TQty,N,Length,gmeter,Width,Gauge,Active,cn")
+        sb.AppendLine("    ,code+','+Revision code,'' Mastercode,'' MRev,'' RMCode,'' RmRev,null Qty,'' Unit")
+        sb.AppendLine("    ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU ,Active Ac,cn cntn ,null per")
+        sb.AppendLine("    FROM  (")
+        sb.AppendLine("      SELECT Psemicode,Revision,MaterialType,MaterialName")
+        sb.AppendLine("      ,QPU,N,Length,gmeter,width,gauge,Active,cn ")
+        sb.AppendLine("      FROM  TBLPreSemi p")
+        sb.AppendLine("      LEFT OUTER JOIN TBLTypeMaterial  t on p.MaterialType = t.MaterialCode")
+        sb.AppendLine("    ) ps")
+        sb.AppendLine("    LEFT OUTER JOIN  (")
+        sb.AppendLine("      SELECT t.TypeCode,TypeName,Code ")
+        sb.AppendLine("      FROM TBLType t")
+        sb.AppendLine("      LEFT OUTER JOIN  TBLGroup g on t.typecode = g.typecode")
+        sb.AppendLine("    ) gp on ps.psemicode = code")
 
-        StrSQL &= "     union"
+        sb.AppendLine("    UNION")
 
-        StrSQL &= "    select  '' Typecode,'' TypeName,'' Pcode,'' Revision,'' mm,Materialcode,MaterialName"
-        StrSQL &= "   ,null TQty,null N,NULL Length,null gmeter,null Width,null Gauge,null Acitve,null cn,"
-        StrSQL &= "   Mastercode+','+m.Revision Code, Mastercode"
-        StrSQL &= "   ,m.Revision MRev,RMCode,isnull(RMRevision,'') RmRev,Qty,Unit"
-        StrSQL &= "   ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU,Active Ac,cn cntn  , per  from "
-        StrSQL &= "  (select * from TBLPresemi pr"
-        StrSQL &= "   left outer join "
-        StrSQL &= "   TBLTypeMaterial t"
-        StrSQL &= "   on pr.MaterialType = t.Materialcode) p"
-        StrSQL &= "  left outer join"
-        StrSQL &= "  (select * from TBLMaster"
-        StrSQL &= "  where mastercode in ("
-        StrSQL &= "  select psemicode  from  TBLPresemi)) m"
-        StrSQL &= "   on p.psemicode+p.Revision = m.mastercode+m.Revision"
-        StrSQL &= "  )aaaa"
-        StrSQL &= " where MaterialType  not in(02)"
+        sb.AppendLine("    SELECT  '' Typecode,'' TypeName,'' Pcode,'' Revision,'' mm,Materialcode,MaterialName")
+        sb.AppendLine("    ,null TQty,null N,NULL Length,null gmeter,null Width,null Gauge,null Acitve,null cn,")
+        sb.AppendLine("    Mastercode+','+m.Revision Code, Mastercode,m.Revision MRev,RMCode,isnull(RMRevision,'') RmRev,Qty,Unit")
+        sb.AppendLine("    ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU,Active Ac,cn cntn  , per")
+        sb.AppendLine("    FROM (")
+        sb.AppendLine("      SELECT *")
+        sb.AppendLine("      FROM TBLPreSemi pr")
+        sb.AppendLine("      LEFT OUTER JOIN TBLTypeMaterial t on pr.MaterialType = t.Materialcode")
+        sb.AppendLine("    ) p")
+        sb.AppendLine("    LEFT OUTER JOIN (")
+        sb.AppendLine("      SELECT * ")
+        sb.AppendLine("      FROM TBLMaster")
+        sb.AppendLine("      WHERE mastercode IN ( SELECT psemicode  FROM  TBLPresemi )") 'Get PreSemi in table TBLMaster
+        sb.AppendLine("    ) m on p.psemicode+p.Revision = m.mastercode+m.Revision")
+        sb.AppendLine("  ) aaaa")
+        sb.AppendLine("  WHERE MaterialType  NOT IN (02)") 'Exclude Material Type COATED CORD
 
-        StrSQL &= " union "
+        sb.AppendLine("  UNION ")
 
-        StrSQL &= "  select Typecode,TypeName,Pcode,Revision,mm,MaterialType,MaterialName"
-        StrSQL &= "   ,TQty,N,Length,gmeter,Width,Gauge,Active,cn"
-        StrSQL &= "   ,code,Mastercode,MRev,RMCode,RmRev,Qty,Qty *(nm /cntn)/(wm/1000) Qty2,Unit"
-        StrSQL &= "  ,nm,lm,wm,QPU,Ac,cntn ,per     from "
-        StrSQL &= "   ("
-        StrSQL &= "   SELECT  Typecode,TypeName,Code Pcode,Revision,MaterialName mm,MaterialType,MaterialName"
-        StrSQL &= "   ,QPU TQty,N,Length,gmeter,Width,Gauge,Active,cn"
-        StrSQL &= "   ,code+','+Revision code,'' Mastercode,'' MRev,'' RMCode,'' RmRev,null Qty,'' Unit"
-        StrSQL &= "  ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU ,Active Ac,cn cntn  ,null per  "
-        StrSQL &= "  FROM  (select Psemicode,Revision,MaterialType,MaterialName"
-        StrSQL &= "  ,QPU,N,Length,gmeter,width,gauge,Active,cn from  TBLPreSemi p"
-        StrSQL &= "  left outer join "
-        StrSQL &= "   TBLTypeMaterial  t"
-        StrSQL &= "   on p.MaterialType = t.MaterialCode) ps"
-        StrSQL &= "   left outer join  ("
-        StrSQL &= "   select t.TypeCode,TypeName,Code from TBLType t"
-        StrSQL &= "   left outer join  TBLGroup g"
-        StrSQL &= "   on t.typecode = g.typecode) gp"
-        StrSQL &= "   on ps.psemicode = code"
+        sb.AppendLine("  SELECT Typecode,TypeName,Pcode,Revision,mm,MaterialType,MaterialName")
+        sb.AppendLine("  ,TQty,N,Length,gmeter,Width,Gauge,Active,cn")
+        sb.AppendLine("  ,code,Mastercode,MRev,RMCode,RmRev,Qty,Qty *(nm /cntn)/(wm/1000) Qty2,Unit")
+        sb.AppendLine("  ,nm,lm,wm,QPU,Ac,cntn ,per ")
+        sb.AppendLine("  FROM (")
+        sb.AppendLine("    SELECT  Typecode,TypeName,Code Pcode,Revision,MaterialName mm,MaterialType,MaterialName")
+        sb.AppendLine("    ,QPU TQty,N,Length,gmeter,Width,Gauge,Active,cn")
+        sb.AppendLine("    ,code+','+Revision code,'' Mastercode,'' MRev,'' RMCode,'' RmRev,null Qty,'' Unit")
+        sb.AppendLine("    ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU ,Active Ac,cn cntn  ,null per  ")
+        sb.AppendLine("    FROM  (")
+        sb.AppendLine("      SELECT Psemicode,Revision,MaterialType,MaterialName")
+        sb.AppendLine("      ,QPU,N,Length,gmeter,width,gauge,Active,cn ")
+        sb.AppendLine("      FROM  TBLPreSemi p")
+        sb.AppendLine("      LEFT OUTER JOIN TBLTypeMaterial  t on p.MaterialType = t.MaterialCode")
+        sb.AppendLine("    ) ps")
+        sb.AppendLine("    LEFT OUTER JOIN (")
+        sb.AppendLine("      SELECT t.TypeCode,TypeName,Code ")
+        sb.AppendLine("      FROM TBLType t")
+        sb.AppendLine("      LEFT OUTER JOIN  TBLGroup g on t.typecode = g.typecode")
+        sb.AppendLine("    ) gp on ps.psemicode = code")
 
-        StrSQL &= "    union"
+        sb.AppendLine("    UNION ")
 
-        StrSQL &= "   select  '' Typecode,'' TypeName,'' Pcode,'' Revision,'' mm,Materialcode,MaterialName"
-        StrSQL &= "   ,null TQty,null N,NULL Length,null gmeter,null Width,null Gauge,null Acitve,null cn,"
-        StrSQL &= "  Mastercode+','+m.Revision Code, Mastercode"
-        StrSQL &= " ,m.Revision MRev,RMCode,isnull(RMRevision,'') RmRev,Qty,Unit"
-        StrSQL &= "  ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU,Active Ac,cn cntn,per  from "
-        StrSQL &= "  (select * from TBLPresemi pr"
-        StrSQL &= "  left outer join "
-        StrSQL &= "   TBLTypeMaterial t"
-        StrSQL &= "   on pr.MaterialType = t.Materialcode) p"
-        StrSQL &= "  left outer join"
-        StrSQL &= "  (select * from TBLMaster"
-        StrSQL &= "    where mastercode in ("
-        StrSQL &= "    select psemicode  from  TBLPresemi)) m"
-        StrSQL &= "   on p.psemicode+p.Revision = m.mastercode+m.Revision"
-        StrSQL &= "  )aaaa"
-        StrSQL &= " where MaterialType   in(02)"
-
-        StrSQL &= "  order by code,Pcode desc"
+        sb.AppendLine("    SELECT  '' Typecode,'' TypeName,'' Pcode,'' Revision,'' mm,Materialcode,MaterialName")
+        sb.AppendLine("    ,null TQty,null N,NULL Length,null gmeter,null Width,null Gauge,null Acitve,null cn,")
+        sb.AppendLine("    Mastercode+','+m.Revision Code, Mastercode,m.Revision MRev,RMCode,isnull(RMRevision,'') RmRev,Qty,Unit")
+        sb.AppendLine("    ,isnull(N,1) nm,isnull(Length,1000) lm,isnull(Width,1000) wm,QPU,Active Ac,cn cntn,per ")
+        sb.AppendLine("    FROM (")
+        sb.AppendLine("      SELECT * ")
+        sb.AppendLine("      FROM TBLPresemi pr")
+        sb.AppendLine("      LEFT OUTER JOIN TBLTypeMaterial t on pr.MaterialType = t.Materialcode")
+        sb.AppendLine("    ) p")
+        sb.AppendLine("    LEFT OUTER JOIN (")
+        sb.AppendLine("      SELECT *")
+        sb.AppendLine("      FROM TBLMaster")
+        sb.AppendLine("      WHERE mastercode in ( SELECT psemicode  FROM  TBLPresemi )") 'Get PreSemi in table TBLMaster
+        sb.AppendLine("    ) m on p.psemicode+p.Revision = m.mastercode+m.Revision")
+        sb.AppendLine("  ) aaaa")
+        sb.AppendLine("  WHERE MaterialType  IN (02)") 'only Material Type COATED CORD
+        sb.AppendLine("  ORDER BY code,Pcode DESC")
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -382,7 +404,7 @@ Public Class FrmPreSemi
         GrdDV.AllowNew = False
         GrdDV.AllowDelete = False
         '************************************
-        DataGridCOM.DataSource = GrdDV
+        DataGridCom.DataSource = GrdDV
         '************************************
         'Dim i As Integer
         'Dim c34 As String = Chr(34)
@@ -398,7 +420,7 @@ Public Class FrmPreSemi
         'Next
         ResetTableStyle()
 
-        With DataGridCOM
+        With DataGridCom
             .BackColor = Color.GhostWhite
             .BackgroundColor = Color.Honeydew
             .BorderStyle = BorderStyle.None
@@ -579,7 +601,7 @@ Public Class FrmPreSemi
         grdTableStyle1.GridColumnStyles.AddRange _
 (New DataGridColumnStyle() _
 {grdColStyle13, grdColStyle12, grdColStyle2, grdColStyle2_1, grdColStyle3, grdColStyle3_1 _
-, grdColStyle5_1, grdColStyle5, grdColStyle6, grdColStyle7, grdColStyle14, _
+, grdColStyle5_1, grdColStyle5, grdColStyle6, grdColStyle7, grdColStyle14,
 grdColStyle11, grdColStyle8, grdColStyle9})
 
         DataGridCom.TableStyles.Add(grdTableStyle1)
@@ -589,7 +611,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
     Private Sub ResetTableStyle()
         ' Clear out the existing TableStyles and result default formatting.
-        With DataGridCOM
+        With DataGridCom
             .BackgroundColor = SystemColors.InactiveCaptionText
             .CaptionText = ""
             .CaptionBackColor = SystemColors.ActiveCaption
@@ -611,20 +633,19 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
 #Region "COMBOBOX"
     Sub LoadPreSemi()
+        Dim sb As New System.Text.StringBuilder()
         Dim dtPreSemi As DataTable = New DataTable()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "   SELECT Code,MaterialName"
-        StrSQL &= "   FROM  TblGroup g"
-        StrSQL &= "  left outer join "
-        StrSQL &= "  ("
-        StrSQL &= "  SELECT distinct PsemiCode,MaterialName"
-        StrSQL &= "   FROM  TblPreSemi p"
-        StrSQL &= "  left outer join  TblTypeMaterial t"
-        StrSQL &= "  on p.MaterialType = t.MaterialCode"
-        StrSQL &= "  )semi"
-        StrSQL &= "  on g.code = semi.Psemicode"
-        StrSQL &= "  where Typecode = '04'"
+        sb.AppendLine("SELECT Code,MaterialName")
+        sb.AppendLine("FROM  TblGroup g")
+        sb.AppendLine("LEFT OUTER JOIN ( ")
+        sb.AppendLine("  SELECT distinct PsemiCode,MaterialName")
+        sb.AppendLine("  FROM  TblPreSemi p")
+        sb.AppendLine("  LEFT OUTER JOIN  TblTypeMaterial t on p.MaterialType = t.MaterialCode")
+        sb.AppendLine(") semi on g.code = semi.Psemicode")
+        sb.AppendLine("WHERE Typecode = '04'")
+        StrSQL = sb.ToString()
 
         Dim DA As SqlDataAdapter
         Try
@@ -644,11 +665,14 @@ grdColStyle11, grdColStyle8, grdColStyle9})
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
     Sub LoadType()
+        Dim sb As New System.Text.StringBuilder()
         Dim dtType As DataTable = New DataTable()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "SELECT  *  FROM  TBLTypeMaterial "
-        StrSQL &= "where  descname like '%Presemi%'"
+        sb.AppendLine("SELECT  *  ")
+        sb.AppendLine("FROM  TBLTypeMaterial ")
+        sb.AppendLine("WHERE  descname LIKE '%Presemi%'")
+        StrSQL = sb.ToString()
 
         Dim DA As SqlDataAdapter
         Try
@@ -669,24 +693,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
     End Sub
 #End Region
 
-    Private Sub FrmPreSemi_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadSemi()
-        LoadPreSemi()
-        LoadType()
-
-        'If CheckBoxType.Checked = False Then
-        '    GrdDV.RowFilter = " "
-        '    DataGridCom.DataSource = GrdDV
-        'End If
-
-        'If CheckBoxPreSemi.Checked = False Then
-        '    GrdDV.RowFilter = " "
-        '    DataGridCom.DataSource = GrdDV
-        'End If
-        CheckBox()
-
-    End Sub
-
+#Region "Control Event"
     Private Sub CmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdClose.Click
         Me.Close()
     End Sub
@@ -704,9 +711,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
             faddPreSemi.chkbal = True
         End If
         If GrdDV.Item(oldrow).Row("MaterialName") = "COATED CORD" Then
-            faddPreSemi.txtWidth.Text = GrdDV.Item(oldrow).Row("Width")
+            faddPreSemi.TxtWidth.Text = GrdDV.Item(oldrow).Row("Width")
         Else
-            faddPreSemi.txtWidth.Text = ""
+            faddPreSemi.TxtWidth.Text = ""
         End If
         faddPreSemi.ShowDialog()
         CheckBox()
@@ -726,6 +733,36 @@ grdColStyle11, grdColStyle8, grdColStyle9})
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCom.CurrentCellChanged
         oldrow = DataGridCom.CurrentCell.RowNumber
     End Sub
+
+    Private Sub CmdActive_Click(sender As Object, e As EventArgs) Handles CmdActive.Click
+        Dim msg As String
+        Dim title As String
+        Dim style As MsgBoxStyle
+        Dim response As MsgBoxResult
+        If GrdDV.Item(oldrow).Row("Pcode") = "" Then
+            Exit Sub
+        End If
+        msg = "Change Active Semi(Material) : " & GrdDV.Item(oldrow).Row("Pcode") _
+        & "  Revision :" & GrdDV.Item(oldrow).Row("Revision") 'Define message.
+        style = MsgBoxStyle.DefaultButton2 Or
+           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        title = "Semi(Material)"   ' Define title.
+        ' Display message.
+        response = MsgBox(msg, style, title)
+        If response = MsgBoxResult.Yes Then ' User chose Yes.
+            If ChkData() Then
+                UPSemi()
+                LoadSemi()
+                CheckBox()
+                oldrow = 0
+            Else
+                MsgBox("Can't Delete. Please check Usage.", MsgBoxStyle.OkOnly, "PreSemi")
+            End If
+        Else
+            Exit Sub
+        End If
+    End Sub
+#End Region
 
 #Region "SelectData"
     Private Sub CmbPreSemi_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbPreSemi.SelectedIndexChanged
@@ -816,7 +853,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
         End If
         msg = "Delete Semi(Material) : " & GrdDV.Item(oldrow).Row("Pcode") _
            & "  Revision :" & GrdDV.Item(oldrow).Row("Revision") 'Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Semi(Material)"   ' Define title.
         ' Display message.
@@ -827,7 +864,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                 LoadSemi()
                 CheckBox()
             Else
-                MsgBox("Can't Delete. Please check Usage.", MsgBoxStyle.OKOnly, "Tire")
+                MsgBox("Can't Delete. Please check Usage.", MsgBoxStyle.OkOnly, "Tire")
             End If
         Else
             Exit Sub
@@ -1004,35 +1041,6 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
     Private Sub ChkAvtive_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChkAvtive.CheckedChanged
         CheckBox()
-    End Sub
-
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
-        Dim response As MsgBoxResult
-        If GrdDV.Item(oldrow).Row("Pcode") = "" Then
-            Exit Sub
-        End If
-        msg = "Change Active Semi(Material) : " & GrdDV.Item(oldrow).Row("Pcode") _
-        & "  Revision :" & GrdDV.Item(oldrow).Row("Revision") 'Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Semi(Material)"   ' Define title.
-        ' Display message.
-        response = MsgBox(msg, style, title)
-        If response = MsgBoxResult.Yes Then ' User chose Yes.
-            If ChkData() Then
-                UPSemi()
-                LoadSemi()
-                CheckBox()
-                oldrow = 0
-            Else
-                MsgBox("Can't Delete. Please check Usage.", MsgBoxStyle.OKOnly, "PreSemi")
-            End If
-        Else
-            Exit Sub
-        End If
     End Sub
 
     Private Sub DataGridCom_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles DataGridCom.KeyPress
