@@ -732,7 +732,7 @@ Public Class FrmRHC
     End Sub
 
     Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
-        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXCEL_COLUMN_MASTER_COMPOUND_RHC").ToString().Split(New Char() {","c})
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("IMP_EXCEL_COLUMN_MASTER_COMPOUND_RHC").ToString().Split(New Char() {","c})
         Dim importDialog As OpenFileDialog = New OpenFileDialog With {
             .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
         }
