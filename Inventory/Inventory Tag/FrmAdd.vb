@@ -72,36 +72,36 @@ Public Class FrmAdd
     Friend WithEvents DPeriod As System.Windows.Forms.DateTimePicker
     Friend WithEvents yPeriod As System.Windows.Forms.DateTimePicker
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmAdd))
-        Me.cmdShow = New System.Windows.Forms.Button
-        Me.cmbType = New System.Windows.Forms.ComboBox
-        Me.GrdItem = New System.Windows.Forms.DataGrid
-        Me.cmdOK = New System.Windows.Forms.Button
-        Me.cmdCancel = New System.Windows.Forms.Button
-        Me.cmbCode = New System.Windows.Forms.ComboBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.cmbLoc = New System.Windows.Forms.ComboBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.DateTime1 = New System.Windows.Forms.DateTimePicker
-        Me.sbar = New System.Windows.Forms.StatusBar
-        Me.MsgPanel = New System.Windows.Forms.StatusBarPanel
-        Me.CurrentUserPanel = New System.Windows.Forms.StatusBarPanel
-        Me.DateTimePanel = New System.Windows.Forms.StatusBarPanel
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.TxtTagNo = New System.Windows.Forms.TextBox
-        Me.RB1 = New System.Windows.Forms.RadioButton
-        Me.RB2 = New System.Windows.Forms.RadioButton
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.TxtRemark = New System.Windows.Forms.TextBox
-        Me.txtcode = New System.Windows.Forms.TextBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.RB3 = New System.Windows.Forms.RadioButton
-        Me.DPeriod = New System.Windows.Forms.DateTimePicker
-        Me.yPeriod = New System.Windows.Forms.DateTimePicker
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmAdd))
+        Me.cmdShow = New System.Windows.Forms.Button()
+        Me.cmbType = New System.Windows.Forms.ComboBox()
+        Me.GrdItem = New System.Windows.Forms.DataGrid()
+        Me.cmdOK = New System.Windows.Forms.Button()
+        Me.cmdCancel = New System.Windows.Forms.Button()
+        Me.cmbCode = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cmbLoc = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.DateTime1 = New System.Windows.Forms.DateTimePicker()
+        Me.sbar = New System.Windows.Forms.StatusBar()
+        Me.MsgPanel = New System.Windows.Forms.StatusBarPanel()
+        Me.CurrentUserPanel = New System.Windows.Forms.StatusBarPanel()
+        Me.DateTimePanel = New System.Windows.Forms.StatusBarPanel()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TxtTagNo = New System.Windows.Forms.TextBox()
+        Me.RB1 = New System.Windows.Forms.RadioButton()
+        Me.RB2 = New System.Windows.Forms.RadioButton()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TxtRemark = New System.Windows.Forms.TextBox()
+        Me.txtcode = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.RB3 = New System.Windows.Forms.RadioButton()
+        Me.DPeriod = New System.Windows.Forms.DateTimePicker()
+        Me.yPeriod = New System.Windows.Forms.DateTimePicker()
         CType(Me.GrdItem, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MsgPanel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CurrentUserPanel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -117,7 +117,7 @@ Public Class FrmAdd
         Me.cmdShow.Name = "cmdShow"
         Me.cmdShow.Size = New System.Drawing.Size(184, 40)
         Me.cmdShow.TabIndex = 4
-        Me.cmdShow.Text = "แสดงรายการ (F5)"
+        Me.cmdShow.Text = "Show List (F5)"
         Me.cmdShow.Visible = False
         '
         'cmbType
@@ -233,7 +233,7 @@ Public Class FrmAdd
         'sbar
         '
         Me.sbar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.sbar.Dock = System.Windows.Forms.DockStyle.None
         Me.sbar.Location = New System.Drawing.Point(0, 288)
         Me.sbar.Name = "sbar"
@@ -246,17 +246,20 @@ Public Class FrmAdd
         '
         Me.MsgPanel.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring
         Me.MsgPanel.Icon = CType(resources.GetObject("MsgPanel.Icon"), System.Drawing.Icon)
-        Me.MsgPanel.Width = 366
+        Me.MsgPanel.Name = "MsgPanel"
+        Me.MsgPanel.Width = 365
         '
         'CurrentUserPanel
         '
         Me.CurrentUserPanel.Alignment = System.Windows.Forms.HorizontalAlignment.Center
         Me.CurrentUserPanel.BorderStyle = System.Windows.Forms.StatusBarPanelBorderStyle.Raised
+        Me.CurrentUserPanel.Name = "CurrentUserPanel"
         Me.CurrentUserPanel.Width = 120
         '
         'DateTimePanel
         '
         Me.DateTimePanel.BorderStyle = System.Windows.Forms.StatusBarPanelBorderStyle.Raised
+        Me.DateTimePanel.Name = "DateTimePanel"
         Me.DateTimePanel.Width = 210
         '
         'CheckBox1
@@ -282,7 +285,6 @@ Public Class FrmAdd
         Me.TxtTagNo.Name = "TxtTagNo"
         Me.TxtTagNo.Size = New System.Drawing.Size(64, 20)
         Me.TxtTagNo.TabIndex = 0
-        Me.TxtTagNo.Text = ""
         '
         'RB1
         '
@@ -318,7 +320,6 @@ Public Class FrmAdd
         Me.TxtRemark.Name = "TxtRemark"
         Me.TxtRemark.Size = New System.Drawing.Size(376, 40)
         Me.TxtRemark.TabIndex = 6
-        Me.TxtRemark.Text = ""
         '
         'txtcode
         '
@@ -326,7 +327,6 @@ Public Class FrmAdd
         Me.txtcode.Name = "txtcode"
         Me.txtcode.Size = New System.Drawing.Size(120, 20)
         Me.txtcode.TabIndex = 2
-        Me.txtcode.Text = ""
         '
         'Label7
         '
@@ -417,6 +417,7 @@ Public Class FrmAdd
         CType(Me.DateTimePanel, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
