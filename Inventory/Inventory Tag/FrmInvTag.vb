@@ -269,47 +269,47 @@ Public Class FrmInvTag
             CurrentName = Login.FrmLogin.EmpName
             CurrentLevel = Login.FrmLogin.LevelUsage
 
-            Dim fYTag As New FrmYearInvTag
-            fYTag.MdiParent = Me
-            fYTag.Username = CurrentName
+            Dim fYTag As New FrmYearInvTag With {
+                .MdiParent = Me,
+                .Username = CurrentName
+            }
             fYTag.Show()
             Me.LayoutMdi(MdiLayout.TileHorizontal)
         Else
-            If closeprogram() Then
+            If CloseProgram() Then
                 Me.Close()
             End If
         End If
     End Sub
-    Function closeprogram() As Boolean
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+    Function CloseProgram() As Boolean
+        Dim msg As String = "Inventory Record Closing Program"  ' Define message.
+        Dim title As String = "Inventory"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
         Dim flog As New FrmLogin
-        closeprogram = False
-        msg = "Inventory Record Closing Program"  ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Inventory"   ' Define title.
+        Dim ret As Boolean = False
+
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
-            closeprogram = True
-            Me.Close()
+            ret = True
         Else
             flog.ShowDialog()
-            If flog.EmpIDValue <> "" Then
+            If flog.EmpIDValue <> String.Empty Then
                 Me.WindowState = FormWindowState.Maximized
                 CurrentIDUser = Login.FrmLogin.EmpID
                 CurrentName = Login.FrmLogin.EmpName
                 CurrentLevel = Login.FrmLogin.LevelUsage
             Else
-                If closeprogram() Then
+                If CloseProgram() Then
                     Me.Close()
                 End If
             End If
         End If
+
+        Return ret
     End Function
+
     Private Sub MenuInvTag_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuInvTag.Click
         Dim fYTag As New FrmYearInvTag
         fYTag.MdiParent = Me
