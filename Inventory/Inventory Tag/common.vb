@@ -17,14 +17,18 @@ Public Class Common
 #End Region
 
     Public Shared Sub GetBrand()
-        Dim strsql As String
+        Dim strsql As String = String.Empty
+        Dim sb As New StringBuilder()
         Dim c1 As New SQLData("ACCINV")
-        strsql = " SELECT   *  FROM  TblGroup"
-        strsql += " union"
-        strsql += " select '03' Typecode,Finalcompound code"
-        strsql += " from TBLCompound where active =1"
+        sb.AppendLine(" SELECT   *  ")
+        sb.AppendLine(" FROM  TblGroup")
+        sb.AppendLine(" UNION")
+        sb.AppendLine(" SELECT '03' Typecode,Finalcompound code")
+        sb.AppendLine(" FROM TBLCompound")
+        sb.AppendLine(" WHERE active = 1")
+        sb.AppendLine(" ORDER BY Typecode,code")
 
-        strsql += " order by Typecode,code"
+        strsql = sb.ToString()
         TB_Code = c1.GetDataset(strsql).Tables(0)
         VwCode.Table = TB_Code
         VwCode.Sort = "code"
