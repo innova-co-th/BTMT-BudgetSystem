@@ -5,6 +5,7 @@ Imports Inventory_Tag.Common
 
 #Region "SQLData"
 Public Class SQLData
+
     Public Strcon As String
 
     Public Sub New()
