@@ -145,7 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Class1.vb">
+    <Compile Include="Class\SQLData.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="common.vb" />
@@ -266,10 +266,10 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Splash.designer.vb">
+    <Compile Include="Notification\Splash.designer.vb">
       <DependentUpon>Splash.vb</DependentUpon>
     </Compile>
-    <Compile Include="Splash.vb">
+    <Compile Include="Notification\Splash.vb">
       <SubType>Form</SubType>
     </Compile>
     <Content Include="Dataset1.xsd">
@@ -288,7 +288,7 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Dataset4.Designer.vb</LastGenOutput>
     </Content>
-    <EmbeddedResource Include="Splash.resx">
+    <EmbeddedResource Include="Notification\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="My Project\Application.myapp">
