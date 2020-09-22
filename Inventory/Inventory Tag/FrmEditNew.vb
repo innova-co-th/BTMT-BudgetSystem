@@ -879,7 +879,7 @@ Public Class FrmEditNew
                     GrdItem.CurrentCell = New DataGridCell(aRow - 1, 2)
                     oldRow = aRow - 1
                     oldCol = 2
-                    sender = e.Empty
+                    'sender = e.Empty
                 End If
             End If
         Else
