@@ -70,8 +70,10 @@ Public Class FrmAdd
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents RB3 As System.Windows.Forms.RadioButton
     Friend WithEvents DPeriod As System.Windows.Forms.DateTimePicker
+    Friend WithEvents Timer1 As Timer
     Friend WithEvents yPeriod As System.Windows.Forms.DateTimePicker
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmAdd))
         Me.cmdShow = New System.Windows.Forms.Button()
         Me.cmbType = New System.Windows.Forms.ComboBox()
@@ -102,6 +104,7 @@ Public Class FrmAdd
         Me.RB3 = New System.Windows.Forms.RadioButton()
         Me.DPeriod = New System.Windows.Forms.DateTimePicker()
         Me.yPeriod = New System.Windows.Forms.DateTimePicker()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.GrdItem, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MsgPanel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CurrentUserPanel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -375,6 +378,9 @@ Public Class FrmAdd
         Me.yPeriod.Size = New System.Drawing.Size(72, 20)
         Me.yPeriod.TabIndex = 12
         '
+        'Timer1
+        '
+        '
         'FrmAdd
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
@@ -422,6 +428,7 @@ Public Class FrmAdd
     End Sub
 
 #End Region
+
     Public Shared GrdItemDv As New DataView
     Protected Const TBL_ITEM As String = "TBL_Item"
     Dim bFormLoad As Boolean
@@ -431,26 +438,41 @@ Public Class FrmAdd
     Public Shared aRow As Long
     Public Shared cm As CurrencyManager
     Dim TrxNo As String
-    Dim dd(), idate As String
+    Dim idate As String
+    Private ReadOnly cult As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
 
     Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
         Me.Close()
     End Sub
 
+#Region "Form Event"
     Private Sub FrmAdd_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        dd = Split(DateTime1.Text.Trim, "/")
-        idate = dd(2)
-        PopulateTypeComboType()
-        PopulateLocation()
-        sbar.Panels(0).Text = Date.Now
-        sbar.Panels(2).Text = "Usage Name : " + CurrentName.Trim
+        Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
+        idate = dd.ToString("yyyy") 'Get year
+
+        PopulateTypeComboType() 'Set Type
+        PopulateLocation() 'Set Location
+
+        sbar.Panels(2).Text = "Usage Name : " + CurrentName.Trim() 'Display User
+        Timer1.Enabled = True 'Start Time
     End Sub
+
+    Private Sub frmAdd_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown, cmbCode.KeyDown, cmbType.KeyDown
+        'Event for cmbCode, cmbType and Form
+        If e.KeyCode = Keys.F5 Then
+            ShowData()
+        End If
+        If e.KeyValue = Keys.Escape Then
+            Me.Hide()
+        End If
+    End Sub
+#End Region
 
     Sub trxRecord()
         Dim i As Integer
         Dim istr As String
-        dd = Split(DateTime1.Text.Trim, "/")
-        idate = dd(2)
+        Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
+        idate = dd.ToString("yyyy") 'Get year
         If cmdOK.Text = "Save" Then
             i = iNo(idate) + 1
             istr = Format(i, "00000")
@@ -502,13 +524,16 @@ Public Class FrmAdd
     Private Sub PopulateTypeComboType()
         Dim objListType As ListType
         Dim dr As DataRow
+
         cmbType.Items.Clear()
+
         Dim i As Integer = 0
         For Each dr In Vwtype.Table.Select(Vwtype.RowFilter)
             objListType = New ListType(RTrim(dr.Item("Typecode").ToString()) + " - " + RTrim(dr.Item("TypeName").ToString()), i)
             cmbType.Items.Add(objListType)
             i += 1
         Next
+
         cmbType.SelectedIndex = 0
     End Sub
 
@@ -516,7 +541,9 @@ Public Class FrmAdd
         VwCode.RowFilter = "Typecode='" & Mid(cmbType.Text, 1, 2) & "'"
         Dim objListType As ListType
         Dim dr As DataRow
+
         cmbCode.Items.Clear()
+
         Dim i As Integer = 0
         For Each dr In VwCode.Table.Select(VwCode.RowFilter)
             objListType = New ListType(RTrim(dr.Item("code").ToString()), i)
@@ -534,13 +561,16 @@ Public Class FrmAdd
     Private Sub PopulateLocation()
         Dim objListType As ListType
         Dim dr As DataRow
+
         cmbLoc.Items.Clear()
+
         Dim i As Integer = 0
         For Each dr In VwLoc.Table.Select(VwLoc.RowFilter)
             objListType = New ListType(RTrim(dr.Item("DeptCode").ToString()) + " - " + RTrim(dr.Item("DeptName").ToString()), i)
             cmbLoc.Items.Add(objListType)
             i += 1
         Next
+
         cmbLoc.SelectedIndex = 0
     End Sub
 #End Region
@@ -557,22 +587,24 @@ Public Class FrmAdd
 
         'Modify error when cmbCode have no any item (By Beam 31-Aug-2020)------
         If cmbCode.Items.Count <= 0 Then
-            switch()
-            ShowData()
+            switch() 'Show show button and hide data grid
+            ShowData() 'Load data grid, Hide show button and show data grid
         End If
         '----------------------------------------------------------------------
     End Sub
 
     Private Sub cmbCode_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbCode.SelectedIndexChanged
-        switch()
-        ShowData()
+        switch() 'Show show button and hide data grid
+        ShowData() 'Load data grid, Hide show button and show data grid
     End Sub
 
     Sub switch()
         Try
             GrdItem.CurrentCell = New DataGridCell(0, 0)
         Catch
+            'Nothing
         End Try
+
         GrdItem.Visible = False
         cmdShow.Visible = True
     End Sub
@@ -581,17 +613,20 @@ Public Class FrmAdd
 
 #Region "Buttom Show Grid"
 
-    'Private Sub cmdShow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdShow.Click
-    '    ShowData()
-    'End Sub
+    Private Sub cmdShow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdShow.Click
+        switch() 'Show show button and hide data grid
+        ShowData() 'Load data grid, Hide show button and show data grid
+    End Sub
+
     Private Sub ShowData()
-        If cmbType.Text.Trim = "" Or cmbCode.Text.Trim = "" Then
-            MsgBox("เลือกเงื่อนไขก่อน")
+        If cmbType.Text.Trim().Equals(String.Empty) Or cmbCode.Text.Trim().Equals(String.Empty) Then
+            MsgBox("Please select condition!!!")
             Exit Sub
         End If
+
         cmdShow.Visible = False
         GrdItem.Visible = True
-        setGrid()
+        setGrid() 'Load data in data grid
         GrdItemDv.RowFilter = " Typecode = '" & Mid(cmbType.Text.Trim, 1, 2) & "' and code = '" & cmbCode.Text.Trim & "'"
         GrdItem.DataSource = GrdItemDv
         oldRow = 0
@@ -604,34 +639,32 @@ Public Class FrmAdd
 #Region "Set grid "
     Private Sub setGrid()
         Dim dt As DataTable = New DataTable()
+        Dim sb As New System.Text.StringBuilder()
         Dim StrSQL As String
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " select  distinct Typecode,code,QTY,Unit,shortUnitName,UnitName from ("
-        StrSQL &= "  SELECT    cc.Typecode,cc.code,isnull(Revision,'')Rev,0.00 QTY,UnitBig Unit"
-        StrSQL &= "  FROM         "
-        StrSQL &= " (SELECT distinct TYpecode, MasterCode, Revision "
-        StrSQL &= " FROM         TBLMASTER m"
-        StrSQL &= " Right outer join "
-        StrSQL &= " TBLGroup  g"
-        StrSQL &= " on m.Mastercode = g.code )gg"
-        StrSQL &= "   right outer join "
-        StrSQL &= " ("
-        StrSQL &= " select distinct Type Typecode,c.code,UnitBig from TBLConvert c"
-        StrSQL &= " left outer join  TBLGroup g"
-        StrSQL &= " on c.code = g.code"
-        StrSQL &= " ) cc"
-        StrSQL &= " on gg.MasterCode = cc.code"
-        StrSQL &= "  Union"
-        StrSQL &= " SELECT  distinct Typecode,code,isnull(Revision,'') Rev,0.00 Qty,'KG' Unit"
-        StrSQL &= " FROM         TBLMASTER m"
-        StrSQL &= " Right outer join "
-        StrSQL &= " TBLGroup  g"
-        StrSQL &= " on m.Mastercode = g.code"
-        StrSQL &= " )Item"
-        StrSQL &= " left outer join"
-        StrSQL &= "  TblUnit "
-        StrSQL &= "  on Item.unit = TblUnit.UnitCode"
-        StrSQL &= " order by code,ShortUnitName"
+
+        sb.AppendLine(" SELECT  distinct Typecode,code,QTY,Unit,shortUnitName,UnitName ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT    cc.Typecode,cc.code,isnull(Revision,'')Rev,0.00 QTY,UnitBig Unit")
+        sb.AppendLine("   FROM (")
+        sb.AppendLine("     SELECT distinct TYpecode, MasterCode, Revision ")
+        sb.AppendLine("     FROM         TBLMASTER m")
+        sb.AppendLine("     Right outer join TBLGroup  g on m.Mastercode = g.code ")
+        sb.AppendLine("   ) gg")
+        sb.AppendLine("   RIGHT OUTER JOIN ( ")
+        sb.AppendLine("     SELECT distinct Type Typecode,c.code,UnitBig ")
+        sb.AppendLine("     FROM TBLConvert c")
+        sb.AppendLine("     LEFT OUTER JOIN  TBLGroup g on c.code = g.code")
+        sb.AppendLine("   ) cc on gg.MasterCode = cc.code")
+        sb.AppendLine("   Union")
+        sb.AppendLine("   SELECT  distinct Typecode,code,isnull(Revision,'') Rev,0.00 Qty,'KG' Unit")
+        sb.AppendLine("   FROM         TBLMASTER m")
+        sb.AppendLine("   Right outer join TBLGroup  g on m.Mastercode = g.code ")
+        sb.AppendLine(" ) Item")
+        sb.AppendLine(" LEFT OUTER JOIN TblUnit on Item.unit = TblUnit.UnitCode ")
+        sb.AppendLine(" ORDER BY code,ShortUnitName")
+        StrSQL = sb.ToString()
+
         If Not dt Is Nothing Then
             If dt.Rows.Count >= 1 Then
                 dt.Clear()
@@ -815,7 +848,7 @@ Public Class FrmAdd
 
                 If txtcode.Text.Trim <> "" Then
                     If cmbCode.Text.Trim <> txtcode.Text.Trim Then
-                        MsgBox("Please check data again. ", MsgBoxStyle.OKOnly, "TAG")
+                        MsgBox("Please check data again. ", MsgBoxStyle.OkOnly, "TAG")
                         Exit Sub
                     End If
                 End If
@@ -883,7 +916,7 @@ Public Class FrmAdd
                     GrdItem.CurrentCell = New DataGridCell(aRow - 1, 2)
                     oldRow = aRow - 1
                     oldCol = 2
-                    sender = e.Empty
+                    'sender = e.Empty
                 End If
             End If
         Else
@@ -932,56 +965,40 @@ Public Class FrmAdd
 
 #End Region
 
-#Region "Form Keydown F5 & Esc"
-
-    Private Sub frmAdd_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown, cmbCode.KeyDown, cmbType.KeyDown
-
-        If e.KeyCode = Keys.F5 Then
-            ShowData()
-        End If
-        If e.KeyValue = 27 Then
-            Me.Hide()
-        End If
-    End Sub
-
-#End Region
-
     Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
         Dim tno() As String
         Dim k As Integer
-        If txtcode.Text.Trim <> "" Then
-            If cmbCode.Text.Trim <> txtcode.Text.Trim Then
-                MsgBox("Please check data again. ", MsgBoxStyle.OKOnly, "TAG")
+
+        If txtcode.Text.Trim() <> String.Empty Then
+            If cmbCode.Text.Trim() <> txtcode.Text.Trim() Then
+                MessageBox.Show("Please check data again. ", "TAG", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                 Exit Sub
             End If
         End If
 
-        If TxtTagNo.Text = "" Then
+        If TxtTagNo.Text.Equals(String.Empty) Then
             TxtTagNo.Focus()
-            MsgBox("Please Check Data Again.", MsgBoxStyle.OKCancel)
+            MessageBox.Show("Tag No. is empty." & vbCrLf & "Please check data Again.", "TAG", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Exit Sub
         Else
             tno = Split(TxtTagNo.Text.Trim, "-")
             If tno.Length = 1 Then
-                k = TxtTagNo.Text.Trim
+                k = TxtTagNo.Text.Trim()
                 TxtTagNo.Text = Format(k, "0000")
             ElseIf tno.Length = 2 Then
                 k = tno(0)
                 TxtTagNo.Text = Format(k, "0000") + "-" + tno(1)
             End If
         End If
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+
+        Dim msg As String = "Inventory Record TrxNo : " & TxtTagNo.Text.Trim  ' Define message.
+        Dim title As String = "Inventory"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Inventory Record TrxNo : " & TxtTagNo.Text.Trim  ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Inventory"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
-        If response = MsgBoxResult.Yes Then ' User chose Yes.
+        If response = MsgBoxResult.Yes Then ' User choose Yes.
             TRX()
         Else
             Exit Sub
@@ -1028,8 +1045,8 @@ Public Class FrmAdd
         Dim t1 As SqlTransaction = cn.BeginTransaction
         cmd.Transaction = t1
         'Dim strDate(), strDate2(), strDate3() As String    'Comment Beam 28-Aug-2020
-        Dim strDate2(), strDate3() As String                'Add Beam 28-Aug-2020
-        Dim strTime As String
+        Dim strUpDateDate, strDate3() As String                'Add Beam 28-Aug-2020
+        Dim strUpdateTime As String
 
         '//Modify date format Beam 28-Aug-2020 --------------------
         'strDate = Split(Date.Now.ToShortDateString, "/")
@@ -1040,21 +1057,26 @@ Public Class FrmAdd
         Dim strTrxDate As String = String.Empty
         strTrxDate = strDateEN.Year.ToString("D4") & strDateEN.Month.ToString("D2") & strDateEN.Day.ToString("D2")
 
-        strTime = Date.Now.ToString("HH:mm:ss")
+        strUpdateTime = Date.Now.ToString("HH:mm:ss", cult)
         '//End Modify date format Beam 28-Aug-2020 ----------------
 
-        strDate2 = Split(DateTime1.Text.Trim, "/")
+        Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
+        strUpDateDate = dd.ToString("yyyyMMdd")
         Dim Period As String
         Dim Ytrx As Integer
+
         If RB1.Checked = True Then
+            'First half year
             Ytrx = "01"
             Period = "YL"
             strDate3 = Split(yPeriod.Value.Month & "/" & yPeriod.Value.Year, "/")
         ElseIf RB2.Checked = True Then
+            'Second half year
             Ytrx = "02"
             Period = "YL"
             strDate3 = Split(yPeriod.Value.Month & "/" & yPeriod.Value.Year, "/")
         Else : RB3.Checked = True
+            'Month/Year
             Ytrx = Now.Date.Month
             Period = "ML"
             strDate3 = Split(DPeriod.Text.Trim, "/")
@@ -1068,29 +1090,32 @@ Public Class FrmAdd
                 Exit Sub
             End If
             Dim dr As DataRow
+            'Loop data in data grid
             For Each dr In aDr
                 With dr
                     If IIf(.Item("Code") Is System.DBNull.Value, "", .Item("Code")) <> "" Then
+                        'If have code
                         strsql = "Insert TBLTRX"
                         strsql += " Values("
-                        strsql += PrepareStr(TxtTagNo.Text.Trim)
-                        strsql += "," & PrepareStr(.Item("Code"))
-                        strsql += "," & PrepareStr(Period)
-                        strsql += "," & PrepareStr(strDate3(1) + Format(Ytrx, "#00"))
-                        strsql += "," & PrepareStr(Mid(cmbType.Text.Trim, 1, 2))
-                        strsql += "," & PrepareStr(Mid(cmbLoc.Text.Trim, 1, 4))
-                        strsql += "," & PrepareStr(.Item("Qty"))
-                        strsql += "," & PrepareStr(.Item("Unit"))
+                        strsql += PrepareStr(TxtTagNo.Text.Trim()) 'TagNo
+                        strsql += "," & PrepareStr(.Item("Code")) 'Code
+                        strsql += "," & PrepareStr(Period) 'period
+                        strsql += "," & PrepareStr(strDate3(1) + Format(Ytrx, "#00")) 'TrxYear
+                        strsql += "," & PrepareStr(Mid(cmbType.Text.Trim(), 1, 2)) 'TypeCode
+                        strsql += "," & PrepareStr(Mid(cmbLoc.Text.Trim(), 1, 4)) 'Location
+                        strsql += "," & PrepareStr(.Item("Qty")) 'Qty
+                        strsql += "," & PrepareStr(.Item("Unit")) 'Uom
 
                         'strsql += "," & PrepareStr(strDate(2) + strDate(1) + strDate(0))   'Comment by Beam 28-Aug-2020
-                        strsql += "," & PrepareStr(strTrxDate)                              'Change to this by Beam 28-Aug-2020
+                        strsql += "," & PrepareStr(strTrxDate) 'TrxDate                     'Change to this by Beam 28-Aug-2020
 
-                        strsql += "," & PrepareStr(strTime)
-                        strsql += "," & PrepareStr(CurrentIDUser.Trim)
-                        strsql += "," & PrepareStr(TxtRemark.Text.Trim)
-                        strsql += "," & PrepareStr(strDate2(2) + strDate2(1) + strDate2(0))
-                        strsql += "," & PrepareStr(strTime)
+                        strsql += "," & PrepareStr(strUpdateTime) 'TrxTime
+                        strsql += "," & PrepareStr(CurrentIDUser.Trim()) 'UserID
+                        strsql += "," & PrepareStr(TxtRemark.Text.Trim()) 'Remark
+                        strsql += "," & PrepareStr(strUpDateDate) 'UpDateDate
+                        strsql += "," & PrepareStr(strUpdateTime) 'UpdateTime
                         strsql += ")"
+
                         cmd.CommandText = strsql
                         cmd.ExecuteNonQuery()
                         MsgBox("Update Complete.", MsgBoxStyle.Information, "Inventory Record")
@@ -1140,11 +1165,6 @@ Public Class FrmAdd
         txtcode.Text = ""
     End Sub
 
-    Private Sub cmdShow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdShow.Click
-        switch()
-        ShowData()
-    End Sub
-
     Private Sub GrdItem_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles GrdItem.KeyPress
         Select Case Asc(e.KeyChar)
             Case 8
@@ -1155,5 +1175,9 @@ Public Class FrmAdd
                 ' e.Handled = True
             Case Else
         End Select
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        sbar.Panels(0).Text = Date.Now.ToString("dd/MM/yyyy HH:mm:ss", cult) 'Display DateTime
     End Sub
 End Class

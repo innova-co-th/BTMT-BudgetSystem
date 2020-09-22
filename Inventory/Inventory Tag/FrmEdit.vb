@@ -30,9 +30,9 @@ Public Class FrmEdit
     Dim oldRow As Long
     Public Shared aRow As Long
     Public Shared cm As CurrencyManager
+    Private ReadOnly cult As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
 
     Friend TType, TLoc, TLocNo, TRMCode, TUnit, Ttime As String
-
     Dim C1 As New SQLData("ACCINV")
 #End Region
 
@@ -85,29 +85,32 @@ Public Class FrmEdit
     Friend WithEvents cmbUnit As System.Windows.Forms.ComboBox
     Friend WithEvents TxtQty As System.Windows.Forms.TextBox
     Friend WithEvents cmdUnit As System.Windows.Forms.Button
+    Friend WithEvents Timer1 As Timer
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmEdit))
-        Me.cmbType = New System.Windows.Forms.ComboBox
-        Me.cmdOK = New System.Windows.Forms.Button
-        Me.cmdCancel = New System.Windows.Forms.Button
-        Me.cmbCode = New System.Windows.Forms.ComboBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.cmbLoc = New System.Windows.Forms.ComboBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.DateTime1 = New System.Windows.Forms.DateTimePicker
-        Me.sbar = New System.Windows.Forms.StatusBar
-        Me.MsgPanel = New System.Windows.Forms.StatusBarPanel
-        Me.CurrentUserPanel = New System.Windows.Forms.StatusBarPanel
-        Me.DateTimePanel = New System.Windows.Forms.StatusBarPanel
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.TxtTagNo = New System.Windows.Forms.TextBox
-        Me.TxtQty = New System.Windows.Forms.TextBox
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.cmbUnit = New System.Windows.Forms.ComboBox
-        Me.cmdUnit = New System.Windows.Forms.Button
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmEdit))
+        Me.cmbType = New System.Windows.Forms.ComboBox()
+        Me.cmdOK = New System.Windows.Forms.Button()
+        Me.cmdCancel = New System.Windows.Forms.Button()
+        Me.cmbCode = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cmbLoc = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.DateTime1 = New System.Windows.Forms.DateTimePicker()
+        Me.sbar = New System.Windows.Forms.StatusBar()
+        Me.MsgPanel = New System.Windows.Forms.StatusBarPanel()
+        Me.CurrentUserPanel = New System.Windows.Forms.StatusBarPanel()
+        Me.DateTimePanel = New System.Windows.Forms.StatusBarPanel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TxtTagNo = New System.Windows.Forms.TextBox()
+        Me.TxtQty = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cmbUnit = New System.Windows.Forms.ComboBox()
+        Me.cmdUnit = New System.Windows.Forms.Button()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.MsgPanel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CurrentUserPanel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateTimePanel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -215,7 +218,7 @@ Public Class FrmEdit
         'sbar
         '
         Me.sbar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.sbar.Dock = System.Windows.Forms.DockStyle.None
         Me.sbar.Location = New System.Drawing.Point(0, 160)
         Me.sbar.Name = "sbar"
@@ -228,17 +231,20 @@ Public Class FrmEdit
         '
         Me.MsgPanel.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring
         Me.MsgPanel.Icon = CType(resources.GetObject("MsgPanel.Icon"), System.Drawing.Icon)
-        Me.MsgPanel.Width = 190
+        Me.MsgPanel.Name = "MsgPanel"
+        Me.MsgPanel.Width = 189
         '
         'CurrentUserPanel
         '
         Me.CurrentUserPanel.Alignment = System.Windows.Forms.HorizontalAlignment.Center
         Me.CurrentUserPanel.BorderStyle = System.Windows.Forms.StatusBarPanelBorderStyle.Raised
+        Me.CurrentUserPanel.Name = "CurrentUserPanel"
         Me.CurrentUserPanel.Width = 120
         '
         'DateTimePanel
         '
         Me.DateTimePanel.BorderStyle = System.Windows.Forms.StatusBarPanelBorderStyle.Raised
+        Me.DateTimePanel.Name = "DateTimePanel"
         Me.DateTimePanel.Width = 210
         '
         'Label5
@@ -256,7 +262,6 @@ Public Class FrmEdit
         Me.TxtTagNo.ReadOnly = True
         Me.TxtTagNo.Size = New System.Drawing.Size(48, 20)
         Me.TxtTagNo.TabIndex = 59
-        Me.TxtTagNo.Text = ""
         '
         'TxtQty
         '
@@ -264,7 +269,6 @@ Public Class FrmEdit
         Me.TxtQty.Name = "TxtQty"
         Me.TxtQty.Size = New System.Drawing.Size(48, 20)
         Me.TxtQty.TabIndex = 61
-        Me.TxtQty.Text = ""
         '
         'Label6
         '
@@ -301,6 +305,10 @@ Public Class FrmEdit
         Me.cmdUnit.TabIndex = 64
         Me.cmdUnit.Text = "..."
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 1000
+        '
         'FrmEdit
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
@@ -333,6 +341,7 @@ Public Class FrmEdit
         CType(Me.CurrentUserPanel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateTimePanel, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -340,7 +349,7 @@ Public Class FrmEdit
 
 #Region "CONSTANT"
     Dim TrxNo As String
-    Dim dd(), idate As String
+    Dim idate As String
     Dim DT As New DataTable
     Dim StrSQL As String
 #End Region
@@ -349,20 +358,23 @@ Public Class FrmEdit
         Me.Close()
     End Sub
 
+#Region "Form Event"
     Private Sub FrmEdit_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        LoadType()
-        LoadLoc()
-        LoadRMCode()
-        cmbType.Text = TType.Trim
-        cmbLoc.Text = TLoc.Trim
-        cmbCode.Text = TRMCode.Trim
-        cmbUnit.Text = TUnit.Trim
-        DateTime1.Text = Ttime.Trim
-        dd = Split(DateTime1.Text.Trim, "/")
-        idate = dd(2)
-        sbar.Panels(0).Text = Date.Now
-        sbar.Panels(2).Text = "Usage Name : " + CurrentName.Trim
+        LoadType() 'Set Type
+        LoadLoc() 'Set Department
+        LoadRMCode() 'Load data in table TBLGrouop and TBLCompound
+        cmbType.Text = TType.Trim()
+        cmbLoc.Text = TLoc.Trim()
+        cmbCode.Text = TRMCode.Trim()
+        cmbUnit.Text = TUnit.Trim()
+
+        Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
+        idate = dd.ToString("yyyy") 'Get year
+
+        sbar.Panels(2).Text = "Usage Name : " + CurrentName.Trim() 'Display User
+        Timer1.Enabled = True 'Start Time
     End Sub
+#End Region
 
 #Region "COMBOBOX"
     Sub LoadType()
@@ -409,12 +421,17 @@ Public Class FrmEdit
     End Sub
     Sub LoadRMCode()
         Dim dtRM As DataTable = New DataTable()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " SELECT   *  FROM  TblGroup"
-        StrSQL += " union"
-        StrSQL += " select '03' Typecode,Finalcompound code"
-        StrSQL += " from TBLCompound where active =1"
-        StrSQL += " order by Typecode,code"
+
+        sb.AppendLine(" SELECT   *  FROM  TblGroup")
+        sb.AppendLine(" UNION")
+        sb.AppendLine(" SELECT '03' Typecode,Finalcompound code")
+        sb.AppendLine(" FROM TBLCompound")
+        sb.AppendLine(" WHERE active = 1")
+        sb.AppendLine(" ORDER BY Typecode,code")
+        StrSQL = sb.ToString()
+
         Dim DA As SqlDataAdapter
         Try
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
@@ -455,7 +472,7 @@ Public Class FrmEdit
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 #End Region
-  
+
 #Region "Combo Change"
 
 
@@ -525,7 +542,7 @@ Public Class FrmEdit
     Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
         If TxtTagNo.Text = "" Then
             TxtTagNo.Focus()
-            MsgBox("Please Check Data Again.", MsgBoxStyle.OKCancel)
+            MsgBox("Please Check Data Again.", MsgBoxStyle.OkCancel)
             Exit Sub
         Else
             Dim k As Integer
@@ -538,7 +555,7 @@ Public Class FrmEdit
         Dim response As MsgBoxResult
 
         msg = "Inventory Record TrxNo : " & TxtTagNo.Text.Trim  ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Inventory"   ' Define title.
         ' Display message.
@@ -576,7 +593,7 @@ Public Class FrmEdit
             strsql += ",UpdateTime = " & PrepareStr(strTime)
             strsql += ",UOM = " & PrepareStr(cmbUnit.SelectedValue)
             strsql += " where tagNo = " & PrepareStr(TxtTagNo.Text.Trim)
-            strsql += " and Location = " & PrepareStr(TLocno.Trim)
+            strsql += " and Location = " & PrepareStr(TLocNo.Trim)
             strsql += " and code = " & PrepareStr(TRMCode.Trim)
             cmd.CommandText = strsql
             cmd.ExecuteNonQuery()
@@ -610,6 +627,7 @@ Public Class FrmEdit
     Private Sub ComboBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbUnit.SelectedIndexChanged
 
     End Sub
+
     Private Sub TxtTagNo_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtTagNo.TextChanged
 
     End Sub
@@ -635,9 +653,13 @@ Public Class FrmEdit
         cmbLoc.Text = TLoc.Trim
         cmbCode.Text = TRMCode.Trim
         cmbUnit.Text = TUnit.Trim
-        dd = Split(DateTime1.Text.Trim, "/")
-        idate = dd(2)
+        Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
+        idate = dd.ToString("yyyy") 'Get year
         sbar.Panels(0).Text = Date.Now
         sbar.Panels(2).Text = "Usage Name : " + CurrentName.Trim
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        sbar.Panels(0).Text = Date.Now.ToString("dd/MM/yyyy HH:mm:ss", cult) 'Display DateTime
     End Sub
 End Class
