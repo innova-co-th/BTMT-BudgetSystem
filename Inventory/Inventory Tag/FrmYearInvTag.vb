@@ -850,6 +850,23 @@ Public Class FrmYearInvTag
         ViewData() 'Filter by condition
     End Sub
 
+    Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
+        Dim fed As New FrmEdit
+        fed.TxtTagNo.Text = GrdDV.Item(oldrow).Row("Tagno")
+        fed.TType = GrdDV.Item(oldrow).Row("TypeName")
+        fed.TLoc = GrdDV.Item(oldrow).Row("DeptName")
+        fed.TLocNo = GrdDV.Item(oldrow).Row("Location")
+        fed.TRMCode = GrdDV.Item(oldrow).Row("code")
+        fed.TxtQty.Text = GrdDV.Item(oldrow).Row("Qty")
+        fed.TUnit = GrdDV.Item(oldrow).Row("Uom")
+        fed.Ttime = Mid(GrdDV.Item(oldrow).Row("trxdate"), 7, 2) + "/" +
+                    Mid(GrdDV.Item(oldrow).Row("trxdate"), 5, 2) + "/" +
+                    Mid(GrdDV.Item(oldrow).Row("trxdate"), 1, 4)
+        fed.ShowDialog()
+        LoadCOM() 'Load all data from table TBLTRX
+        ViewData() 'Filter by condition
+    End Sub
+
     Private Sub ButtonDel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ButtonDel.Click
         Dim msg As String
         Dim title As String
@@ -1144,8 +1161,8 @@ Public Class FrmYearInvTag
                     Mid(GrdDV.Item(oldrow).Row("trxdate"), 5, 2) + "/" +
                     Mid(GrdDV.Item(oldrow).Row("trxdate"), 1, 4)
         fed.ShowDialog()
-        LoadCOM()
-        ViewData()
+        LoadCOM() 'Load all data from table TBLTRX
+        ViewData() 'Filter by condition
     End Sub
 
 
@@ -1290,21 +1307,4 @@ Public Class FrmYearInvTag
     'End Function
 
 #End Region
-
-    Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
-        Dim fed As New FrmEdit
-        fed.TxtTagNo.Text = GrdDV.Item(oldrow).Row("Tagno")
-        fed.TType = GrdDV.Item(oldrow).Row("TypeName")
-        fed.TLoc = GrdDV.Item(oldrow).Row("DeptName")
-        fed.TLocNo = GrdDV.Item(oldrow).Row("Location")
-        fed.TRMCode = GrdDV.Item(oldrow).Row("code")
-        fed.TxtQty.Text = GrdDV.Item(oldrow).Row("Qty")
-        fed.TUnit = GrdDV.Item(oldrow).Row("Uom")
-        fed.Ttime = Mid(GrdDV.Item(oldrow).Row("trxdate"), 7, 2) + "/" +
-                    Mid(GrdDV.Item(oldrow).Row("trxdate"), 5, 2) + "/" +
-                    Mid(GrdDV.Item(oldrow).Row("trxdate"), 1, 4)
-        fed.ShowDialog()
-        LoadCOM()
-        ViewData()
-    End Sub
 End Class
