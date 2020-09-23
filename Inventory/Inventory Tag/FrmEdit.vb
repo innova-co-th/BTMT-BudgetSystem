@@ -66,22 +66,22 @@ Public Class FrmEdit
     'Do not modify it using the code editor.
     Friend WithEvents cmdOK As System.Windows.Forms.Button
     Friend WithEvents cmdCancel As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents lblCode As System.Windows.Forms.Label
+    Friend WithEvents lblType As System.Windows.Forms.Label
     Friend WithEvents cmbType As System.Windows.Forms.ComboBox
     Friend WithEvents cmbCode As System.Windows.Forms.ComboBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents lblLocation As System.Windows.Forms.Label
+    Friend WithEvents lblDate As System.Windows.Forms.Label
     Friend WithEvents cmbLoc As System.Windows.Forms.ComboBox
     Friend WithEvents DateTime1 As System.Windows.Forms.DateTimePicker
     Friend WithEvents sbar As System.Windows.Forms.StatusBar
     Friend WithEvents MsgPanel As System.Windows.Forms.StatusBarPanel
     Friend WithEvents CurrentUserPanel As System.Windows.Forms.StatusBarPanel
     Friend WithEvents DateTimePanel As System.Windows.Forms.StatusBarPanel
-    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents lblTagNo As System.Windows.Forms.Label
     Friend WithEvents TxtTagNo As System.Windows.Forms.TextBox
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents lblQty As System.Windows.Forms.Label
+    Friend WithEvents lblUnit As System.Windows.Forms.Label
     Friend WithEvents cmbUnit As System.Windows.Forms.ComboBox
     Friend WithEvents TxtQty As System.Windows.Forms.TextBox
     Friend WithEvents cmdUnit As System.Windows.Forms.Button
@@ -93,21 +93,21 @@ Public Class FrmEdit
         Me.cmdOK = New System.Windows.Forms.Button()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.cmbCode = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblCode = New System.Windows.Forms.Label()
+        Me.lblType = New System.Windows.Forms.Label()
+        Me.lblLocation = New System.Windows.Forms.Label()
         Me.cmbLoc = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lblDate = New System.Windows.Forms.Label()
         Me.DateTime1 = New System.Windows.Forms.DateTimePicker()
         Me.sbar = New System.Windows.Forms.StatusBar()
         Me.MsgPanel = New System.Windows.Forms.StatusBarPanel()
         Me.CurrentUserPanel = New System.Windows.Forms.StatusBarPanel()
         Me.DateTimePanel = New System.Windows.Forms.StatusBarPanel()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblTagNo = New System.Windows.Forms.Label()
         Me.TxtTagNo = New System.Windows.Forms.TextBox()
         Me.TxtQty = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblQty = New System.Windows.Forms.Label()
+        Me.lblUnit = New System.Windows.Forms.Label()
         Me.cmbUnit = New System.Windows.Forms.ComboBox()
         Me.cmdUnit = New System.Windows.Forms.Button()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
@@ -159,30 +159,30 @@ Public Class FrmEdit
         Me.cmbCode.Size = New System.Drawing.Size(120, 21)
         Me.cmbCode.TabIndex = 1
         '
-        'Label1
+        'lblCode
         '
-        Me.Label1.Location = New System.Drawing.Point(8, 43)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(40, 14)
-        Me.Label1.TabIndex = 51
-        Me.Label1.Text = "Code"
+        Me.lblCode.Location = New System.Drawing.Point(8, 43)
+        Me.lblCode.Name = "lblCode"
+        Me.lblCode.Size = New System.Drawing.Size(40, 14)
+        Me.lblCode.TabIndex = 51
+        Me.lblCode.Text = "Code"
         '
-        'Label2
+        'lblType
         '
-        Me.Label2.Location = New System.Drawing.Point(120, 11)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(40, 14)
-        Me.Label2.TabIndex = 49
-        Me.Label2.Text = "Type"
+        Me.lblType.Location = New System.Drawing.Point(120, 11)
+        Me.lblType.Name = "lblType"
+        Me.lblType.Size = New System.Drawing.Size(40, 14)
+        Me.lblType.TabIndex = 49
+        Me.lblType.Text = "Type"
         '
-        'Label3
+        'lblLocation
         '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label3.Location = New System.Drawing.Point(8, 137)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(56, 14)
-        Me.Label3.TabIndex = 52
-        Me.Label3.Text = "Location"
+        Me.lblLocation.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblLocation.Location = New System.Drawing.Point(8, 137)
+        Me.lblLocation.Name = "lblLocation"
+        Me.lblLocation.Size = New System.Drawing.Size(56, 14)
+        Me.lblLocation.TabIndex = 52
+        Me.lblLocation.Text = "Location"
         '
         'cmbLoc
         '
@@ -196,14 +196,14 @@ Public Class FrmEdit
         Me.cmbLoc.Size = New System.Drawing.Size(216, 21)
         Me.cmbLoc.TabIndex = 53
         '
-        'Label4
+        'lblDate
         '
-        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label4.Location = New System.Drawing.Point(368, 10)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(40, 16)
-        Me.Label4.TabIndex = 55
-        Me.Label4.Text = "Date"
+        Me.lblDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblDate.Location = New System.Drawing.Point(368, 10)
+        Me.lblDate.Name = "lblDate"
+        Me.lblDate.Size = New System.Drawing.Size(40, 16)
+        Me.lblDate.TabIndex = 55
+        Me.lblDate.Text = "Date"
         '
         'DateTime1
         '
@@ -247,13 +247,13 @@ Public Class FrmEdit
         Me.DateTimePanel.Name = "DateTimePanel"
         Me.DateTimePanel.Width = 210
         '
-        'Label5
+        'lblTagNo
         '
-        Me.Label5.Location = New System.Drawing.Point(8, 10)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(48, 16)
-        Me.Label5.TabIndex = 58
-        Me.Label5.Text = "Tag No."
+        Me.lblTagNo.Location = New System.Drawing.Point(8, 10)
+        Me.lblTagNo.Name = "lblTagNo"
+        Me.lblTagNo.Size = New System.Drawing.Size(48, 16)
+        Me.lblTagNo.TabIndex = 58
+        Me.lblTagNo.Text = "Tag No."
         '
         'TxtTagNo
         '
@@ -270,21 +270,21 @@ Public Class FrmEdit
         Me.TxtQty.Size = New System.Drawing.Size(48, 20)
         Me.TxtQty.TabIndex = 61
         '
-        'Label6
+        'lblQty
         '
-        Me.Label6.Location = New System.Drawing.Point(8, 74)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(48, 16)
-        Me.Label6.TabIndex = 60
-        Me.Label6.Text = "Qty"
+        Me.lblQty.Location = New System.Drawing.Point(8, 74)
+        Me.lblQty.Name = "lblQty"
+        Me.lblQty.Size = New System.Drawing.Size(48, 16)
+        Me.lblQty.TabIndex = 60
+        Me.lblQty.Text = "Qty"
         '
-        'Label7
+        'lblUnit
         '
-        Me.Label7.Location = New System.Drawing.Point(8, 106)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(48, 16)
-        Me.Label7.TabIndex = 62
-        Me.Label7.Text = "Unit"
+        Me.lblUnit.Location = New System.Drawing.Point(8, 106)
+        Me.lblUnit.Name = "lblUnit"
+        Me.lblUnit.Size = New System.Drawing.Size(48, 16)
+        Me.lblUnit.TabIndex = 62
+        Me.lblUnit.Text = "Unit"
         '
         'cmbUnit
         '
@@ -315,22 +315,22 @@ Public Class FrmEdit
         Me.ClientSize = New System.Drawing.Size(518, 188)
         Me.Controls.Add(Me.cmdUnit)
         Me.Controls.Add(Me.cmbUnit)
-        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.lblUnit)
         Me.Controls.Add(Me.TxtQty)
-        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.lblQty)
         Me.Controls.Add(Me.TxtTagNo)
-        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.lblTagNo)
         Me.Controls.Add(Me.sbar)
-        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.lblDate)
         Me.Controls.Add(Me.DateTime1)
         Me.Controls.Add(Me.cmbLoc)
-        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.lblLocation)
         Me.Controls.Add(Me.cmbType)
         Me.Controls.Add(Me.cmdOK)
         Me.Controls.Add(Me.cmdCancel)
         Me.Controls.Add(Me.cmbCode)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblCode)
+        Me.Controls.Add(Me.lblType)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -363,10 +363,10 @@ Public Class FrmEdit
         LoadType() 'Set Type
         LoadLoc() 'Set Department
         LoadRMCode() 'Load data in table TBLGrouop and TBLCompound
-        cmbType.Text = TType.Trim()
-        cmbLoc.Text = TLoc.Trim()
-        cmbCode.Text = TRMCode.Trim()
-        cmbUnit.Text = TUnit.Trim()
+        cmbType.Text = TType.Trim() 'TypeName
+        cmbLoc.Text = TLoc.Trim() 'DeptName
+        cmbCode.Text = TRMCode.Trim() 'Code
+        cmbUnit.Text = TUnit.Trim() 'Unit
 
         Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
         idate = dd.ToString("yyyy") 'Get year
@@ -451,9 +451,14 @@ Public Class FrmEdit
     End Sub
     Sub LoadUom()
         Dim dtUom As DataTable = New DataTable()
+        Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-        StrSQL = " SELECT  unitcode,ShortUnitName  FROM  TBLUnit where unitcode "
-        StrSQL &= "   IN (SELECT  UnitBig  FROM  TBLConvert  where  code ='" & cmbCode.Text.Trim & "')"
+
+        sb.AppendLine(" SELECT  unitcode,ShortUnitName ")
+        sb.AppendLine(" FROM  TBLUnit ")
+        sb.AppendLine(" WHERE unitcode IN (SELECT  UnitBig  FROM  TBLConvert  where  code ='" & cmbCode.Text.Trim & "')")
+        StrSQL = sb.ToString()
+
         Dim DA As SqlDataAdapter
         Try
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
@@ -546,18 +551,15 @@ Public Class FrmEdit
             Exit Sub
         Else
             Dim k As Integer
-            k = TxtTagNo.Text.Trim
+            k = TxtTagNo.Text.Trim()
             TxtTagNo.Text = Format(k, "0000")
         End If
-        Dim msg As String
-        Dim title As String
-        Dim style As MsgBoxStyle
+
+        Dim msg As String = "Inventory Record TrxNo : " & TxtTagNo.Text.Trim  ' Define message.
+        Dim title As String = "Inventory"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
 
-        msg = "Inventory Record TrxNo : " & TxtTagNo.Text.Trim  ' Define message.
-        style = MsgBoxStyle.DefaultButton2 Or
-           MsgBoxStyle.Information Or MsgBoxStyle.YesNo
-        title = "Inventory"   ' Define title.
         ' Display message.
         response = MsgBox(msg, style, title)
         If response = MsgBoxResult.Yes Then ' User chose Yes.
@@ -582,16 +584,16 @@ Public Class FrmEdit
 
         Try
             strsql = "update TBLTRX"
-            strsql += " set code =" & PrepareStr(cmbCode.SelectedValue)
-            strsql += ", Qty = " & PrepareStr(TxtQty.Text.Trim)
-            strsql += ", Typecode = " & PrepareStr(cmbType.SelectedValue)
-            strsql += ", Location = " & PrepareStr(cmbLoc.SelectedValue)
-            strsql += ", UserID = " & PrepareStr(CurrentIDUser.Trim)
-            strsql += ", Trxdate = " & PrepareStr(strDate(2) + strDate(1) + strDate(0))
-            strsql += ",TrxTime = " & PrepareStr(strTime)
-            strsql += ", Updatedate = " & PrepareStr(strDate1(2) + strDate1(1) + strDate1(0))
-            strsql += ",UpdateTime = " & PrepareStr(strTime)
-            strsql += ",UOM = " & PrepareStr(cmbUnit.SelectedValue)
+            strsql += " set code =" & PrepareStr(cmbCode.SelectedValue) 'Code
+            strsql += ", Qty = " & PrepareStr(TxtQty.Text.Trim) 'Qty
+            strsql += ", Typecode = " & PrepareStr(cmbType.SelectedValue) 'TypeCode
+            strsql += ", Location = " & PrepareStr(cmbLoc.SelectedValue) 'Location
+            strsql += ", UserID = " & PrepareStr(CurrentIDUser.Trim) 'UserID
+            strsql += ", Trxdate = " & PrepareStr(strDate(2) + strDate(1) + strDate(0)) 'TrxDate
+            strsql += ",TrxTime = " & PrepareStr(strTime) 'TrxTime
+            strsql += ",Updatedate = " & PrepareStr(strDate1(2) + strDate1(1) + strDate1(0)) 'UpdateDate
+            strsql += ",UpdateTime = " & PrepareStr(strTime) 'UpdateTime
+            strsql += ",UOM = " & PrepareStr(cmbUnit.SelectedValue) 'Uom
             strsql += " where tagNo = " & PrepareStr(TxtTagNo.Text.Trim)
             strsql += " and Location = " & PrepareStr(TLocNo.Trim)
             strsql += " and code = " & PrepareStr(TRMCode.Trim)
@@ -624,17 +626,10 @@ Public Class FrmEdit
 
 #End Region
 
-    Private Sub ComboBox1_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbUnit.SelectedIndexChanged
-
-    End Sub
-
     Private Sub TxtTagNo_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtTagNo.TextChanged
 
     End Sub
     Private Sub TextBox1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TxtQty.TextChanged
-
-    End Sub
-    Private Sub Label1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Label1.Click
 
     End Sub
 
