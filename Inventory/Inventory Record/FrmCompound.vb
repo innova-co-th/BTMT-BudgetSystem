@@ -792,9 +792,20 @@ Public Class FrmCompound
                                 '//Sum QTY each Compound Code and Revision
                                 If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalQty = 0
+                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    For k As Integer = 0 To GridRow.Count - 1
+                                        totalQty = totalQty + GridRow(k)("Qty")
+                                    Next k
+
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
-                                        totalQty = totalQty + ExcelRow(j)("Qty")
+                                        GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "' AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
+
+                                        If GridRow.Count > 0 Then
+                                            totalQty = totalQty - GridRow(0)("Qty")
+                                        End If
+
+                                        totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
                                     Next j
                                 End If
 
