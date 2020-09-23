@@ -887,7 +887,94 @@ Public Class FrmYearInvTag
             Exit Sub
         End If
         oldrow = 0
+    End Sub
 
+    Private Sub ButtonImport_Click(sender As Object, e As EventArgs) Handles ButtonImport.Click
+        Dim tagNoLen As String = System.Configuration.ConfigurationManager.AppSettings("TAG_NO_LENGTH").ToString()
+        Dim tagNoSep As String = System.Configuration.ConfigurationManager.AppSettings("TAG_NO_SEP").ToString()
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("IMP_EXCEL_COLUMN_TAG").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create loading of overlay
+            Dim frm As New Importing()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("TAGTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            Dim tagNo As String = dtRec.Rows(i)("TagNo").ToString().Trim()
+                            Dim code As String = dtRec.Rows(i)("Code").ToString().Trim()
+                            Dim typeCode As String = dtRec.Rows(i)("TypeCode").ToString().Trim()
+
+                            If tagNo.Equals(String.Empty) Then
+                                'Tag No is empty
+                                Throw New ApplicationException("Tag No is empty.")
+                            End If
+
+                            If tagNo.Length > tagNoLen Then
+                                'Check length of Tag No
+                                Throw New ApplicationException("Tag No """ & tagNo & """ have length more than " & tagNoLen & " digits.")
+                            End If
+
+                            Dim arrTagNo() As String = tagNo.Split(New Char() {tagNoSep})
+
+                            If arrTagNo.Length = 1 Then
+
+                            ElseIf arrTagNo.Length = 2 Then
+
+                            Else
+                                'Error separator more than 1
+                                Throw New ApplicationException("Tag No """ & tagNo & """ have """ & tagNoSep & """ more than 1.")
+                            End If
+                        Next i
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
     End Sub
 #End Region
 
