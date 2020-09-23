@@ -936,7 +936,6 @@ Public Class FrmAdd
         oldCol = GrdItem.CurrentCell.ColumnNumber
     End Sub
 
-
 #End Region
 
 #Region "Ok add line "
@@ -981,11 +980,14 @@ Public Class FrmAdd
             MessageBox.Show("Tag No. is empty." & vbCrLf & "Please check data Again.", "TAG", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Exit Sub
         Else
-            tno = Split(TxtTagNo.Text.Trim, "-")
+            'Set Tag No
+            tno = Split(TxtTagNo.Text.Trim(), "-")
+
             If tno.Length = 1 Then
                 k = TxtTagNo.Text.Trim()
                 TxtTagNo.Text = Format(k, "0000")
             ElseIf tno.Length = 2 Then
+                'It have character "-"
                 k = tno(0)
                 TxtTagNo.Text = Format(k, "0000") + "-" + tno(1)
             End If
@@ -1045,7 +1047,7 @@ Public Class FrmAdd
         Dim t1 As SqlTransaction = cn.BeginTransaction
         cmd.Transaction = t1
         'Dim strDate(), strDate2(), strDate3() As String    'Comment Beam 28-Aug-2020
-        Dim strUpDateDate, strDate3() As String                'Add Beam 28-Aug-2020
+        Dim strUpDateDate, strTrxYear As String                'Add Beam 28-Aug-2020
         Dim strUpdateTime As String
 
         '//Modify date format Beam 28-Aug-2020 --------------------
@@ -1055,40 +1057,47 @@ Public Class FrmAdd
         Dim strDateEN As Date
         strDateEN = Date.Now.ToShortDateString.ToString(New CultureInfo("en-US"))
         Dim strTrxDate As String = String.Empty
-        strTrxDate = strDateEN.Year.ToString("D4") & strDateEN.Month.ToString("D2") & strDateEN.Day.ToString("D2")
+        strTrxDate = strDateEN.Year.ToString("D4") & strDateEN.Month.ToString("D2") & strDateEN.Day.ToString("D2") 'Format yyyyMMdd
 
         strUpdateTime = Date.Now.ToString("HH:mm:ss", cult)
         '//End Modify date format Beam 28-Aug-2020 ----------------
 
         Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
         strUpDateDate = dd.ToString("yyyyMMdd")
-        Dim Period As String
-        Dim Ytrx As Integer
+        Dim Period As String = String.Empty
+        Dim Ytrx As Integer = 0
 
         If RB1.Checked = True Then
             'First half year
-            Ytrx = "01"
+            Ytrx = 1
             Period = "YL"
-            strDate3 = Split(yPeriod.Value.Month & "/" & yPeriod.Value.Year, "/")
+            Dim tmpPeriod As DateTime = Convert.ToDateTime(yPeriod.Value, cult)
+            strTrxYear = tmpPeriod.ToString("yyyy")
         ElseIf RB2.Checked = True Then
             'Second half year
-            Ytrx = "02"
+            Ytrx = 2
             Period = "YL"
-            strDate3 = Split(yPeriod.Value.Month & "/" & yPeriod.Value.Year, "/")
+            Dim tmpPeriod As DateTime = Convert.ToDateTime(yPeriod.Value, cult)
+            strTrxYear = tmpPeriod.ToString("yyyy")
         Else : RB3.Checked = True
             'Month/Year
-            Ytrx = Now.Date.Month
+            Dim tmpNow As DateTime = Convert.ToDateTime(Now, cult)
+            Ytrx = tmpNow.Month
             Period = "ML"
-            strDate3 = Split(DPeriod.Text.Trim, "/")
+            Dim tmpPeriod As DateTime = Convert.ToDateTime(DPeriod.Value, cult)
+            strTrxYear = tmpPeriod.ToString("yyyy")
         End If
 
         Try
             Dim aDr() As DataRow
             GrdItemDv.RowFilter = " Qty <> 0.00"
             aDr = GrdItemDv.Table.Select(GrdItemDv.RowFilter)
+
             If UBound(aDr) < 0 Then
+                'No data
                 Exit Sub
             End If
+
             Dim dr As DataRow
             'Loop data in data grid
             For Each dr In aDr
@@ -1099,8 +1108,8 @@ Public Class FrmAdd
                         strsql += " Values("
                         strsql += PrepareStr(TxtTagNo.Text.Trim()) 'TagNo
                         strsql += "," & PrepareStr(.Item("Code")) 'Code
-                        strsql += "," & PrepareStr(Period) 'period
-                        strsql += "," & PrepareStr(strDate3(1) + Format(Ytrx, "#00")) 'TrxYear
+                        strsql += "," & PrepareStr(Period) 'period YL or ML
+                        strsql += "," & PrepareStr(strTrxYear + Format(Ytrx, "#00")) 'TrxYear
                         strsql += "," & PrepareStr(Mid(cmbType.Text.Trim(), 1, 2)) 'TypeCode
                         strsql += "," & PrepareStr(Mid(cmbLoc.Text.Trim(), 1, 4)) 'Location
                         strsql += "," & PrepareStr(.Item("Qty")) 'Qty
@@ -1126,13 +1135,16 @@ Public Class FrmAdd
                         End If
                     End If
                 End With
-            Next
+            Next 'For Each dr
+
             t1.Commit()
+
             Dim tno(), n As String
             Dim k As Integer
-            tno = Split(TxtTagNo.Text.Trim, "-")
+
+            tno = Split(TxtTagNo.Text.Trim(), "-")
             If tno.Length = 1 Then
-                TxtTagNo.Text = TxtTagNo.Text.Trim + 1
+                TxtTagNo.Text = TxtTagNo.Text.Trim() + 1
             ElseIf tno.Length = 2 Then
                 k = tno(0)
                 n = tno(1) + 1
@@ -1140,7 +1152,7 @@ Public Class FrmAdd
             End If
         Catch
             t1.Rollback()
-            MsgBox("It's Duplicate.Check Data Again.")
+            MessageBox.Show("It's Duplicate." & vbCrLf & "Check Data Again.", "TAG", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             cn.Close()
         End Try
