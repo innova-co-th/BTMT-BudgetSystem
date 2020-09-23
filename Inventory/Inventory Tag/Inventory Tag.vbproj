@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Class\ExcelLib.vb" />
     <Compile Include="Class\SQLData.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -230,6 +231,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Notification\Importing.designer.vb">
+      <DependentUpon>Importing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Notification\Importing.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PHYReport.vb">
       <DependentUpon>PHYReport.rpt</DependentUpon>
       <SubType>Component</SubType>
@@ -288,6 +295,9 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Dataset4.Designer.vb</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Notification\Importing.resx">
+      <DependentUpon>Importing.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Notification\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
@@ -296,7 +306,9 @@
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
     <Content Include="Tag.ico" />
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Dataset1.xsc">
       <DependentUpon>Dataset1.xsd</DependentUpon>
     </None>
