@@ -55,7 +55,7 @@ Public Class ExcelLib
                 Throw New ApplicationException("Number columns of import is incorrect!!!")
             End If
 
-            'Check column header
+            'Check column header of first row of array
             For i As Integer = 1 To numCols
                 'Error
                 If arr(1, i) <> arrColumn(i - 1) Then
@@ -65,17 +65,11 @@ Public Class ExcelLib
 
             'Create temporary datatable
             For i As Integer = 1 To numCols
-                'Check third row when second row nothing
-                If IsNothing(arr(2, i)) Then
-                    If arr(3, i).GetType().Equals(GetType(Double)) Then
-                        dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
-                    ElseIf arr(3, i).GetType().Equals(GetType(Int32)) Then
-                        dtTemp.Columns.Add(arr(1, i), GetType(Int32))
-                    Else
-                        dtTemp.Columns.Add(arr(1, i), GetType(String))
-                    End If
+                'Check second row of array
+                If arr(2, i) Is Nothing Then
+                    'If column is nothing value
+                    dtTemp.Columns.Add(arr(1, i), GetType(String))
                 Else
-                    'Check second row
                     If arr(2, i).GetType().Equals(GetType(Double)) Then
                         dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
                     ElseIf arr(2, i).GetType().Equals(GetType(Int32)) Then
@@ -84,7 +78,7 @@ Public Class ExcelLib
                         dtTemp.Columns.Add(arr(1, i), GetType(String))
                     End If
                 End If
-            Next
+            Next i
 
             'Convert Array to Datatable
             dtTemp = ConvertArrayToDatatable(arr, dtTemp)
