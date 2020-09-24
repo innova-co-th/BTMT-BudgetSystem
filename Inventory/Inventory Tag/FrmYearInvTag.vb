@@ -33,6 +33,8 @@ Public Class FrmYearInvTag
     Dim StrData As String
     Friend Username As String
     Private ReadOnly cult As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
+    Private DT_TYPE As New DataTable("Type")
+    Private DT_LOCATION As New DataTable("Location")
 #End Region
 
 #Region " Windows Form Designer generated code "
@@ -838,7 +840,40 @@ Public Class FrmYearInvTag
         GetBrand() 'Get group from table TBLGroup and TBLCompound
         GetLocation() 'Get data from table TBLDepartment
         SelectData() 'Filter data by TrxDate and UserID for table TBLTRX
-        lblTagName.Text = GrdDV.Count
+
+        Dim dt As DataTable = New DataTable()
+        Dim strSQL As String = String.Empty
+        Dim sb As StringBuilder = New StringBuilder()
+        Dim da As SqlDataAdapter
+
+        'Load type master
+        sb.AppendLine("SELECT * FROM TBLType")
+        strSQL = sb.ToString()
+
+        Try
+            da = New SqlDataAdapter(strSQL, C1.Strcon)
+            dt = New DataTable
+            da.Fill(dt)
+            DT_TYPE = dt.Copy()
+        Catch ex As Exception
+            MessageBox.Show("Cannot load type master!!!" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Close()
+        End Try
+
+        'Load department master
+        sb.Clear()
+        sb.AppendLine("SELECT * FROM TBLDepartment")
+        strSQL = sb.ToString()
+
+        Try
+            da = New SqlDataAdapter(strSQL, C1.Strcon)
+            dt = New DataTable
+            da.Fill(dt)
+            DT_LOCATION = dt.Copy()
+        Catch ex As Exception
+            MessageBox.Show("Cannot load department master!!!" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Close()
+        End Try
     End Sub
 #End Region
 
@@ -898,6 +933,7 @@ Public Class FrmYearInvTag
         }
         Dim dtRec As DataTable
         Dim sb As New System.Text.StringBuilder()
+        Dim sql As String = String.Empty
         Dim frmOverlay As New Form()
 
         If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
@@ -933,27 +969,88 @@ Public Class FrmYearInvTag
                             Dim tagNo As String = dtRec.Rows(i)("TagNo").ToString().Trim()
                             Dim code As String = dtRec.Rows(i)("Code").ToString().Trim()
                             Dim typeCode As String = dtRec.Rows(i)("TypeCode").ToString().Trim()
+                            Dim location As String = dtRec.Rows(i)("Location").ToString().Trim()
+                            Dim period As String = dtRec.Rows(i)("Period").ToString().Trim()
+                            Dim trxYear As String = dtRec.Rows(i)("TrxYear").ToString().Trim()
+                            Dim qty As String = dtRec.Rows(i)("Qty").ToString()
+                            Dim unit As String = dtRec.Rows(i)("Unit").ToString().Trim()
+                            Dim remark As String = dtRec.Rows(i)("Remark").ToString().Trim()
+                            Dim updateDate As String = dtRec.Rows(i)("UpdateDate").ToString().Trim()
 
-                            If tagNo.Equals(String.Empty) Then
-                                'Tag No is empty
-                                Throw New ApplicationException("Tag No is empty.")
+                            'Check format of Qty
+                            Dim result As Decimal
+                            If Not Decimal.TryParse(qty, result) Then
+                                Continue For
                             End If
 
-                            If tagNo.Length > tagNoLen Then
-                                'Check length of Tag No
-                                Throw New ApplicationException("Tag No """ & tagNo & """ have length more than " & tagNoLen & " digits.")
-                            End If
+                            'Check empty data
+                            ChkData(tagNo, code, typeCode, location, period, trxYear, unit, updateDate)
 
+                            'Check format data
+                            ChkFormat(tagNo, tagNoLen, tagNoSep, code, typeCode, location, period, trxYear, updateDate)
+
+                            'Set Tag No
                             Dim arrTagNo() As String = tagNo.Split(New Char() {tagNoSep})
 
                             If arrTagNo.Length = 1 Then
-
+                                tagNo = Strings.Format(tagNo, "0000")
                             ElseIf arrTagNo.Length = 2 Then
-
+                                tagNo = Strings.Format(arrTagNo(0), "0000") & tagNoSep & arrTagNo(1)
                             Else
-                                'Error separator more than 1
-                                Throw New ApplicationException("Tag No """ & tagNo & """ have """ & tagNoSep & """ more than 1.")
+                                'Nothing because call sub ChkFormat
                             End If
+
+                            Dim isExists As Boolean = ChkDataImport(tagNo, period, trxYear, typeCode, location)
+
+                            'Refer sub TRX() of FrmAdd
+                            Dim strTrxDate As String = Date.Now.ToString("yyyyMMdd", cult) 'Format yyyyMMdd
+                            Dim strTrxTime As String = Date.Now.ToString("HH:mm:ss", cult) 'Form HH:mm:ss
+                            Dim dd As DateTime = Convert.ToDateTime(updateDate, cult)
+                            Dim strUpDateDate As String = dd.ToString("yyyyMMdd")
+                            Dim strUpdateTime As String = strTrxTime
+
+                            If Not isExists Then
+                                'Insert
+                                sb.Clear()
+                                sb.AppendLine("Insert TBLTRX")
+                                sb.AppendLine(" Values(")
+                                sb.AppendLine(PrepareStr(tagNo)) 'TagNo
+                                sb.AppendLine("," & PrepareStr(code)) 'Code
+                                sb.AppendLine("," & PrepareStr(period)) 'period YL or ML
+                                sb.AppendLine("," & PrepareStr(trxYear)) 'TrxYear
+                                sb.AppendLine("," & PrepareStr(typeCode)) 'TypeCode
+                                sb.AppendLine("," & PrepareStr(location)) 'Location
+                                sb.AppendLine("," & qty) 'Qty
+                                sb.AppendLine("," & PrepareStr(unit)) 'Uom
+                                sb.AppendLine("," & PrepareStr(strTrxDate)) 'TrxDate
+                                sb.AppendLine("," & PrepareStr(strTrxTime)) 'TrxTime
+                                sb.AppendLine("," & PrepareStr(CurrentIDUser.Trim())) 'UserID
+                                sb.AppendLine("," & PrepareStr(remark)) 'Remark
+                                sb.AppendLine("," & PrepareStr(strUpDateDate)) 'UpDateDate
+                                sb.AppendLine("," & PrepareStr(strUpdateTime)) 'UpDateTime
+                                sb.AppendLine(")")
+                                sql = sb.ToString()
+                                cmSQL.CommandText = sql
+                                cmSQL.ExecuteNonQuery()
+                            Else
+                                'Update
+                                sb.Clear()
+                                sb.AppendLine("Update TBLTRX")
+                                sb.AppendLine(" Set ")
+                                sb.AppendLine(PrepareStr(code)) 'Code
+                                sb.AppendLine("," & PrepareStr(location)) 'Location
+                                sb.AppendLine("," & qty) 'Qty
+                                sb.AppendLine("," & PrepareStr(unit)) 'Uom
+                                sb.AppendLine("," & PrepareStr(strTrxDate)) 'TrxDate
+                                sb.AppendLine("," & PrepareStr(strTrxTime)) 'TrxTime
+                                sb.AppendLine("," & PrepareStr(CurrentIDUser.Trim())) 'UserID
+                                sb.AppendLine("," & PrepareStr(remark)) 'Remark
+                                sb.AppendLine("," & PrepareStr(strUpDateDate)) 'UpDateDate
+                                sb.AppendLine("," & PrepareStr(strUpdateTime)) 'UpDateTime
+                                sql = sb.ToString()
+                                cmSQL.CommandText = sql
+                                cmSQL.ExecuteNonQuery()
+                            End If 'If Not isExists
                         Next i
 
                         trans.Commit()
@@ -973,6 +1070,8 @@ Public Class FrmYearInvTag
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
+            LoadCOM() 'Load all data from table TBLTRX
+            ViewData() 'Filter by condition
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
     End Sub
@@ -1394,4 +1493,158 @@ Public Class FrmYearInvTag
     'End Function
 
 #End Region
+
+    Private Sub ChkData(tagNo As String, code As String, typeCode As String, location As String, period As String, trxYear As String, unit As String, updateDate As String)
+        If tagNo.Equals(String.Empty) Then
+            'Tag No is empty
+            Throw New ApplicationException("Tag No is empty.")
+        End If
+
+        If String.IsNullOrEmpty(code) Then
+            'Code is empty
+            Throw New ApplicationException("Code is empty.")
+        End If
+
+        If String.IsNullOrEmpty(typeCode) Then
+            'Type Code is empty
+            Throw New ApplicationException("Type Code is empty.")
+        End If
+
+        If location.Equals(String.Empty) Then
+            'Location is empty
+            Throw New ApplicationException("Location is empty.")
+        End If
+
+        If period.Equals(String.Empty) Then
+            'Period is empty
+            Throw New ApplicationException("Period is empty.")
+        End If
+
+        If trxYear.Equals(String.Empty) Then
+            'TrxYear is empty
+            Throw New ApplicationException("TrxYear is empty.")
+        End If
+
+        If unit.Equals(String.Empty) Then
+            'Unit is empty
+            Throw New ApplicationException("Unit is empty.")
+        End If
+
+        If updateDate.Equals(String.Empty) Then
+            'Update Date is empty
+            Throw New ApplicationException("UpdateDate is empty.")
+        End If
+    End Sub
+
+    Private Sub ChkFormat(tagNo As String, tagNoLen As String, tagNoSep As String, code As String, typeCode As String, location As String, period As String, trxYear As String, updateDate As String)
+        Dim sql As String = String.Empty
+        Dim sb As New StringBuilder()
+        Dim chkDT As New DataTable("Check")
+        Dim chkDR() As DataRow
+
+        'Format Tag No XXXX-XX
+        Dim arrTagNo() As String = tagNo.Split(New Char() {tagNoSep})
+
+        If arrTagNo.Length = 1 Then
+            'Nothing
+        ElseIf arrTagNo.Length = 2 Then
+            tagNo = arrTagNo(0)
+        Else
+            'Error separator more than 1
+            Throw New ApplicationException("Tag No """ & tagNo & """ have """ & tagNoSep & """ more than 1.")
+        End If
+
+        If tagNo.Length > tagNoLen Then
+            'Check length of Tag No
+            Throw New ApplicationException("Tag No """ & tagNo & """ have length more than " & tagNoLen & " digits.")
+        End If
+
+        'Format Code
+        sb.AppendLine(" SELECT * ")
+        sb.AppendLine(" FROM (")
+        sb.AppendLine("   SELECT * ")
+        sb.AppendLine("   FROM  TblGroup")
+        sb.AppendLine("   UNION")
+        sb.AppendLine("   SELECT '03' TypeCode, Finalcompound Code")
+        sb.AppendLine("   FROM TBLCompound")
+        sb.AppendLine("   WHERE Active = 1")
+        sb.AppendLine(" ) Code")
+        sb.AppendLine(" WHERE Code = '" & code & "'")
+        sql = sb.ToString()
+        chkDT = C1.GetDataset(sql).Tables(0)
+
+        If chkDT.Rows.Count = 0 Then
+            'Not found in master
+            Throw New ApplicationException("Code """ & code & """ does not find in system.")
+        End If
+
+        'Format Type Code
+        chkDR = DT_TYPE.Select("TypeCode = '" & typeCode & "'")
+
+        If chkDR.Length = 0 Then
+            'Not found in master
+            Throw New ApplicationException("Type Code """ & typeCode & """ does not find in system.")
+        End If
+
+        'Format Location
+        chkDR = DT_LOCATION.Select("DeptCode = '" & location & "'")
+
+        If chkDR.Length = 0 Then
+            'Not found in master
+            Throw New ApplicationException("Location """ & location & """ does not find in system.")
+        End If
+
+        'Format Period
+        If Not period.Equals("ML") And Not period.Equals("YL") Then
+            Throw New ApplicationException("Period """ & period & """ is incorrect.")
+        End If
+
+        'Format TrxYear
+        Dim result As Date
+        If Not DateTime.TryParseExact(trxYear, "yyyyMM", cult, System.Globalization.DateTimeStyles.None, result) Then
+            Throw New ApplicationException("TrxYear """ & trxYear & """ is not format YYYYMM")
+        End If
+
+        If period.Equals("YL") Then
+            If Not trxYear.Substring(4, 2) = "01" And Not trxYear.Substring(4, 2) = "02" Then
+                Throw New ApplicationException("TrxYear """ & trxYear & """ is not format of YL")
+            End If
+        End If
+
+        'Format UpdateDate
+        If Not DateTime.TryParseExact(updateDate, "dd/MM/yyyy", cult, System.Globalization.DateTimeStyles.None, result) Then
+            Throw New ApplicationException("Update Date """ & updateDate & """ is not format DD/MM/YYYY")
+        End If
+    End Sub
+
+    Private Function ChkDataImport(tagNo As String, period As String, trxYear As String, typeCode As String, location As String) As Boolean
+        Dim cnSQL As SqlConnection
+        Dim cmSQL As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim sb As New StringBuilder()
+        Dim ret As Boolean = False
+
+        Try
+            sb.AppendLine(" SELECT count(*) ")
+            sb.AppendLine(" FROM TBLTRX ")
+            sb.AppendLine(" WHERE TagNo = '" & tagNo & "' AND period = '" & period & "' AND TrxYear = '" & trxYear & "' AND")
+            sb.AppendLine(" TypeCode = '" & typeCode & "' AND Location = '" & location & "'")
+            cnSQL = New SqlConnection(C1.Strcon)
+            cnSQL.Open()
+            cmSQL = New SqlCommand(strSQL, cnSQL)
+            Dim i As Long = cmSQL.ExecuteScalar()
+            If i <> 0 Then
+                ret = True
+            End If
+
+            cmSQL.Dispose()
+            cnSQL.Dispose()
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        End Try
+
+        Return ret
+    End Function
 End Class
