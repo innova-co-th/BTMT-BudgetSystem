@@ -835,10 +835,23 @@ Public Class FrmRHC
                                 If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalQty = 0
                                     totalRHC = 0
+                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    For k As Integer = 0 To GridRow.Count - 1
+                                        totalQty = totalQty + GridRow(k)("Qty")
+                                        totalRHC = totalRHC + GridRow(k)("mRHC")
+                                    Next k
+
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
-                                        totalQty = totalQty + ExcelRow(j)("Qty")
-                                        totalRHC = totalRHC + ExcelRow(j)("RHC")
+                                        GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
+
+                                        If GridRow.Count > 0 Then
+                                            totalQty = totalQty - GridRow(0)("Qty")
+                                            totalRHC = totalRHC - GridRow(0)("mRHC")
+                                        End If
+
+                                        totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
+                                        totalRHC = totalRHC + CDbl(ExcelRow(j)("RHC"))
                                     Next j
                                 End If
 
