@@ -812,7 +812,6 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                         'Set datetime
                         Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
-                        Dim chkSamePigmentCode As String = String.Empty
 
                         '//Sort Data from Excel
                         dtRec.DefaultView.Sort = "TypeMaterial DESC, PreSemi DESC, PreSemiRevision DESC"
@@ -1298,7 +1297,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
-            LoadPreSemi() 'ReQuery and set datagrid
+            LoadSemi() 'ReQuery and set datagrid
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
     End Sub
