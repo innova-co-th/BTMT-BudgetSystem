@@ -755,59 +755,73 @@ Public Class FrmView
     End Sub
     Sub selectYear()
         Dim fview As New FrmPHYReport
-        'Adjust Tag 
+
+        'Set Tag
         If CHKTAG.Checked Then
             Dim i, j As Integer
-            i = TxtNo1.Text.Trim
-            j = TxtNo2.Text.Trim
+            i = TxtNo1.Text.Trim()
+            j = TxtNo2.Text.Trim()
             TxtNo1.Text = Format(i, "0000")
             TxtNo2.Text = Format(j, "0000")
-            fview.sTrx1 = Format(i, "0000")
-            fview.sTrx2 = Format(j, "0000")
+            fview.sTrx1 = Format(i, "0000") 'Tag No From
+            fview.sTrx2 = Format(j, "0000") 'Tag No To
         Else
-            fview.sTrx1 = ""
-            fview.sTrx2 = ""
+            fview.sTrx1 = String.Empty 'Tag No From
+            fview.sTrx2 = String.Empty 'Tag No To
         End If
 
         'Select format of report between by month or by half year
         If CHKYear.Checked Then
-            fview.sTrxPeriod = "YL"
+            fview.sTrxPeriod = "YL" 'Period
         Else
-            fview.sTrxPeriod = ""
+            fview.sTrxPeriod = String.Empty 'Period
         End If
 
         'Report by R/M Material by display each material
         If RBRAW.Checked Then
-            fview.sName = ""
+            'Check by R/M Material
+            fview.sName = String.Empty
+
             If CHKType.Checked Then
-                fview.sType = cmbType.SelectedValue
-                fview.sName = cmbType.Text.Trim
+                'Check Type
+                fview.sType = cmbType.SelectedValue 'Type
+                fview.sName = cmbType.Text.Trim()
             Else
-                fview.sType = ""
+                fview.sType = String.Empty
             End If
+
             If CHKMType.Checked Then
-                fview.sMType = cmbTypeMaterial.SelectedValue
-                fview.sName = cmbTypeMaterial.Text.Trim & "  "
+                'Check Material Type
+                fview.sMType = cmbTypeMaterial.SelectedValue 'Material Type
+                fview.sName = cmbTypeMaterial.Text.Trim() & "  "
             Else
                 fview.sMType = ""
             End If
+
             If CHKType.Checked = False And CHKMType.Checked = False Then
+                'Not check both Type and Material Type
                 fview.sName = " All PROCESS"
             End If
-            fview.sPeriod1 = ""
-            fview.sPeriod2 = ""
+
+            fview.sPeriod1 = String.Empty
+            fview.sPeriod2 = String.Empty
+
             If RBFrist.Checked Then
+                'First half year
                 fview.sHeader = " 1st HALF'" & DTPYear.Text
                 fview.sMonth = " JUNE '" & DTPYear.Text
-                fview.sPeriod1 = DTPYear.Text.Trim & "01"
-                fview.sPeriod2 = DTPYear.Text.Trim & "01"
+                fview.sPeriod1 = DTPYear.Text.Trim() & "01"
+                fview.sPeriod2 = DTPYear.Text.Trim() & "01"
             End If
+
             If RBSec.Checked Then
+                'Second half year
                 fview.sHeader = " 2nd HALF'" & DTPYear.Text
                 fview.sMonth = " DECEMBER '" & DTPYear.Text
-                fview.sPeriod1 = DTPYear.Text & "02"
-                fview.sPeriod2 = DTPYear.Text & "02"
+                fview.sPeriod1 = DTPYear.Text() & "02"
+                fview.sPeriod2 = DTPYear.Text() & "02"
             End If
+
             If CHKSection.Checked Then
                 fview.sLoc = cmbSection1.SelectedValue
                 fview.sSec = cmbSection1.Text.Trim
@@ -815,17 +829,20 @@ Public Class FrmView
                 fview.sLoc = ""
                 fview.sSec = "ALL PRODUCTION"
             End If
+
             If CHKWIP.Checked Then
                 fview.sLoc2 = "WIP"
                 fview.sSec = "WIP"
             Else
                 fview.sLoc2 = ""
             End If
+
             If CHKMatCode.Checked Then
                 fview.sCODE = cmbCode.Text.Trim
             Else
                 fview.sCODE = ""
             End If
+
             If CHKTAG.Checked Then
                 fview.sTag1 = TxtNo1.Text.Trim
                 fview.sTag2 = TxtNo2.Text.Trim
@@ -833,8 +850,9 @@ Public Class FrmView
                 fview.sTag1 = ""
                 fview.sTag2 = ""
             End If
+
             fview.Show()
-        End If
+        End If 'If RBRAW.Checked
 
         Dim fmview As New FrmPHYReportMaterial
         'Select format of report between by month or by half year
@@ -846,7 +864,9 @@ Public Class FrmView
 
         ' Report by material 
         If RBMat.Checked Then
-            fmview.sName = ""
+            'Check by Material
+            fmview.sName = String.Empty
+
             If CHKType.Checked Then
                 fmview.sType = cmbType.SelectedValue
                 fmview.sName = cmbType.Text.Trim
@@ -903,8 +923,9 @@ Public Class FrmView
                 fmview.sTag1 = ""
                 fmview.sTag2 = ""
             End If
+
             fmview.ShowDialog()
-        End If
+        End If 'If RBMat.Checked
     End Sub
 #End Region
 End Class
