@@ -862,12 +862,12 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 Throw New System.Exception("Please input Width data as Number")
                                             End If
                                         Else
-                                            Throw New System.Exception("Please input Length data as Number")
+                                            Throw New System.Exception("Please input Width data as Number")
                                         End If
                                     ElseIf GridRow(0)("MaterialType").ToString = "16" Then
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
-                                                Throw New System.Exception("Please input Qty data as Number")
+                                                Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
@@ -878,12 +878,12 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
                                         Else
-                                            Throw New System.Exception("Please input Qty data as Number")
+                                            Throw New System.Exception("Please input N data as Number")
                                         End If
                                     ElseIf GridRow(0)("MaterialType").ToString = "21" Then
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
-                                                Throw New System.Exception("Please input Qty data as Number")
+                                                Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
@@ -891,7 +891,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     Else
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
-                                                Throw New System.Exception("Please input Qty data as Number")
+                                                Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
@@ -902,7 +902,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
                                         Else
-                                            Throw New System.Exception("Please input Qty data as Number")
+                                            Throw New System.Exception("Please input N data as Number")
                                         End If
                                     End If
                                 Else
@@ -913,12 +913,12 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 Throw New System.Exception("Please input Width data as Number")
                                             End If
                                         Else
-                                            Throw New System.Exception("Please input Length data as Number")
+                                            Throw New System.Exception("Please input Width data as Number")
                                         End If
                                     ElseIf strTypeMaterial = "16" Then
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
-                                                Throw New System.Exception("Please input Qty data as Number")
+                                                Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
@@ -929,12 +929,12 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
                                         Else
-                                            Throw New System.Exception("Please input Qty data as Number")
+                                            Throw New System.Exception("Please input N data as Number")
                                         End If
                                     ElseIf strTypeMaterial = "21" Then
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
-                                                Throw New System.Exception("Please input Qty data as Number")
+                                                Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
@@ -942,7 +942,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     Else
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
-                                                Throw New System.Exception("Please input Qty data as Number")
+                                                Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
@@ -953,7 +953,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
                                         Else
-                                            Throw New System.Exception("Please input Qty data as Number")
+                                            Throw New System.Exception("Please input N data as Number")
                                         End If
                                     End If
                                 End If
@@ -1041,7 +1041,19 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Qty = '" & dblQty & "'")
+
+                                        If strTypeMaterialOriginal = "01" Then
+                                            sb.AppendLine(" Qty = '" & dblQty & "' ")
+                                        ElseIf strTypeMaterialOriginal = "02" Then
+                                            sb.AppendLine(" Qty = '" & ((dblQty * dblWidth) / 1000) & "' ")
+                                        ElseIf strTypeMaterialOriginal = "19" Then
+                                            sb.AppendLine(" Qty = '" & (dblQty / intN) & "' ")
+                                        ElseIf strTypeMaterialOriginal = "16" Then
+                                            sb.AppendLine(" Qty = '" & ((dblQty / dblLength) * 1000) & "' ")
+                                        Else
+                                            sb.AppendLine(" Qty = '" & (((dblQty / dblLength) * 1000) / intN) & "' ")
+                                        End If
+
                                         sb.AppendLine(" Where MasterCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
 
                                         sb.AppendLine(" ")
