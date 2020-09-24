@@ -964,6 +964,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 '//For Check Data from above row on import file.
                                 Dim chkSamePreSemiBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
+                                Dim chkSamePreSemiRevAbove As Boolean = False
                                 If i > 0 Then
                                     chkSamePreSemiBefore = dtRec.Rows(i - 1)("PreSemi").ToString
                                     chkSameRevisionBefore = dtRec.Rows(i - 1)("PreSemiRevision").ToString
@@ -1021,6 +1022,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             End If
                                         Next j
                                     End If
+                                Else
+                                    chkSamePreSemiRevAbove = True
                                 End If
 
                                 '// 1.) Check PreSemi and Revision fron DB
@@ -1033,7 +1036,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 '// 1.) Check PreSemi and Revision fron DB
                                 GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "'")
 
-                                If GridRow.Count > 0 Then '// 1.2) [OK] Find Import RMCode on DB
+                                If GridRow.Count > 0 Or chkSamePreSemiRevAbove = True Then '// 1.2) [OK] Find Import RMCode on DB
 
                                     GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
 
