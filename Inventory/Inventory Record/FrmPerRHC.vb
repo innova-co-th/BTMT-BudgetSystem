@@ -715,10 +715,23 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                 If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalPer = 0
                                     totalRHC = 0
+                                    GridRow = DT.Select("Final = '" & strFinalCompoundCode & "' AND mCompCode = '" & strCompoundCode & "' AND mRev = '" & strRevision & "'")
+                                    For k As Integer = 0 To GridRow.Count - 1
+                                        totalPer = totalPer + GridRow(k)("mPer")
+                                        totalRHC = totalRHC + GridRow(k)("mRHC")
+                                    Next k
+
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
-                                        totalPer = totalPer + ExcelRow(j)("Percent")
-                                        totalRHC = totalRHC + ExcelRow(j)("RHC")
+                                        GridRow = DT.Select("Final = '" & strFinalCompoundCode & "' AND mCompCode = '" & strCompoundCode & "' AND mRev = '" & strRevision & "' AND rmcode = '" & ExcelRow(j)("RMCode") & "'")
+
+                                        If GridRow.Count > 0 Then
+                                            totalPer = totalPer - GridRow(0)("mPer")
+                                            totalRHC = totalRHC - GridRow(0)("mRHC")
+                                        End If
+
+                                        totalPer = totalPer + CDbl(ExcelRow(j)("Percent"))
+                                        totalRHC = totalRHC + CDbl(ExcelRow(j)("RHC"))
                                     Next j
                                 End If
 
