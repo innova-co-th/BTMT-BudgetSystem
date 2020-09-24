@@ -22,7 +22,7 @@ Public Class FrmSemi
     Protected Const TBL_Type As String = "TBL_Type"
     Dim C1 As New SQLData("ACCINV")
     Friend WithEvents CmdImport As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents CmdExport As System.Windows.Forms.Button
 
     Protected DefaultGridBorderStyle As BorderStyle
 
@@ -93,7 +93,7 @@ Public Class FrmSemi
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
         Me.MenuItem1 = New System.Windows.Forms.MenuItem
         Me.CmdImport = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
+        Me.CmdExport = New System.Windows.Forms.Button
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -265,23 +265,23 @@ Public Class FrmSemi
         Me.CmdImport.Text = "Import"
         Me.CmdImport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
-        'Button2
+        'CmdExport
         '
-        Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button2.Location = New System.Drawing.Point(803, 594)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(72, 56)
-        Me.Button2.TabIndex = 27
-        Me.Button2.Text = "Export"
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.CmdExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CmdExport.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.CmdExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.CmdExport.Location = New System.Drawing.Point(803, 594)
+        Me.CmdExport.Name = "CmdExport"
+        Me.CmdExport.Size = New System.Drawing.Size(72, 56)
+        Me.CmdExport.TabIndex = 27
+        Me.CmdExport.Text = "Export"
+        Me.CmdExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
         'FrmSemi
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1058, 656)
-        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
         Me.Controls.Add(Me.cmdActive)
         Me.Controls.Add(Me.CheckBoxTire)
@@ -598,8 +598,8 @@ Public Class FrmSemi
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle14, grdColStyle13, grdColStyle2, grdColStyle2_1, grdColStyle3, _
-    grdColStyle9_0, grdColStyle9, grdColStyle6, grdColStyle5, grdColStyle15, grdColStyle10, _
+    {grdColStyle14, grdColStyle13, grdColStyle2, grdColStyle2_1, grdColStyle3,
+    grdColStyle9_0, grdColStyle9, grdColStyle6, grdColStyle5, grdColStyle15, grdColStyle10,
     grdColStyle12, grdColStyle11})
 
         DataGridCOM.TableStyles.Add(grdTableStyle1)
@@ -704,7 +704,7 @@ Public Class FrmSemi
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
         StrSQL = "SELECT  *  FROM  TBLTire "
-    
+
         Dim DA As SqlDataAdapter
         Try
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
@@ -777,6 +777,825 @@ Public Class FrmSemi
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
+
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_MASTER_SEMI").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_MASTER_SEMI").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn, arrColumnHeader)
+    End Sub
+
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("IMP_EXCEL_COLUMN_MASTER_SEMI").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+        Dim totalQty As Double = 0
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create Importing of overlay
+            Dim frm As New Importing()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+                        '//Sort Data from Excel
+                        dtRec.DefaultView.Sort = "TypeMaterial DESC, Semi DESC, SemiRevision DESC"
+                        dtRec = dtRec.DefaultView.ToTable
+
+                        '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
+                        If ChkRMCode_TypeMaterial_Unit(dtRec) = False Then
+                            LoadSemi() 'ReQuery and set datagrid
+                            frmOverlay.Dispose()
+                            Exit Sub
+                        End If
+
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            Dim strTypeMaterial As String = dtRec.Rows(i)("TypeMaterial").ToString().Trim()
+                            Dim strTypeMaterialOriginal As String = String.Empty
+                            Dim strSemi As String = dtRec.Rows(i)("Semi").ToString().Trim()
+                            Dim strRevision As String = dtRec.Rows(i)("SemiRevision").ToString().Trim()
+                            Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+
+                            If strTypeMaterial.Length > 0 And strSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0 Then
+                                Dim dblQty As Double = 0
+                                Dim dblWidth As Double = 0
+                                Dim dblLength As Double = 0
+                                Dim intN As Integer = 0
+                                Dim strUnit As String = dtRec.Rows(i)("Unit").ToString().Trim()
+                                Dim GridRow As DataRow()        '//Grid Data
+                                Dim ExcelRow As DataRow()       '//Excel Data
+
+                                '//Check Qty input format as Number
+                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                    If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblQty) Then
+                                        Throw New System.Exception("Please input Qty data as Number")
+                                    End If
+                                Else
+                                    Throw New System.Exception("Please input Qty data as Number")
+                                End If
+
+                                GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
+                                If GridRow.Count > 0 Then
+
+                                    strTypeMaterialOriginal = GridRow(0)("MaterialType").ToString
+
+                                    '//Check Width,Length and N as Number by Condition
+                                    If GridRow(0)("MaterialType").ToString = "13" Then
+                                        '//Just QTY
+                                    ElseIf GridRow(0)("MaterialType").ToString = "14" Then
+                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                            If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
+                                                Throw New System.Exception("Please input N data as Number")
+                                            End If
+                                        Else
+                                            Throw New System.Exception("Please input N data as Number")
+                                        End If
+                                    Else
+                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                            If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
+                                                Throw New System.Exception("Please input Length data as Number")
+                                            End If
+                                        Else
+                                            Throw New System.Exception("Please input Length data as Number")
+                                        End If
+                                    End If
+                                Else
+                                    '//Check Width,Length and N as Number by Condition
+                                    If strTypeMaterial = "13" Then
+                                        '//Just QTY
+                                    ElseIf strTypeMaterial = "14" Then
+                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                            If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
+                                                Throw New System.Exception("Please input N data as Number")
+                                            End If
+                                        Else
+                                            Throw New System.Exception("Please input N data as Number")
+                                        End If
+                                    Else
+                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                            If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
+                                                Throw New System.Exception("Please input Length data as Number")
+                                            End If
+                                        Else
+                                            Throw New System.Exception("Please input Length data as Number")
+                                        End If
+                                    End If
+                                End If
+
+                                '//For Check Data from above row on import file.
+                                Dim chkSamePreSemiBefore As String = String.Empty
+                                Dim chkSameRevisionBefore As String = String.Empty
+                                Dim chkSameSemiRevAbove As Boolean = False
+                                If i > 0 Then
+                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("Semi").ToString
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("SemiRevision").ToString
+                                Else
+                                    chkSamePreSemiBefore = ""
+                                    chkSameRevisionBefore = ""
+                                End If
+
+                                '//Sumarize TotalQty
+                                If strSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore Then
+                                    totalQty = 0
+                                    GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
+                                    If GridRow.Count > 0 Then '//Have Semi and Rev on DB so can use TypeMat from DB
+                                        Dim sameTypeMat As String = GridRow(0)("MaterialType").ToString
+                                        For k As Integer = 0 To GridRow.Count - 1
+                                            totalQty = totalQty + GridRow(k)("Qty")
+                                        Next k
+
+                                        ExcelRow = dtRec.Select("Semi = '" & strSemi & "' AND SemiRevision = '" & strRevision & "'")
+                                        For j As Integer = 0 To ExcelRow.Count - 1
+                                            GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "' AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
+
+                                            If GridRow.Count > 0 Then
+                                                totalQty = totalQty - GridRow(0)("Qty")
+                                            End If
+
+                                            If sameTypeMat = "13" Then
+                                                totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
+                                            ElseIf sameTypeMat = "14" Then
+                                                totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
+                                            Else
+                                                totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
+                                            End If
+                                        Next j
+                                    Else '//New PreSemi and Rev so use TypeMat from ImportExcel
+                                        ExcelRow = dtRec.Select("Semi = '" & strSemi & "' AND SemiRevision = '" & strRevision & "'")
+                                        For j As Integer = 0 To ExcelRow.Count - 1
+                                            If ExcelRow(j)("TypeMaterial") = "13" Then
+                                                totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
+                                            ElseIf ExcelRow(j)("TypeMaterial") = "14" Then
+                                                totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
+                                            Else
+                                                totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
+                                            End If
+                                        Next j
+                                    End If
+                                End If
+
+                                '// 1.) Check Semi and Revision fron DB
+                                '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLSemi and TBLConvert
+                                '// 1.2) [OK] Find Import RMCode on DB
+                                '// 1.2.1) [NG] Insert TBLMASTER / Update TBLSemi,TBLConvert
+                                '// 1.2.2) [OK] Compare QTY from Import file and DB
+                                '// 1.2.2.1) [NG] Update TBLMASTER,TBLSemi,TBLConvert
+
+                                '// 1.) Check PreSemi and Revision fron DB
+                                GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
+
+                                If GridRow.Count > 0 Then '// 1.2) [OK] Find Import RMCode on DB
+
+                                    GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+
+                                    If GridRow.Count > 0 AndAlso CDbl(GridRow(0)("Qty")) <> dblQty Then '// 1.2.2) [OK] Compare QTY from Import file and DB
+
+                                        '// 1.2.2.1) [NG] Update TBLMASTER,TBLPreSemi,TBLConvert
+                                        '//Update TBLMASTER
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+
+                                        If strTypeMaterialOriginal = "13" Then
+                                            sb.AppendLine(" '" & dblQty & "', ")
+                                        ElseIf strTypeMaterialOriginal = "14" Then
+                                            sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                        Else
+                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                                        End If
+
+                                        sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLPreSemi
+                                        sb.AppendLine(" Update TBLPreSemi")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" QPU = '" & totalQty & "'")
+                                        sb.AppendLine(" Where PSemiCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLConvert
+                                        sb.AppendLine(" Update TBLConvert")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" SQty = '" & totalQty & "'")
+                                        sb.AppendLine(" Where Code = '" & strSemi & "' AND Rev = '" & strRevision & "' ")
+
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+
+                                        '//Update All Per in TBLMASTER***********
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                    Else '// 1.2.1) [NG] Insert TBLMASTER / Update TBLPreSemi,TBLConvert
+
+                                        '//Insert TBLMASTER
+                                        sb.Clear()
+                                        sb.AppendLine(" Insert  TBLMASTER ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(" '" & strSemi & "', ")                                   'Column MasterCode
+                                        sb.AppendLine(" '" & strRevision & "' , ")                              'Column Revision
+                                        sb.AppendLine(" '" & strRMCode & "' , ")                                'Column RMCode
+                                        sb.AppendLine(" NULL , ")                                               'Column RmRevision
+
+                                        If strTypeMaterialOriginal = "13" Then                                  'Column Qty
+                                            sb.AppendLine(" '" & dblQty & "', ")
+                                        ElseIf strTypeMaterialOriginal = "14" Then
+                                            sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                        Else
+                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                                        End If
+
+                                        sb.AppendLine(" '" & strUnit & "' , ")                                  'Column Unit
+                                        sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                 'Column Per
+                                        sb.AppendLine(" )")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLPreSemi
+                                        sb.AppendLine(" Update TBLSemi")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" QPU = '" & totalQty & "'")
+                                        sb.AppendLine(" Where semiCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Update TBLConvert
+                                        sb.AppendLine(" Update TBLConvert")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" SQty = '" & totalQty & "'")
+                                        sb.AppendLine(" Where Code = '" & strSemi & "' AND Rev = '" & strRevision & "' ")
+
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+
+                                        '//Update All Per in TBLMASTER***********
+                                        sb.Clear()
+                                        sb.AppendLine(" Update TBLMASTER")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
+
+                                    End If
+
+                                Else '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLPreSemi and TBLConvert
+
+                                    '//Insert TBLGroup
+                                    sb.Clear()
+                                    sb.AppendLine(" Insert  TBLGroup ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine("'05' , ")                'Column TypeCode
+                                    sb.AppendLine("'" & strSemi & "'")      'Column Code
+                                    sb.AppendLine(" )")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Insert TBLPreSemi
+                                    sb.AppendLine(" Insert TBLSemi ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(" '" & strSemi & "', ")           'Column Final
+                                    sb.AppendLine(" '" & strSemi & "', ")           'Column PsemiCode
+                                    sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
+                                    sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
+                                    sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
+
+                                    If dblWidth = 0 Then                            'Column Width
+                                        sb.AppendLine(" NULL , ")
+                                    Else
+                                        sb.AppendLine(" '" & dblWidth & "' , ")
+                                    End If
+
+                                    If dblLength = 0 Then                           'Column Length
+                                        sb.AppendLine(" NULL , ")
+                                    Else
+                                        sb.AppendLine(" '" & dblLength & "' , ")
+                                    End If
+
+                                    If intN = 0 Then                                'Column N
+                                        sb.AppendLine(" NULL , ")
+                                    Else
+                                        sb.AppendLine(" '" & intN & "', ")
+                                    End If
+
+                                    sb.AppendLine(" '0' , ")                        'Column Active
+                                    sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
+
+                                    If strTypeMaterial = "13" Then                  'Column CN
+                                        sb.AppendLine(" '1' , ")
+                                    ElseIf strTypeMaterial = "14" Then
+                                        sb.AppendLine(" '1' , ")
+                                    ElseIf strTypeMaterial = "07" Then
+                                        sb.AppendLine(" '1' , ")
+                                    ElseIf strTypeMaterial = "08" Then
+                                        sb.AppendLine(" '1' , ")
+                                    ElseIf strTypeMaterial = "12" Then
+                                        sb.AppendLine(" '1' , ")
+                                    ElseIf strTypeMaterial = "04" Then
+                                        sb.AppendLine(" '1' , ")
+                                    Else
+                                        sb.AppendLine(" '2' , ")
+                                    End If
+
+                                    sb.AppendLine(" )")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Insert TblMaster
+                                    sb.AppendLine(" Insert  TBLMASTER ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(" '" & strSemi & "', ")                                   'Column MasterCode
+                                    sb.AppendLine(" '" & strRevision & "' , ")                              'Column Revision
+                                    sb.AppendLine(" '" & strRMCode & "' , ")                                'Column RMCode
+                                    sb.AppendLine(" NULL , ")                                               'Column RmRevision
+
+                                    If strTypeMaterial = "13" Then                                          'Column Qty
+                                        sb.AppendLine(" '" & dblQty & "', ")
+                                    ElseIf strTypeMaterial = "14" Then
+                                        sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                    Else
+                                        sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                                    End If
+
+                                    sb.AppendLine(" '" & strUnit & "' , ")                                  'Column Unit
+                                    sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                 'Column Per
+                                    sb.AppendLine(" )")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Insert TblConvert #1
+                                    sb.AppendLine(" Insert  TblConvert ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(" '05' , ")                   'Column Type
+                                    sb.AppendLine(" '" & strSemi & "', ")       'Column Final
+                                    sb.AppendLine(" '" & strSemi & "', ")       'Column Code
+                                    sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
+                                    sb.AppendLine(" 'KG' , ")                   'Column UnitBig
+                                    sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
+                                    sb.AppendLine(" '1' , ")                    'Column BQty
+                                    sb.AppendLine(" '1' ")                      'Column SQty
+                                    sb.AppendLine(" )")
+
+                                    '//Insert TblConvert #2
+                                    sb.AppendLine(" ")
+
+                                    sb.AppendLine(" Insert  TblConvert ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(" '05' , ")                       'Column Type
+                                    sb.AppendLine(" '" & strSemi & "', ")           'Column Final
+                                    sb.AppendLine(" '" & strSemi & "', ")           'Column Code
+                                    sb.AppendLine(" '" & strRevision & "' , ")      'Column Rev
+
+                                    If strTypeMaterial = "13" Then                  'Column UnitBig
+                                        sb.AppendLine(" 'UT' , ")
+                                    ElseIf strTypeMaterial = "14" Then
+                                        sb.AppendLine(" 'UT' , ")
+                                    Else
+                                        sb.AppendLine(" 'M' , ")
+                                    End If
+
+                                    sb.AppendLine(" 'KG' , ")                       'Column UnitSmall
+                                    sb.AppendLine(" '1' , ")                        'Column BQty
+                                    sb.AppendLine(" '" & (totalQty / 1000) & "' ")  'Column SQty
+
+                                    sb.AppendLine(" )")
+
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+
+                                End If
+
+                            End If
+                        Next
+
+
+
+                        '        '// 1.) Check PreSemi and Revision fron DB
+                        '        '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLPreSemi and TBLConvert
+                        '        '// 1.2) [OK] Find Import RMCode on DB
+                        '        '// 1.2.1) [NG] Insert TBLMASTER / Update TBLPreSemi,TBLConvert
+                        '        '// 1.2.2) [OK] Compare QTY from Import file and DB
+                        '        '// 1.2.2.1) [NG] Update TBLMASTER,TBLPreSemi,TBLConvert
+
+                        '        '// 1.) Check PreSemi and Revision fron DB
+                        '        GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "'")
+
+                        '        If GridRow.Count > 0 Then '// 1.2) [OK] Find Import RMCode on DB
+
+                        '            GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+
+                        '            If GridRow.Count > 0 AndAlso CDbl(GridRow(0)("Qty")) <> dblQty Then '// 1.2.2) [OK] Compare QTY from Import file and DB
+
+                        '                '// 1.2.2.1) [NG] Update TBLMASTER,TBLPreSemi,TBLConvert
+                        '                '//Update TBLMASTER
+                        '                sb.Clear()
+                        '                sb.AppendLine(" Update TBLMASTER")
+                        '                sb.AppendLine(" Set ")
+
+                        '                If strTypeMaterialOriginal = "01" Then
+                        '                    sb.AppendLine(" Qty = '" & dblQty & "' ")
+                        '                ElseIf strTypeMaterialOriginal = "02" Then
+                        '                    sb.AppendLine(" Qty = '" & ((dblQty * dblWidth) / 1000) & "' ")
+                        '                ElseIf strTypeMaterialOriginal = "19" Then
+                        '                    sb.AppendLine(" Qty = '" & (dblQty / intN) & "' ")
+                        '                ElseIf strTypeMaterialOriginal = "16" Then
+                        '                    sb.AppendLine(" Qty = '" & ((dblQty / dblLength) * 1000) & "' ")
+                        '                Else
+                        '                    sb.AppendLine(" Qty = '" & (((dblQty / dblLength) * 1000) / intN) & "' ")
+                        '                End If
+
+                        '                sb.AppendLine(" Where MasterCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
+
+                        '                sb.AppendLine(" ")
+
+                        '                '//Update TBLPreSemi
+                        '                sb.AppendLine(" Update TBLPreSemi")
+                        '                sb.AppendLine(" Set ")
+                        '                sb.AppendLine(" QPU = '" & totalQty & "'")
+                        '                sb.AppendLine(" Where PSemiCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
+
+                        '                sb.AppendLine(" ")
+
+                        '                '//Update TBLConvert
+                        '                sb.AppendLine(" Update TBLConvert")
+                        '                sb.AppendLine(" Set ")
+                        '                sb.AppendLine(" SQty = '" & totalQty & "'")
+                        '                sb.AppendLine(" Where Code = '" & strPreSemi & "' AND Rev = '" & strRevision & "' ")
+
+                        '                StrSQL = sb.ToString()
+                        '                cmSQL.CommandText = StrSQL
+                        '                cmSQL.ExecuteNonQuery()
+
+
+                        '                '//Update All Per in TBLMASTER***********
+                        '                sb.Clear()
+                        '                sb.AppendLine(" Update TBLMASTER")
+                        '                sb.AppendLine(" Set ")
+                        '                sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                        '                sb.AppendLine(" Where MasterCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
+                        '                StrSQL = sb.ToString()
+                        '                cmSQL.CommandText = StrSQL
+                        '                cmSQL.ExecuteNonQuery()
+
+                        '            Else '// 1.2.1) [NG] Insert TBLMASTER / Update TBLPreSemi,TBLConvert
+
+                        '                '//Insert TBLMASTER
+                        '                sb.Clear()
+                        '                sb.AppendLine(" Insert  TBLMASTER ")
+                        '                sb.AppendLine(" Values (")
+                        '                sb.AppendLine(" '" & strPreSemi & "', ")                                    'Column MasterCode
+                        '                sb.AppendLine(" '" & strRevision & "' , ")                                  'Column Revision
+                        '                sb.AppendLine(" '" & strRMCode & "' , ")                                    'Column RMCode
+                        '                sb.AppendLine(" NULL , ")                                                   'Column RmRevision
+
+                        '                If strTypeMaterialOriginal = "01" Then                                              'Column Qty
+                        '                    sb.AppendLine(" '" & dblQty & "', ")
+                        '                ElseIf strTypeMaterialOriginal = "02" Then
+                        '                    sb.AppendLine(" '" & ((dblQty * dblWidth) / 1000) & "', ")
+                        '                ElseIf strTypeMaterialOriginal = "19" Then
+                        '                    sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                        '                ElseIf strTypeMaterialOriginal = "16" Then
+                        '                    sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                        '                Else
+                        '                    sb.AppendLine(" '" & (((dblQty / dblLength) * 1000) / intN) & "', ")
+                        '                End If
+
+                        '                sb.AppendLine(" '" & strUnit & "' , ")                                      'Column Unit
+                        '                sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                     'Column Per
+                        '                sb.AppendLine(" )")
+
+                        '                sb.AppendLine(" ")
+
+                        '                '//Update TBLPreSemi
+                        '                sb.AppendLine(" Update TBLPreSemi")
+                        '                sb.AppendLine(" Set ")
+                        '                sb.AppendLine(" QPU = '" & totalQty & "'")
+                        '                sb.AppendLine(" Where PSemiCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
+
+                        '                sb.AppendLine(" ")
+
+                        '                '//Update TBLConvert
+                        '                sb.AppendLine(" Update TBLConvert")
+                        '                sb.AppendLine(" Set ")
+                        '                sb.AppendLine(" SQty = '" & totalQty & "'")
+                        '                sb.AppendLine(" Where Code = '" & strPreSemi & "' AND Rev = '" & strRevision & "' ")
+
+                        '                StrSQL = sb.ToString()
+                        '                cmSQL.CommandText = StrSQL
+                        '                cmSQL.ExecuteNonQuery()
+
+
+                        '                '//Update All Per in TBLMASTER***********
+                        '                sb.Clear()
+                        '                sb.AppendLine(" Update TBLMASTER")
+                        '                sb.AppendLine(" Set ")
+                        '                sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                        '                sb.AppendLine(" Where MasterCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
+                        '                StrSQL = sb.ToString()
+                        '                cmSQL.CommandText = StrSQL
+                        '                cmSQL.ExecuteNonQuery()
+
+                        '            End If
+
+                        '        Else '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLPreSemi and TBLConvert
+
+                        '            '//Insert TBLGroup
+                        '            sb.Clear()
+                        '            sb.AppendLine(" Insert  TBLGroup ")
+                        '            sb.AppendLine(" Values (")
+                        '            sb.AppendLine("'04' , ")                    'Column TypeCode
+                        '            sb.AppendLine("'" & strPreSemi & "'")       'Column Code
+                        '            sb.AppendLine(" )")
+
+                        '            sb.AppendLine(" ")
+
+                        '            '//Insert TBLPreSemi
+                        '            sb.AppendLine(" Insert TBLPreSemi ")
+                        '            sb.AppendLine(" Values (")
+                        '            sb.AppendLine(" '" & strPreSemi & "', ")        'Column Final
+                        '            sb.AppendLine(" '" & strPreSemi & "', ")        'Column PsemiCode
+                        '            sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
+                        '            sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
+                        '            sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
+
+                        '            If intN = 0 Then                                'Column N
+                        '                sb.AppendLine(" NULL , ")
+                        '            Else
+                        '                sb.AppendLine(" '" & intN & "', ")
+                        '            End If
+
+                        '            If dblLength = 0 Then                           'Column Length
+                        '                sb.AppendLine(" NULL , ")
+                        '            Else
+                        '                sb.AppendLine(" '" & dblLength & "' , ")
+                        '            End If
+
+                        '            sb.AppendLine(" NULL , ")                       'Column gmeter
+
+                        '            If dblWidth = 0 Then                            'Column Width
+                        '                sb.AppendLine(" NULL , ")
+                        '            Else
+                        '                sb.AppendLine(" '" & dblWidth & "' , ")
+                        '            End If
+
+                        '            sb.AppendLine(" NULL , ")                       'Column Gauge
+                        '            sb.AppendLine(" '0' , ")                        'Column Active
+                        '            sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
+
+                        '            If strTypeMaterial = "16" Then                  'Column CN
+                        '                sb.AppendLine(" '2' , ")
+                        '            Else
+                        '                sb.AppendLine(" '1' , ")
+                        '            End If
+
+                        '            sb.AppendLine(" )")
+
+                        '            sb.AppendLine(" ")
+
+                        '            '//Insert TblMaster
+                        '            sb.AppendLine(" Insert  TBLMASTER ")
+                        '            sb.AppendLine(" Values (")
+                        '            sb.AppendLine(" '" & strPreSemi & "', ")                                    'Column MasterCode
+                        '            sb.AppendLine(" '" & strRevision & "' , ")                                  'Column Revision
+                        '            sb.AppendLine(" '" & strRMCode & "' , ")                                    'Column RMCode
+                        '            sb.AppendLine(" NULL , ")                                                   'Column RmRevision
+
+                        '            If strTypeMaterial = "01" Then                                              'Column Qty
+                        '                sb.AppendLine(" '" & dblQty & "', ")
+                        '            ElseIf strTypeMaterial = "02" Then
+                        '                sb.AppendLine(" '" & ((dblQty * dblWidth) / 1000) & "', ")
+                        '            ElseIf strTypeMaterial = "19" Then
+                        '                sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                        '            ElseIf strTypeMaterial = "16" Then
+                        '                sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                        '            Else
+                        '                sb.AppendLine(" '" & (((dblQty / dblLength) * 1000) / intN) & "', ")
+                        '            End If
+
+                        '            sb.AppendLine(" '" & strUnit & "' , ")                                      'Column Unit
+                        '            sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                     'Column Per
+                        '            sb.AppendLine(" )")
+
+                        '            sb.AppendLine(" ")
+
+                        '            '//Insert TblConvert #1
+                        '            sb.AppendLine(" Insert  TblConvert ")
+                        '            sb.AppendLine(" Values (")
+                        '            sb.AppendLine(" '04' , ")                   'Column Type
+                        '            sb.AppendLine(" '" & strPreSemi & "', ")    'Column Final
+                        '            sb.AppendLine(" '" & strPreSemi & "', ")    'Column Code
+                        '            sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
+                        '            sb.AppendLine(" 'KG' , ")                   'Column UnitBig
+                        '            sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
+                        '            sb.AppendLine(" '1' , ")                    'Column BQty
+                        '            sb.AppendLine(" '1' ")                      'Column SQty
+                        '            sb.AppendLine(" )")
+
+                        '            '//Insert TblConvert #2
+                        '            If strTypeMaterial <> "01" Then
+                        '                sb.AppendLine(" ")
+
+                        '                sb.AppendLine(" Insert  TblConvert ")
+                        '                sb.AppendLine(" Values (")
+                        '                sb.AppendLine(" '04' , ")                   'Column Type
+                        '                sb.AppendLine(" '" & strPreSemi & "', ")    'Column Final
+                        '                sb.AppendLine(" '" & strPreSemi & "', ")    'Column Code
+                        '                sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
+
+                        '                If strTypeMaterial = "02" Then              'Column UnitBig
+                        '                    sb.AppendLine(" 'M' , ")
+                        '                ElseIf strTypeMaterial = "19" Then
+                        '                    sb.AppendLine(" 'UT' , ")
+                        '                Else
+                        '                    sb.AppendLine(" 'M' , ")
+                        '                End If
+
+                        '                sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
+                        '                sb.AppendLine(" '1' , ")                    'Column BQty
+
+                        '                If strUnit = "KG" Then                      'Column SQty
+                        '                    sb.AppendLine(" '" & totalQty & "' ")
+                        '                Else
+                        '                    sb.AppendLine(" '" & (totalQty / 1000) & "' ")
+                        '                End If
+
+                        '                sb.AppendLine(" )")
+                        '            End If
+
+                        '            StrSQL = sb.ToString()
+                        '            cmSQL.CommandText = StrSQL
+                        '            cmSQL.ExecuteNonQuery()
+
+                        '        End If
+
+                        '    End If
+                        'Next
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            LoadSemi() 'ReQuery and set datagrid
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+#End Region
+
+#Region "Import"
+    Private Function ChkRMCode_TypeMaterial_Unit(ByVal ImportTable As DataTable) As Boolean
+        Dim cnSQLRM As SqlConnection
+        Dim cmSQLRM As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+        Dim strRmcodeBefore As String = String.Empty
+        Dim distinctImportTabale As New DataTable
+
+        Try
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim strTypeMat As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
+                Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
+                Dim strUnit As String = ImportTable.Rows(x)("Unit").ToString().Trim()
+                strSQL = ""
+
+                '// 1.) Check RMCode
+                If rmCode.Length > 0 Then
+                    strSQL = " Select count(*) from  "
+                    strSQL += " (select t.Typecode ,TypeName,code from TBLType t  "
+                    strSQL += " Left outer join TBLGroup  g   On t.typecode=g.typecode )a  "
+                    strSQL += " Left outer join ( "
+                    strSQL += " Select distinct  Finalcompound code ,null DescName,compcode,0.00 Qty "
+                    strSQL += " From TBLCompound Where Compcode Not In ( Select code from TblGroup where Typecode ='01') and active = 1   "
+                    strSQL += " union"
+                    strSQL += " Select distinct  Final code ,null DescName,psemicode,0.00 Qty  FROM TBLpresemi  where MaterialType   Not In ( '01','02')   and active = 1   "
+                    strSQL += " union"
+                    strSQL += " Select rmCode,DescName,RMcode, 0.00 Qty  from TblRM  where descName Like '%Steel%' or descName like '%Bead%' or descName like '%Nylon%' "
+                    strSQL += " )b    On a.code = b.compcode   "
+                    strSQL += " where B.code Is Not null And TypeCode = '" & rmCode & "' "
+                    cnSQLRM = New SqlConnection(C1.Strcon)
+                    cnSQLRM.Open()
+                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                    Dim i As Long = cmSQLRM.ExecuteScalar()
+                    If i = 0 Then
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                        Throw New System.Exception("This RM Code '" & rmCode & "' is not found from Master")
+                    Else
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                    End If
+                End If
+
+                '// 2.) Check TypeMaterial
+                If strTypeMat.Length > 0 Then
+                    strSQL = "SELECT  COUNT(*) "
+                    strSQL += "  FROM  TblTypeMaterial  "
+                    strSQL += " where  descname like '%Semi%'  AND  MaterialCode = '" & strTypeMat & "' "
+                    cnSQLRM = New SqlConnection(C1.Strcon)
+                    cnSQLRM.Open()
+                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                    Dim i As Long = cmSQLRM.ExecuteScalar()
+                    If i = 0 Then
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                        Throw New System.Exception("This TypeMaterial Code '" & strTypeMat & "' is not match PreSemi TypeMatetial")
+                    Else
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                    End If
+                End If
+
+
+                '// 3.) Check Unit
+                If strUnit.Length > 0 Then
+                    strSQL = "SELECT COUNT(*) "
+                    strSQL += "  FROM  TBLUnit  "
+                    strSQL += " Where UnitCode = '" & strUnit & "' "
+                    cnSQLRM = New SqlConnection(C1.Strcon)
+                    cnSQLRM.Open()
+                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                    Dim i As Long = cmSQLRM.ExecuteScalar()
+                    If i = 0 Then
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                        Throw New System.Exception("This Unit Code '" & strUnit & "' is not match Unit Master")
+                    Else
+                        cmSQLRM.Dispose()
+                        cnSQLRM.Dispose()
+                    End If
+                End If
+            Next x
+
+            ret = True
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        Finally
+            cnSQLRM.Close()
+            cmSQLRM.Dispose()
+            cnSQLRM.Dispose()
+        End Try
+
+        Return ret
+    End Function
 #End Region
 
 #Region "SelectData"
