@@ -20,13 +20,13 @@ Public Class FrmPHYReport
     Dim C1 As New SQLData("ACCINV")
     Dim StrData As String
     Friend Username As String
-    Friend sType As String
+    Friend sType As String 'Type
     Friend sMType, sName As String
     Friend sPeriod1, sPeriod2 As String
     Friend sLoc, sLoc2, sSec As String
     Friend sCODE As String
-    Friend sTrxPeriod As String
-    Friend sTrx1, sTrx2 As String
+    Friend sTrxPeriod As String 'Period
+    Friend sTrx1, sTrx2 As String 'Tag No
     Friend sTag1, sTag2 As String
     Friend sHeader, sMonth As String
 #End Region
@@ -70,19 +70,22 @@ Public Class FrmPHYReport
     Friend WithEvents lblatc As System.Windows.Forms.Label
     Friend WithEvents CmdPrint As System.Windows.Forms.Button
     Friend WithEvents txtAdj As System.Windows.Forms.TextBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmPHYReport))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DGView = New System.Windows.Forms.DataGrid
-        Me.CmdPrint = New System.Windows.Forms.Button
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.txtAdj = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.LblTotal = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.lblstd = New System.Windows.Forms.Label
-        Me.lblatc = New System.Windows.Forms.Label
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPHYReport))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DGView = New System.Windows.Forms.DataGrid()
+        Me.CmdPrint = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtAdj = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LblTotal = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblstd = New System.Windows.Forms.Label()
+        Me.lblatc = New System.Windows.Forms.Label()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -90,8 +93,8 @@ Public Class FrmPHYReport
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DGView)
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
         Me.GroupBox1.Name = "GroupBox1"
@@ -141,7 +144,6 @@ Public Class FrmPHYReport
         Me.txtAdj.Name = "txtAdj"
         Me.txtAdj.Size = New System.Drawing.Size(88, 20)
         Me.txtAdj.TabIndex = 3
-        Me.txtAdj.Text = ""
         '
         'Label2
         '
@@ -203,6 +205,11 @@ Public Class FrmPHYReport
         Me.lblatc.Size = New System.Drawing.Size(152, 16)
         Me.lblatc.TabIndex = 10
         '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
+        '
         'FrmPHYReport
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
@@ -220,13 +227,14 @@ Public Class FrmPHYReport
         Me.Controls.Add(Me.lblstd)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmPHYReport"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Physical Report"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
-
 #End Region
 
 #Region "CONSTANT"
@@ -235,9 +243,17 @@ Public Class FrmPHYReport
     Dim oldrow As Integer
 #End Region
 
+#Region "Propeties"
+    ''' <summary>
+    ''' Flag for check loading
+    ''' </summary>
+    ''' <returns>Boolean</returns>
+    Public Property IsLoad As Boolean
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadData()
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+        Dim sb As System.Text.StringBuilder()
         StrSQL = "  "
 
         StrSQL &= " select  rm.rmcode,Round(isnull(QQty,0),4) TOTAL,StdPrice "
@@ -314,7 +330,7 @@ Public Class FrmPHYReport
         GrdDV.AllowNew = False
         GrdDV.AllowDelete = False
         '************************************
-        DGView.DataSource = GrdDV
+        UpdateDataGrid()
         '************************************
         'Dim i As Integer
         'Dim c34 As String = Chr(34)
@@ -328,27 +344,52 @@ Public Class FrmPHYReport
         '    coltype = coltype.Replace("Decimal", "decimal")
         '    Debug.WriteLine("<xs:element name=" & c34 & col.Trim & c34 & "  type= " & c34 & "xs:" & coltype & c34 & " minOccurs=" & c34 & "0" & c34 & "/>")
         'Next
-
-        Me.Cursor = System.Windows.Forms.Cursors.Default
-
     End Sub
 
 #End Region
 
+#Region "Form Event"
     Private Sub FrmPHYReport_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        IsLoad = True
+    End Sub
+
+    Private Sub FrmPHYReport_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        If IsLoad Then
+            Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+            IsLoad = False
+            BackgroundWorker1.RunWorkerAsync()
+        End If
+    End Sub
+#End Region
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        LoadData()
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        DGView.DataSource = GrdDV
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
         Dim i As Integer
         Dim itotal, istotal, iatotal As Double
-        LoadData()
+
         For i = 0 To GrdDV.Count - 1
             itotal = itotal + GrdDV.Item(i).Row("Total")
             istotal = istotal + GrdDV.Item(i).Row("SAMOUNT")
             iatotal = iatotal + GrdDV.Item(i).Row("AAMOUNT")
-        Next
+        Next i
+
         LblTotal.Text = Format(CDbl(itotal), "###,###,###,###,##0.00")
         lblstd.Text = Format(CDbl(istotal), "###,###,###,###,##0.00")
         lblatc.Text = Format(CDbl(iatotal), "###,###,###,###,##0.00")
+
+        Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 
+    Private Sub UpdateDataGrid()
+        BackgroundWorker1.ReportProgress(100)
+    End Sub
 
     Private Sub CmdPrint_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdPrint.Click
         Dim i As Integer
