@@ -855,7 +855,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     strTypeMaterialOriginal = GridRow(0)("MaterialType").ToString
 
                                     '//Check Width,Length and N as Number by Condition
-                                    If GridRow(0)("MaterialType").ToString = "02" Then
+                                    If GridRow(0)("MaterialType").ToString = "01" Then
+                                        '//Just QTY
+                                    ElseIf GridRow(0)("MaterialType").ToString = "02" Then
                                         If dtRec.Rows(i)("Width").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Width"), dblLength) Then
                                                 Throw New System.Exception("Please input Width data as Number")
@@ -906,7 +908,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     End If
                                 Else
                                     '//Check Width,Length and N as Number by Condition
-                                    If strTypeMaterial = "02" Then
+                                    If strTypeMaterial = "01" Then
+                                        '//Just QTY
+                                    ElseIf strTypeMaterial = "02" Then
                                         If dtRec.Rows(i)("Width").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Width"), dblLength) Then
                                                 Throw New System.Exception("Please input Width data as Number")
