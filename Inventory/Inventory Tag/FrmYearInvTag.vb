@@ -980,7 +980,12 @@ Public Class FrmYearInvTag
                             'Check format of Qty
                             Dim result As Decimal
                             If Not Decimal.TryParse(qty, result) Then
+                                'Qty is not decimal
                                 Continue For
+                            Else
+                                If qty = 0.0 Then
+                                    Continue For
+                                End If
                             End If
 
                             'Check empty data
