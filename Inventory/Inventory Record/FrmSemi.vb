@@ -1292,7 +1292,7 @@ Public Class FrmSemi
                     If i = 0 Then
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
-                        Throw New System.Exception("This TypeMaterial Code '" & strTypeMat & "' is not match PreSemi TypeMatetial")
+                        Throw New System.Exception("This TypeMaterial Code '" & strTypeMat & "' is not match Semi TypeMatetial")
                     Else
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
