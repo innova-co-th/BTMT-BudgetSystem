@@ -253,59 +253,67 @@ Public Class FrmPHYReport
 
 #Region "Function_Load"
     Private Sub LoadData()
-        Dim sb As System.Text.StringBuilder()
-        StrSQL = "  "
+        Dim sb As New System.Text.StringBuilder()
 
-        StrSQL &= " select  rm.rmcode,Round(isnull(QQty,0),4) TOTAL,StdPrice "
-        StrSQL &= " ,Round(isnull(QQty,0)*StdPrice,2) SAMOUNT,ActPrice"
-        StrSQL &= " ,Round(isnull(QQty,0)*ActPrice,2) AAMOUNT from "
-        StrSQL &= " TBLRM rm"
-        StrSQL &= " left outer join "
-        StrSQL &= " ("
-        StrSQL &= " select  rmcode,Sum(QQty) qqty  from ("
+        sb.Clear()
+        sb.AppendLine(" SELECT  rm.rmcode,Round(isnull(QQty,0),4) TOTAL,StdPrice ")
+        sb.AppendLine(" ,Round(isnull(QQty,0)*StdPrice,2) SAMOUNT,ActPrice")
+        sb.AppendLine(" ,Round(isnull(QQty,0)*ActPrice,2) AAMOUNT ")
+        sb.AppendLine(" FROM TBLRM rm")
+        sb.AppendLine(" LEFT OUTER JOIN ( ")
+        sb.AppendLine("   SELECT  rmcode,Sum(QQty) qqty ")
+        sb.AppendLine("   FROM (")
+        sb.AppendLine("     SELECT * FROM ScarpRmTag1 ")
+        sb.AppendLine("     UNION  ")
+        sb.AppendLine("     SELECT * FROM ScarpRmTag2 ")
+        sb.AppendLine("     UNION  ")
+        sb.AppendLine("     SELECT * FROM ScarpRmTag3 ")
+        sb.AppendLine("     UNION  ")
+        sb.AppendLine("     SELECT * FROM ScarpRmTag4 ")
+        sb.AppendLine("     UNION  ")
+        sb.AppendLine("     SELECT * FROM ScarpRmTag5 ")
+        sb.AppendLine("   ) xx")
+        sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
 
-        StrSQL &= "select * from ScarpRmTag1 "
-        StrSQL &= "union  "
-        StrSQL &= "select * from ScarpRmTag2 "
-        StrSQL &= "Union  "
-        StrSQL &= "select * from ScarpRmTag3 "
-        StrSQL &= "Union  "
-        StrSQL &= "select * from ScarpRmTag4 "
-        StrSQL &= "union "
-        StrSQL &= " select * from ScarpRmTag5 "
-        StrSQL &= "   )xx"
-
-        StrSQL &= " where period  = '" & sTrxPeriod.Trim & "' "
         If sType <> "" Then
-            StrSQL &= " and Typecode = '" & sType.Trim & "' "
+            'Type Code
+            sb.AppendLine("   AND Typecode = '" & sType.Trim() & "' ")
         End If
         If sLoc <> "" Then
-            StrSQL &= " and Loc = '" & sLoc.Trim & "' "
+            'Location
+            sb.AppendLine("   AND Loc = '" & sLoc.Trim() & "' ")
         End If
         If sLoc2 <> "" Then
-            StrSQL &= "  and Loc not in ( '3130','6400' )"
+            'WIP (Material Warehouse or Tire Warehouse)
+            sb.AppendLine("   AND Loc not in ( '3130','6400' )")
         End If
         If sPeriod1 <> "" Then
-            StrSQL &= " and trxyear > = '" & sPeriod1.Trim & "' "
+            'Year
+            sb.AppendLine("   AND trxyear > = '" & sPeriod1.Trim() & "' ")
         End If
         If sPeriod2 <> "" Then
-            StrSQL &= " and trxyear < = '" & sPeriod2.Trim & "' "
+            'Year
+            sb.AppendLine("   AND trxyear < = '" & sPeriod2.Trim() & "' ")
         End If
         If sMType <> "" Then
-            StrSQL &= " and MaterialType = '" & sMType.Trim & " ' "
+            'Material Type
+            sb.AppendLine("   AND MaterialType = '" & sMType.Trim() & " ' ")
         End If
         If sCODE <> "" Then
-            StrSQL &= " and CODE = '" & sCODE.Trim & "' "
+            'Table TBLGroup
+            sb.AppendLine("   AND CODE = '" & sCODE.Trim() & "' ")
         End If
         If sTag1 <> "" And sTag2 <> "" Then
-            StrSQL &= " and Tagno >= '" & sTag1.Trim & "' "
-            StrSQL &= " and Tagno <= '" & sTag2.Trim & "' "
+            sb.AppendLine("   AND Tagno >= '" & sTag1.Trim() & "' ")
+            sb.AppendLine("   AND Tagno <= '" & sTag2.Trim() & "' ")
         End If
 
-        StrSQL &= "   group by rmcode  ) yy"
-        StrSQL &= "  on yy.rmcode = rm.rmcode "
-        StrSQL &= "  where (ActPrice+QQty <> 0.00 ) "
-        StrSQL &= "  order by rm.rmcode "
+        sb.AppendLine("   GROUP BY rmcode ")
+        sb.AppendLine(" ) yy on yy.rmcode = rm.rmcode ")
+        sb.AppendLine(" WHERE (ActPrice+QQty <> 0.00 ) ")
+        sb.AppendLine(" ORDER BY rm.rmcode ")
+        StrSQL = sb.ToString()
+
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
@@ -316,7 +324,7 @@ Public Class FrmPHYReport
         Try
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
             Dim CB As New SqlCommandBuilder(DA)
-            DA.SelectCommand.CommandTimeout = 120 'กำหนดเวลาในการคำนวน 
+            DA.SelectCommand.CommandTimeout = 120 'Timeout
             tb1 = New DataTable
             DT = New DataTable
             DA.Fill(DT)
@@ -357,12 +365,14 @@ Public Class FrmPHYReport
         If IsLoad Then
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
             IsLoad = False
+            CmdPrint.Enabled = False
             BackgroundWorker1.RunWorkerAsync()
         End If
     End Sub
 #End Region
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        'Report
         LoadData()
     End Sub
 
@@ -371,10 +381,9 @@ Public Class FrmPHYReport
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        Dim i As Integer
         Dim itotal, istotal, iatotal As Double
 
-        For i = 0 To GrdDV.Count - 1
+        For i As Integer = 0 To GrdDV.Count - 1
             itotal = itotal + GrdDV.Item(i).Row("Total")
             istotal = istotal + GrdDV.Item(i).Row("SAMOUNT")
             iatotal = iatotal + GrdDV.Item(i).Row("AAMOUNT")
@@ -384,6 +393,7 @@ Public Class FrmPHYReport
         lblstd.Text = Format(CDbl(istotal), "###,###,###,###,##0.00")
         lblatc.Text = Format(CDbl(iatotal), "###,###,###,###,##0.00")
 
+        CmdPrint.Enabled = True
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 
