@@ -795,7 +795,7 @@ Public Class FrmView
                 fview.sMType = cmbTypeMaterial.SelectedValue 'Material Type
                 fview.sName = cmbTypeMaterial.Text.Trim() & "  "
             Else
-                fview.sMType = ""
+                fview.sMType = String.Empty
             End If
 
             If CHKType.Checked = False And CHKMType.Checked = False Then
@@ -824,9 +824,9 @@ Public Class FrmView
 
             If CHKSection.Checked Then
                 fview.sLoc = cmbSection1.SelectedValue
-                fview.sSec = cmbSection1.Text.Trim
+                fview.sSec = cmbSection1.Text.Trim()
             Else
-                fview.sLoc = ""
+                fview.sLoc = String.Empty
                 fview.sSec = "ALL PRODUCTION"
             End If
 
@@ -834,21 +834,21 @@ Public Class FrmView
                 fview.sLoc2 = "WIP"
                 fview.sSec = "WIP"
             Else
-                fview.sLoc2 = ""
+                fview.sLoc2 = String.Empty
             End If
 
             If CHKMatCode.Checked Then
-                fview.sCODE = cmbCode.Text.Trim
+                fview.sCODE = cmbCode.Text.Trim()
             Else
-                fview.sCODE = ""
+                fview.sCODE = String.Empty
             End If
 
             If CHKTAG.Checked Then
-                fview.sTag1 = TxtNo1.Text.Trim
-                fview.sTag2 = TxtNo2.Text.Trim
+                fview.sTag1 = TxtNo1.Text.Trim()
+                fview.sTag2 = TxtNo2.Text.Trim()
             Else
-                fview.sTag1 = ""
-                fview.sTag2 = ""
+                fview.sTag1 = String.Empty
+                fview.sTag2 = String.Empty
             End If
 
             fview.Show()
@@ -859,7 +859,7 @@ Public Class FrmView
         If CHKYear.Checked Then
             fmview.sTrxPeriod = "YL"
         Else
-            fmview.sTrxPeriod = ""
+            fmview.sTrxPeriod = String.Empty
         End If
 
         ' Report by material 
@@ -869,21 +869,21 @@ Public Class FrmView
 
             If CHKType.Checked Then
                 fmview.sType = cmbType.SelectedValue
-                fmview.sName = cmbType.Text.Trim
+                fmview.sName = cmbType.Text.Trim()
             Else
-                fmview.sType = ""
+                fmview.sType = String.Empty
             End If
             If CHKMType.Checked Then
                 fmview.sMType = cmbTypeMaterial.SelectedValue
-                fmview.sName = cmbTypeMaterial.Text.Trim & "  "
+                fmview.sName = cmbTypeMaterial.Text.Trim() & "  "
             Else
-                fmview.sMType = ""
+                fmview.sMType = String.Empty
             End If
             If CHKType.Checked = False And CHKMType.Checked = False Then
                 fmview.sName &= " All PROCESS"
             End If
-            fmview.sPeriod1 = ""
-            fmview.sPeriod2 = ""
+            fmview.sPeriod1 = String.Empty
+            fmview.sPeriod2 = String.Empty
             If RBFrist.Checked Then
                 fmview.sHeader = " 1St HALF'" & DTPYear.Text
                 fmview.sMonth = " JUNE '" & DTPYear.Text
@@ -898,10 +898,10 @@ Public Class FrmView
             End If
             If CHKSection.Checked Then
                 fmview.sLoc = cmbSection1.SelectedValue
-                fmview.sSec = cmbSection1.Text.Trim
+                fmview.sSec = cmbSection1.Text.Trim()
                 fmview.sIdSec = cmbSection1.SelectedValue
             Else
-                fmview.sLoc = ""
+                fmview.sLoc = String.Empty
                 fmview.sSec = "ALL PRODUCTION"
                 fmview.sIdSec = ""
             End If
@@ -909,19 +909,19 @@ Public Class FrmView
                 fmview.sLoc2 = "WIP"
                 fmview.sSec = "WIP"
             Else
-                fmview.sLoc2 = ""
+                fmview.sLoc2 = String.Empty
             End If
             If CHKMatCode.Checked Then
-                fmview.sCODE = cmbCode.Text.Trim
+                fmview.sCODE = cmbCode.Text.Trim()
             Else
-                fmview.sCODE = ""
+                fmview.sCODE = String.Empty
             End If
             If CHKTAG.Checked Then
-                fmview.sTag1 = TxtNo1.Text.Trim
-                fmview.sTag2 = TxtNo2.Text.Trim
+                fmview.sTag1 = TxtNo1.Text.Trim()
+                fmview.sTag2 = TxtNo2.Text.Trim()
             Else
-                fmview.sTag1 = ""
-                fmview.sTag2 = ""
+                fmview.sTag1 = String.Empty
+                fmview.sTag2 = String.Empty
             End If
 
             fmview.ShowDialog()
