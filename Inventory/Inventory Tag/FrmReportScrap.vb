@@ -69,34 +69,49 @@ Public Class FrmReportScrap
     Friend WithEvents lblatc As System.Windows.Forms.Label
     Friend WithEvents CmdPrint As System.Windows.Forms.Button
     Friend WithEvents txtAdj As System.Windows.Forms.TextBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents pbLoading As PictureBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmReportScrap))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DGView = New System.Windows.Forms.DataGrid
-        Me.CmdPrint = New System.Windows.Forms.Button
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.txtAdj = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.LblTotal = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.lblstd = New System.Windows.Forms.Label
-        Me.lblatc = New System.Windows.Forms.Label
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmReportScrap))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.pbLoading = New System.Windows.Forms.PictureBox()
+        Me.DGView = New System.Windows.Forms.DataGrid()
+        Me.CmdPrint = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtAdj = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LblTotal = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblstd = New System.Windows.Forms.Label()
+        Me.lblatc = New System.Windows.Forms.Label()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.pbLoading)
         Me.GroupBox1.Controls.Add(Me.DGView)
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(712, 600)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
+        '
+        'pbLoading
+        '
+        Me.pbLoading.Image = CType(resources.GetObject("pbLoading.Image"), System.Drawing.Image)
+        Me.pbLoading.Location = New System.Drawing.Point(6, 45)
+        Me.pbLoading.Name = "pbLoading"
+        Me.pbLoading.Size = New System.Drawing.Size(150, 150)
+        Me.pbLoading.TabIndex = 1
+        Me.pbLoading.TabStop = False
         '
         'DGView
         '
@@ -140,7 +155,6 @@ Public Class FrmReportScrap
         Me.txtAdj.Name = "txtAdj"
         Me.txtAdj.Size = New System.Drawing.Size(88, 20)
         Me.txtAdj.TabIndex = 3
-        Me.txtAdj.Text = ""
         '
         'Label2
         '
@@ -161,6 +175,7 @@ Public Class FrmReportScrap
         Me.LblTotal.Name = "LblTotal"
         Me.LblTotal.Size = New System.Drawing.Size(152, 16)
         Me.LblTotal.TabIndex = 5
+        Me.LblTotal.Text = "0"
         '
         'Label4
         '
@@ -191,6 +206,7 @@ Public Class FrmReportScrap
         Me.lblstd.Name = "lblstd"
         Me.lblstd.Size = New System.Drawing.Size(152, 16)
         Me.lblstd.TabIndex = 9
+        Me.lblstd.Text = "0"
         '
         'lblatc
         '
@@ -201,6 +217,12 @@ Public Class FrmReportScrap
         Me.lblatc.Name = "lblatc"
         Me.lblatc.Size = New System.Drawing.Size(152, 16)
         Me.lblatc.TabIndex = 10
+        Me.lblatc.Text = "0"
+        '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
         '
         'FrmReportScrap
         '
@@ -219,10 +241,13 @@ Public Class FrmReportScrap
         Me.Controls.Add(Me.lblstd)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmReportScrap"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Report"
         Me.GroupBox1.ResumeLayout(False)
+        CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -234,113 +259,128 @@ Public Class FrmReportScrap
     Dim oldrow As Integer
 #End Region
 
+#Region "Propeties"
+    ''' <summary>
+    ''' Flag for check loading
+    ''' </summary>
+    ''' <returns>Boolean</returns>
+    Public Property IsLoad As Boolean
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadData()
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-
         StrSQL &= " select  rm.rmcode,Round(isnull(QQty,0),2) TOTAL,round(StdPrice,4) StdPrice "
         StrSQL &= " ,Round(isnull(QQty,0)*StdPrice,2) SAMOUNT,round(ActPrice,4) ActPrice,Round(isnull(QQty,0)*ActPrice,2) AAMOUNT from "
         StrSQL &= "  TBLRM rm"
         StrSQL &= " left outer join "
         StrSQL &= "  ("
         StrSQL &= "  select  rmcode,Sum(QQty) qqty  from ("
-        StrSQL &= "  select * from ScarpRmTag1 where period  = '" & sTrxPeriod.Trim & "' "
+        StrSQL &= "  select * "
+        StrSQL &= "  from ScarpRmTag1 "
+        StrSQL &= "  where period  = '" & sTrxPeriod.Trim() & "' "
         If sType <> "" Then
-            StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+            StrSQL &= "  and Typecode = '" & sType.Trim() & "' "
         End If
         If sLoc <> "" Then
-            StrSQL &= "  and Loc = ' " & sLoc.Trim & "' "
+            StrSQL &= "  and Loc = ' " & sLoc.Trim() & "' "
         End If
         If sPeriod1 <> "" Then
-            StrSQL &= "   and trxyear > = '" & sPeriod1.Trim & "' "
+            StrSQL &= "   and trxyear > = '" & sPeriod1.Trim() & "' "
         End If
         If sPeriod2 <> "" Then
-            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim() & "' "
         End If
         If sMType <> "" Then
-            StrSQL &= "  and MaterialType = '" & sMType.Trim & " ' "
+            StrSQL &= "  and MaterialType = '" & sMType.Trim() & " ' "
         End If
         If sCODE <> "" Then
-            StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+            StrSQL &= "  and CODE = '" & sCODE.Trim() & "' "
         End If
         If sTag1 <> "" And sTag2 <> "" Then
-            StrSQL &= "  and Tagno >= '" & sTag1.Trim & "' "
-            StrSQL &= "  and Tagno <= '" & sTag2.Trim & "' "
+            StrSQL &= "  and Tagno >= '" & sTag1.Trim() & "' "
+            StrSQL &= "  and Tagno <= '" & sTag2.Trim() & "' "
         End If
 
         StrSQL &= " union"
-        StrSQL &= " select * from ScarpRmTag2  where period  = '" & sTrxPeriod.Trim & "' "
+        StrSQL &= " select * "
+        StrSQL &= " from ScarpRmTag2  "
+        StrSQL &= " where period  = '" & sTrxPeriod.Trim() & "' "
         If sType <> "" Then
-            StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+            StrSQL &= "  and Typecode = '" & sType.Trim() & "' "
         End If
         If sLoc <> "" Then
-            StrSQL &= " and Loc = '" & sLoc.Trim & "' "
+            StrSQL &= " and Loc = '" & sLoc.Trim() & "' "
         End If
         If sPeriod1 <> "" Then
-            StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & "' "
+            StrSQL &= "  and trxyear > = '" & sPeriod1.Trim() & "' "
         End If
         If sPeriod2 <> "" Then
-            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim() & "' "
         End If
         If sMType <> "" Then
-            StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+            StrSQL &= "  and MaterialType = '" & sMType.Trim() & "' "
         End If
         If sCODE <> "" Then
-            StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+            StrSQL &= "  and CODE = '" & sCODE.Trim() & "' "
         End If
         If sTag1 <> "" And sTag2 <> "" Then
-            StrSQL &= "   and Tagno >= '" & sTag1.Trim & "' "
-            StrSQL &= "   and Tagno <= '" & sTag2.Trim & "' "
+            StrSQL &= "   and Tagno >= '" & sTag1.Trim() & "' "
+            StrSQL &= "   and Tagno <= '" & sTag2.Trim() & "' "
         End If
 
 
         StrSQL &= "  union"
-        StrSQL &= "  select * from ScarpRmTag3 where period  = '" & sTrxPeriod.Trim & "' "
+        StrSQL &= "  select * "
+        StrSQL &= "  from ScarpRmTag3 "
+        StrSQL &= "  where period  = '" & sTrxPeriod.Trim() & "' "
         If sType <> "" Then
-            StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+            StrSQL &= "  and Typecode = '" & sType.Trim() & "' "
         End If
         If sLoc <> "" Then
-            StrSQL &= " and Loc = '" & sLoc.Trim & " ' "
+            StrSQL &= " and Loc = '" & sLoc.Trim() & " ' "
         End If
         If sPeriod1 <> "" Then
-            StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & " ' "
+            StrSQL &= "  and trxyear > = '" & sPeriod1.Trim() & " ' "
         End If
         If sPeriod2 <> "" Then
-            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim() & "' "
         End If
         If sMType <> "" Then
-            StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+            StrSQL &= "  and MaterialType = '" & sMType.Trim() & "' "
         End If
         If sCODE <> "" Then
-            StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+            StrSQL &= "  and CODE = '" & sCODE.Trim() & "' "
         End If
         If sTag1 <> "" And sTag2 <> "" Then
-            StrSQL &= "   and Tagno >= '" & sTag1.Trim & "' "
-            StrSQL &= "   and Tagno <= '" & sTag2.Trim & "' "
+            StrSQL &= "   and Tagno >= '" & sTag1.Trim() & "' "
+            StrSQL &= "   and Tagno <= '" & sTag2.Trim() & "' "
         End If
+
         StrSQL &= "  union"
-        StrSQL &= "  select * from ScarpRmTag4 where period  = '" & sTrxPeriod.Trim & "' "
+        StrSQL &= "  select * "
+        StrSQL &= "  from ScarpRmTag4 "
+        StrSQL &= "  where period  = '" & sTrxPeriod.Trim() & "' "
         If sType <> "" Then
-            StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+            StrSQL &= "  and Typecode = '" & sType.Trim() & "' "
         End If
         If sLoc <> "" Then
-            StrSQL &= " and Loc = '" & sLoc.Trim & " ' "
+            StrSQL &= " and Loc = '" & sLoc.Trim() & " ' "
         End If
         If sPeriod1 <> "" Then
-            StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & " ' "
+            StrSQL &= "  and trxyear > = '" & sPeriod1.Trim() & " ' "
         End If
         If sPeriod2 <> "" Then
-            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+            StrSQL &= "  and trxyear < = '" & sPeriod2.Trim() & "' "
         End If
         If sMType <> "" Then
-            StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+            StrSQL &= "  and MaterialType = '" & sMType.Trim() & "' "
         End If
         If sCODE <> "" Then
-            StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+            StrSQL &= "  and CODE = '" & sCODE.Trim() & "' "
         End If
         If sTag1 <> "" And sTag2 <> "" Then
-            StrSQL &= "   and Tagno >= '" & sTag1.Trim & "' "
-            StrSQL &= "   and Tagno <= '" & sTag2.Trim & "' "
+            StrSQL &= "   and Tagno >= '" & sTag1.Trim() & "' "
+            StrSQL &= "   and Tagno <= '" & sTag2.Trim() & "' "
         End If
         StrSQL &= "   )xx"
         StrSQL &= "   group by rmcode  ) yy"
@@ -371,7 +411,7 @@ Public Class FrmReportScrap
         GrdDV.AllowNew = False
         GrdDV.AllowDelete = False
         '************************************
-        DGView.DataSource = GrdDV
+        UpdateDataGrid()
         '************************************
         'Dim i As Integer
         'Dim c34 As String = Chr(34)
@@ -385,27 +425,65 @@ Public Class FrmReportScrap
         '    coltype = coltype.Replace("Decimal", "decimal")
         '    Debug.WriteLine("<xs:element name=" & c34 & col.Trim & c34 & "  type= " & c34 & "xs:" & coltype & c34 & " minOccurs=" & c34 & "0" & c34 & "/>")
         'Next
-
-        Me.Cursor = System.Windows.Forms.Cursors.Default
-
     End Sub
 
 #End Region
 
+#Region "Form Event"
     Private Sub FrmReportScrap_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim i As Integer
-        Dim itotal, istotal, iatotal As Double
+        IsLoad = True
+    End Sub
+
+    Private Sub FrmReportScrap_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        If IsLoad Then
+            Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+            IsLoad = False
+            CmdPrint.Enabled = False
+            DGView.Visible = False
+            pbLoading.Visible = True
+
+            'Set center
+            Dim x As Integer = (DGView.Width \ 2) - (pbLoading.Width \ 2)
+            Dim y As Integer = (DGView.Height \ 2) - (pbLoading.Height \ 2)
+            pbLoading.Location = New Point(x, y)
+
+            BackgroundWorker1.RunWorkerAsync()
+        End If
+    End Sub
+#End Region
+
+#Region "Control Event"
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        'Report
         LoadData()
-        For i = 0 To GrdDV.Count - 1
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        DGView.DataSource = GrdDV
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+        Dim itotal, istotal, iatotal As Double
+
+        For i As Integer = 0 To GrdDV.Count - 1
             itotal = itotal + GrdDV.Item(i).Row("Total")
             istotal = istotal + GrdDV.Item(i).Row("SAMOUNT")
             iatotal = iatotal + GrdDV.Item(i).Row("AAMOUNT")
         Next
+
         LblTotal.Text = Format(CDbl(itotal), "###,###,###,###,##0.00")
         lblstd.Text = Format(CDbl(istotal), "###,###,###,###,##0.00")
         lblatc.Text = Format(CDbl(iatotal), "###,###,###,###,##0.00")
+
+        pbLoading.Visible = False
+        DGView.Visible = True
+        CmdPrint.Enabled = True
+        Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 
+    Private Sub UpdateDataGrid()
+        BackgroundWorker1.ReportProgress(100)
+    End Sub
 
     Private Sub CmdPrint_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdPrint.Click
         Dim i As Integer
@@ -430,10 +508,11 @@ Public Class FrmReportScrap
 
         fRpt.dt_new = GrdDV.Table
         fRpt.sUser = Username
-        fRpt.sAdj = txtAdj.Text.Trim
-        fRpt.sCODE = sCODE.Trim
-        fRpt.sName = sName.Trim
-        fRpt.sSec = sSec.Trim
+        fRpt.sAdj = txtAdj.Text.Trim()
+        fRpt.sCODE = sCODE.Trim()
+        fRpt.sName = sName.Trim()
+        fRpt.sSec = sSec.Trim()
         fRpt.ShowDialog()
     End Sub
+#End Region
 End Class

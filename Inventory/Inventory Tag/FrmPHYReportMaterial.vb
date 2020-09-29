@@ -78,36 +78,42 @@ Public Class FrmPHYReportMaterial
     Friend WithEvents lblstdKG As System.Windows.Forms.Label
     Friend WithEvents CHKGroup As System.Windows.Forms.CheckBox
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents pbLoading As PictureBox
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmPHYReportMaterial))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DGView = New System.Windows.Forms.DataGrid
-        Me.CmdPrint = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.LblTotal = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.lblstd = New System.Windows.Forms.Label
-        Me.lblatc = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.LblTotalKG = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.lblactKG = New System.Windows.Forms.Label
-        Me.lblstdKG = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.CHKGroup = New System.Windows.Forms.CheckBox
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPHYReportMaterial))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DGView = New System.Windows.Forms.DataGrid()
+        Me.CmdPrint = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LblTotal = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblstd = New System.Windows.Forms.Label()
+        Me.lblatc = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.LblTotalKG = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblactKG = New System.Windows.Forms.Label()
+        Me.lblstdKG = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.CHKGroup = New System.Windows.Forms.CheckBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.pbLoading = New System.Windows.Forms.PictureBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.pbLoading)
         Me.GroupBox1.Controls.Add(Me.DGView)
         Me.GroupBox1.Location = New System.Drawing.Point(8, 96)
         Me.GroupBox1.Name = "GroupBox1"
@@ -160,6 +166,7 @@ Public Class FrmPHYReportMaterial
         Me.LblTotal.Name = "LblTotal"
         Me.LblTotal.Size = New System.Drawing.Size(96, 16)
         Me.LblTotal.TabIndex = 5
+        Me.LblTotal.Text = "0"
         '
         'Label4
         '
@@ -190,6 +197,7 @@ Public Class FrmPHYReportMaterial
         Me.lblstd.Name = "lblstd"
         Me.lblstd.Size = New System.Drawing.Size(104, 16)
         Me.lblstd.TabIndex = 9
+        Me.lblstd.Text = "0"
         '
         'lblatc
         '
@@ -200,6 +208,7 @@ Public Class FrmPHYReportMaterial
         Me.lblatc.Name = "lblatc"
         Me.lblatc.Size = New System.Drawing.Size(104, 16)
         Me.lblatc.TabIndex = 10
+        Me.lblatc.Text = "0"
         '
         'Label3
         '
@@ -230,6 +239,7 @@ Public Class FrmPHYReportMaterial
         Me.LblTotalKG.Name = "LblTotalKG"
         Me.LblTotalKG.Size = New System.Drawing.Size(96, 16)
         Me.LblTotalKG.TabIndex = 14
+        Me.LblTotalKG.Text = "0"
         '
         'Label7
         '
@@ -250,6 +260,7 @@ Public Class FrmPHYReportMaterial
         Me.lblactKG.Name = "lblactKG"
         Me.lblactKG.Size = New System.Drawing.Size(104, 16)
         Me.lblactKG.TabIndex = 18
+        Me.lblactKG.Text = "0"
         '
         'lblstdKG
         '
@@ -260,6 +271,7 @@ Public Class FrmPHYReportMaterial
         Me.lblstdKG.Name = "lblstdKG"
         Me.lblstdKG.Size = New System.Drawing.Size(104, 16)
         Me.lblstdKG.TabIndex = 17
+        Me.lblstdKG.Text = "0"
         '
         'Label10
         '
@@ -299,6 +311,20 @@ Public Class FrmPHYReportMaterial
         Me.CheckBox1.TabIndex = 20
         Me.CheckBox1.Text = "Report Group  By Material"
         '
+        'BackgroundWorker1
+        '
+        Me.BackgroundWorker1.WorkerReportsProgress = True
+        Me.BackgroundWorker1.WorkerSupportsCancellation = True
+        '
+        'pbLoading
+        '
+        Me.pbLoading.Image = CType(resources.GetObject("pbLoading.Image"), System.Drawing.Image)
+        Me.pbLoading.Location = New System.Drawing.Point(6, 41)
+        Me.pbLoading.Name = "pbLoading"
+        Me.pbLoading.Size = New System.Drawing.Size(150, 150)
+        Me.pbLoading.TabIndex = 1
+        Me.pbLoading.TabStop = False
+        '
         'FrmPHYReportMaterial
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
@@ -324,13 +350,14 @@ Public Class FrmPHYReportMaterial
         Me.Controls.Add(Me.CheckBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmPHYReportMaterial"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Physical Report By Material"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-
 #End Region
 
 #Region "CONSTANT"
@@ -339,145 +366,189 @@ Public Class FrmPHYReportMaterial
     Dim oldrow As Integer
 #End Region
 
+#Region "Propeties"
+    ''' <summary>
+    ''' Flag for check loading
+    ''' </summary>
+    ''' <returns>Boolean</returns>
+    Public Property IsLoad As Boolean
+#End Region
+
 #Region "Function_Load"
     Private Sub LoadData()
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+        Dim sb As New System.Text.StringBuilder()
+
+        sb.Clear()
+
         If CHKGroup.Checked Then
-            ' group by Material 
-            StrSQL = " select  code,typecode,typename,trxyear,Period,MName,"
-            StrSQL &= " sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,"
-            StrSQL &= " sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg"
+            'If check Group by Material 
+            sb.AppendLine(" SELECT  code,typecode,typename,trxyear,Period,MName,")
+            sb.AppendLine(" sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,")
+            sb.AppendLine(" sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
+            sb.AppendLine(" FROM ( ")
+            sb.AppendLine("   SELECT *")
+            sb.AppendLine("   FROM  tagKG ")
+            sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
 
-            StrSQL &= "  from (  SELECT * "
-            StrSQL &= " FROM  tagKG "
-            StrSQL &= " where period  = '" & sTrxPeriod.Trim & "' "
             If sType <> "" Then
-                StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+                'Type Code
+                sb.AppendLine("   AND Typecode = '" & sType.Trim() & "' ")
             End If
             If sLoc <> "" Then
-                StrSQL &= "  and Location = '" & sLoc.Trim & "' "
+                'Department
+                sb.AppendLine("   AND Location = '" & sLoc.Trim() & "' ")
             End If
             If sLoc2 <> "" Then
-                StrSQL &= "  and Location not in ( '3130','6400' )"
+                'WIP (Material Warehouse or Tire Warehouse)
+                sb.AppendLine("   AND Location not in ( '3130','6400' )")
             End If
             If sPeriod1 <> "" Then
-                StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & "' "
+                'Year
+                sb.AppendLine("   AND trxyear > = '" & sPeriod1.Trim() & "' ")
             End If
             If sPeriod2 <> "" Then
-                StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+                'Year
+                sb.AppendLine("   AND trxyear < = '" & sPeriod2.Trim() & "' ")
             End If
             If sMType <> "" Then
-                StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+                'Material Type
+                sb.AppendLine("   AND MaterialType = '" & sMType.Trim() & "' ")
             End If
             If sCODE <> "" Then
-                StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+                'Table TBLGroup
+                sb.AppendLine("   AND CODE = '" & sCODE.Trim() & "' ")
             End If
             If sTag1 <> "" And sTag2 <> "" Then
-                StrSQL &= "  and Tagno >= '" & sTag1.Trim & "' "
-                StrSQL &= "  and Tagno <= '" & sTag2.Trim & "' "
+                sb.AppendLine("   AND Tagno >= '" & sTag1.Trim() & "' ")
+                sb.AppendLine("   AND Tagno <= '" & sTag2.Trim() & "' ")
             End If
-            StrSQL &= " ) xxx"
-            StrSQL &= " group by code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg"
 
-            StrSQL &= " Union "
+            sb.AppendLine(" ) xxx")
+            sb.AppendLine(" GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
 
-            StrSQL &= " select  code,typecode,typename,trxyear,Period,MName,"
-            StrSQL &= " sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,"
-            StrSQL &= " sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg"
-            StrSQL &= "  from (  SELECT * "
-            StrSQL &= " FROM  tagUT "
-            StrSQL &= " where period  = '" & sTrxPeriod.Trim & "' "
+            sb.AppendLine(" UNION ")
+
+            sb.AppendLine(" SELECT  code,typecode,typename,trxyear,Period,MName,")
+            sb.AppendLine(" sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,")
+            sb.AppendLine(" sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
+            sb.AppendLine(" FROM ( ")
+            sb.AppendLine("   SELECT *")
+            sb.AppendLine("   FROM  tagUT ")
+            sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
+
             If sType <> "" Then
-                StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+                'Type Code
+                sb.AppendLine("   AND Typecode = '" & sType.Trim() & "' ")
             End If
             If sLoc <> "" Then
-                StrSQL &= "  and Location = '" & sLoc.Trim & "' "
+                'Location
+                sb.AppendLine("   AND Location = '" & sLoc.Trim() & "' ")
             End If
             If sLoc2 <> "" Then
-                StrSQL &= "  and Location not in ( '3130','6400' )"
+                'WIP (Material Warehouse or Tire Warehouse)
+                sb.AppendLine("   AND Location not in ( '3130','6400' )")
             End If
-
             If sPeriod1 <> "" Then
-                StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & "' "
+                'Year
+                sb.AppendLine("   AND trxyear > = '" & sPeriod1.Trim() & "' ")
             End If
             If sPeriod2 <> "" Then
-                StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+                'Year
+                sb.AppendLine("  AND trxyear < = '" & sPeriod2.Trim() & "' ")
             End If
             If sMType <> "" Then
-                StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+                'Material Type
+                sb.AppendLine("   AND MaterialType = '" & sMType.Trim() & "' ")
             End If
             If sCODE <> "" Then
-                StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+                sb.AppendLine("   AND CODE = '" & sCODE.Trim() & "' ")
             End If
             If sTag1 <> "" And sTag2 <> "" Then
-                StrSQL &= "  and Tagno >= '" & sTag1.Trim & "' "
-                StrSQL &= "  and Tagno <= '" & sTag2.Trim & "' "
+                sb.AppendLine("   AND Tagno >= '" & sTag1.Trim() & "' ")
+                sb.AppendLine("   AND Tagno <= '" & sTag2.Trim() & "' ")
             End If
 
-            StrSQL &= " ) xxx"
-            StrSQL &= " group by code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg"
-            StrSQL &= "  order by typecode,code"
+            sb.AppendLine(" ) xxx")
+            sb.AppendLine(" GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
+            sb.AppendLine(" ORDER BY typecode,code")
 
         Else
-            StrSQL = " SELECT * "
-            StrSQL &= " FROM  tagKG "
-            StrSQL &= " where period  = '" & sTrxPeriod.Trim & "' "
+            sb.AppendLine(" SELECT * ")
+            sb.AppendLine(" FROM  tagKG ")
+            sb.AppendLine(" WHERE period  = '" & sTrxPeriod.Trim() & "' ")
             If sType <> "" Then
-                StrSQL &= "  and Typecode = '" & sType.Trim & "' "
+                'Type Code
+                sb.AppendLine(" AND Typecode = '" & sType.Trim() & "' ")
             End If
             If sLoc <> "" Then
-                StrSQL &= "  and Location = '" & sLoc.Trim & "' "
+                'Location
+                sb.AppendLine(" AND Location = '" & sLoc.Trim() & "' ")
             End If
             If sLoc2 <> "" Then
-                StrSQL &= "  and Location not in ( '3130','6400' )"
+                'WIP (Material Warehouse or Tire Warehouse)
+                sb.AppendLine(" AND Location not in ( '3130','6400' )")
             End If
             If sPeriod1 <> "" Then
-                StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & "' "
+                'Year
+                sb.AppendLine(" AND trxyear > = '" & sPeriod1.Trim() & "' ")
             End If
             If sPeriod2 <> "" Then
-                StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+                'Year
+                sb.AppendLine(" AND trxyear < = '" & sPeriod2.Trim() & "' ")
             End If
             If sMType <> "" Then
-                StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+                'Material Type
+                sb.AppendLine(" AND MaterialType = '" & sMType.Trim() & "' ")
             End If
             If sCODE <> "" Then
-                StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+                'Table TBLGroup
+                sb.AppendLine(" AND CODE = '" & sCODE.Trim() & "' ")
             End If
             If sTag1 <> "" And sTag2 <> "" Then
-                StrSQL &= "  and Tagno >= '" & sTag1.Trim & "' "
-                StrSQL &= "  and Tagno <= '" & sTag2.Trim & "' "
-            End If
-            StrSQL &= " Union "
-            StrSQL &= "  SELECT  * "
-            StrSQL &= " FROM  tagUT "
-            StrSQL &= " where period  = '" & sTrxPeriod.Trim & "' "
-            If sType <> "" Then
-                StrSQL &= "  and Typecode = '" & sType.Trim & "' "
-            End If
-            If sLoc <> "" Then
-                StrSQL &= "  and Location = '" & sLoc.Trim & "' "
-            End If
-            If sLoc2 <> "" Then
-                StrSQL &= "  and Location not in ( '3130','6400' )"
+                sb.AppendLine(" AND Tagno >= '" & sTag1.Trim() & "' ")
+                sb.AppendLine(" AND Tagno <= '" & sTag2.Trim() & "' ")
             End If
 
+            sb.AppendLine(" UNION ")
+
+            sb.AppendLine(" SELECT  * ")
+            sb.AppendLine(" FROM  tagUT ")
+            sb.AppendLine(" WHERE period  = '" & sTrxPeriod.Trim() & "' ")
+            If sType <> "" Then
+                'Type Code
+                sb.AppendLine(" AND Typecode = '" & sType.Trim() & "' ")
+            End If
+            If sLoc <> "" Then
+                'Location
+                sb.AppendLine(" AND Location = '" & sLoc.Trim() & "' ")
+            End If
+            If sLoc2 <> "" Then
+                'WIP (Material Warehouse or Tire Warehouse)
+                sb.AppendLine(" AND Location not in ( '3130','6400' )")
+            End If
             If sPeriod1 <> "" Then
-                StrSQL &= "  and trxyear > = '" & sPeriod1.Trim & "' "
+                'Year
+                sb.AppendLine(" AND trxyear > = '" & sPeriod1.Trim() & "' ")
             End If
             If sPeriod2 <> "" Then
-                StrSQL &= "  and trxyear < = '" & sPeriod2.Trim & "' "
+                'Year
+                sb.AppendLine(" AND trxyear < = '" & sPeriod2.Trim() & "' ")
             End If
             If sMType <> "" Then
-                StrSQL &= "  and MaterialType = '" & sMType.Trim & "' "
+                'Material Type
+                sb.AppendLine(" AND MaterialType = '" & sMType.Trim() & "' ")
             End If
             If sCODE <> "" Then
-                StrSQL &= "  and CODE = '" & sCODE.Trim & "' "
+                'Table TBLGroup
+                sb.AppendLine(" AND CODE = '" & sCODE.Trim() & "' ")
             End If
             If sTag1 <> "" And sTag2 <> "" Then
-                StrSQL &= "  and Tagno >= '" & sTag1.Trim & "' "
-                StrSQL &= "  and Tagno <= '" & sTag2.Trim & "' "
+                sb.AppendLine(" AND Tagno >= '" & sTag1.Trim() & "' ")
+                sb.AppendLine(" AND Tagno <= '" & sTag2.Trim() & "' ")
             End If
-        End If
+        End If 'If CHKGroup.Checked
+
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
@@ -490,7 +561,7 @@ Public Class FrmPHYReportMaterial
             DA = New SqlDataAdapter(StrSQL, C1.Strcon)
 
             Dim CB As New SqlCommandBuilder(DA)
-            DA.SelectCommand.CommandTimeout = 120 'กำหนดเวลาในการคำนวน 
+            DA.SelectCommand.CommandTimeout = 120 'Timeout
             tb1 = New DataTable
             DT = New DataTable
             DA.Fill(DT)
@@ -504,7 +575,7 @@ Public Class FrmPHYReportMaterial
         GrdDV.AllowNew = False
         GrdDV.AllowDelete = False
         '************************************
-        DGView.DataSource = GrdDV
+        UpdateDataGrid()
         '************************************
         'Dim i As Integer
         'Dim c34 As String = Chr(34)
@@ -519,18 +590,48 @@ Public Class FrmPHYReportMaterial
         '    Debug.WriteLine("<xs:element name=" & c34 & col.Trim & c34 & "  type= " & c34 & "xs:" & coltype & c34 & " minOccurs=" & c34 & "0" & c34 & "/>")
         'Next
 
-        Me.Cursor = System.Windows.Forms.Cursors.Default
-
     End Sub
 
 #End Region
 
+#Region "Form Event"
     Private Sub FrmPHYReportMaterialMaterial_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim i As Integer
+        IsLoad = True
+    End Sub
+
+    Private Sub FrmPHYReportMaterial_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        If IsLoad Then
+            Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+            IsLoad = False
+            CmdPrint.Enabled = False
+            DGView.Visible = False
+            pbLoading.Visible = True
+
+            'Set center
+            Dim x As Integer = (DGView.Width \ 2) - (pbLoading.Width \ 2)
+            Dim y As Integer = (DGView.Height \ 2) - (pbLoading.Height \ 2)
+            pbLoading.Location = New Point(x, y)
+
+            BackgroundWorker1.RunWorkerAsync()
+        End If
+    End Sub
+#End Region
+
+#Region "Control Event"
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        'Report
+        LoadData()
+    End Sub
+
+    Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
+        DGView.DataSource = GrdDV
+    End Sub
+
+    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
         Dim itotal, istotal, iatotal As Double
         Dim itotal1, istotal1, iatotal1 As Double
-        LoadData()
-        For i = 0 To GrdDV.Count - 1
+
+        For i As Integer = 0 To GrdDV.Count - 1
             itotal = itotal + GrdDV.Item(i).Row("UQTY")
             istotal = istotal + GrdDV.Item(i).Row("ASTDUT")
             iatotal = iatotal + GrdDV.Item(i).Row("AACTUT")
@@ -544,17 +645,28 @@ Public Class FrmPHYReportMaterial
         LblTotalKG.Text = Format(CDbl(itotal1), "###,###,###,###,##0.00")
         lblstdKG.Text = Format(CDbl(istotal1), "###,###,###,###,##0.00")
         lblactKG.Text = Format(CDbl(iatotal1), "###,###,###,###,##0.00")
+
+        pbLoading.Visible = False
+        DGView.Visible = True
+        CmdPrint.Enabled = True
+        CHKGroup.Enabled = True
+        Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 
+    Private Sub UpdateDataGrid()
+        BackgroundWorker1.ReportProgress(100)
+    End Sub
 
     Private Sub CmdPrint_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdPrint.Click
         Dim i As Integer
         If CHKGroup.Checked Then
+            'Check Group by Material
             Dim fRpt As New FrmPHYViewGroup
             Dim aDr() As DataRow = GrdDV.Table.Select(GrdDV.RowFilter)
             Dim dr As DataRow
             Dim tbNew As DataTable
             Dim dt4prt As DataTable
+
             If CheckBox1.Checked = False Then
                 tbNew = New DataTable
                 tbNew = DT.Clone
@@ -572,14 +684,15 @@ Public Class FrmPHYReportMaterial
 
                 fRpt.dt_new = GrdDV.Table
                 fRpt.sUser = Username
-                fRpt.sCODE = sCODE.Trim
-                fRpt.sName = sName.Trim
-                fRpt.sSec = sSec.Trim
-                fRpt.sIdSec = sIdSec.Trim
-                fRpt.sHeader = sHeader.Trim
-                fRpt.sMonth = sMonth.Trim
+                fRpt.sCODE = sCODE.Trim()
+                fRpt.sName = sName.Trim()
+                fRpt.sSec = sSec.Trim()
+                fRpt.sIdSec = sIdSec.Trim()
+                fRpt.sHeader = sHeader.Trim()
+                fRpt.sMonth = sMonth.Trim()
                 fRpt.ShowDialog()
             Else
+                'Check Report Group by Material
                 Dim fRptM As New FrmPHYViewGroupMat
                 tbNew = New DataTable
                 tbNew = DT.Clone
@@ -597,14 +710,14 @@ Public Class FrmPHYReportMaterial
 
                 fRptM.dt_new = GrdDV.Table
                 fRptM.sUser = Username
-                fRptM.sCODE = sCODE.Trim
-                fRptM.sName = sName.Trim
-                fRptM.sSec = sSec.Trim
-                fRptM.sIdSec = sIdSec.Trim
-                fRptM.sHeader = sHeader.Trim
-                fRptM.sMonth = sMonth.Trim
+                fRptM.sCODE = sCODE.Trim()
+                fRptM.sName = sName.Trim()
+                fRptM.sSec = sSec.Trim()
+                fRptM.sIdSec = sIdSec.Trim()
+                fRptM.sHeader = sHeader.Trim()
+                fRptM.sMonth = sMonth.Trim()
                 fRptM.ShowDialog()
-            End If
+            End If 'If CheckBox1.Checked = False
         Else
             Dim fRpt As New FrmPHYViewMaterial
             Dim aDr() As DataRow = GrdDV.Table.Select(GrdDV.RowFilter)
@@ -627,38 +740,29 @@ Public Class FrmPHYReportMaterial
 
             fRpt.dt_new = GrdDV.Table
             fRpt.sUser = Username
-            fRpt.sCODE = sCODE.Trim
-            fRpt.sName = sName.Trim
-            fRpt.sSec = sSec.Trim
-            fRpt.sIdSec = sIdSec.Trim
-            fRpt.sHeader = sHeader.Trim
-            fRpt.sMonth = sMonth.Trim
+            fRpt.sCODE = sCODE.Trim()
+            fRpt.sName = sName.Trim()
+            fRpt.sSec = sSec.Trim()
+            fRpt.sIdSec = sIdSec.Trim()
+            fRpt.sHeader = sHeader.Trim()
+            fRpt.sMonth = sMonth.Trim()
             fRpt.ShowDialog()
-        End If
+        End If 'If CHKGroup.Checked
     End Sub
-
 
     Private Sub CHKGroup_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CHKGroup.CheckedChanged
-        If CHKGroup.Checked Then
-            Dim i As Integer
-            Dim itotal, istotal, iatotal As Double
-            Dim itotal1, istotal1, iatotal1 As Double
-            LoadData()
-            For i = 0 To GrdDV.Count - 1
-                itotal = itotal + GrdDV.Item(i).Row("UQTY")
-                istotal = istotal + GrdDV.Item(i).Row("ASTDUT")
-                iatotal = iatotal + GrdDV.Item(i).Row("AACTUT")
-                itotal1 = itotal1 + GrdDV.Item(i).Row("KQTY")
-                istotal1 = istotal1 + GrdDV.Item(i).Row("ASTDKG")
-                iatotal1 = iatotal1 + GrdDV.Item(i).Row("AACTKG")
-            Next
-            LblTotal.Text = Format(CDbl(itotal), "###,###,###,###,##0.00")
-            lblstd.Text = Format(CDbl(istotal), "###,###,###,###,##0.00")
-            lblatc.Text = Format(CDbl(iatotal), "###,###,###,###,##0.00")
-            LblTotalKG.Text = Format(CDbl(itotal1), "###,###,###,###,##0.00")
-            lblstdKG.Text = Format(CDbl(istotal1), "###,###,###,###,##0.00")
-            lblactKG.Text = Format(CDbl(iatotal1), "###,###,###,###,##0.00")
-        End If
-    End Sub
+        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+        CHKGroup.Enabled = False
+        CmdPrint.Enabled = False
+        DGView.Visible = False
+        pbLoading.Visible = True
 
+        'Set center
+        Dim x As Integer = (DGView.Width \ 2) - (pbLoading.Width \ 2)
+        Dim y As Integer = (DGView.Height \ 2) - (pbLoading.Height \ 2)
+        pbLoading.Location = New Point(x, y)
+
+        BackgroundWorker1.RunWorkerAsync()
+    End Sub
+#End Region
 End Class

@@ -71,6 +71,7 @@ Public Class FrmPHYReport
     Friend WithEvents CmdPrint As System.Windows.Forms.Button
     Friend WithEvents txtAdj As System.Windows.Forms.TextBox
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents pbLoading As PictureBox
 
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPHYReport))
@@ -86,8 +87,10 @@ Public Class FrmPHYReport
         Me.lblstd = New System.Windows.Forms.Label()
         Me.lblatc = New System.Windows.Forms.Label()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.pbLoading = New System.Windows.Forms.PictureBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -95,6 +98,7 @@ Public Class FrmPHYReport
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.pbLoading)
         Me.GroupBox1.Controls.Add(Me.DGView)
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
         Me.GroupBox1.Name = "GroupBox1"
@@ -164,6 +168,7 @@ Public Class FrmPHYReport
         Me.LblTotal.Name = "LblTotal"
         Me.LblTotal.Size = New System.Drawing.Size(152, 16)
         Me.LblTotal.TabIndex = 5
+        Me.LblTotal.Text = "0"
         '
         'Label4
         '
@@ -194,6 +199,7 @@ Public Class FrmPHYReport
         Me.lblstd.Name = "lblstd"
         Me.lblstd.Size = New System.Drawing.Size(152, 16)
         Me.lblstd.TabIndex = 9
+        Me.lblstd.Text = "0"
         '
         'lblatc
         '
@@ -204,11 +210,21 @@ Public Class FrmPHYReport
         Me.lblatc.Name = "lblatc"
         Me.lblatc.Size = New System.Drawing.Size(152, 16)
         Me.lblatc.TabIndex = 10
+        Me.lblatc.Text = "0"
         '
         'BackgroundWorker1
         '
         Me.BackgroundWorker1.WorkerReportsProgress = True
         Me.BackgroundWorker1.WorkerSupportsCancellation = True
+        '
+        'pbLoading
+        '
+        Me.pbLoading.Image = CType(resources.GetObject("pbLoading.Image"), System.Drawing.Image)
+        Me.pbLoading.Location = New System.Drawing.Point(6, 43)
+        Me.pbLoading.Name = "pbLoading"
+        Me.pbLoading.Size = New System.Drawing.Size(150, 150)
+        Me.pbLoading.TabIndex = 1
+        Me.pbLoading.TabStop = False
         '
         'FrmPHYReport
         '
@@ -231,6 +247,7 @@ Public Class FrmPHYReport
         Me.Text = "Physical Report"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DGView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -366,11 +383,20 @@ Public Class FrmPHYReport
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
             IsLoad = False
             CmdPrint.Enabled = False
+            DGView.Visible = False
+            pbLoading.Visible = True
+
+            'Set center
+            Dim x As Integer = (DGView.Width \ 2) - (pbLoading.Width \ 2)
+            Dim y As Integer = (DGView.Height \ 2) - (pbLoading.Height \ 2)
+            pbLoading.Location = New Point(x, y)
+
             BackgroundWorker1.RunWorkerAsync()
         End If
     End Sub
 #End Region
 
+#Region "Control Event"
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'Report
         LoadData()
@@ -393,6 +419,8 @@ Public Class FrmPHYReport
         lblstd.Text = Format(CDbl(istotal), "###,###,###,###,##0.00")
         lblatc.Text = Format(CDbl(iatotal), "###,###,###,###,##0.00")
 
+        pbLoading.Visible = False
+        DGView.Visible = True
         CmdPrint.Enabled = True
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
@@ -424,12 +452,13 @@ Public Class FrmPHYReport
 
         fRpt.dt_new = GrdDV.Table
         fRpt.sUser = Username
-        fRpt.sAdj = txtAdj.Text.Trim
-        fRpt.sCODE = sCODE.Trim
-        fRpt.sName = sName.Trim
-        fRpt.sSec = sSec.Trim
-        fRpt.sHeader = sHeader.Trim
-        fRpt.sMonth = sMonth.Trim
+        fRpt.sAdj = txtAdj.Text.Trim()
+        fRpt.sCODE = sCODE.Trim()
+        fRpt.sName = sName.Trim()
+        fRpt.sSec = sSec.Trim()
+        fRpt.sHeader = sHeader.Trim()
+        fRpt.sMonth = sMonth.Trim()
         fRpt.ShowDialog()
     End Sub
+#End Region
 End Class
