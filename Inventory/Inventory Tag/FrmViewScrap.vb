@@ -55,7 +55,8 @@ Public Class FrmViewScrap
         'CrystalReportViewer1
         '
         Me.CrystalReportViewer1.ActiveViewIndex = -1
-        Me.CrystalReportViewer1.DisplayGroupTree = False
+        'Me.CrystalReportViewer1.DisplayGroupTree = False 'It is obsoleted
+        Me.CrystalReportViewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         Me.CrystalReportViewer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CrystalReportViewer1.Location = New System.Drawing.Point(0, 0)
         Me.CrystalReportViewer1.Name = "CrystalReportViewer1"

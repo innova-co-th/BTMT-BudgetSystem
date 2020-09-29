@@ -53,7 +53,8 @@ Public Class FrmPrt
         'Viewer1
         '
         Me.Viewer1.ActiveViewIndex = -1
-        Me.Viewer1.DisplayGroupTree = False
+        'Me.Viewer1.DisplayGroupTree = False 'It is obsoleted
+        Me.Viewer1.ToolPanelView = CrystalDecisions.Windows.Forms.ToolPanelViewType.None
         Me.Viewer1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Viewer1.Location = New System.Drawing.Point(0, 0)
         Me.Viewer1.Name = "Viewer1"
