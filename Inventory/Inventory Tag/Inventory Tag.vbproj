@@ -305,6 +305,7 @@
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="Notification\Loading.gif" />
     <Content Include="Tag.ico" />
     <None Include="App.config">
       <SubType>Designer</SubType>
