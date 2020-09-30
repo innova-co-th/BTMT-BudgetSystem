@@ -324,6 +324,9 @@ Public Class FrmMonthView
 #End Region
 
     Private Sub FrmMonthView_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        'Update 1st day of month
+        DPeriod.Value = New DateTime(DPeriod.Value.Year, DPeriod.Value.Month, 1, DPeriod.Value.Hour, DPeriod.Value.Minute, DPeriod.Value.Second)
+
         LoadLoc()
         LoadType()
         LoadMType()

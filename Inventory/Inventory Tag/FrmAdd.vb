@@ -447,8 +447,12 @@ Public Class FrmAdd
 
 #Region "Form Event"
     Private Sub FrmAdd_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        'Update 1st day of month
+        DPeriod.Value = New DateTime(DPeriod.Value.Year, DPeriod.Value.Month, 1, DPeriod.Value.Hour, DPeriod.Value.Minute, DPeriod.Value.Second)
+
+        'Get year
         Dim dd As DateTime = Convert.ToDateTime(DateTime1.Value, cult)
-        idate = dd.ToString("yyyy") 'Get year
+        idate = dd.ToString("yyyy")
 
         PopulateTypeComboType() 'Set Type
         PopulateLocation() 'Set Location
