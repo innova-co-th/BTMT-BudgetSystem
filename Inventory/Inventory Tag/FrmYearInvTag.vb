@@ -823,6 +823,9 @@ Public Class FrmYearInvTag
 
 #Region "Form Event"
     Private Sub FrmYearInvTag_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        'Update 1st day of month
+        Datemonth.Value = New DateTime(Datemonth.Value.Year, Datemonth.Value.Month, 1, Datemonth.Value.Hour, Datemonth.Value.Minute, Datemonth.Value.Second)
+
         If ChkLoc.Checked = True Then
             LoadLoc() 'Table TBLDepartment
         Else
