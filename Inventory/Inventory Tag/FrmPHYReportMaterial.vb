@@ -387,7 +387,8 @@ Public Class FrmPHYReportMaterial
             sb.AppendLine(" sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
             sb.AppendLine(" FROM ( ")
             sb.AppendLine("   SELECT *")
-            sb.AppendLine("   FROM  tagKG ")
+            'sb.AppendLine("   FROM  tagKG ") 'Use new View by Aek 30/09/2020 14:38
+            sb.AppendLine("   FROM  tagKG_New ")
             sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
 
             If sType <> "" Then
@@ -433,7 +434,8 @@ Public Class FrmPHYReportMaterial
             sb.AppendLine(" sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
             sb.AppendLine(" FROM ( ")
             sb.AppendLine("   SELECT *")
-            sb.AppendLine("   FROM  tagUT ")
+            'sb.AppendLine("   FROM  tagUT ") 'Use new View by Aek 30/09/2020 14:38
+            sb.AppendLine("   FROM  tagUT_New ")
             sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
 
             If sType <> "" Then
@@ -473,8 +475,10 @@ Public Class FrmPHYReportMaterial
             sb.AppendLine(" ORDER BY typecode,code")
 
         Else
+            'If uncheck Group by Material
             sb.AppendLine(" SELECT * ")
-            sb.AppendLine(" FROM  tagKG ")
+            'sb.AppendLine(" FROM  tagKG ") 'Use new View by Aek 30/09/2020 14:38
+            sb.AppendLine(" FROM  tagKG_New ")
             sb.AppendLine(" WHERE period  = '" & sTrxPeriod.Trim() & "' ")
             If sType <> "" Then
                 'Type Code
@@ -512,7 +516,8 @@ Public Class FrmPHYReportMaterial
             sb.AppendLine(" UNION ")
 
             sb.AppendLine(" SELECT  * ")
-            sb.AppendLine(" FROM  tagUT ")
+            'sb.AppendLine(" FROM  tagUT ") 'Use new View by Aek 30/09/2020 14:38
+            sb.AppendLine(" FROM  tagUT_New ")
             sb.AppendLine(" WHERE period  = '" & sTrxPeriod.Trim() & "' ")
             If sType <> "" Then
                 'Type Code
