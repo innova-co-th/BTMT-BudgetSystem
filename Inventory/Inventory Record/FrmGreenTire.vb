@@ -299,6 +299,7 @@ Public Class FrmGreenTire
     Dim DT As New DataTable
     Dim StrSQL As String
     Dim oldrow As Integer
+
 #End Region
 
 #Region "Form Event"
@@ -328,11 +329,11 @@ Public Class FrmGreenTire
         sb.AppendLine("  SELECT final,TireSize,Round(Qty,1) TQty,")
         sb.AppendLine("  substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'")
         sb.AppendLine("  +substring(DateUp,1,4) dateup,TireSize TSize,Tirecode,Rev,null MaterialName")
-        sb.AppendLine("  ,null Semicode,null Length,null number,null QTU,null Unit,Remark,Active,Active AC ")
+        sb.AppendLine("  ,null Semicode,null Length,null number,null QTU,null Unit,Remark,Active,Active AC,'' as EachGreenTire, '' as EachRevision, '' as EachBSJ, '' as MaterialCode ")
         sb.AppendLine("  FROM TblGtHdr")
         sb.AppendLine("  UNION")
         sb.AppendLine("  SELECT null final,null TireSize,null TQty,null dateup,tiresize TSize,dt.Tirecode,dt.Rev,MaterialName")
-        sb.AppendLine("  ,isnull(Semicode,'No Use') Semicode,Length,number, round(QTU,3) Qty, Unit ,null Remark ,null Active,Active AC ")
+        sb.AppendLine("  ,isnull(Semicode,'No Use') Semicode,Length,number, round(QTU,3) Qty, Unit ,null Remark ,null Active,Active AC, dt.TireCode as EachGreenTire, dt.Rev as EachRevision, TireSize as EachBSJ, MaterialCode ")
         sb.AppendLine("  FROM TblGtDtl dt")
         sb.AppendLine("  LEFT OUTER JOIN TBLTypeMaterial tm on dt.MaterialType = tm.MaterialCode")
         sb.AppendLine("  LEFT OUTER JOIN TBLGTHdr hd on dt.tirecode+dt.Rev = hd.Tirecode+hd.Rev")
@@ -713,6 +714,1473 @@ Public Class FrmGreenTire
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
+
+    Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_MASTER_GREENTIRE").ToString().Split(New Char() {","c})
+        Dim arrColumnHeader As String() = System.Configuration.ConfigurationManager.AppSettings("EXP_EXCEL_COLUMN_HEADER_MASTER_GREENTIRE").ToString().Split(New Char() {","c})
+        ExcelLib.Export(Me, GrdDV, TBL_RM, arrColumn, arrColumnHeader)
+    End Sub
+
+    Private Sub CmdImport_Click(sender As Object, e As EventArgs) Handles CmdImport.Click
+        Dim arrColumn As String() = System.Configuration.ConfigurationManager.AppSettings("IMP_EXCEL_COLUMN_MASTER_GREENTIRE").ToString().Split(New Char() {","c})
+        Dim importDialog As OpenFileDialog = New OpenFileDialog With {
+            .Filter = System.Configuration.ConfigurationManager.AppSettings("DIALOG_FILE_EXT").ToString()
+        }
+        Dim dtRec As DataTable
+        Dim sb As New System.Text.StringBuilder()
+        Dim frmOverlay As New Form()
+        Dim totalQty As Double = 0
+        Dim QBF, QSide, QInnerLiner, QCussion, QTread, QBodyPly, QBelt1, QBelt2, QBelt3, QBelt4, QWireChafer, QNylonChafer, QFlipper As Double
+
+
+        If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            'Create Importing of overlay
+            Dim frm As New Importing()
+            frmOverlay.StartPosition = FormStartPosition.Manual
+            frmOverlay.FormBorderStyle = FormBorderStyle.None
+            frmOverlay.Opacity = 0.5D
+            frmOverlay.BackColor = Color.Black
+            frmOverlay.WindowState = FormWindowState.Maximized
+            frmOverlay.TopMost = True
+            frmOverlay.Location = Me.Location
+            frmOverlay.ShowInTaskbar = False
+            frmOverlay.Show()
+            frm.Owner = frmOverlay
+            ExcelLib.CenterForm(frm, Me)
+            frm.Show()
+
+            'Read excel file
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+            dtRec.Columns.Add("QTU", GetType(Double))
+
+            'Save
+            If dtRec IsNot Nothing Then
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        'Set datetime
+                        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+                        '//Sort Data from Excel
+                        dtRec.DefaultView.Sort = "GreenTire DESC, Revision DESC, TypeMaterial DESC"
+                        dtRec = dtRec.DefaultView.ToTable
+
+                        '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
+                        If ChkImportData_Correctly(dtRec) = False Then
+                            LoadTire() 'ReQuery and set datagrid
+                            frmOverlay.Dispose()
+                            Exit Sub
+                        End If
+
+
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            Dim strGreentire As String = dtRec(i)("GreenTire").ToString.Trim
+                            Dim strRevision As String = dtRec(i)("Revision").ToString.Trim
+                            Dim strBSJ As String = dtRec(i)("BSJ").ToString.Trim
+                            Dim strRevisionBoss1st As String = dtRec(i)("RevisionBoss_1st").ToString.Trim
+                            Dim strRevisionBoss2nd As String = dtRec(i)("RevisionBoss_2nd").ToString.Trim
+                            Dim GridRow As DataRow()        '//Grid Data
+                            Dim ExcelRow As DataRow()       '//Excel Data
+
+                            '//For Check Data from above row on import file.
+                            Dim chkSameGreenTireBefore As String = String.Empty
+                            Dim chkSameRevisionBefore As String = String.Empty
+                            If i > 0 Then
+                                chkSameGreenTireBefore = dtRec.Rows(i - 1)("GreenTire").ToString
+                                chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision").ToString
+                            Else
+                                chkSameGreenTireBefore = ""
+                                chkSameRevisionBefore = ""
+                            End If
+
+                            GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "'")
+                            If GridRow.Count > 0 Then '//Case Update
+                                If strGreentire <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
+
+                                    '//Update TblGtDtl
+                                    '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
+                                    '// Tread
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '13'")
+
+                                    sb.Clear()
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '13'")
+
+                                    QTread = ExcelRow(0)("QTU")
+
+                                    sb.AppendLine(" ")
+
+                                    ''// BF
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '14'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '14'")
+
+                                    QBF = ExcelRow(0)("QTU") * ExcelRow(0)("Num")
+                                    ''//---------------------------------------------------------------------------------------------------------------------------------
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
+                                    ''// Cussion
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '03'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '03'")
+
+                                    QCussion = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// BodyPly
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '04'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '04'")
+
+                                    QBodyPly = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Belt-1
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '05'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '05'")
+
+                                    QBelt1 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Belt-2
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '06'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '06'")
+
+                                    QBelt2 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Belt-3
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '07'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '07'")
+
+                                    QBelt3 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Belt-4
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '08'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '08'")
+
+                                    QBelt4 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Side
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '11'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '11'")
+
+                                    QSide = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(" ")
+
+                                    ''// InnerLiner
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '12'")
+                                    sb.AppendLine(" Update TblGtDtl")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '12'")
+
+                                    QInnerLiner = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    ''//==================================================================================================================================
+
+                                    ''// WireChafer, NylonChafer, Flipper (No Require, Need Num and Length) **************************************************************
+                                    sb.AppendLine(" ")
+
+                                    ''// WireChafer
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '09'")
+                                    If ExcelRow.Count > 0 Then
+                                        sb.AppendLine(" Update TblGtDtl")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                        sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                        sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                        sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                        sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '09'")
+
+                                        QWireChafer = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    Else
+                                        sb.AppendLine(" Update TblGtDtl")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Semicode = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" length = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" number = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" QTU = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '09'")
+
+                                        QWireChafer = 0
+                                    End If
+
+                                    sb.AppendLine(" ")
+
+                                    ''// NylonChafer
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '10'")
+                                    If ExcelRow.Count > 0 Then
+                                        sb.AppendLine(" Update TblGtDtl")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                        sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                        sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                        sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                        sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '10'")
+
+                                        QNylonChafer = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    Else
+                                        sb.AppendLine(" Update TblGtDtl")
+                                        sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Semicode = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" length = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" number = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" QTU = " & PrepareStr("") & ", ")
+                                        sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '10'")
+
+                                        QNylonChafer = 0
+                                    End If
+
+                                    sb.AppendLine(" ")
+
+                                    ''// Flipper
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '22'")
+                                    GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "' AND MaterialCode = '22'")
+                                    If ExcelRow.Count > 0 Then
+                                        If GridRow.Count > 0 Then
+                                            sb.AppendLine(" Update TblGtDtl")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                            sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                            sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                            sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                            sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                            sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '22'")
+                                        Else
+                                            sb.AppendLine(" Insert TblGtDtl ")
+                                            sb.AppendLine(" Values ")
+                                            sb.AppendLine(" (")
+                                            sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                            sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                            sb.AppendLine(PrepareStr("22") & ", ")
+                                            sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                            sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                            sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                            sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                            sb.AppendLine(PrepareStr("g") & ", ")
+                                            sb.AppendLine(PrepareStr(strDate))
+                                            sb.AppendLine(") ")
+                                        End If
+
+                                        QFlipper = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    Else
+                                        If GridRow.Count > 0 Then
+                                            sb.AppendLine(" Update TblGtDtl")
+                                            sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Semicode = " & PrepareStr("") & ", ")
+                                            sb.AppendLine(" length = " & PrepareStr("") & ", ")
+                                            sb.AppendLine(" number = " & PrepareStr("") & ", ")
+                                            sb.AppendLine(" QTU = " & PrepareStr("") & ", ")
+                                            sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                            sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '22'")
+                                        Else
+                                            sb.AppendLine(" Insert TblGtDtl ")
+                                            sb.AppendLine(" Values ")
+                                            sb.AppendLine(" (")
+                                            sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                            sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                            sb.AppendLine(PrepareStr("22") & ", ")
+                                            sb.AppendLine(PrepareStr("") & ", ")
+                                            sb.AppendLine(PrepareStr("") & ", ")
+                                            sb.AppendLine(PrepareStr("") & ", ")
+                                            sb.AppendLine(PrepareStr("") & ", ")
+                                            sb.AppendLine(PrepareStr("g") & ", ")
+                                            sb.AppendLine(PrepareStr(strDate))
+                                            sb.AppendLine(") ")
+                                        End If
+
+                                        QFlipper = 0
+                                    End If
+                                    ''//**********************************************************************************************************************************
+
+                                    '//Summarize QTU
+                                    totalQty = QBF + QSide + QInnerLiner + QCussion + QTread + QBodyPly + QBelt1 + QBelt2 + QBelt3 + QBelt4 + QWireChafer + QNylonChafer + QFlipper
+
+                                    sb.AppendLine(" ")
+
+                                    '//Update TBLGTHdr
+                                    sb.AppendLine(" Update TBLGTHdr")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Qty = " & PrepareStr(totalQty) & ", ")
+                                    sb.AppendLine(" remark = " & PrepareStr(strRevisionBoss1st + "," + strRevisionBoss2nd) & ", ")
+                                    sb.AppendLine(" Dateup = " & PrepareStr(strDate))
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "'")
+
+                                    sb.AppendLine(" ")
+
+                                    '//Update TblConvert
+                                    sb.AppendLine(" Update TblConvert")
+                                    sb.AppendLine(" Set ")
+                                    sb.AppendLine(" SQty = " & PrepareStr((totalQty / 1000)))
+                                    sb.AppendLine(" Where Code = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND UnitBig = 'UT'")
+
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+
+                                End If
+
+                            Else '//Case Insert
+
+                                If strGreentire <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
+
+                                    '//Insert TblGtDtl
+                                    '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
+                                    '// Tread
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '13'")
+                                    sb.Clear()
+                                    sb.AppendLine(" Insert INTO TblGtDtl(TireCode,Rev,MaterialType,Semicode,length,number,QTU,Unit,Dateup) ")
+                                    sb.AppendLine(" Values ")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("13") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QTread = ExcelRow(0)("QTU")
+
+                                    sb.AppendLine(", ")
+
+                                    ''// BF
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '14'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("14") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QBF = ExcelRow(0)("QTU") * ExcelRow(0)("Num")
+                                    ''//---------------------------------------------------------------------------------------------------------------------------------
+
+                                    ''// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
+                                    sb.AppendLine(", ")
+
+                                    ''// Cussion
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '03'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("03") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QCussion = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// BodyPly
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '04'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("04") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QBodyPly = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// Belt-1
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '05'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("05") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QBelt1 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// Belt-2
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '06'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("06") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QBelt2 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// Belt-3
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '07'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("07") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QBelt3 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// Belt-4
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '08'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("08") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QBelt4 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// Side
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '11'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("11") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QSide = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+
+                                    sb.AppendLine(", ")
+
+                                    ''// InnerLiner
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '12'")
+                                    sb.AppendLine(" (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                    sb.AppendLine(PrepareStr("12") & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+                                    sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                    sb.AppendLine(PrepareStr("g") & ", ")
+                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(") ")
+
+                                    QInnerLiner = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    ''//==================================================================================================================================
+
+                                    ''// WireChafer, NylonChafer, Flipper (No Require, Need Num and Length) **************************************************************
+                                    sb.AppendLine(", ")
+
+                                    ''// WireChafer
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '09'")
+                                    If ExcelRow.Count > 0 Then
+                                        sb.AppendLine(" (")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                        sb.AppendLine(PrepareStr("09") & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+
+                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                        sb.AppendLine(PrepareStr("g") & ", ")
+                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(") ")
+
+                                        QWireChafer = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    Else
+                                        sb.AppendLine(" (")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                        sb.AppendLine(PrepareStr("09") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("g") & ", ")
+                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(") ")
+
+                                        QWireChafer = 0
+                                    End If
+
+
+                                    sb.AppendLine(", ")
+
+                                    ''// NylonChafer
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '10'")
+                                    If ExcelRow.Count > 0 Then
+                                        sb.AppendLine(" (")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                        sb.AppendLine(PrepareStr("10") & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
+
+                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                        sb.AppendLine(PrepareStr("g") & ", ")
+                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(") ")
+
+                                        QNylonChafer = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    Else
+                                        sb.AppendLine(" (")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                        sb.AppendLine(PrepareStr("10") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("g") & ", ")
+                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(") ")
+
+                                        QNylonChafer = 0
+                                    End If
+
+                                    sb.AppendLine(", ")
+
+                                    ''// Flipper
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '22'")
+                                    If ExcelRow.Count > 0 Then
+                                        sb.AppendLine(" (")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                        sb.AppendLine(PrepareStr("22") & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
+                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("QTU")) & ", ")
+                                        sb.AppendLine(PrepareStr("g") & ", ")
+                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(") ")
+
+                                        QFlipper = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
+                                    Else
+                                        sb.AppendLine(" (")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
+                                        sb.AppendLine(PrepareStr("22") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("") & ", ")
+
+                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr("g") & ", ")
+                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(") ")
+
+                                        QFlipper = 0
+                                    End If
+
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+                                    ''//**********************************************************************************************************************************
+
+                                    '//Summarize QTU
+                                    totalQty = QBF + QSide + QInnerLiner + QCussion + QTread + QBodyPly + QBelt1 + QBelt2 + QBelt3 + QBelt4 + QWireChafer + QNylonChafer + QFlipper
+
+                                    '//Insert TBLGroup
+                                    sb.Clear()
+                                    sb.AppendLine(" Insert  TBLGroup ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(PrepareStr("06") & ", ")      'Column TypeCode
+                                    sb.AppendLine(PrepareStr(strGreentire))     'Column Code
+                                    sb.AppendLine(" )")
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+
+                                    '//Insert TBLGTHdr
+                                    sb.Clear()
+                                    sb.AppendLine(" Insert  TBLGTHdr ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")                              'Column Final
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")                              'Column TireCide
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")                               'Column Rev
+                                    sb.AppendLine(PrepareStr(strBSJ) & ", ")                                    'Column TireSize
+                                    sb.AppendLine(PrepareStr(totalQty) & ", ")                                  'Column Qty
+                                    sb.AppendLine(PrepareStr(0) & ", ")                                         'Column Active
+                                    sb.AppendLine(PrepareStr(strDate) & ", ")                                   'Column Dateup
+                                    sb.AppendLine(PrepareStr(strRevisionBoss1st + "," + strRevisionBoss2nd))    'Column remark
+                                    sb.AppendLine(" )")
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+
+                                    '//Insert TblConvert #1
+                                    sb.Clear()
+                                    sb.AppendLine(" Insert  TblConvert ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(PrepareStr("06") & ", ")          'Column Type
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")  'Column Final
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")  'Column Code
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")   'Column Rev
+                                    sb.AppendLine(PrepareStr("KG") & ", ")          'Column UnitBig
+                                    sb.AppendLine(PrepareStr("KG") & ", ")          'Column UnitSmall
+                                    sb.AppendLine(PrepareStr("1") & ", ")           'Column BQty
+                                    sb.AppendLine(PrepareStr("1"))                  'Column SQty
+                                    sb.AppendLine(" )")
+
+                                    '//Insert TblConvert #2
+                                    sb.AppendLine(" ")
+
+                                    sb.AppendLine(" Insert  TblConvert ")
+                                    sb.AppendLine(" Values (")
+                                    sb.AppendLine(PrepareStr("06") & ", ")          'Column Type
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")  'Column Final
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")  'Column Code
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ")   'Column Rev
+                                    sb.AppendLine(PrepareStr("UT") & ", ")          'Column UnitBig
+                                    sb.AppendLine(PrepareStr("KG") & ", ")          'Column UnitSmall
+                                    sb.AppendLine(PrepareStr("1") & ", ")           'Column BQty
+                                    sb.AppendLine(PrepareStr((totalQty / 1000)))    'Column SQty
+                                    sb.AppendLine(" )")
+
+                                    StrSQL = sb.ToString()
+                                    cmSQL.CommandText = StrSQL
+                                    cmSQL.ExecuteNonQuery()
+                                End If
+                            End If
+                        Next i
+
+                        trans.Commit()
+                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
+            End If 'If dtRec IsNot Nothing Then
+
+            LoadTire() 'ReQuery and set datagrid
+            frmOverlay.Dispose()
+        End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+#End Region
+
+#Region "Import"
+    Private Function PrepareStr(ByVal strValue As String) As String
+        ' This function accepts a string and creates a string that can
+        ' be used in a SQL statement by adding single quotes around
+        ' it and handling empty values.
+        If strValue.Trim() = "" Then
+            Return "NULL"
+        Else
+            Return "'" & strValue.Trim() & "'"
+        End If
+    End Function
+
+    Private Function ChkImportData_Correctly(ByRef ImportTable As DataTable) As Boolean
+        Dim cnSQLRM As SqlConnection
+        Dim cmSQLRM As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+        Dim strRmcodeBefore As String = String.Empty
+        Dim QBF, QSide, QInnerLiner, QCussion, QTread, QBodyPly, QBelt1, QBelt2, QBelt3, QBelt4, QWireChafer, QNylonChafer, QFlipper As Double
+        Dim distinctImportTabale As New DataTable
+        Dim importRow As DataRow()
+
+        Try
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim strGreenTireCode As String = ImportTable.Rows(x)("GreenTire").ToString().Trim()
+                Dim strRevision As String = ImportTable.Rows(x)("Revision").ToString().Trim()
+                Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim()
+                Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim()
+                Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim()
+
+                Dim strTypeMaterial As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
+                Dim dblNum As Double
+
+                strSQL = ""
+
+                If strGreenTireCode.Length > 0 Then
+                    '//For Check Data from above row on import file.
+                    Dim chkSameGreenTireBefore As String = String.Empty
+                    Dim chkSameRevisionBefore As String = String.Empty
+                    If x > 0 Then
+                        chkSameGreenTireBefore = ImportTable.Rows(x - 1)("GreenTire").ToString
+                        chkSameRevisionBefore = ImportTable.Rows(x - 1)("Revision").ToString
+                    Else
+                        chkSameGreenTireBefore = ""
+                        chkSameRevisionBefore = ""
+                    End If
+
+                    '// 1.) Check GreeTireCode
+                    If strGreenTireCode.Length <= 0 Then
+                        Throw New System.Exception("Please check GreenTire Code input")
+                    End If
+
+                    '// 2.) Check Revision
+                    If strRevision.Length <= 0 Then
+                        Throw New System.Exception("Please check Revision input")
+                    End If
+
+                    '// 3.) Check BSJ
+                    If strBSJ.Length <= 0 Then
+                        Throw New System.Exception("Please check BSJ input")
+                    Else
+                        strSQL = " SELECT COUNT(*) FROM  TblTiresize "
+                        strSQL += " WHERE BSJCode = '" & strBSJ & "' "
+                        cnSQLRM = New SqlConnection(C1.Strcon)
+                        cnSQLRM.Open()
+                        cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                        Dim i As Long = cmSQLRM.ExecuteScalar()
+                        If i = 0 Then
+                            cmSQLRM.Dispose()
+                            cnSQLRM.Dispose()
+                            Throw New System.Exception("This BSJ '" & strBSJ & "' is not found from Master")
+                        Else
+                            cmSQLRM.Dispose()
+                            cnSQLRM.Dispose()
+                        End If
+                    End If
+
+                    '// 4.) Check RevisionBoss 1st
+                    If strRevisionBoss1st.Length <= 0 Then
+                        Throw New System.Exception("Please check RevisionBoss 1st input")
+                    End If
+
+                    '// 5.) Check RevisionBoss 2nd
+                    If strRevisionBoss2nd.Length <= 0 Then
+                        Throw New System.Exception("Please check RevisionBoss 2nd input")
+                    End If
+
+                    '// Check Each SemiCode in same group of GreenTire and Revision correctly
+                    If strGreenTireCode <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
+                        '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
+                        '// Tread
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '13'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Tread' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Tread '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QTread = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QTread
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Tread' input")
+                        End If
+
+                        '// BF
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '14'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'BF' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly BF '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QBF = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QBF
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'BF' input")
+                        End If
+                        '//---------------------------------------------------------------------------------------------------------------------------------
+
+                        '// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
+                        '// Cussion
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '03'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Cussion' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Cussion' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Cussion '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QCussion = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QCussion
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Cussion' input")
+                        End If
+
+                        '// BodyPly
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '04'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'BodyPly' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'BodyPly' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly BodyPly '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QBodyPly = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QBodyPly
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'BodyPly' input")
+                        End If
+
+                        '// Belt-1
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '05'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-1' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-1' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Belt-1 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QBelt1 = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QBelt1
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Belt-1' input")
+                        End If
+
+                        '// Belt-2
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '06'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-2' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-2' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Belt-2 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QBelt2 = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QBelt2
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Belt-2' input")
+                        End If
+
+                        '// Belt-3
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '07'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-3' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-3' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Belt-3 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QBelt3 = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QBelt3
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Belt-3' input")
+                        End If
+
+                        '// Belt-4
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '08'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-4' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Belt-4' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Belt-4 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QBelt4 = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QBelt4
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Belt-4' input")
+                        End If
+
+                        '// Side
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '11'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Side' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Side' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Side '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QSide = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QSide
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'Side' input")
+                        End If
+
+                        '// InnerLiner
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '12'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'InnerLiner' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'InnerLiner' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly InnerLiner '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QInnerLiner = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QInnerLiner
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            Throw New System.Exception("Please check type 'InnerLiner' input")
+                        End If
+                        '//==================================================================================================================================
+
+                        '// WireChafer, NylonChafer, Flipper (No Require, Need Num and Length) **************************************************************
+                        '// WireChafer
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '09'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Wire Chafer' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Wire Chafer' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Wire Chafer '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QWireChafer = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QWireChafer
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            '// Do nothing
+                        End If
+
+                        '// NylonChafer
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '10'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Nylon Chafer' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Nylon Chafer' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Nylon Chafer '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QNylonChafer = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QNylonChafer
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            '// Do nothing
+                        End If
+
+                        '// Flipper
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '22'")
+                        If importRow.Count > 0 Then
+                            If importRow(0)("Num").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Flipper' Num value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
+                                    Throw New System.Exception("Please input Num data as Number")
+                                End If
+                            End If
+                            If importRow(0)("Length").ToString.Length <= 0 Then
+                                Throw New System.Exception("Please check type 'Flipper' Length value")
+                            Else
+                                '//Check type number
+                                If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
+                                    Throw New System.Exception("Please input Length data as Number")
+                                End If
+                            End If
+
+                            strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
+                            strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            cnSQLRM = New SqlConnection(C1.Strcon)
+                            cnSQLRM.Open()
+                            cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                            Dim i As Long = cmSQLRM.ExecuteScalar()
+                            If i = 0 Then
+                                Throw New System.Exception("Please check correctly Flipper '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                            Else
+                                strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
+                                strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                cnSQLRM = New SqlConnection(C1.Strcon)
+                                cnSQLRM.Open()
+                                cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+
+                                QFlipper = cmSQLRM.ExecuteScalar()
+                                importRow(0)("QTU") = QFlipper
+
+                                cmSQLRM.Dispose()
+                                cnSQLRM.Dispose()
+                            End If
+                        Else
+                            '// Do nothing
+                        End If
+                        '//**********************************************************************************************************************************
+                    End If
+                End If
+
+            Next x
+
+            ret = True
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        Finally
+            cnSQLRM.Close()
+            cmSQLRM.Dispose()
+            cnSQLRM.Dispose()
+        End Try
+
+        Return ret
+    End Function
 #End Region
 
 #Region "SelectData"
