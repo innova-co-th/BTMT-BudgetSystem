@@ -764,14 +764,36 @@ Public Class FrmRM
                         'Set datetime
                         Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        'Get master
+                        Dim dtTypeCode As DataTable = GetTypeCode()
+                        Dim dtUnitCode As DataTable = GetUnitCode()
 
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             'Check RMCode
                             Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                            Dim strTypeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString().Trim())
+                            Dim typeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString().Trim())
                             Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString().Trim())
                             Dim qty As String = PrepareStr(dtRec.Rows(i)("Qty"))
                             Dim qUnit As String = PrepareStr(dtRec.Rows(i)("Qunit"))
+
+                            'Check empty
+                            If dtRec.Rows(i)("TypeCode").ToString().Trim().Equals(String.Empty) Or rmCode.Equals(String.Empty) Or dtRec.Rows(i)("UnitCode").ToString().Trim().Equals(String.Empty) Then
+                                Throw New ApplicationException("Type Code, Rm Code and Unit Code is not empty.")
+                            End If
+
+                            'Check type master
+                            Dim arrTypeCode As DataRow() = dtTypeCode.Select("TypeCode = " & typeCode)
+                            If arrTypeCode.Length = 0 Then
+                                Throw New ApplicationException("Type Code: " & typeCode & " is not found in master.")
+                            End If
+
+                            'Check unit master
+                            Dim arrUnitCode As DataRow() = dtUnitCode.Select("UnitCode = " & unitCode)
+                            If arrUnitCode.Length = 0 Then
+                                Throw New ApplicationException("Unit Code: " & unitCode & " is not found in master.")
+                            End If
+
+                            'Check duplicate R/M
                             Dim isExists As Boolean = ChkDataImport(rmCode)
 
                             'Refer sub RM() of FrmAddRM
@@ -785,7 +807,7 @@ Public Class FrmRM
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("DescName").ToString().Trim()) & ",") 'Column DescName
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("StdPrice")) & ",") 'Column StdPrice
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("ActPrice")) & ",") 'Column ActPrice
-                                sb.AppendLine(strTypeCode & ",") 'Column TypeCode
+                                sb.AppendLine(typeCode & ",") 'Column TypeCode
                                 sb.AppendLine(unitCode & ",") 'Column Unit
                                 sb.AppendLine(PrepareStr(strDate) & ",") 'Column UpdateDate
                                 sb.AppendLine(PrepareStr(iTime)) 'Column UpdateTime
@@ -798,7 +820,7 @@ Public Class FrmRM
                                 '2.Table TblGroup
                                 sb.AppendLine(" Insert  TblGroup ")
                                 sb.AppendLine(" Values (")
-                                sb.AppendLine(strTypeCode & ",") 'Column TypeCode
+                                sb.AppendLine(typeCode & ",") 'Column TypeCode
                                 sb.AppendLine(" '" & rmCode & "'") 'Column Code
                                 sb.AppendLine(" )")
                                 StrSQL = sb.ToString()
@@ -809,7 +831,7 @@ Public Class FrmRM
                                 '3.Table TblConvert
                                 sb.AppendLine(" Insert TBLConvert ")
                                 sb.AppendLine(" Values (")
-                                sb.AppendLine(strTypeCode & ",") 'Column Type
+                                sb.AppendLine(typeCode & ",") 'Column Type
                                 sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Final
                                 sb.AppendLine(" '" & rmCode & "',") 'Column Code
                                 sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Rev
@@ -894,6 +916,8 @@ Public Class FrmRM
                         Next i
 
                         trans.Commit()
+                        LoadRM() 'ReQuery and set datagrid
+                        View() 'Filter by condition
                         MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Catch ex As SqlException
                         MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
@@ -910,8 +934,6 @@ Public Class FrmRM
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
-            LoadRM() 'ReQuery and set datagrid
-            View() 'Filter by condition
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
     End Sub
@@ -945,12 +967,51 @@ Public Class FrmRM
             cmSQL.Dispose()
             cnSQL.Dispose()
         Catch Exp As SqlException
-            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+            MessageBox.Show(Exp.Message, "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch Exp As Exception
-            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+            MessageBox.Show(Exp.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
         Return ret
+    End Function
+
+    Private Function GetTypeCode() As DataTable
+        Dim daSQL As SqlDataAdapter
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
+
+        Try
+            sb.AppendLine(" SELECT TypeCode, TypeName ")
+            sb.AppendLine(" FROM TBLType ")
+            sb.AppendLine(" WHERE TypeCode in ('01','07','08','09') ")
+            strSQL = sb.ToString()
+            daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
+            daSQL.Fill(dt)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return dt
+    End Function
+
+    Private Function GetUnitCode() As DataTable
+        Dim daSQL As SqlDataAdapter
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
+
+        Try
+            sb.AppendLine(" SELECT UnitCode, ShortUnitName ")
+            sb.AppendLine(" FROM TBLUnit ")
+            strSQL = sb.ToString()
+            daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
+            daSQL.Fill(dt)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return dt
     End Function
 
     Private Function PrepareStr(ByVal strValue As String) As String
