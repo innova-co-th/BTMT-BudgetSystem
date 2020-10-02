@@ -629,12 +629,18 @@ Public Class FrmPIGMENT
                                 Dim strRMCode As String = dtRec.Rows(i)("rmCode").ToString().Trim()
                                 Dim dblRMQty As Double
 
-                                If dtRec.Rows(i)("RmQty").ToString.Length > 0 Then
+                                'Check empty
+                                If strEachRevision.Length = 0 Then
+                                    Throw New System.Exception("Please input EachRevision data.")
+                                End If
+
+                                'Check RmQty
+                                If dtRec.Rows(i)("RmQty").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("RmQty"), dblRMQty) Then
-                                        Throw New System.Exception("Please input Qty data as Number")
+                                        Throw New System.Exception("Please input Qty data as Number.")
                                     End If
                                 Else
-                                    Throw New System.Exception("Please input Qty data as Number")
+                                    Throw New System.Exception("Please input Qty data as Number.")
                                 End If
 
                                 Dim DTRow As DataRow()          '//Grid Data
@@ -644,11 +650,11 @@ Public Class FrmPIGMENT
                                 Dim chkSameEachPigmentCodeBefore As String = String.Empty
                                 Dim chkSameEachRevisionBefore As String = String.Empty
                                 If i > 0 Then
-                                    chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString
-                                    chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString
+                                    chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString()
+                                    chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString()
                                 Else
-                                    chkSameEachPigmentCodeBefore = ""
-                                    chkSameEachRevisionBefore = ""
+                                    chkSameEachPigmentCodeBefore = String.Empty
+                                    chkSameEachRevisionBefore = String.Empty
                                 End If
 
                                 DTRow = DT.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
@@ -890,7 +896,7 @@ Public Class FrmPIGMENT
                                         cmSQL.ExecuteNonQuery()
                                     End If
                                 End If
-                            End If
+                            End If 'If strEachPigmentCode.Length > 0
                         Next i
 
                         trans.Commit()
@@ -1049,24 +1055,28 @@ Public Class FrmPIGMENT
         Dim cmSQLRM As SqlCommand
         Dim strSQL As String = String.Empty
         Dim ret As Boolean = False
-        Dim strRmcodeBefore As String = String.Empty
-        Dim distinctImportTabale As New DataTable
+        Dim strRmcodeBefore As String = String.Empty 'Previous rmCode
+        Dim distinctImportTabale As New DataTable()
 
         Try
-            ImportTable.DefaultView.Sort = "rmCode DESC"
-            ImportTable = ImportTable.DefaultView.ToTable
-            ImportTable = ImportTable.DefaultView.ToTable(True, "rmCode")
+            ImportTable.DefaultView.Sort = "rmCode DESC" 'Sort datatable
+            ImportTable = ImportTable.DefaultView.ToTable()
+            ImportTable = ImportTable.DefaultView.ToTable(True, "rmCode") 'Distinct rmCode
+
             For x As Integer = 0 To ImportTable.Rows.Count - 1
                 Dim rmCode As String = ImportTable.Rows(x)("rmCode").ToString().Trim()
-                strSQL = ""
+                strSQL = String.Empty
 
                 If x = 0 Then
-                    strRmcodeBefore = ""
+                    'First record
+                    strRmcodeBefore = String.Empty
                 Else
                     strRmcodeBefore = ImportTable.Rows(x - 1)("rmCode").ToString().Trim()
                 End If
+
                 If rmCode.Length > 0 Then
                     If rmCode <> strRmcodeBefore Then
+                        'Previous rmCode and current rmCode not equal
                         strSQL &= " SELECT count(*) "
                         strSQL &= " FROM TBLRM "
                         strSQL &= " WHERE RMcode  = '" & rmCode & "'"
@@ -1074,7 +1084,9 @@ Public Class FrmPIGMENT
                         cnSQLRM.Open()
                         cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                         Dim i As Long = cmSQLRM.ExecuteScalar()
+
                         If i = 0 Then
+                            'Not found in Master
                             cmSQLRM.Dispose()
                             cnSQLRM.Dispose()
                             Throw New System.Exception("This RM Code '" & rmCode & "' have no data on RM Master")
