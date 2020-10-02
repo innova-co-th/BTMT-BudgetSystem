@@ -725,7 +725,7 @@ Public Class FrmCompound
 
                         '//Sort Data from Excel
                         dtRec.DefaultView.Sort = "FinalCompound_Code DESC, Compound_Code DESC, Revision_No DESC"
-                        dtRec = dtRec.DefaultView.ToTable
+                        dtRec = dtRec.DefaultView.ToTable()
 
                         '//Check RMCode on Master
                         If ChkRMCodeMaster(dtRec) = False Then
@@ -757,10 +757,10 @@ Public Class FrmCompound
 
                                 If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
-                                        Throw New System.Exception("Please input Qty data as Number")
+                                        Throw New System.Exception("Please input Qty data as Number.")
                                     End If
                                 Else
-                                    Throw New System.Exception("Please input Qty data as Number")
+                                    Throw New System.Exception("Please input Qty data as Number.")
                                 End If
 
                                 '//Case Special [Check Duplicate CompoundCode and Revision on Excel]
@@ -1086,24 +1086,28 @@ Public Class FrmCompound
         Dim cmSQLRM As SqlCommand
         Dim strSQL As String = String.Empty
         Dim ret As Boolean = False
-        Dim strRmcodeBefore As String = String.Empty
-        Dim distinctImportTabale As New DataTable
+        Dim strRmcodeBefore As String = String.Empty 'Previous rmCode
+        Dim distinctImportTabale As New DataTable()
 
         Try
-            ImportTable.DefaultView.Sort = "RMCode DESC"
-            ImportTable = ImportTable.DefaultView.ToTable
-            ImportTable = ImportTable.DefaultView.ToTable(True, "RMCode")
+            ImportTable.DefaultView.Sort = "RMCode DESC" 'Sort datatable
+            ImportTable = ImportTable.DefaultView.ToTable()
+            ImportTable = ImportTable.DefaultView.ToTable(True, "RMCode") 'Distinct column RMCode
+
             For x As Integer = 0 To ImportTable.Rows.Count - 1
                 Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
-                strSQL = ""
+                strSQL = String.Empty
 
                 If x = 0 Then
-                    strRmcodeBefore = ""
+                    'First row
+                    strRmcodeBefore = String.Empty
                 Else
                     strRmcodeBefore = ImportTable.Rows(x - 1)("RMCode").ToString().Trim()
                 End If
+
                 If rmCode.Length > 0 Then
                     If rmCode <> strRmcodeBefore Then
+                        'Previous rmCode and current rmCode not equal
                         strSQL &= " SELECT count(*) "
                         strSQL &= " FROM TBLRM "
                         strSQL &= " WHERE RMcode  = '" & rmCode & "'"
@@ -1111,14 +1115,18 @@ Public Class FrmCompound
                         cnSQLRM.Open()
                         cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                         Dim i As Long = cmSQLRM.ExecuteScalar()
+
                         If i = 0 Then
+                            'Not found in Master
                             cmSQLRM.Dispose()
                             cnSQLRM.Dispose()
-                            Throw New System.Exception("This RM Code '" & rmCode & "' have no data on RM Master")
+                            Throw New System.Exception("This RM Code '" & rmCode & "' have no data on RM Master.")
                         Else
                             cmSQLRM.Dispose()
                             cnSQLRM.Dispose()
                         End If
+
+                        cnSQLRM.Dispose()
                     End If
                 End If
             Next x
@@ -1128,10 +1136,6 @@ Public Class FrmCompound
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch Exp As Exception
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
-        Finally
-            cnSQLRM.Close()
-            cmSQLRM.Dispose()
-            cnSQLRM.Dispose()
         End Try
 
         Return ret
