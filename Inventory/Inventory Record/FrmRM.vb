@@ -765,32 +765,38 @@ Public Class FrmRM
                         Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         'Get master
-                        Dim dtTypeCode As DataTable = GetTypeCode()
-                        Dim dtUnitCode As DataTable = GetUnitCode()
+                        Dim dtTypeCode As DataTable = GetTypeCode() 'Table TBLType
+                        Dim dtUnitCode As DataTable = GetUnitCode() 'Table TBLUnit
 
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             'Check RMCode
                             Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                            Dim typeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString().Trim())
-                            Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString().Trim())
+                            Dim typeCode As String = String.Empty
+                            Dim typeName As String = dtRec.Rows(i)("TypeCode").ToString().Trim() 'Type Name
+                            Dim unitCode As String = String.Empty
+                            Dim shortUnitName As String = dtRec.Rows(i)("UnitCode").ToString().Trim() 'Short Unit Name
                             Dim qty As String = PrepareStr(dtRec.Rows(i)("Qty"))
                             Dim qUnit As String = PrepareStr(dtRec.Rows(i)("Qunit"))
 
                             'Check empty
-                            If dtRec.Rows(i)("TypeCode").ToString().Trim().Equals(String.Empty) Or rmCode.Equals(String.Empty) Or dtRec.Rows(i)("UnitCode").ToString().Trim().Equals(String.Empty) Then
+                            If typeName.Equals(String.Empty) Or rmCode.Equals(String.Empty) Or shortUnitName.Equals(String.Empty) Then
                                 Throw New ApplicationException("Type Code, Rm Code and Unit Code is not empty.")
                             End If
 
                             'Check type master
-                            Dim arrTypeCode As DataRow() = dtTypeCode.Select("TypeCode = " & typeCode)
+                            Dim arrTypeCode As DataRow() = dtTypeCode.Select("TypeName = " & typeName) 'TypeName column
                             If arrTypeCode.Length = 0 Then
-                                Throw New ApplicationException("Type Code: " & typeCode & " is not found in master.")
+                                Throw New ApplicationException("Type Code: " & typeName & " is not found in master.")
+                            Else
+                                typeCode = arrTypeCode(0)("TypeCode")
                             End If
 
                             'Check unit master
-                            Dim arrUnitCode As DataRow() = dtUnitCode.Select("UnitCode = " & unitCode)
+                            Dim arrUnitCode As DataRow() = dtUnitCode.Select("ShortUnitName = " & shortUnitName) 'ShortUnitName column
                             If arrUnitCode.Length = 0 Then
-                                Throw New ApplicationException("Unit Code: " & unitCode & " is not found in master.")
+                                Throw New ApplicationException("Unit Code: " & shortUnitName & " is not found in master.")
+                            Else
+                                unitCode = arrUnitCode(0)("UnitCode")
                             End If
 
                             'Check duplicate R/M
@@ -807,8 +813,8 @@ Public Class FrmRM
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("DescName").ToString().Trim()) & ",") 'Column DescName
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("StdPrice")) & ",") 'Column StdPrice
                                 sb.AppendLine(PrepareStr(dtRec.Rows(i)("ActPrice")) & ",") 'Column ActPrice
-                                sb.AppendLine(typeCode & ",") 'Column TypeCode
-                                sb.AppendLine(unitCode & ",") 'Column Unit
+                                sb.AppendLine(PrepareStr(typeCode) & ",") 'Column TypeCode
+                                sb.AppendLine(PrepareStr(unitCode) & ",") 'Column Unit
                                 sb.AppendLine(PrepareStr(strDate) & ",") 'Column UpdateDate
                                 sb.AppendLine(PrepareStr(iTime)) 'Column UpdateTime
                                 sb.AppendLine(" )")
@@ -820,7 +826,7 @@ Public Class FrmRM
                                 '2.Table TblGroup
                                 sb.AppendLine(" Insert  TblGroup ")
                                 sb.AppendLine(" Values (")
-                                sb.AppendLine(typeCode & ",") 'Column TypeCode
+                                sb.AppendLine(PrepareStr(typeCode) & ",") 'Column TypeCode
                                 sb.AppendLine(" '" & rmCode & "'") 'Column Code
                                 sb.AppendLine(" )")
                                 StrSQL = sb.ToString()
@@ -831,11 +837,11 @@ Public Class FrmRM
                                 '3.Table TblConvert
                                 sb.AppendLine(" Insert TBLConvert ")
                                 sb.AppendLine(" Values (")
-                                sb.AppendLine(typeCode & ",") 'Column Type
+                                sb.AppendLine(PrepareStr(typeCode) & ",") 'Column Type
                                 sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Final
                                 sb.AppendLine(" '" & rmCode & "',") 'Column Code
                                 sb.AppendLine(PrepareStr(String.Empty) & ",") 'Column Rev
-                                sb.AppendLine(unitCode & ",") 'Column UnitBig
+                                sb.AppendLine(PrepareStr(unitCode) & ",") 'Column UnitBig
                                 sb.AppendLine(PrepareStr("KG") & ",") 'Column UnitSmall
                                 sb.AppendLine(qty & ",") 'Column BQty
                                 sb.AppendLine(qUnit) 'Column SQty
@@ -851,7 +857,7 @@ Public Class FrmRM
                                     sb.AppendLine(" Values (")
                                     sb.AppendLine(" '" & rmCode & "',") 'Column RMCode(PK)
                                     sb.AppendLine(qty & ",") 'Column RMQty
-                                    sb.AppendLine(unitCode & ",") 'Column UnitCode
+                                    sb.AppendLine(PrepareStr(unitCode) & ",") 'Column UnitCode
                                     sb.AppendLine(qUnit & ",") 'Column Qty
                                     sb.AppendLine(PrepareStr("KG") & ",") 'Column QUnit
                                     sb.AppendLine(PrepareStr(strDate) & ",") 'Column UpdateDate
@@ -862,7 +868,7 @@ Public Class FrmRM
                                     sb.AppendLine(" Values (")
                                     sb.AppendLine(" '" & rmCode & "',")
                                     sb.AppendLine(qty & ",")
-                                    sb.AppendLine(unitCode & ",")
+                                    sb.AppendLine(PrepareStr(unitCode) & ",")
                                     sb.AppendLine("0,") 'Force 0
                                     sb.AppendLine(PrepareStr("KG") & ",")
                                     sb.AppendLine(PrepareStr(strDate) & ",")
@@ -882,7 +888,7 @@ Public Class FrmRM
                                 sb.AppendLine(" descName = '" & dtRec.Rows(i)("DescName").ToString().Trim() & "'")
                                 sb.AppendLine(" , StdPrice = '" & dtRec.Rows(i)("StdPrice") & "'")
                                 sb.AppendLine(" , ActPrice = '" & dtRec.Rows(i)("ActPrice") & "'")
-                                sb.AppendLine(" , Unit = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
+                                sb.AppendLine(" , Unit = '" & unitCode & "'")
                                 sb.AppendLine(" Where RMCode = '" & rmCode & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
@@ -894,7 +900,7 @@ Public Class FrmRM
                                 sb.AppendLine(" Set ")
                                 sb.AppendLine(" Qty = '" & dtRec.Rows(i)("Qunit") & "'")
                                 sb.AppendLine(" , RMQty = '" & dtRec.Rows(i)("Qty") & "'")
-                                sb.AppendLine(" , UnitCode = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
+                                sb.AppendLine(" , UnitCode = '" & unitCode & "'")
                                 sb.AppendLine(" Where RMCode = '" & rmCode & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
@@ -906,9 +912,9 @@ Public Class FrmRM
                                 sb.AppendLine(" Set ")
                                 sb.AppendLine(" SQty = '" & dtRec.Rows(i)("Qunit") & "'")
                                 sb.AppendLine(" , BQty = '" & dtRec.Rows(i)("Qty") & "'")
-                                sb.AppendLine(" , UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
+                                sb.AppendLine(" , UnitBig = '" & unitCode & "'")
                                 sb.AppendLine(" Where Code = '" & rmCode & "'")
-                                sb.AppendLine(" And  UnitBig = '" & dtRec.Rows(i)("UnitCode").ToString() & "'")
+                                sb.AppendLine(" And  UnitBig = '" & unitCode & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
                                 cmSQL.ExecuteNonQuery()
