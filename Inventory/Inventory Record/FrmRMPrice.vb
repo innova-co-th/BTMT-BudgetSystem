@@ -717,7 +717,7 @@ Public Class FrmRMPrice
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             'Check RMCode
                             Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                            'Dim strTypeCode As String = PrepareStr(dtRec.Rows(i)("TypeCode").ToString().Trim())
+                            Dim typeCode As String = String.Empty
                             'Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString().Trim())
                             'Dim stdPrice As String = PrepareStr(dtRec.Rows(i)("StdPrice").ToString().Trim())
                             'Dim acrPrice As String = PrepareStr(dtRec.Rows(i)("ActPrice").ToString().Trim())
@@ -730,10 +730,10 @@ Public Class FrmRMPrice
                                 '1.Table TblRM
                                 sb.AppendLine(" Update TblRM")
                                 sb.AppendLine(" Set ")
-                                sb.AppendLine(" descName = '" & dtRec.Rows(i)("DescName").ToString().Trim() & "'")
-                                sb.AppendLine(" , StdPrice = '" & dtRec.Rows(i)("SPrice") & "'")
+                                sb.AppendLine(" StdPrice = '" & dtRec.Rows(i)("SPrice") & "'")
                                 sb.AppendLine(" , ActPrice = '" & dtRec.Rows(i)("APrice") & "'")
-                                sb.AppendLine(" , Unit = '" & dtRec.Rows(i)("UnitCode").ToString().Trim() & "'")
+                                sb.AppendLine(" , UpdateDate = '" & strDate & "'")
+                                sb.AppendLine(" , UpdateTime = '" & iTime & "'")
                                 sb.AppendLine(" Where RMCode = '" & rmCode & "'")
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
