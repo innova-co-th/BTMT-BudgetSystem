@@ -755,6 +755,19 @@ Public Class FrmCompound
                                 Dim GridRow As DataRow()        '//Grid Data
                                 Dim ExcelRow As DataRow()       '//Excel Data
 
+                                'Check empty
+                                If strFinalCompoundCode.Length = 0 Then
+                                    Throw New System.Exception("Please input Final Compound data.")
+                                End If
+
+                                If strCompoundCode.Length = 0 Then
+                                    Throw New System.Exception("Please input Compound data.")
+                                End If
+
+                                If strRevision.Length = 0 Then
+                                    Throw New System.Exception("Please input Revision data.")
+                                End If
+
                                 If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
                                         Throw New System.Exception("Please input Qty data as Number.")
