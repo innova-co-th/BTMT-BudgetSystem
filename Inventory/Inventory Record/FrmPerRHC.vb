@@ -801,21 +801,27 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
         Dim strSQL As String = String.Empty
         Dim ret As Boolean = False
         Dim strRmcodeBefore As String = String.Empty
-        Dim distinctImportTabale As New DataTable
+        Dim distinctImportTabale As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
+
         Try
             For x As Integer = 0 To ImportTable.Rows.Count - 1
                 Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
                 Dim Final As String = ImportTable.Rows(x)("FinalCompound_Code").ToString().Trim()
                 Dim Comp As String = ImportTable.Rows(x)("Compound_Code").ToString().Trim()
                 Dim Rev As String = ImportTable.Rows(x)("Revision_No").ToString().Trim()
-                strSQL = ""
+                sb.Clear()
 
                 If rmCode.Length > 0 Then
-                    strSQL &= " SELECT COUNT(*) "
-                    strSQL &= " FROM (SELECT R.Final,R.MasterCode,R.Revision,RMCode FROM TBLRHCDtl as R "
-                    strSQL &= " left outer join TBLCompound as C  "
-                    strSQL &= " on R.Final+R.MasterCode+R.Revision = C.FinalCompound+C.CompCode+C.Revision) RC "
-                    strSQL &= " WHERE Final = '" & Final & "' and MasterCode = '" & Comp & "' and Revision = '" & Rev & "' and RMCode = '" & rmCode & "' "
+                    sb.AppendLine(" SELECT COUNT(*) ")
+                    sb.AppendLine(" FROM ( ")
+                    sb.AppendLine("   SELECT R.Final,R.MasterCode,R.Revision,RMCode ")
+                    sb.AppendLine("   FROM TBLRHCDtl as R ")
+                    sb.AppendLine("   LEFT OUTER JOIN TBLCompound as C on R.Final+R.MasterCode+R.Revision = C.FinalCompound+C.CompCode+C.Revision ")
+                    sb.AppendLine(" ) RC ")
+                    sb.AppendLine(" WHERE Final = '" & Final & "' and MasterCode = '" & Comp & "' and Revision = '" & Rev & "' and RMCode = '" & rmCode & "' ")
+                    strSQL = sb.ToString()
+
                     cnSQLRM = New SqlConnection(C1.Strcon)
                     cnSQLRM.Open()
                     cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -828,6 +834,8 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
                     End If
+
+                    cnSQLRM.Close()
                 End If
             Next x
 
@@ -836,10 +844,6 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch Exp As Exception
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
-        Finally
-            cnSQLRM.Close()
-            cmSQLRM.Dispose()
-            cnSQLRM.Dispose()
         End Try
 
         Return ret
