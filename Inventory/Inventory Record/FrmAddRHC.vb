@@ -997,7 +997,7 @@ Public Class FrmAddRHC
             Reader = cmd2.ExecuteReader()
             CalTotalPercent = True
         Catch ex As Exception
-            MsgBox("การคำนวณผลรวมอาจผิดพลาดได้ กรุณาตรวจสอบ เปอร์เซ็นต์ผลรวมอีกครั้ง", 48)
+            MsgBox("It may fail for calculation sum total. Please verify percent of sum total again.", 48)
             CalTotalPercent = False
         End Try
         cnn.Close()
@@ -1009,7 +1009,7 @@ Public Class FrmAddRHC
     End Sub
 
     Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
-        GrdDV.RowFilter = "  descname like'%" & TxtName.Text.Trim & "%'"
+        GrdDV.RowFilter = "  descname like'%" & TxtName.Text.Trim() & "%'"
         DataGridRM.DataSource = GrdDV
     End Sub
 
