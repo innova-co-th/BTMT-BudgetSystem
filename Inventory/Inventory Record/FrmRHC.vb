@@ -1109,7 +1109,8 @@ Public Class FrmRHC
         Dim strSQL As String = String.Empty
         Dim ret As Boolean = False
         Dim strRmcodeBefore As String = String.Empty
-        Dim distinctImportTabale As New DataTable
+        Dim distinctImportTabale As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
 
         Try
             For x As Integer = 0 To ImportTable.Rows.Count - 1
@@ -1117,15 +1118,22 @@ Public Class FrmRHC
                 Dim Final As String = ImportTable.Rows(x)("FinalCompound_Code").ToString().Trim()
                 Dim Comp As String = ImportTable.Rows(x)("Compound_Code").ToString().Trim()
                 Dim Rev As String = ImportTable.Rows(x)("Revision_No").ToString().Trim()
-                strSQL = ""
+                sb.Clear()
 
                 If rmCode.Length > 0 Then
-                    strSQL &= " SELECT COUNT(*) "
-                    strSQL &= " FROM (SELECT c.seq,c.FinalCompound,Compcode,c.Revision,RMCode"
-                    strSQL &= "   FROM TBLCompound C "
-                    strSQL &= " left outer join (select * from TBLMaster) M on C.compcode+C.Revision = M.MasterCode+M.Revision )zzz "
-                    strSQL &= " WHERE RMCode in (select rmcode from TBLRM) "
-                    strSQL &= " AND FinalCompound = '" & Final & "' AND CompCode = '" & Comp & "' AND Revision = '" & Rev & "' AND RMCode = '" & rmCode & "' "
+                    sb.AppendLine(" SELECT COUNT(*) ")
+                    sb.AppendLine(" FROM (")
+                    sb.AppendLine("   SELECT c.seq,c.FinalCompound,Compcode,c.Revision,RMCode")
+                    sb.AppendLine("   FROM TBLCompound C ")
+                    sb.AppendLine("   LEFT OUTER JOIN (")
+                    sb.AppendLine("     SELECT * ")
+                    sb.AppendLine("     FROM TBLMaster")
+                    sb.AppendLine("   ) M on C.compcode+C.Revision = M.MasterCode+M.Revision ")
+                    sb.AppendLine(" ) zzz")
+                    sb.AppendLine(" WHERE RMCode IN (SELECT rmcode FROM TBLRM) ")
+                    sb.AppendLine(" AND FinalCompound = '" & Final & "' AND CompCode = '" & Comp & "' AND Revision = '" & Rev & "' AND RMCode = '" & rmCode & "' ")
+                    strSQL = sb.ToString()
+
                     cnSQLRM = New SqlConnection(C1.Strcon)
                     cnSQLRM.Open()
                     cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1138,6 +1146,8 @@ Public Class FrmRHC
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
                     End If
+
+                    cnSQLRM.Close()
                 End If
             Next x
 
@@ -1146,10 +1156,6 @@ Public Class FrmRHC
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch Exp As Exception
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
-        Finally
-            cnSQLRM.Close()
-            cmSQLRM.Dispose()
-            cnSQLRM.Dispose()
         End Try
 
         Return ret
