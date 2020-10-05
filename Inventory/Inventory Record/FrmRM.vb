@@ -784,7 +784,7 @@ Public Class FrmRM
                             End If
 
                             'Check type master
-                            Dim arrTypeCode As DataRow() = dtTypeCode.Select("TypeName = " & typeName) 'TypeName column
+                            Dim arrTypeCode As DataRow() = dtTypeCode.Select("[TypeName] = '" & typeName & "'") 'TypeName column
                             If arrTypeCode.Length = 0 Then
                                 Throw New ApplicationException("Type Code: " & typeName & " is not found in master.")
                             Else
@@ -792,7 +792,7 @@ Public Class FrmRM
                             End If
 
                             'Check unit master
-                            Dim arrUnitCode As DataRow() = dtUnitCode.Select("ShortUnitName = " & shortUnitName) 'ShortUnitName column
+                            Dim arrUnitCode As DataRow() = dtUnitCode.Select("ShortUnitName = '" & shortUnitName & "'") 'ShortUnitName column
                             If arrUnitCode.Length = 0 Then
                                 Throw New ApplicationException("Unit Code: " & shortUnitName & " is not found in master.")
                             Else

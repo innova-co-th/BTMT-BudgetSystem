@@ -767,6 +767,8 @@ Public Class FrmGreenTire
                         'Set datetime
                         Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        'Get Master
+                        Dim dtTypeMaterial As DataTable = GetTypeMaterial() 'Table TBLTypeMaterial
 
                         '//Sort Data from Excel
                         dtRec.DefaultView.Sort = "GreenTire DESC, Revision DESC, TypeMaterial DESC"
@@ -786,8 +788,22 @@ Public Class FrmGreenTire
                             Dim strBSJ As String = dtRec(i)("BSJ").ToString.Trim
                             Dim strRevisionBoss1st As String = dtRec(i)("RevisionBoss_1st").ToString.Trim
                             Dim strRevisionBoss2nd As String = dtRec(i)("RevisionBoss_2nd").ToString.Trim
+                            Dim strTypeMaterial As String = dtRec.Rows(i)("TypeMaterial").ToString().Trim()
                             Dim GridRow As DataRow()        '//Grid Data
                             Dim ExcelRow As DataRow()       '//Excel Data
+
+                            'Check Empty
+                            If strGreentire.Equals(String.Empty) Or strRevision.Equals(String.Empty) Or strTypeMaterial.Equals(String.Empty) Then
+                                Throw New ApplicationException("Greentire Code, Revision and Material Code is not empty.")
+                            End If
+
+                            'Check Type Material Master
+                            Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
+                            If arrTypeMatCode.Length = 0 Then
+                                Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
+                            Else
+                                strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
+                            End If
 
                             '//For Check Data from above row on import file.
                             Dim chkSameGreenTireBefore As String = String.Empty
@@ -2181,6 +2197,27 @@ Public Class FrmGreenTire
 
         Return ret
     End Function
+
+    Private Function GetTypeMaterial() As DataTable
+        Dim daSQL As SqlDataAdapter
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
+
+        Try
+            sb.AppendLine(" SELECT MaterialCode, MaterialName ")
+            sb.AppendLine(" FROM TBLTypeMaterial ")
+            sb.AppendLine(" WHERE TypeCode in ('03','04','05','06','07','08','09','10','11','12','13','14','22') ")
+            strSQL = sb.ToString()
+            daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
+            daSQL.Fill(dt)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return dt
+    End Function
+
 #End Region
 
 #Region "SelectData"

@@ -812,6 +812,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                         'Set datetime
                         Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+                        'Get Master
+                        Dim dtTypeMaterial As DataTable = GetTypeMaterial() 'Table TBLTypeMaterial
 
                         '//Sort Data from Excel
                         dtRec.DefaultView.Sort = "TypeMaterial DESC, PreSemi DESC, PreSemiRevision DESC"
@@ -830,6 +832,19 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                             Dim strPreSemi As String = dtRec.Rows(i)("PreSemi").ToString().Trim()
                             Dim strRevision As String = dtRec.Rows(i)("PreSemiRevision").ToString().Trim()
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+
+                            'Check Empty
+                            If strPreSemi.Equals(String.Empty) Or strRevision.Equals(String.Empty) Then
+                                Throw New ApplicationException("Presemi Code, Presemi Revision is not empty.")
+                            End If
+
+                            'Check Type Material Master
+                            Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
+                            If arrTypeMatCode.Length = 0 Then
+                                Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
+                            Else
+                                strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
+                            End If
 
                             If strTypeMaterial.Length > 0 And strPreSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0 Then
                                 Dim dblQty As Double = 0
@@ -1406,6 +1421,29 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
         Return ret
     End Function
+
+    Private Function GetTypeMaterial() As DataTable
+        Dim daSQL As SqlDataAdapter
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
+
+        Try
+            sb.AppendLine(" SELECT MaterialCode, MaterialName ")
+            sb.AppendLine(" FROM TBLTypeMaterial ")
+            sb.AppendLine(" WHERE TypeCode in ('01','02','15','16','17','18','19','20','21') ")
+            strSQL = sb.ToString()
+            daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
+            daSQL.Fill(dt)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return dt
+    End Function
+
+
+
 #End Region
 
 #Region "SelectData"

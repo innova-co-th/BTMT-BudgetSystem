@@ -789,15 +789,23 @@ Public Class FrmRHC
                         End If
 
                         For i As Integer = 0 To dtRec.Rows.Count - 1
-
                             Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
+                            Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
+                            Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+                            Dim strSeqNo As String = dtRec.Rows(i)("Seq_No").ToString().Trim()
+
+                            'Check empty
+                            If strFinalCompoundCode.Equals(String.Empty) Or strCompoundCode.Equals(String.Empty) Or strRevision.Equals(String.Empty) Or strSeqNo.Equals(String.Empty) Then
+                                Throw New ApplicationException("FinalCompoundCode Code, Compound Code, Revision and Seq No is not empty.")
+                            End If
+
+                            Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
+
                             If strFinalCompoundCode.Length > 0 Then
-                                Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
-                                Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
-                                Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                                Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
                                 Dim dblRMQty As Double
                                 Dim dblRHC As Double
+
                                 If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
                                         Throw New System.Exception("Please input Qty data as Number")

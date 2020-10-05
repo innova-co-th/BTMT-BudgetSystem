@@ -672,12 +672,19 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
 
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
+                            Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
+                            Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+
+                            'Check empty
+                            If strFinalCompoundCode.Equals(String.Empty) Or strCompoundCode.Equals(String.Empty) Or strRevision.Equals(String.Empty) Then
+                                Throw New ApplicationException("FinalCompoundCode Code, Compound Code and Revision is not empty.")
+                            End If
+
                             If strFinalCompoundCode.Length > 0 Then
-                                Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
-                                Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
-                                Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
                                 Dim dblPer As Double
                                 Dim dblRHC As Double
+
                                 If dtRec.Rows(i)("Percent").ToString.Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Percent"), dblPer) Then
                                         Throw New System.Exception("Please input Percent data as Number")
