@@ -1332,27 +1332,36 @@ grdColStyle11, grdColStyle8, grdColStyle9})
         Dim strSQL As String = String.Empty
         Dim ret As Boolean = False
         Dim strRmcodeBefore As String = String.Empty
-        Dim distinctImportTabale As New DataTable
+        Dim distinctImportTabale As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
 
         Try
             For x As Integer = 0 To ImportTable.Rows.Count - 1
                 Dim strTypeMat As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
                 Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
                 Dim strUnit As String = ImportTable.Rows(x)("Unit").ToString().Trim()
-                strSQL = ""
+                sb.Clear()
 
                 '// 1.) Check RMCode
                 If rmCode.Length > 0 Then
-                    strSQL = " Select COUNT(*)  "
-                    strSQL += " from(select t.Typecode , TypeName, code  "
-                    strSQL += " From TBLType t  left outer Join TBLGroup g on t.typecode=g.typecode )a "
-                    strSQL += " Left outer join (Select  distinct  Finalcompound code , null DescName, compcode, 0.00 Qty  "
-                    strSQL += " From TBLCompound "
-                    strSQL += " Where Compcode Not In ( Select code from TblGroup where Typecode ='01') and active = 1 "
-                    strSQL += " union "
-                    strSQL += " Select rmCode,DescName,RMcode, 0.00 Qty From TblRM "
-                    strSQL += " Where descName Like '%Steel%' or descName like '%Bead%' )b  on a.code = b.compcode "
-                    strSQL += " where b.code Is Not null AND b.code = '" & rmCode & "' "
+                    sb.AppendLine(" Select COUNT(*)  ")
+                    sb.AppendLine(" FROM (  ")
+                    sb.AppendLine("   SELECT t.Typecode , TypeName, code")
+                    sb.AppendLine("   FROM TBLType t  ")
+                    sb.AppendLine("   LEFT OUTER JOIN TBLGroup g on t.typecode = g.typecode ")
+                    sb.AppendLine(" ) a ")
+                    sb.AppendLine(" LEFT OUTER JOIN ( ")
+                    sb.AppendLine("   SELECT distinct  Finalcompound code , null DescName, compcode, 0.00 Qty ")
+                    sb.AppendLine("   FROM TBLCompound ")
+                    sb.AppendLine("   WHERE Compcode NOT IN ( SELECT code FROM TblGroup WHERE Typecode ='01') AND active = 1 ")
+                    sb.AppendLine("   UNION ")
+                    sb.AppendLine("   SELECT rmCode,DescName,RMcode, 0.00 Qty ")
+                    sb.AppendLine("   FROM TblRM ")
+                    sb.AppendLine("   WHERE descName Like '%Steel%' or descName like '%Bead%' ")
+                    sb.AppendLine(" ) b on a.code = b.compcode ")
+                    sb.AppendLine(" WHERE b.code Is Not null AND b.code = '" & rmCode & "' ")
+                    strSQL = sb.ToString()
+
                     cnSQLRM = New SqlConnection(C1.Strcon)
                     cnSQLRM.Open()
                     cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1405,6 +1414,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
                     End If
+
+                    cnSQLRM.Close()
                 End If
             Next x
 
@@ -1413,10 +1424,6 @@ grdColStyle11, grdColStyle8, grdColStyle9})
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch Exp As Exception
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
-        Finally
-            cnSQLRM.Close()
-            cmSQLRM.Dispose()
-            cnSQLRM.Dispose()
         End Try
 
         Return ret
