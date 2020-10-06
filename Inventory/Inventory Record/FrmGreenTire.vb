@@ -775,7 +775,7 @@ Public Class FrmGreenTire
                         dtRec = dtRec.DefaultView.ToTable
 
                         '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
-                        If ChkImportData_Correctly(dtRec) = False Then
+                        If ChkImportData_Correctly(dtRec, dtTypeMaterial) = False Then
                             LoadTire() 'ReQuery and set datagrid
                             frmOverlay.Dispose()
                             Exit Sub
@@ -783,19 +783,14 @@ Public Class FrmGreenTire
 
 
                         For i As Integer = 0 To dtRec.Rows.Count - 1
-                            Dim strGreentire As String = dtRec(i)("GreenTire").ToString.Trim
-                            Dim strRevision As String = dtRec(i)("Revision").ToString.Trim
-                            Dim strBSJ As String = dtRec(i)("BSJ").ToString.Trim
-                            Dim strRevisionBoss1st As String = dtRec(i)("RevisionBoss_1st").ToString.Trim
-                            Dim strRevisionBoss2nd As String = dtRec(i)("RevisionBoss_2nd").ToString.Trim
+                            Dim strGreentire As String = dtRec(i)("GreenTire").ToString.Trim()
+                            Dim strRevision As String = dtRec(i)("Revision").ToString.Trim()
+                            Dim strBSJ As String = dtRec(i)("BSJ").ToString.Trim()
+                            Dim strRevisionBoss1st As String = dtRec(i)("RevisionBoss_1st").ToString.Trim()
+                            Dim strRevisionBoss2nd As String = dtRec(i)("RevisionBoss_2nd").ToString.Trim()
                             Dim strTypeMaterial As String = dtRec.Rows(i)("TypeMaterial").ToString().Trim()
                             Dim GridRow As DataRow()        '//Grid Data
                             Dim ExcelRow As DataRow()       '//Excel Data
-
-                            'Check Empty
-                            If strGreentire.Equals(String.Empty) Or strRevision.Equals(String.Empty) Or strTypeMaterial.Equals(String.Empty) Then
-                                Throw New ApplicationException("Greentire Code, Revision and Material Code is not empty.")
-                            End If
 
                             'Check Type Material Master
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
@@ -1528,7 +1523,7 @@ Public Class FrmGreenTire
         End If
     End Function
 
-    Private Function ChkImportData_Correctly(ByRef ImportTable As DataTable) As Boolean
+    Private Function ChkImportData_Correctly(ByRef ImportTable As DataTable, dtTypeMaterial As DataTable) As Boolean
         Dim cnSQLRM As SqlConnection
         Dim cmSQLRM As SqlCommand
         Dim strSQL As String = String.Empty
@@ -1542,84 +1537,93 @@ Public Class FrmGreenTire
             For x As Integer = 0 To ImportTable.Rows.Count - 1
                 Dim strGreenTireCode As String = ImportTable.Rows(x)("GreenTire").ToString().Trim()
                 Dim strRevision As String = ImportTable.Rows(x)("Revision").ToString().Trim()
-                Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim()
-                Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim()
-                Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim()
+                Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim() 'Tire Size
+                Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
+                Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
 
                 Dim strTypeMaterial As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
                 Dim dblNum As Double
 
-                strSQL = ""
+                strSQL = String.Empty
+                cnSQLRM = New SqlConnection(C1.Strcon)
+                cnSQLRM.Open()
 
+                '// 1.) Check GreeTireCode
                 If strGreenTireCode.Length > 0 Then
                     '//For Check Data from above row on import file.
                     Dim chkSameGreenTireBefore As String = String.Empty
                     Dim chkSameRevisionBefore As String = String.Empty
+
                     If x > 0 Then
                         chkSameGreenTireBefore = ImportTable.Rows(x - 1)("GreenTire").ToString
                         chkSameRevisionBefore = ImportTable.Rows(x - 1)("Revision").ToString
                     Else
-                        chkSameGreenTireBefore = ""
-                        chkSameRevisionBefore = ""
-                    End If
-
-                    '// 1.) Check GreeTireCode
-                    If strGreenTireCode.Length <= 0 Then
-                        Throw New System.Exception("Please check GreenTire Code input")
+                        chkSameGreenTireBefore = String.Empty
+                        chkSameRevisionBefore = String.Empty
                     End If
 
                     '// 2.) Check Revision
                     If strRevision.Length <= 0 Then
-                        Throw New System.Exception("Please check Revision input")
+                        Throw New System.Exception("Revision is not empty.")
                     End If
 
-                    '// 3.) Check BSJ
+                    '// 3.) Check BSJ (TireSize)
                     If strBSJ.Length <= 0 Then
-                        Throw New System.Exception("Please check BSJ input")
+                        'Empty
+                        Throw New System.Exception("BSJ (Tire Size) is not empty.")
                     Else
                         strSQL = " SELECT COUNT(*) FROM  TblTiresize "
                         strSQL += " WHERE BSJCode = '" & strBSJ & "' "
-                        cnSQLRM = New SqlConnection(C1.Strcon)
-                        cnSQLRM.Open()
                         cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                         Dim i As Long = cmSQLRM.ExecuteScalar()
                         If i = 0 Then
                             cmSQLRM.Dispose()
-                            cnSQLRM.Dispose()
                             Throw New System.Exception("This BSJ '" & strBSJ & "' is not found from Master")
                         Else
                             cmSQLRM.Dispose()
-                            cnSQLRM.Dispose()
                         End If
                     End If
 
                     '// 4.) Check RevisionBoss 1st
                     If strRevisionBoss1st.Length <= 0 Then
-                        Throw New System.Exception("Please check RevisionBoss 1st input")
+                        Throw New System.Exception("Revision of Boss 1st is not empty.")
                     End If
 
                     '// 5.) Check RevisionBoss 2nd
                     If strRevisionBoss2nd.Length <= 0 Then
-                        Throw New System.Exception("Please check RevisionBoss 2nd input")
+                        Throw New System.Exception("Revision of Boss 2nd is not empty.")
+                    End If
+
+                    '//6.) Check Type Material
+                    If strTypeMaterial.Equals(String.Empty) Then
+                        Throw New ApplicationException("Type Material is not empty.")
+                    End If
+
+                    'Check Type Material Master
+                    Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
+                    If arrTypeMatCode.Length = 0 Then
+                        Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
                     End If
 
                     '// Check Each SemiCode in same group of GreenTire and Revision correctly
+                    'For first GreenTire and Semi in each group
                     If strGreenTireCode <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
                         '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
                         '// Tread
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '13'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Tread' Num value")
+                                Throw New System.Exception("Please check Num value of type 'Tread'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Tread'.")
                                 End If
                             End If
 
+                            'Check Semi in master
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = 'TREAD' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1627,6 +1631,7 @@ Public Class FrmGreenTire
                             If i = 0 Then
                                 Throw New System.Exception("Please check correctly Tread '" & importRow(0)("SemiCode").ToString.Trim & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
@@ -2180,8 +2185,13 @@ Public Class FrmGreenTire
                         End If
                         '//**********************************************************************************************************************************
                     End If
-                End If
+                Else
+                    'Green Tire Code is not empty
+                    Throw New ApplicationException("Green Tire Code is not empty.")
+                End If 'If strGreenTireCode.Length > 0
 
+                cnSQLRM.Close()
+                cnSQLRM.Dispose()
             Next x
 
             ret = True
@@ -2189,10 +2199,6 @@ Public Class FrmGreenTire
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
         Catch Exp As Exception
             MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
-        Finally
-            cnSQLRM.Close()
-            cmSQLRM.Dispose()
-            cnSQLRM.Dispose()
         End Try
 
         Return ret
@@ -2207,7 +2213,7 @@ Public Class FrmGreenTire
         Try
             sb.AppendLine(" SELECT MaterialCode, MaterialName ")
             sb.AppendLine(" FROM TBLTypeMaterial ")
-            sb.AppendLine(" WHERE TypeCode in ('03','04','05','06','07','08','09','10','11','12','13','14','22') ")
+            sb.AppendLine(" WHERE descName like '%Semi%' ")
             strSQL = sb.ToString()
             daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
             daSQL.Fill(dt)
