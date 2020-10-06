@@ -743,6 +743,9 @@ Public Class FrmRMPrice
                                 StrSQL = sb.ToString()
                                 cmSQL.CommandText = StrSQL
                                 cmSQL.ExecuteNonQuery()
+                            Else
+                                'Not found in master
+                                Throw New ApplicationException("RMCode " & rmCode & " is not in master.")
                             End If ' If Not isExists
                         Next i
 
