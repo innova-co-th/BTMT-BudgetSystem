@@ -852,6 +852,10 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 Dim GridRow As DataRow()        '//Grid Data
                                 Dim ExcelRow As DataRow()       '//Excel Data
 
+                                'Check Unit Master
+                                Dim arrUnitCode As DataRow() = dtUnitCode.Select("ShortUnitName = '" & strUnit & "'")
+                                strUnit = arrUnitCode(0)("ShortUnitName")
+
                                 '//Check Qty input format as Number
                                 If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblQty) Then
