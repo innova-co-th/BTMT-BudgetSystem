@@ -814,13 +814,14 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         'Get Master
                         Dim dtTypeMaterial As DataTable = GetTypeMaterial() 'Table TBLTypeMaterial
+                        Dim dtUnitCode As DataTable = GetUnitCode() 'Table TBLUnit
 
                         '//Sort Data from Excel
                         dtRec.DefaultView.Sort = "TypeMaterial DESC, PreSemi DESC, PreSemiRevision DESC"
                         dtRec = dtRec.DefaultView.ToTable
 
                         '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
-                        If ChkRMCode_TypeMaterial_Unit(dtRec) = False Then
+                        If ChkRMCode_TypeMaterial_Unit(dtRec, dtTypeMaterial, dtUnitCode) = False Then
                             LoadSemi() 'ReQuery and set datagrid
                             frmOverlay.Dispose()
                             Exit Sub
@@ -840,11 +841,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
                             'Check Type Material Master
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
-                            If arrTypeMatCode.Length = 0 Then
-                                Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
-                            Else
-                                strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
-                            End If
+                            strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
 
                             If strTypeMaterial.Length > 0 And strPreSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0 Then
                                 Dim dblQty As Double = 0
@@ -1326,7 +1323,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 #End Region
 
 #Region "Import"
-    Private Function ChkRMCode_TypeMaterial_Unit(ByVal ImportTable As DataTable) As Boolean
+    Private Function ChkRMCode_TypeMaterial_Unit(ByVal ImportTable As DataTable, dtTypeMaterial As DataTable, dtUnitCode As DataTable) As Boolean
         Dim cnSQLRM As SqlConnection
         Dim cmSQLRM As SqlCommand
         Dim strSQL As String = String.Empty
@@ -1340,10 +1337,13 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                 Dim strTypeMat As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
                 Dim rmCode As String = ImportTable.Rows(x)("RMCode").ToString().Trim()
                 Dim strUnit As String = ImportTable.Rows(x)("Unit").ToString().Trim()
-                sb.Clear()
+
+                cnSQLRM = New SqlConnection(C1.Strcon)
+                cnSQLRM.Open()
 
                 '// 1.) Check RMCode
                 If rmCode.Length > 0 Then
+                    sb.Clear()
                     sb.AppendLine(" Select COUNT(*)  ")
                     sb.AppendLine(" FROM (  ")
                     sb.AppendLine("   SELECT t.Typecode , TypeName, code")
@@ -1362,61 +1362,45 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                     sb.AppendLine(" WHERE b.code Is Not null AND b.code = '" & rmCode & "' ")
                     strSQL = sb.ToString()
 
-                    cnSQLRM = New SqlConnection(C1.Strcon)
-                    cnSQLRM.Open()
                     cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                     Dim i As Long = cmSQLRM.ExecuteScalar()
                     If i = 0 Then
                         cmSQLRM.Dispose()
-                        cnSQLRM.Dispose()
                         Throw New System.Exception("This RM Code '" & rmCode & "' is not found from Master")
                     Else
                         cmSQLRM.Dispose()
-                        cnSQLRM.Dispose()
                     End If
+                Else
+                    'Empty
+                    Throw New System.Exception("RM Code is not empty.")
                 End If
 
 
                 '// 2.) Check TypeMaterial
-                If strTypeMat.Length > 0 Then
-                    strSQL = "SELECT  COUNT(*) "
-                    strSQL += "  FROM  TblTypeMaterial  "
-                    strSQL += " where  descname like '%Presemi%'  AND  MaterialCode = '" & strTypeMat & "' "
-                    cnSQLRM = New SqlConnection(C1.Strcon)
-                    cnSQLRM.Open()
-                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
-                    Dim i As Long = cmSQLRM.ExecuteScalar()
-                    If i = 0 Then
-                        cmSQLRM.Dispose()
-                        cnSQLRM.Dispose()
-                        Throw New System.Exception("This TypeMaterial Code '" & strTypeMat & "' is not match PreSemi TypeMatetial")
-                    Else
-                        cmSQLRM.Dispose()
-                        cnSQLRM.Dispose()
-                    End If
+                If strTypeMat.Length = 0 Then
+                    'Empty
+                    Throw New System.Exception("Type Material is not empty.")
+                End If
+
+                Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMat & "'")
+                If arrTypeMatCode.Length = 0 Then
+                    Throw New System.Exception("This TypeMaterial Code '" & strTypeMat & "' is not match PreSemi TypeMaterial")
                 End If
 
 
                 '// 3.) Check Unit
-                If strUnit.Length > 0 Then
-                    strSQL = "SELECT COUNT(*) "
-                    strSQL += "  FROM  TBLUnit  "
-                    strSQL += " Where UnitCode = '" & strUnit & "' "
-                    cnSQLRM = New SqlConnection(C1.Strcon)
-                    cnSQLRM.Open()
-                    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
-                    Dim i As Long = cmSQLRM.ExecuteScalar()
-                    If i = 0 Then
-                        cmSQLRM.Dispose()
-                        cnSQLRM.Dispose()
-                        Throw New System.Exception("This Unit Code '" & strUnit & "' is not match Unit Master")
-                    Else
-                        cmSQLRM.Dispose()
-                        cnSQLRM.Dispose()
-                    End If
-
-                    cnSQLRM.Close()
+                If strUnit.Length = 0 Then
+                    'Empty
+                    Throw New System.Exception("Unit is not empty.")
                 End If
+
+                Dim arrUnitCode As DataRow() = dtUnitCode.Select("ShortUnitName = '" & strUnit & "'")
+                If arrUnitCode.Length = 0 Then
+                    Throw New System.Exception("This Unit Code '" & strUnit & "' is not match Unit Master")
+                End If
+
+                cnSQLRM.Close()
+                cnSQLRM.Dispose()
             Next x
 
             ret = True
@@ -1438,7 +1422,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
         Try
             sb.AppendLine(" SELECT MaterialCode, MaterialName ")
             sb.AppendLine(" FROM TBLTypeMaterial ")
-            sb.AppendLine(" WHERE TypeCode in ('01','02','15','16','17','18','19','20','21') ")
+            sb.AppendLine(" WHERE descName like '%PreSemi%' ")
             strSQL = sb.ToString()
             daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
             daSQL.Fill(dt)
@@ -1449,8 +1433,24 @@ grdColStyle11, grdColStyle8, grdColStyle9})
         Return dt
     End Function
 
+    Private Function GetUnitCode() As DataTable
+        Dim daSQL As SqlDataAdapter
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
 
+        Try
+            sb.AppendLine(" SELECT UnitCode, ShortUnitName ")
+            sb.AppendLine(" FROM TBLUnit ")
+            strSQL = sb.ToString()
+            daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
+            daSQL.Fill(dt)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
+        Return dt
+    End Function
 #End Region
 
 #Region "SelectData"
