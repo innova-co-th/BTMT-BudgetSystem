@@ -67,13 +67,8 @@ Public Class ExcelLib
             For i As Integer = 1 To numCols
                 'Check third row when second row nothing
                 If IsNothing(arr(2, i)) Then
-                    If arr(3, i).GetType().Equals(GetType(Double)) Then
-                        dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
-                    ElseIf arr(3, i).GetType().Equals(GetType(Int32)) Then
-                        dtTemp.Columns.Add(arr(1, i), GetType(Int32))
-                    Else
-                        dtTemp.Columns.Add(arr(1, i), GetType(String))
-                    End If
+                    'If column is nothing value
+                    dtTemp.Columns.Add(arr(1, i), GetType(String))
                 Else
                     'Check second row
                     If arr(2, i).GetType().Equals(GetType(Double)) Then
@@ -84,16 +79,7 @@ Public Class ExcelLib
                         dtTemp.Columns.Add(arr(1, i), GetType(String))
                     End If
                 End If
-
-                ''Check second row
-                'If arr(2, i).GetType().Equals(GetType(Double)) Then
-                '    dtTemp.Columns.Add(arr(1, i), GetType(Decimal))
-                'ElseIf arr(2, i).GetType().Equals(GetType(Int32)) Then
-                '    dtTemp.Columns.Add(arr(1, i), GetType(Int32))
-                'Else
-                '    dtTemp.Columns.Add(arr(1, i), GetType(String))
-                'End If
-            Next
+            Next i
 
             'Convert Array to Datatable
             dtTemp = ConvertArrayToDatatable(arr, dtTemp)
