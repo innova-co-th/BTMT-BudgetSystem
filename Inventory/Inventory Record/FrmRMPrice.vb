@@ -717,16 +717,13 @@ Public Class FrmRMPrice
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             'Check RMCode
                             Dim rmCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                            Dim typeCode As String = String.Empty
                             'Dim unitCode As String = PrepareStr(dtRec.Rows(i)("UnitCode").ToString().Trim())
                             'Dim stdPrice As String = PrepareStr(dtRec.Rows(i)("StdPrice").ToString().Trim())
                             'Dim acrPrice As String = PrepareStr(dtRec.Rows(i)("ActPrice").ToString().Trim())
-                            Dim typeName As String = dtRec.Rows(i)("TypeCode").ToString().Trim() 'Type Name
-                            Dim shortUnitName As String = dtRec.Rows(i)("UnitCode").ToString().Trim() 'Short Unit Name
 
                             'Check empty
-                            If typeName.Equals(String.Empty) Or rmCode.Equals(String.Empty) Or shortUnitName.Equals(String.Empty) Then
-                                Throw New ApplicationException("Type Code, Rm Code and Unit Code is not empty.")
+                            If rmCode.Equals(String.Empty) Then
+                                Throw New ApplicationException("Rm Code is not empty.")
                             End If
 
                             Dim isExists As Boolean = ChkDataImport(rmCode)
