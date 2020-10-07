@@ -792,13 +792,9 @@ Public Class FrmGreenTire
                             Dim GridRow As DataRow()        '//Grid Data
                             Dim ExcelRow As DataRow()       '//Excel Data
 
-                            'Check Type Material Master
+                            'Set Type Material
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
-                            If arrTypeMatCode.Length = 0 Then
-                                Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
-                            Else
-                                strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
-                            End If
+                            strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
 
                             '//For Check Data from above row on import file.
                             Dim chkSameGreenTireBefore As String = String.Empty
@@ -807,8 +803,8 @@ Public Class FrmGreenTire
                                 chkSameGreenTireBefore = dtRec.Rows(i - 1)("GreenTire").ToString
                                 chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision").ToString
                             Else
-                                chkSameGreenTireBefore = ""
-                                chkSameRevisionBefore = ""
+                                chkSameGreenTireBefore = String.Empty
+                                chkSameRevisionBefore = String.Empty
                             End If
 
                             GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "'")
@@ -1128,15 +1124,15 @@ Public Class FrmGreenTire
                                     sb.AppendLine(" Insert INTO TblGtDtl(TireCode,Rev,MaterialType,Semicode,length,number,QTU,Unit,Dateup) ")
                                     sb.AppendLine(" Values ")
                                     sb.AppendLine(" (")
-                                    sb.AppendLine(PrepareStr(strGreentire) & ", ")
-                                    sb.AppendLine(PrepareStr(strRevision) & ", ")
-                                    sb.AppendLine(PrepareStr("13") & ", ")
-                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
-                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
-                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
-                                    sb.AppendLine(PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
-                                    sb.AppendLine(PrepareStr("g") & ", ")
-                                    sb.AppendLine(PrepareStr(strDate))
+                                    sb.AppendLine(PrepareStr(strGreentire) & ", ") 'TireCode
+                                    sb.AppendLine(PrepareStr(strRevision) & ", ") 'Rev
+                                    sb.AppendLine(PrepareStr("13") & ", ") 'MaterialType
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ") 'Semicode
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ") 'length
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ") 'number
+                                    sb.AppendLine(PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ") 'QTU
+                                    sb.AppendLine(PrepareStr("g") & ", ") 'Unit
+                                    sb.AppendLine(PrepareStr(strDate)) 'Dateup
                                     sb.AppendLine(") ")
 
                                     QTread = ExcelRow(0)("QTU")
@@ -1386,31 +1382,31 @@ Public Class FrmGreenTire
                                     ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '22'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
-                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
-                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
-                                        sb.AppendLine(PrepareStr("22") & ", ")
-                                        sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
-                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
-                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ") 'TireCode
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ") 'Rev
+                                        sb.AppendLine(PrepareStr("22") & ", ") 'MaterialType
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ") 'Semicode
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ") 'length
+                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ") 'number
 
-                                        sb.AppendLine(PrepareStr(ExcelRow(0)("QTU")) & ", ")
-                                        sb.AppendLine(PrepareStr("g") & ", ")
-                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("QTU")) & ", ") 'QTU
+                                        sb.AppendLine(PrepareStr("g") & ", ") 'Unit
+                                        sb.AppendLine(PrepareStr(strDate)) 'Dateup
                                         sb.AppendLine(") ")
 
                                         QFlipper = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
                                     Else
                                         sb.AppendLine(" (")
-                                        sb.AppendLine(PrepareStr(strGreentire) & ", ")
-                                        sb.AppendLine(PrepareStr(strRevision) & ", ")
-                                        sb.AppendLine(PrepareStr("22") & ", ")
-                                        sb.AppendLine(PrepareStr("") & ", ")
-                                        sb.AppendLine(PrepareStr("") & ", ")
-                                        sb.AppendLine(PrepareStr("") & ", ")
+                                        sb.AppendLine(PrepareStr(strGreentire) & ", ") 'TireCode
+                                        sb.AppendLine(PrepareStr(strRevision) & ", ") 'Rev
+                                        sb.AppendLine(PrepareStr("22") & ", ") 'MaterialType
+                                        sb.AppendLine(PrepareStr("") & ", ") 'Semicode
+                                        sb.AppendLine(PrepareStr("") & ", ") 'length
+                                        sb.AppendLine(PrepareStr("") & ", ") 'number
 
-                                        sb.AppendLine(PrepareStr("") & ", ")
-                                        sb.AppendLine(PrepareStr("g") & ", ")
-                                        sb.AppendLine(PrepareStr(strDate))
+                                        sb.AppendLine(PrepareStr("") & ", ") 'QTU
+                                        sb.AppendLine(PrepareStr("g") & ", ") 'Unit
+                                        sb.AppendLine(PrepareStr(strDate)) 'Dateup
                                         sb.AppendLine(") ")
 
                                         QFlipper = 0
@@ -1623,17 +1619,17 @@ Public Class FrmGreenTire
 
                             'Check Semi in master
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = 'TREAD' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Tread '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Tread '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1649,28 +1645,29 @@ Public Class FrmGreenTire
                         End If
 
                         '// BF
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '14'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'BF' Num value")
+                                Throw New System.Exception("Please check Num value of type 'BF'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'BF'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly BF '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly BF '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1688,36 +1685,37 @@ Public Class FrmGreenTire
 
                         '// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
                         '// Cussion
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '03'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Cussion' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Cussion'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Cussion'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Cussion' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Cussion'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Cussion'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Cussion '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Cussion '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Geet QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1733,36 +1731,36 @@ Public Class FrmGreenTire
                         End If
 
                         '// BodyPly
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '04'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'BodyPly' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'BodyPly'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'BodyPly'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'BodyPly' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'BodyPly'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'BodyPly'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly BodyPly '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly BodyPly '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1778,36 +1776,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// Belt-1
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '05'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-1' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Belt-1'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Belt-1'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-1' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Belt-1'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of 'Belt-2'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Belt-1 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Belt-1 '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1823,36 +1822,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// Belt-2
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '06'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-2' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Belt-2'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Belt-2'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-2' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Belt-2'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Belt-2'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Belt-2 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Belt-2 '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1868,36 +1868,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// Belt-3
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '07'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-3' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Belt-3'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Belt-3'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-3' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Belt-3'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Belt-3'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Belt-3 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Belt-3 '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1913,36 +1914,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// Belt-4
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '08'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-4' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Belt-4'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Belt-4'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Belt-4' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Belt-4'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Belt-4'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Belt-4 '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Belt-4 '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1958,36 +1960,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// Side
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '11'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Side' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Side'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Side'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Side' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Side'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Side'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Side '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Side '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2003,36 +2006,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// InnerLiner
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '12'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'InnerLiner' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'InnerLiner'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'InnerLiner'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'InnerLiner' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'InnerLiner'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'InnerLiner'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly InnerLiner '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly InnerLiner '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2050,36 +2054,37 @@ Public Class FrmGreenTire
 
                         '// WireChafer, NylonChafer, Flipper (No Require, Need Num and Length) **************************************************************
                         '// WireChafer
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '09'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Wire Chafer' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Wire Chafer'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Wire Chafer'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Wire Chafer' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Wire Chafer'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Wire Chafer'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Wire Chafer '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Wire Chafer '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2095,36 +2100,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// NylonChafer
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '10'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Nylon Chafer' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Nylon Chafer'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Nylon Chafer'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Nylon Chafer' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Nylon Chafer'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Nylon Chafer'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Nylon Chafer '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Nylon Chafer '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2140,36 +2146,37 @@ Public Class FrmGreenTire
                         End If
 
                         '// Flipper
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '22'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Flipper' Num value")
+                            If importRow(0)("Num").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Num value of type 'Flipper'")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Num"), dblNum) Then
-                                    Throw New System.Exception("Please input Num data as Number")
+                                    Throw New System.Exception("Please input Num data as Number of type 'Flipper'.")
                                 End If
                             End If
-                            If importRow(0)("Length").ToString.Length <= 0 Then
-                                Throw New System.Exception("Please check type 'Flipper' Length value")
+                            If importRow(0)("Length").ToString().Length <= 0 Then
+                                Throw New System.Exception("Please check Length value of type 'Flipper'.")
                             Else
                                 '//Check type number
                                 If Not Double.TryParse(importRow(0)("Length"), dblNum) Then
-                                    Throw New System.Exception("Please input Length data as Number")
+                                    Throw New System.Exception("Please input Length data as Number of type 'Flipper'.")
                                 End If
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                            strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
-                                Throw New System.Exception("Please check correctly Flipper '" & importRow(0)("SemiCode").ToString.Trim & "'")
+                                Throw New System.Exception("Please check correctly Flipper '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
+                                'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString.Trim & "' "
+                                strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
