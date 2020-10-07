@@ -35,6 +35,7 @@ Public Class FrmYearInvTag
     Private ReadOnly cult As System.Globalization.CultureInfo = System.Globalization.CultureInfo.CreateSpecificCulture("en-US")
     Private DT_TYPE As New DataTable("Type")
     Private DT_LOCATION As New DataTable("Location")
+    Private DT_UNIT As New DataTable("Unit")
 #End Region
 
 #Region " Windows Form Designer generated code "
@@ -855,7 +856,7 @@ Public Class FrmYearInvTag
 
         Try
             da = New SqlDataAdapter(strSQL, C1.Strcon)
-            dt = New DataTable
+            dt = New DataTable()
             da.Fill(dt)
             DT_TYPE = dt.Copy()
         Catch ex As Exception
@@ -870,11 +871,26 @@ Public Class FrmYearInvTag
 
         Try
             da = New SqlDataAdapter(strSQL, C1.Strcon)
-            dt = New DataTable
+            dt = New DataTable()
             da.Fill(dt)
             DT_LOCATION = dt.Copy()
         Catch ex As Exception
             MessageBox.Show("Cannot load department master!!!" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Close()
+        End Try
+
+        'Load unit master
+        sb.Clear()
+        sb.AppendLine("SELECT * FROM TBLUnit")
+        strSQL = sb.ToString()
+
+        Try
+            da = New SqlDataAdapter(strSQL, C1.Strcon)
+            dt = New DataTable()
+            da.Fill(dt)
+            DT_UNIT = dt.Copy()
+        Catch ex As Exception
+            MessageBox.Show("Cannot load unit master!!!" & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Close()
         End Try
     End Sub
@@ -1502,6 +1518,7 @@ Public Class FrmYearInvTag
 
 #End Region
 
+#Region "Function"
     Private Sub ChkData(tagNo As String, code As String, typeCode As String, location As String, period As String, trxYear As String, unit As String, updateDate As String)
         If tagNo.Equals(String.Empty) Then
             'Tag No is empty
@@ -1587,7 +1604,7 @@ Public Class FrmYearInvTag
         End If
 
         'Format Type Code
-        chkDR = DT_TYPE.Select("TypeCode = '" & typeCode & "'")
+        chkDR = DT_TYPE.Select("TypeName = '" & typeCode & "'")
 
         If chkDR.Length = 0 Then
             'Not found in master
@@ -1595,7 +1612,7 @@ Public Class FrmYearInvTag
         End If
 
         'Format Location
-        chkDR = DT_LOCATION.Select("DeptCode = '" & location & "'")
+        chkDR = DT_LOCATION.Select("DeptName = '" & location & "'")
 
         If chkDR.Length = 0 Then
             'Not found in master
@@ -1655,4 +1672,5 @@ Public Class FrmYearInvTag
 
         Return ret
     End Function
+#End Region
 End Class
