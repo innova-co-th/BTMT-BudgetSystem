@@ -724,11 +724,14 @@ Public Class FrmCompound
                         'Dim totalQty As Double = 0
 
                         '//Sort Data from Excel
-                        dtRec.DefaultView.Sort = "FinalCompound_Code DESC, Compound_Code DESC, Revision_No DESC"
+                        'dtRec.DefaultView.Sort = "FinalCompound_Code DESC, Compound_Code DESC, Revision_No DESC"
+                        dtRec.DefaultView.Sort = "Compound_Code DESC, Revision_No DESC"
                         dtRec = dtRec.DefaultView.ToTable()
 
                         '//Check RMCode on Master
                         If ChkRMCodeMaster(dtRec) = False Then
+                            LoadCOM() 'ReQuery and set datagrid
+                            frmOverlay.Dispose()
                             Exit Sub
                         End If
 
@@ -746,6 +749,7 @@ Public Class FrmCompound
                             '//Case 2.2 : [NEW] FinalCompoundCode, CompoundCode and Revision
 
                             Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+
                             If strFinalCompoundCode.Length > 0 Then
                                 Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
                                 Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
@@ -756,10 +760,6 @@ Public Class FrmCompound
                                 Dim ExcelRow As DataRow()       '//Excel Data
 
                                 'Check empty
-                                If strFinalCompoundCode.Length = 0 Then
-                                    Throw New System.Exception("Please input Final Compound data.")
-                                End If
-
                                 If strCompoundCode.Length = 0 Then
                                     Throw New System.Exception("Please input Compound data.")
                                 End If
@@ -784,6 +784,8 @@ Public Class FrmCompound
                                 If ImportTable.Rows.Count > 1 Then
                                     '//Error because of This Compound and Revision duplicate with Other FinalCompoundCode!!!
                                     MsgBox("This Compound : " & strCompoundCode & " and Revision : " & strRevision & " is Duplicate on Import File!!!", MsgBoxStyle.OkOnly, "Import Compound")
+                                    LoadCOM() 'ReQuery and set datagrid
+                                    frmOverlay.Dispose()
                                     Exit Sub
                                 End If
 
@@ -1004,6 +1006,8 @@ Public Class FrmCompound
 
                                         '//Error because of This Compound and Revision duplicate with Other FinalCompoundCode!!!
                                         MsgBox("This Compound : " & strCompoundCode & " and Revision : " & strRevision & " is Duplicate on Other Group!!!", MsgBoxStyle.OkOnly, "Import Compound")
+                                        LoadCOM() 'ReQuery and set datagrid
+                                        frmOverlay.Dispose()
                                         Exit Sub
 
                                     Else '//Case 2.2 : [NEW] FinalCompoundCode, CompoundCode and Revision
@@ -1067,6 +1071,8 @@ Public Class FrmCompound
 
                                     End If
                                 End If
+                            Else
+                                Throw New System.Exception("Please input Final Compound data.")
                             End If
                         Next i
 
@@ -1141,6 +1147,9 @@ Public Class FrmCompound
 
                         cnSQLRM.Dispose()
                     End If
+                Else
+                    ret = False
+                    Throw New System.Exception("RM Code is not empty.")
                 End If
             Next x
 

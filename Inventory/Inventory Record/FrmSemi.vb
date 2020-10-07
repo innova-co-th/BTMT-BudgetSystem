@@ -1306,6 +1306,7 @@ Public Class FrmSemi
                     End If
                 Else
                     'Empty
+                    ret = False
                     Throw New System.Exception("RM Code is not empty.")
                 End If
 

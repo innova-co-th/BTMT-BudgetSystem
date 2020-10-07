@@ -618,6 +618,8 @@ Public Class FrmPIGMENT
 
                         '//Check RMCode on Master
                         If ChkRMCodeMaster(dtRec) = False Then
+                            LoadPIGMENT() 'ReQuery and set datagrid
+                            frmOverlay.Dispose()
                             Exit Sub
                         End If
 
@@ -633,6 +635,10 @@ Public Class FrmPIGMENT
                                 If strEachRevision.Length = 0 Then
                                     Throw New System.Exception("Please input EachRevision data.")
                                 End If
+
+                                'If strRMCode.Equals(String.Empty) Then
+                                '    Throw New ApplicationException("Rm Code is not empty.")
+                                'End If
 
                                 'Check RmQty
                                 If dtRec.Rows(i)("RmQty").ToString().Length > 0 Then
@@ -1097,6 +1103,9 @@ Public Class FrmPIGMENT
 
                         cnSQLRM.Close()
                     End If
+                Else
+                    ret = False
+                    Throw New ApplicationException("Rm Code is not empty.")
                 End If
             Next x
 

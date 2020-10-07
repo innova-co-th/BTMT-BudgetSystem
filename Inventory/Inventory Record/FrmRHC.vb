@@ -793,13 +793,6 @@ Public Class FrmRHC
                             Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
                             Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
-                            Dim strSeqNo As String = dtRec.Rows(i)("Seq_No").ToString().Trim()
-
-                            'Check empty
-                            If strFinalCompoundCode.Equals(String.Empty) Or strCompoundCode.Equals(String.Empty) Or strRevision.Equals(String.Empty) Or strSeqNo.Equals(String.Empty) Then
-                                Throw New ApplicationException("FinalCompoundCode Code, Compound Code, Revision and Seq No is not empty.")
-                            End If
-
                             Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
 
                             If strFinalCompoundCode.Length > 0 Then
@@ -1076,6 +1069,8 @@ Public Class FrmRHC
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
                                 End If
+                            Else
+                                Throw New System.Exception("Please input Final Compound data.")
                             End If
                         Next i
 
@@ -1120,6 +1115,12 @@ Public Class FrmRHC
                 Dim Rev As String = ImportTable.Rows(x)("Revision_No").ToString().Trim()
                 sb.Clear()
 
+                'Check empty
+                'If Final.Equals(String.Empty) Or Comp.Equals(String.Empty) Or Rev.Equals(String.Empty) Then
+                '    ret = False
+                '    Throw New ApplicationException("FinalCompoundCode Code, Compound Code, Revision is not empty.")
+                'End If
+
                 If rmCode.Length > 0 Then
                     sb.AppendLine(" SELECT COUNT(*) ")
                     sb.AppendLine(" FROM (")
@@ -1148,6 +1149,11 @@ Public Class FrmRHC
                     End If
 
                     cnSQLRM.Close()
+                Else
+                    'Check empty
+                    If rmCode.Equals(String.Empty) Then
+                        Throw New ApplicationException("Rm Code is not empty.")
+                    End If
                 End If
             Next x
 

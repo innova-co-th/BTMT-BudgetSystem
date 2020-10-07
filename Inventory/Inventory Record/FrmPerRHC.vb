@@ -676,11 +676,6 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                             Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
 
-                            'Check empty
-                            If strFinalCompoundCode.Equals(String.Empty) Or strCompoundCode.Equals(String.Empty) Or strRevision.Equals(String.Empty) Then
-                                Throw New ApplicationException("FinalCompoundCode Code, Compound Code and Revision is not empty.")
-                            End If
-
                             If strFinalCompoundCode.Length > 0 Then
                                 Dim dblPer As Double
                                 Dim dblRHC As Double
@@ -724,8 +719,17 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                     totalRHC = 0
                                     GridRow = DT.Select("Final = '" & strFinalCompoundCode & "' AND mCompCode = '" & strCompoundCode & "' AND mRev = '" & strRevision & "'")
                                     For k As Integer = 0 To GridRow.Count - 1
-                                        totalPer = totalPer + GridRow(k)("mPer")
-                                        totalRHC = totalRHC + GridRow(k)("mRHC")
+                                        If Not GridRow(k)("mPer") Is DBNull.Value Then
+                                            totalPer = totalPer + GridRow(k)("mPer")
+                                        End If
+
+                                        If Not GridRow(k)("mRHC") Is DBNull.Value Then
+                                            totalRHC = totalRHC + GridRow(k)("mRHC")
+                                        End If
+
+                                        'totalPer = totalPer + GridRow(k)("mPer")
+                                        'totalRHC = totalRHC + GridRow(k)("mRHC")
+
                                     Next k
 
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
@@ -733,8 +737,16 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                         GridRow = DT.Select("Final = '" & strFinalCompoundCode & "' AND mCompCode = '" & strCompoundCode & "' AND mRev = '" & strRevision & "' AND rmcode = '" & ExcelRow(j)("RMCode") & "'")
 
                                         If GridRow.Count > 0 Then
-                                            totalPer = totalPer - GridRow(0)("mPer")
-                                            totalRHC = totalRHC - GridRow(0)("mRHC")
+                                            If Not GridRow(0)("mPer") Is DBNull.Value Then
+                                                totalPer = totalPer - GridRow(0)("mPer")
+                                            End If
+
+                                            If Not GridRow(0)("mRHC") Is DBNull.Value Then
+                                                totalRHC = totalRHC - GridRow(0)("mRHC")
+                                            End If
+
+                                            'totalPer = totalPer - GridRow(0)("mPer")
+                                            'totalRHC = totalRHC - GridRow(0)("mRHC")
                                         End If
 
                                         totalPer = totalPer + CDbl(ExcelRow(j)("Percent"))
@@ -768,6 +780,8 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
                                 End If
+                            Else
+                                Throw New System.Exception("Please input Final Compound data.")
                             End If
                         Next i
 
@@ -812,6 +826,11 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                 Dim Rev As String = ImportTable.Rows(x)("Revision_No").ToString().Trim()
                 sb.Clear()
 
+                'If Final.Equals(String.Empty) Or Comp.Equals(String.Empty) Or Rev.Equals(String.Empty) Then
+                '    ret = False
+                '    Throw New ApplicationException("FinalCompoundCode Code, Compound Code and Revision is not empty.")
+                'End If
+
                 If rmCode.Length > 0 Then
                     sb.AppendLine(" SELECT COUNT(*) ")
                     sb.AppendLine(" FROM ( ")
@@ -836,6 +855,11 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                     End If
 
                     cnSQLRM.Close()
+                Else
+                    'Check empty
+                    If rmCode.Equals(String.Empty) Then
+                        Throw New ApplicationException("Rm Code is not empty.")
+                    End If
                 End If
             Next x
 
