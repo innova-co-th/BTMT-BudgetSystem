@@ -996,19 +996,19 @@ Public Class FrmYearInvTag
                             Dim remark As String = dtRec.Rows(i)("Remark").ToString().Trim()
                             Dim updateDate As String = dtRec.Rows(i)("UpdateDate").ToString().Trim()
 
-                            'Check format of Qty
-                            Dim result As Decimal
-                            If Not Decimal.TryParse(qty, result) Then
-                                'Qty is not decimal
-                                Continue For
-                            Else
-                                If qty = 0.0 Then
-                                    Continue For
-                                End If
-                            End If
+                            ''Check format of Qty
+                            'Dim result As Decimal
+                            'If Not Decimal.TryParse(qty, result) Then
+                            '    'Qty is not decimal
+                            '    Continue For
+                            'Else
+                            '    If qty = 0.0 Then
+                            '        Continue For
+                            '    End If
+                            'End If
 
                             'Check empty data
-                            ChkData(tagNo, code, typeCode, location, period, trxYear, unit, updateDate)
+                            ChkData(tagNo, code, typeCode, location, period, trxYear, qty, unit, updateDate)
 
                             'Check format data
                             ChkFormat(tagNo, tagNoLen, tagNoSep, code, typeCode, location, period, trxYear, updateDate)
@@ -1029,7 +1029,7 @@ Public Class FrmYearInvTag
                             'Refer sub TRX() of FrmAdd
                             Dim strTrxDate As String = Date.Now.ToString("yyyyMMdd", cult) 'Format yyyyMMdd
                             Dim strTrxTime As String = Date.Now.ToString("HH:mm:ss", cult) 'Form HH:mm:ss
-                            Dim dd As DateTime = Convert.ToDateTime(updateDate, cult)
+                            Dim dd As DateTime = DateTime.ParseExact(updateDate, "dd/MM/yyyy", cult)
                             Dim strUpDateDate As String = dd.ToString("yyyyMMdd")
                             Dim strUpdateTime As String = strTrxTime
 
@@ -1519,7 +1519,7 @@ Public Class FrmYearInvTag
 #End Region
 
 #Region "Function"
-    Private Sub ChkData(tagNo As String, code As String, typeCode As String, location As String, period As String, trxYear As String, unit As String, updateDate As String)
+    Private Sub ChkData(tagNo As String, code As String, typeCode As String, location As String, period As String, trxYear As String, qty As String, unit As String, updateDate As String)
         If tagNo.Equals(String.Empty) Then
             'Tag No is empty
             Throw New ApplicationException("Tag No is empty.")
@@ -1548,6 +1548,11 @@ Public Class FrmYearInvTag
         If trxYear.Equals(String.Empty) Then
             'TrxYear is empty
             Throw New ApplicationException("TrxYear is empty.")
+        End If
+
+        If qty.Equals(String.Empty) Then
+            'Qty is empty
+            Throw New ApplicationException("Qty is empty.")
         End If
 
         If unit.Equals(String.Empty) Then
@@ -1654,6 +1659,7 @@ Public Class FrmYearInvTag
             sb.AppendLine(" FROM TBLTRX ")
             sb.AppendLine(" WHERE TagNo = '" & tagNo & "' AND period = '" & period & "' AND TrxYear = '" & trxYear & "' AND")
             sb.AppendLine(" TypeCode = '" & typeCode & "' AND Location = '" & location & "'")
+            strSQL = sb.ToString()
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
             cmSQL = New SqlCommand(strSQL, cnSQL)
