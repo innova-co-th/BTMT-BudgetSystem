@@ -1158,8 +1158,8 @@ Public Class Calculate
     End Function
 #End Region
 
-#Region "WIRE CHAFER,Nylon CHAFER,BODY PLY Semi Price"
-    Private Function Chafer(ByVal dateup As String, ByVal Timeup As String) As Boolean
+#Region "BODY PLY, WIRE CHAFER Semi Price"
+    Private Function BW(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
@@ -1167,7 +1167,7 @@ Public Class Calculate
         cmd2 = New SqlClient.SqlCommand
         cmd2.CommandTimeout = 0
         cmd2.CommandType = CommandType.StoredProcedure
-        cmd2.CommandText = "CALCHAFER"
+        cmd2.CommandText = "CALBW"
         cmd2.Connection = cnn
 
         Dim sparam0 As SqlClient.SqlParameter
@@ -1218,7 +1218,7 @@ Public Class Calculate
         cnn.Close()
         Return ret
     End Function
-    Private Function Chafer2(ByVal dateup As String, ByVal Timeup As String) As Boolean
+    Private Function BW2(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
@@ -1226,7 +1226,128 @@ Public Class Calculate
         cmd2 = New SqlClient.SqlCommand
         cmd2.CommandTimeout = 0
         cmd2.CommandType = CommandType.StoredProcedure
-        cmd2.CommandText = "CALCHAFER2"
+        cmd2.CommandText = "CALBW2"
+        cmd2.Connection = cnn
+
+        Dim sparam0 As SqlClient.SqlParameter
+        sparam0 = New SqlClient.SqlParameter
+        sparam0.ParameterName = "@Date"
+        sparam0.SqlDbType = SqlDbType.Char
+        sparam0.Size = 8
+        sparam0.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam0)
+
+        Dim sparam1 As SqlClient.SqlParameter
+        sparam1 = New SqlClient.SqlParameter
+        sparam1.ParameterName = "@Time"
+        sparam1.SqlDbType = SqlDbType.Char
+        sparam1.Size = 8
+        sparam1.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam1)
+
+        Dim sparam2 As SqlClient.SqlParameter
+        sparam2 = New SqlClient.SqlParameter
+        sparam2.ParameterName = "@errID"
+        sparam2.SqlDbType = SqlDbType.Char
+        sparam2.Size = 4
+        sparam2.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam2)
+
+        Dim sparam3 As SqlClient.SqlParameter
+        sparam3 = New SqlClient.SqlParameter
+        sparam3.ParameterName = "@errMsg"
+        sparam3.SqlDbType = SqlDbType.Char
+        sparam3.Size = 40
+        sparam3.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam3)
+
+        Dim Reader As SqlClient.SqlDataReader
+        cmd2.Parameters("@Date").Value = dateup.Trim
+        cmd2.Parameters("@Time").Value = Timeup.Trim
+
+        cnn.Open()
+        Try
+            Reader = cmd2.ExecuteReader()
+            ret = True
+        Catch ex As Exception
+            MsgBox(ex.Message, 48)
+            ret = False
+        End Try
+
+        cnn.Close()
+        Return ret
+    End Function
+#End Region
+
+#Region "Nylon CHAFER, Flipper Semi Price"
+    Private Function NF(ByVal dateup As String, ByVal Timeup As String) As Boolean
+        Dim ret As Boolean = False
+        Dim cnn As New SqlConnection(C1.Strcon)
+
+        Dim cmd2 As SqlClient.SqlCommand
+        cmd2 = New SqlClient.SqlCommand
+        cmd2.CommandTimeout = 0
+        cmd2.CommandType = CommandType.StoredProcedure
+        cmd2.CommandText = "CALNF"
+        cmd2.Connection = cnn
+
+        Dim sparam0 As SqlClient.SqlParameter
+        sparam0 = New SqlClient.SqlParameter
+        sparam0.ParameterName = "@Date"
+        sparam0.SqlDbType = SqlDbType.Char
+        sparam0.Size = 8
+        sparam0.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam0)
+
+        Dim sparam1 As SqlClient.SqlParameter
+        sparam1 = New SqlClient.SqlParameter
+        sparam1.ParameterName = "@Time"
+        sparam1.SqlDbType = SqlDbType.Char
+        sparam1.Size = 8
+        sparam1.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam1)
+
+        Dim sparam2 As SqlClient.SqlParameter
+        sparam2 = New SqlClient.SqlParameter
+        sparam2.ParameterName = "@errID"
+        sparam2.SqlDbType = SqlDbType.Char
+        sparam2.Size = 4
+        sparam2.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam2)
+
+        Dim sparam3 As SqlClient.SqlParameter
+        sparam3 = New SqlClient.SqlParameter
+        sparam3.ParameterName = "@errMsg"
+        sparam3.SqlDbType = SqlDbType.Char
+        sparam3.Size = 40
+        sparam3.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam3)
+
+        Dim Reader As SqlClient.SqlDataReader
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
+
+        cnn.Open()
+        Try
+            Reader = cmd2.ExecuteReader()
+            ret = True
+        Catch ex As Exception
+            MsgBox(ex.Message, 48)
+            ret = False
+        End Try
+
+        cnn.Close()
+        Return ret
+    End Function
+    Private Function NF2(ByVal dateup As String, ByVal Timeup As String) As Boolean
+        Dim ret As Boolean = False
+        Dim cnn As New SqlConnection(C1.Strcon)
+
+        Dim cmd2 As SqlClient.SqlCommand
+        cmd2 = New SqlClient.SqlCommand
+        cmd2.CommandTimeout = 0
+        cmd2.CommandType = CommandType.StoredProcedure
+        cmd2.CommandText = "CALNF2"
         cmd2.Connection = cnn
 
         Dim sparam0 As SqlClient.SqlParameter
@@ -1436,22 +1557,33 @@ Public Class Calculate
                     BF(StrDate, StrTime) 'Call Store Procedure CALBF (Material Type is BF)(Insert Table TBLMasterPrice)
                     BF2(StrDate, StrTime) 'Call Store Procedure CALBF2 (Material Type is BF)(Insert Table TBLMasterPriceRM)
                 Else
-                    x = 70 'Skip to next process
+                    x = 60 'Skip to next process
                     UpdateProgress(x, False)
                 End If
             End If
 
-            If x = 70 Then
+            If x = 60 Then
                 'Semi
                 If CKSemi.Checked Then
                     BElT(StrDate, StrTime) 'Call Store Procedure CALBELT (Type Material:BELT-1, BELT-2, BELT-3, BELT-4 to Table TBLMASTERPRICE)
                     BElT2(StrDate, StrTime) 'Call Store Procedure CALBELT2 (Type Material:BELT-1, BELT-2, BELT-3, BELT-4 to Table TBLMASTERPRICERM)
                     SIC(StrDate, StrTime) 'Call Store Procedure CALSIC (Type Material:CUSSION, SIDE, INNERLINER)
-                    Chafer(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICE)
-                    Chafer2(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICERM)
-                    'Call Store Procedure (Type Material:Flipper)
+                    BW(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER to Table TBLMASTERPRICE)
+                    BW2(StrDate, StrTime) 'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER to Table TBLMASTERPRICERM)
                 Else
-                    x = 90 'Skip to next process
+                    x = 70 'Skip to next process
+                    UpdateProgress(x, False)
+                End If
+            End If
+
+            'Add Flipper for Semi
+            If x = 70 Then
+                'Semi
+                If CKSemi.Checked Then
+                    NF(StrDate, StrTime) 'Call Store Procedure (Type Material:Nylon CHAFER, Flipper to Table TBLMASTERPRICE)
+                    NF2(StrDate, StrTime) 'Call Store Procedure (Type Material:Nylon CHAFER, Flipper to Table TBLMASTERPRICERM)
+                Else
+                    x = 90 'Skip to next processs
                     UpdateProgress(x, False)
                 End If
             End If
