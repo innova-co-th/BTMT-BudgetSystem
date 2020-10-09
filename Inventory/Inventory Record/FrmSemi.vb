@@ -883,12 +883,12 @@ Public Class FrmSemi
                                 GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
                                 If GridRow.Count > 0 Then
 
-                                    strTypeMaterialOriginal = GridRow(0)("MaterialType").ToString
+                                    strTypeMaterialOriginal = GridRow(0)("MaterialCode").ToString
 
                                     '//Check Width,Length and N as Number by Condition
-                                    If GridRow(0)("MaterialType").ToString = "13" Then
+                                    If GridRow(0)("MaterialCode").ToString = "13" Then
                                         '//Just QTY
-                                    ElseIf GridRow(0)("MaterialType").ToString = "14" Then
+                                    ElseIf GridRow(0)("MaterialCode").ToString = "14" Then
                                         If dtRec.Rows(i)("N").ToString.Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
@@ -945,7 +945,7 @@ Public Class FrmSemi
                                     totalQty = 0
                                     GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
                                     If GridRow.Count > 0 Then '//Have Semi and Rev on DB so can use TypeMat from DB
-                                        Dim sameTypeMat As String = GridRow(0)("MaterialType").ToString
+                                        Dim sameTypeMat As String = GridRow(0)("MaterialCode").ToString
                                         For k As Integer = 0 To GridRow.Count - 1
                                             totalQty = totalQty + GridRow(k)("Qty")
                                         Next k
@@ -1001,13 +1001,14 @@ Public Class FrmSemi
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Qty = ")
 
                                         If strTypeMaterialOriginal = "13" Then
-                                            sb.AppendLine(" '" & dblQty & "', ")
+                                            sb.AppendLine(" '" & dblQty & "'")
                                         ElseIf strTypeMaterialOriginal = "14" Then
-                                            sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                            sb.AppendLine(" '" & (dblQty / intN) & "'")
                                         Else
-                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "'")
                                         End If
 
                                         sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
@@ -1055,11 +1056,11 @@ Public Class FrmSemi
                                         sb.AppendLine(" NULL , ")                                               'Column RmRevision
 
                                         If strTypeMaterialOriginal = "13" Then                                  'Column Qty
-                                            sb.AppendLine(" '" & dblQty & "', ")
+                                            sb.AppendLine(" '" & dblQty & "'")
                                         ElseIf strTypeMaterialOriginal = "14" Then
-                                            sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                            sb.AppendLine(" '" & (dblQty / intN) & "'")
                                         Else
-                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
+                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "'")
                                         End If
 
                                         sb.AppendLine(" '" & strUnit & "' , ")                                  'Column Unit
@@ -1293,7 +1294,7 @@ Public Class FrmSemi
                     sb.AppendLine("   FROM TblRM  ")
                     sb.AppendLine("   WHERE descName Like '%Steel%' OR descName like '%Bead%' OR descName like '%Nylon%' ")
                     sb.AppendLine(" ) b On a.code = b.compcode   ")
-                    sb.AppendLine(" WHERE B.code Is Not null AND TypeCode = '" & rmCode & "' ")
+                    sb.AppendLine(" WHERE B.code Is Not null AND B.code = '" & rmCode & "' ")
                     strSQL = sb.ToString()
 
                     cmSQLRM = New SqlCommand(strSQL, cnSQLRM)

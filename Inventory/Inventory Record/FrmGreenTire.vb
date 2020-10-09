@@ -1530,33 +1530,21 @@ Public Class FrmGreenTire
         Dim importRow As DataRow()
 
         Try
-            For x As Integer = 0 To ImportTable.Rows.Count - 1
-                Dim strGreenTireCode As String = ImportTable.Rows(x)("GreenTire").ToString().Trim()
-                Dim strRevision As String = ImportTable.Rows(x)("Revision").ToString().Trim()
-                Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim() 'Tire Size
-                Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
-                Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
 
-                Dim strTypeMaterial As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
-                Dim dblNum As Double
+            For y As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim strGreenTireCode As String = ImportTable.Rows(y)("GreenTire").ToString().Trim()
+                Dim strRevision As String = ImportTable.Rows(y)("Revision").ToString().Trim()
+                Dim strBSJ As String = ImportTable.Rows(y)("BSJ").ToString().Trim() 'Tire Size
+                Dim strRevisionBoss1st As String = ImportTable.Rows(y)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
+                Dim strRevisionBoss2nd As String = ImportTable.Rows(y)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
+
+                Dim strTypeMaterial As String = ImportTable.Rows(y)("TypeMaterial").ToString().Trim()
 
                 strSQL = String.Empty
                 cnSQLRM = New SqlConnection(C1.Strcon)
                 cnSQLRM.Open()
 
-                '// 1.) Check GreeTireCode
                 If strGreenTireCode.Length > 0 Then
-                    '//For Check Data from above row on import file.
-                    Dim chkSameGreenTireBefore As String = String.Empty
-                    Dim chkSameRevisionBefore As String = String.Empty
-
-                    If x > 0 Then
-                        chkSameGreenTireBefore = ImportTable.Rows(x - 1)("GreenTire").ToString
-                        chkSameRevisionBefore = ImportTable.Rows(x - 1)("Revision").ToString
-                    Else
-                        chkSameGreenTireBefore = String.Empty
-                        chkSameRevisionBefore = String.Empty
-                    End If
 
                     '// 2.) Check Revision
                     If strRevision.Length <= 0 Then
@@ -1600,6 +1588,83 @@ Public Class FrmGreenTire
                     If arrTypeMatCode.Length = 0 Then
                         Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
                     End If
+
+                Else
+                    Throw New ApplicationException("Green Tire Code is not empty.")
+                End If
+
+            Next
+
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim strGreenTireCode As String = ImportTable.Rows(x)("GreenTire").ToString().Trim()
+                Dim strRevision As String = ImportTable.Rows(x)("Revision").ToString().Trim()
+                Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim() 'Tire Size
+                Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
+                Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
+
+                Dim strTypeMaterial As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
+                Dim dblNum As Double
+
+                strSQL = String.Empty
+                cnSQLRM = New SqlConnection(C1.Strcon)
+                cnSQLRM.Open()
+
+                '// 1.) Check GreeTireCode
+                If strGreenTireCode.Length > 0 Then
+                    '//For Check Data from above row on import file.
+                    Dim chkSameGreenTireBefore As String = String.Empty
+                    Dim chkSameRevisionBefore As String = String.Empty
+
+                    If x > 0 Then
+                        chkSameGreenTireBefore = ImportTable.Rows(x - 1)("GreenTire").ToString
+                        chkSameRevisionBefore = ImportTable.Rows(x - 1)("Revision").ToString
+                    Else
+                        chkSameGreenTireBefore = String.Empty
+                        chkSameRevisionBefore = String.Empty
+                    End If
+
+                    ''// 2.) Check Revision
+                    'If strRevision.Length <= 0 Then
+                    '    Throw New System.Exception("Revision is not empty.")
+                    'End If
+
+                    ''// 3.) Check BSJ (TireSize)
+                    'If strBSJ.Length <= 0 Then
+                    '    'Empty
+                    '    Throw New System.Exception("BSJ (Tire Size) is not empty.")
+                    'Else
+                    '    strSQL = " SELECT COUNT(*) FROM  TblTiresize "
+                    '    strSQL += " WHERE BSJCode = '" & strBSJ & "' "
+                    '    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
+                    '    Dim i As Long = cmSQLRM.ExecuteScalar()
+                    '    If i = 0 Then
+                    '        cmSQLRM.Dispose()
+                    '        Throw New System.Exception("This BSJ '" & strBSJ & "' is not found from Master")
+                    '    Else
+                    '        cmSQLRM.Dispose()
+                    '    End If
+                    'End If
+
+                    ''// 4.) Check RevisionBoss 1st
+                    'If strRevisionBoss1st.Length <= 0 Then
+                    '    Throw New System.Exception("Revision of Boss 1st is not empty.")
+                    'End If
+
+                    ''// 5.) Check RevisionBoss 2nd
+                    'If strRevisionBoss2nd.Length <= 0 Then
+                    '    Throw New System.Exception("Revision of Boss 2nd is not empty.")
+                    'End If
+
+                    ''//6.) Check Type Material
+                    'If strTypeMaterial.Equals(String.Empty) Then
+                    '    Throw New ApplicationException("Type Material is not empty.")
+                    'End If
+
+                    ''Check Type Material Master
+                    'Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
+                    'If arrTypeMatCode.Length = 0 Then
+                    '    Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
+                    'End If
 
                     '// Check Each SemiCode in same group of GreenTire and Revision correctly
                     'For first GreenTire and Semi in each group
