@@ -915,8 +915,7 @@ Public Class Calculate
         Return ret
     End Function
     Private Function BF2(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        BF2 = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -965,13 +964,14 @@ Public Class Calculate
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            BF2 = True
+            Return ret
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            BF2 = False
+            Return ret
         End Try
+
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
@@ -1403,7 +1403,6 @@ Public Class Calculate
 
 #Region "CALGT Price"
     Private Function GT(ByVal dateup As String, ByVal Timeup As String) As Boolean
-        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
@@ -1460,7 +1459,6 @@ Public Class Calculate
         End Try
 
         cnn.Close()
-        Me.Cursor = System.Windows.Forms.Cursors.Default()
         Return ret
     End Function
 #End Region
@@ -1530,8 +1528,8 @@ Public Class Calculate
             If x = 30 Then
                 'Pre Semi
                 If CKPresemi.Checked Then
-                    CalCoatedcord2(StrDate, StrTime) 'Call Store Procedure CALCoatedCord2 (Insert Table TBLMasterPriceRM Exclude TBLRM)
-                    CalCoatedcord3(StrDate, StrTime) 'Call Store Procedure CALCoatedCord3 (Insert Table TBLMasterPriceRM Include TBLRM)
+                    CalCoatedcord2(StrDate, StrTime) 'Call Store Procedure CALCoatedCord2 (Insert Table TBLMasterPriceRM which it is included Compound)
+                    CalCoatedcord3(StrDate, StrTime) 'Call Store Procedure CALCoatedCord3 (Insert Table TBLMasterPriceRM which it is included R/M)
                     CalCoatedcord(StrDate, StrTime) 'Call Store Procedure CALCoatedCord (Insert Table TBLMasterPrice)
                 Else
                     x = 40 'Skip to next process
