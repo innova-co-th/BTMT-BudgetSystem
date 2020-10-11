@@ -530,70 +530,60 @@ Public Class FrmAddPreSemi
 #Region "Function_Load"
     Private Sub LoadRM()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+        Dim sb As New System.Text.StringBuilder()
+
         If CmdSave.Text = "Edit" Then
-            StrSQL = "  select * from "
-            StrSQL &= "   ( "
-            StrSQL &= "  select * from "
-            StrSQL &= "  ("
-            StrSQL &= "   select t.TypeCode,Typename,MasterCode,Revision as MRev,isnull(descname,'') as descName"
-            StrSQL &= "   ,Code,RMRevision as Revision,Qty as Qty ,g.Unit"
-            StrSQL &= "   FROM   "
-            StrSQL &= "   ("
-            StrSQL &= "   select  distinct Typecode ,MasterCode,isnull(Revision,'') Revision,isnull(rmcode,'') code"
-            StrSQL &= "   ,rmRevision as RMRevision,Qty,Unit from TBLGroup t "
-            StrSQL &= "  left outer join "
-            StrSQL &= "  ( SELECT  distinct  MasterCode,Revision,rmcode,rmRevision,Qty,Unit"
-            StrSQL &= "    FROM         TBLMaster"
-            StrSQL &= "    where MasterCode not in "
-            StrSQL &= "  ( select code from TblGroup where Typecode ='01')"
-            StrSQL &= "  ) yy"
-            StrSQL &= "  on t.code = yy.MasterCode"
-            StrSQL &= "  )g"
-            StrSQL &= "  left outer join "
-            StrSQL &= "   TBLTYPE t"
-            StrSQL &= "   on g.typecode = t.typecode"
-            StrSQL &= "   left outer join "
-            StrSQL &= "   TBLRM r"
-            StrSQL &= "  on r.rmcode = g.code"
-            StrSQL &= "   ) PreSemi"
-            StrSQL &= "  where typecode <>'02' and "
-            StrSQL &= "   code not in "
-            StrSQL &= "  ("
-            StrSQL &= "   select code  from TBLGroup"
-            StrSQL &= "   where code in ("
-            StrSQL &= "   select CompCode from TBLcompound "
-            StrSQL &= "   where Active = '0')) "
-            StrSQL &= "  ) xxx"
-            StrSQL &= " where Mastercode = '" & TxtCode.Text.Trim & "'and MRev = '" & TxtRev.Text.Trim & "'"
-            StrSQL &= "   order by Typename,Code,descName"
+            sb.AppendLine("  SELECT * ")
+            sb.AppendLine("  FROM (")
+            sb.AppendLine("    SELECT * ")
+            sb.AppendLine("    FROM (")
+            sb.AppendLine("      SELECT t.TypeCode,Typename,MasterCode,Revision as MRev,isnull(descname,'') as descName")
+            sb.AppendLine("      ,Code,RMRevision as Revision,Qty as Qty ,g.Unit")
+            sb.AppendLine("      FROM (")
+            sb.AppendLine("        SELECT  distinct Typecode ,MasterCode,isnull(Revision,'') Revision,isnull(rmcode,'') code")
+            sb.AppendLine("        ,rmRevision as RMRevision,Qty,Unit ")
+            sb.AppendLine("        FROM TBLGroup t ")
+            sb.AppendLine("        LEFT OUTER JOIN ( ")
+            sb.AppendLine("          SELECT  distinct  MasterCode,Revision,rmcode,rmRevision,Qty,Unit")
+            sb.AppendLine("          FROM         TBLMaster")
+            sb.AppendLine("          WHERE MasterCode NOT IN ( SELECT code FROM TblGroup WHERE Typecode = '01')")
+            sb.AppendLine("        ) yy on t.code = yy.MasterCode")
+            sb.AppendLine("      ) g")
+            sb.AppendLine("      LEFT OUTER JOIN TBLTYPE t on g.typecode = t.typecode")
+            sb.AppendLine("      LEFT OUTER JOIN TBLRM r on r.rmcode = g.code")
+            sb.AppendLine("    ) PreSemi")
+            sb.AppendLine("    WHERE typecode <> '02' ")
+            sb.AppendLine("    AND  code NOT IN (SELECT code  FROM TBLGroup WHERE code IN (SELECT CompCode FROM TBLcompound WHERE Active = '0')) ")
+            sb.AppendLine("  ) xxx")
+            sb.AppendLine("  WHERE Mastercode = '" & TxtCode.Text.Trim() & "' AND MRev = '" & TxtRev.Text.Trim() & "'")
+            sb.AppendLine("  ORDER BY Typename,Code,descName")
         Else
-            StrSQL = "  select Typecode,TypeName,descName,b.code,Qty,'g' Unit from"
-            StrSQL &= "  (select t.Typecode ,TypeName,code from TBLType t"
-            StrSQL &= "  left outer join TBLGroup  g"
-            StrSQL &= "   on t.typecode=g.typecode"
-            StrSQL &= "   )a"
-            StrSQL &= "  left outer join "
-            StrSQL &= "   ("
-            StrSQL &= "  SELECT  distinct  Finalcompound code ,null DescName,compcode,0.00 Qty"
-            StrSQL &= "   FROM         TBLCompound"
-            StrSQL &= "   where Compcode not in "
-            StrSQL &= "   ( select code from TblGroup where Typecode ='01')"
-            StrSQL &= "   and active = 1"
-            StrSQL &= "   union"
-            StrSQL &= "   select RMcode,DescName,RMcode, 0.00 Qty  from TblRM"
-            StrSQL &= "  where descName like '%Steel%' or descName like '%Bead%'"
-            'StrSQL &= "  union"
-            'StrSQL &= "   SELECT  psemicode,MaterialName,psemicode,0.00 Qty"
-            'StrSQL &= "   FROM         TBLPreSemi p"
-            'StrSQL &= "  left outer join TBLTypeMaterial m"
-            'StrSQL &= "  on p.materialType = m.Materialcode"
-            'StrSQL &= "  where Active = 1" 
-            StrSQL &= "   )b"
-            StrSQL &= "    on a.code = b.compcode"
-            StrSQL &= "   where b.code is not null"
-            StrSQL &= "   order by descName desc,typecode desc , b.code"
+            sb.AppendLine("  SELECT Typecode,TypeName,descName,b.code,Qty,'g' Unit ")
+            sb.AppendLine("  FROM (")
+            sb.AppendLine("    SELECT t.Typecode ,TypeName,code ")
+            sb.AppendLine("    FROM TBLType t")
+            sb.AppendLine("    LEFT OUTER JOIN TBLGroup  g on t.typecode=g.typecode")
+            sb.AppendLine("  ) a")
+            sb.AppendLine("  LEFT OUTER JOIN (")
+            sb.AppendLine("    SELECT  distinct  Finalcompound code ,null DescName,compcode,0.00 Qty")
+            sb.AppendLine("    FROM         TBLCompound")
+            sb.AppendLine("    WHERE Compcode NOT IN (SELECT code FROM TblGroup WHERE Typecode = '01') AND Active = 1")
+            sb.AppendLine("    UNION")
+            sb.AppendLine("    SELECT RMcode,DescName,RMcode, 0.00 Qty ")
+            sb.AppendLine("    FROM TblRM")
+            sb.AppendLine("    WHERE descName LIKE '%Steel%' OR descName LIKE '%Bead%'")
+            'sb.AppendLine("    UNION")
+            'sb.AppendLine("    SELECT  psemicode,MaterialName,psemicode,0.00 Qty")
+            'sb.AppendLine("    FROM         TBLPreSemi p")
+            'sb.AppendLine("    LEFT OUTER JOIN TBLTypeMaterial m on p.materialType = m.Materialcode")
+            'sb.AppendLine("    WHERE Active = 1")
+            sb.AppendLine("  ) b on a.code = b.compcode")
+            sb.AppendLine("  WHERE b.code is not null")
+            sb.AppendLine("  ORDER BY descName desc,typecode desc , b.code")
 
         End If
+
+        StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
