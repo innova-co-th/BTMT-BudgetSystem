@@ -132,7 +132,8 @@ Public Class FrmMain
     Friend WithEvents MenuCalBF As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalBelt As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalSIC As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuCalChafer As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCalBW As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuCalNF As System.Windows.Forms.MenuItem
     Friend WithEvents MenuCalGT As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItem5 As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItem6 As System.Windows.Forms.MenuItem
@@ -188,7 +189,7 @@ Public Class FrmMain
         Me.MenuCalBF = New System.Windows.Forms.MenuItem()
         Me.MenuCalBelt = New System.Windows.Forms.MenuItem()
         Me.MenuCalSIC = New System.Windows.Forms.MenuItem()
-        Me.MenuCalChafer = New System.Windows.Forms.MenuItem()
+        Me.MenuCalBW = New System.Windows.Forms.MenuItem()
         Me.MenuCalGT = New System.Windows.Forms.MenuItem()
         Me.MenuConvert = New System.Windows.Forms.MenuItem()
         Me.MenuItem14 = New System.Windows.Forms.MenuItem()
@@ -212,6 +213,7 @@ Public Class FrmMain
         Me.MenuHelp = New System.Windows.Forms.MenuItem()
         Me.MenuUpdate = New System.Windows.Forms.MenuItem()
         Me.MenuAbout = New System.Windows.Forms.MenuItem()
+        Me.MenuCalNF = New System.Windows.Forms.MenuItem()
         Me.SuspendLayout()
         '
         'MainMenu1
@@ -450,7 +452,7 @@ Public Class FrmMain
         'MenuCalSemi
         '
         Me.MenuCalSemi.Index = 4
-        Me.MenuCalSemi.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalTT, Me.MenuCalBF, Me.MenuCalBelt, Me.MenuCalSIC, Me.MenuCalChafer})
+        Me.MenuCalSemi.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuCalTT, Me.MenuCalBF, Me.MenuCalBelt, Me.MenuCalSIC, Me.MenuCalBW, Me.MenuCalNF})
         Me.MenuCalSemi.Text = "Semi"
         '
         'MenuCalTT
@@ -473,10 +475,10 @@ Public Class FrmMain
         Me.MenuCalSIC.Index = 3
         Me.MenuCalSIC.Text = "Side,Innerliner,Cussion"
         '
-        'MenuCalChafer
+        'MenuCalBW
         '
-        Me.MenuCalChafer.Index = 4
-        Me.MenuCalChafer.Text = "Wire Chafer,Nylon Chafer,Body Ply"
+        Me.MenuCalBW.Index = 4
+        Me.MenuCalBW.Text = "Wire Chafer,Body Ply"
         '
         'MenuCalGT
         '
@@ -603,6 +605,11 @@ Public Class FrmMain
         '
         Me.MenuAbout.Index = 1
         Me.MenuAbout.Text = "About Inventory Record"
+        '
+        'MenuCalNF
+        '
+        Me.MenuCalNF.Index = 5
+        Me.MenuCalNF.Text = "Nylon Chafer,Flipper"
         '
         'FrmMain
         '
@@ -2357,9 +2364,9 @@ Public Class FrmMain
     End Function
 #End Region
 
-#Region "Wire Chafer,Nylon Chafer,Body Ply"
-    Private Sub MenuCalChafer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuCalChafer.Click
-        Dim msg As String = "Calculate Wire Chafer,Nylon Chafer,Body Ply Price " ' Define message.
+#Region "Wire Chafer,Body Ply"
+    Private Sub MenuCalBW_Click(sender As Object, e As EventArgs) Handles MenuCalBW.Click
+        Dim msg As String = "Calculate Wire Chafer,Body Ply Price " ' Define message.
         Dim title As String = "Calculate"   ' Define title.
         Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         Dim response As MsgBoxResult
@@ -2372,25 +2379,25 @@ Public Class FrmMain
             StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
             StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
 
-            'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICE)
-            If Chafer(StrDate, StrTime) Then
+            'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER to Table TBLMASTERPRICE)
+            If BW(StrDate, StrTime) Then
                 'Nothing
             Else
                 Exit Sub
             End If
 
-            'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER, Nylon CHAFER to Table TBLMASTERPRICERM)
-            If Chafer2(StrDate, StrTime) Then
-                MessageBox.Show("Update Wire Chafer,Nylon Chafer,Body Ply Price", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            'Call Store Procedure (Type Material:BODY PLY, WIRE CHAFER to Table TBLMASTERPRICERM)
+            If BW2(StrDate, StrTime) Then
+                MessageBox.Show("Update Wire Chafer,Body Ply Price", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Else
-                MessageBox.Show("Update Wire Chafer,Nylon Chafer,Body Ply Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                MessageBox.Show("Update Wire Chafer,Body Ply Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             End If
         Else
             Exit Sub
         End If
-
     End Sub
-    Private Function Chafer(ByVal dateup As String, ByVal Timeup As String) As Boolean
+
+    Private Function BW(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
@@ -2399,7 +2406,7 @@ Public Class FrmMain
         cmd2 = New SqlClient.SqlCommand
         cmd2.CommandTimeout = 0
         cmd2.CommandType = CommandType.StoredProcedure
-        cmd2.CommandText = "CALCHAFER"
+        cmd2.CommandText = "CALBW"
         cmd2.Connection = cnn
 
         Dim sparam0 As SqlClient.SqlParameter
@@ -2451,7 +2458,7 @@ Public Class FrmMain
         Me.Cursor = System.Windows.Forms.Cursors.Default()
         Return ret
     End Function
-    Private Function Chafer2(ByVal dateup As String, ByVal Timeup As String) As Boolean
+    Private Function BW2(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
         Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
@@ -2460,7 +2467,7 @@ Public Class FrmMain
         cmd2 = New SqlClient.SqlCommand
         cmd2.CommandTimeout = 0
         cmd2.CommandType = CommandType.StoredProcedure
-        cmd2.CommandText = "CALCHAFER2"
+        cmd2.CommandText = "CALBW2"
         cmd2.Connection = cnn
 
         Dim sparam0 As SqlClient.SqlParameter
@@ -2510,7 +2517,164 @@ Public Class FrmMain
 
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
-        Return False
+        Return ret
+    End Function
+#End Region
+
+#Region "Nylon Chafer,Flipper"
+    Private Sub MenuCalNF_Click(sender As Object, e As EventArgs) Handles MenuCalNF.Click
+        Dim msg As String = "Calculate Nylon Chafer,Flipper Price " ' Define message.
+        Dim title As String = "Calculate"   ' Define title.
+        Dim style As MsgBoxStyle = MsgBoxStyle.DefaultButton2 Or MsgBoxStyle.Information Or MsgBoxStyle.YesNo
+        Dim response As MsgBoxResult
+
+        ' Display message.
+        response = MsgBox(msg, style, title)
+        If response = MsgBoxResult.Yes Then ' User chose Yes.
+            Dim StrDate, StrTime As String
+            'Get datetime
+            StrDate = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+            StrTime = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
+
+            'Call Store Procedure (Type Material:Nylon CHAFER, FLIPPER to Table TBLMASTERPRICE)
+            If NF(StrDate, StrTime) Then
+                'Nothing
+            Else
+                Exit Sub
+            End If
+
+            'Call Store Procedure (Type Material:Nylon CHAFER,FLIPPER to Table TBLMASTERPRICERM)
+            If NF2(StrDate, StrTime) Then
+                MessageBox.Show("Update Nylon Chafer,Flipper Price", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Update Nylon Chafer,Flipper Price. Not Complete", "Calculate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
+        Else
+            Exit Sub
+        End If
+    End Sub
+
+    Private Function NF(ByVal dateup As String, ByVal Timeup As String) As Boolean
+        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
+        Dim ret As Boolean = False
+        Dim cnn As New SqlConnection(C1.Strcon)
+
+        Dim cmd2 As SqlClient.SqlCommand
+        cmd2 = New SqlClient.SqlCommand
+        cmd2.CommandTimeout = 0
+        cmd2.CommandType = CommandType.StoredProcedure
+        cmd2.CommandText = "CALNF"
+        cmd2.Connection = cnn
+
+        Dim sparam0 As SqlClient.SqlParameter
+        sparam0 = New SqlClient.SqlParameter
+        sparam0.ParameterName = "@Date"
+        sparam0.SqlDbType = SqlDbType.Char
+        sparam0.Size = 8
+        sparam0.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam0)
+
+        Dim sparam1 As SqlClient.SqlParameter
+        sparam1 = New SqlClient.SqlParameter
+        sparam1.ParameterName = "@Time"
+        sparam1.SqlDbType = SqlDbType.Char
+        sparam1.Size = 8
+        sparam1.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam1)
+
+        Dim sparam2 As SqlClient.SqlParameter
+        sparam2 = New SqlClient.SqlParameter
+        sparam2.ParameterName = "@errID"
+        sparam2.SqlDbType = SqlDbType.Char
+        sparam2.Size = 4
+        sparam2.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam2)
+
+        Dim sparam3 As SqlClient.SqlParameter
+        sparam3 = New SqlClient.SqlParameter
+        sparam3.ParameterName = "@errMsg"
+        sparam3.SqlDbType = SqlDbType.Char
+        sparam3.Size = 40
+        sparam3.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam3)
+
+        Dim Reader As SqlClient.SqlDataReader
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
+
+        cnn.Open()
+        Try
+            Reader = cmd2.ExecuteReader()
+            ret = True
+        Catch ex As Exception
+            MsgBox(ex.Message, 48)
+            ret = False
+        End Try
+
+        cnn.Close()
+        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
+    End Function
+    Private Function NF2(ByVal dateup As String, ByVal Timeup As String) As Boolean
+        Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
+        Dim ret As Boolean = False
+        Dim cnn As New SqlConnection(C1.Strcon)
+
+        Dim cmd2 As SqlClient.SqlCommand
+        cmd2 = New SqlClient.SqlCommand
+        cmd2.CommandTimeout = 0
+        cmd2.CommandType = CommandType.StoredProcedure
+        cmd2.CommandText = "CALNF2"
+        cmd2.Connection = cnn
+
+        Dim sparam0 As SqlClient.SqlParameter
+        sparam0 = New SqlClient.SqlParameter
+        sparam0.ParameterName = "@Date"
+        sparam0.SqlDbType = SqlDbType.Char
+        sparam0.Size = 8
+        sparam0.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam0)
+
+        Dim sparam1 As SqlClient.SqlParameter
+        sparam1 = New SqlClient.SqlParameter
+        sparam1.ParameterName = "@Time"
+        sparam1.SqlDbType = SqlDbType.Char
+        sparam1.Size = 8
+        sparam1.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam1)
+
+        Dim sparam2 As SqlClient.SqlParameter
+        sparam2 = New SqlClient.SqlParameter
+        sparam2.ParameterName = "@errID"
+        sparam2.SqlDbType = SqlDbType.Char
+        sparam2.Size = 4
+        sparam2.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam2)
+
+        Dim sparam3 As SqlClient.SqlParameter
+        sparam3 = New SqlClient.SqlParameter
+        sparam3.ParameterName = "@errMsg"
+        sparam3.SqlDbType = SqlDbType.Char
+        sparam3.Size = 40
+        sparam3.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam3)
+
+        Dim Reader As SqlClient.SqlDataReader
+        cmd2.Parameters("@Date").Value = dateup.Trim()
+        cmd2.Parameters("@Time").Value = Timeup.Trim()
+
+        cnn.Open()
+        Try
+            Reader = cmd2.ExecuteReader()
+            ret = True
+        Catch ex As Exception
+            MsgBox(ex.Message, 48)
+            ret = False
+        End Try
+
+        cnn.Close()
+        Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 #End Region
@@ -2543,7 +2707,7 @@ Public Class FrmMain
     End Sub
     Private Function GT(ByVal dateup As String, ByVal Timeup As String) As Boolean
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
-        GT = False
+        Dim ret As Boolean = False
         Dim cnn As New SqlConnection(C1.Strcon)
 
         Dim cmd2 As SqlClient.SqlCommand
@@ -2592,13 +2756,14 @@ Public Class FrmMain
         cnn.Open()
         Try
             Reader = cmd2.ExecuteReader()
-            GT = True
+            ret = True
         Catch ex As Exception
             MsgBox(ex.Message, 48)
-            GT = False
+            ret = False
         End Try
         cnn.Close()
         Me.Cursor = System.Windows.Forms.Cursors.Default()
+        Return ret
     End Function
 #End Region
 
