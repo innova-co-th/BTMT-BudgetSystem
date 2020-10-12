@@ -1017,12 +1017,24 @@ Public Class FrmYearInvTag
                             Dim arrTagNo() As String = tagNo.Split(New Char() {tagNoSep})
 
                             If arrTagNo.Length = 1 Then
-                                tagNo = Strings.Format(tagNo, "0000")
+                                tagNo = arrTagNo(0).PadLeft(4, "0"c)
                             ElseIf arrTagNo.Length = 2 Then
-                                tagNo = Strings.Format(arrTagNo(0), "0000") & tagNoSep & arrTagNo(1)
+                                tagNo = arrTagNo(0).PadLeft(4, "0"c) & tagNoSep & arrTagNo(1)
                             Else
                                 'Nothing because call sub ChkFormat
                             End If
+
+                            'Set Type Code
+                            Dim arrTypeCode As DataRow() = DT_TYPE.Select("TypeName = '" & typeCode & "'")
+                            typeCode = arrTypeCode(0)("TypeCode")
+
+                            'Set Location
+                            Dim arrLocation As DataRow() = DT_LOCATION.Select("DeptName = '" & location & "'")
+                            location = arrLocation(0)("DeptCode")
+
+                            'Set Unit
+                            Dim arrUnitCode As DataRow() = DT_UNIT.Select("ShortUnitName = '" & unit & "'")
+                            unit = arrUnitCode(0)("UnitCode")
 
                             Dim isExists As Boolean = ChkDataImport(tagNo, period, trxYear, typeCode, location)
 
