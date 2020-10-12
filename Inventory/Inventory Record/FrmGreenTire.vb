@@ -1119,7 +1119,7 @@ Public Class FrmGreenTire
                                     '//Insert TblGtDtl
                                     '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
                                     '// Tread
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '13'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
                                     sb.Clear()
                                     sb.AppendLine(" Insert INTO TblGtDtl(TireCode,Rev,MaterialType,Semicode,length,number,QTU,Unit,Dateup) ")
                                     sb.AppendLine(" Values ")
@@ -1140,7 +1140,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// BF
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '14'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1160,7 +1160,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Cussion
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '03'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1178,7 +1178,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// BodyPly
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '04'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1196,7 +1196,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-1
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '05'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1214,7 +1214,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-2
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '06'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1232,7 +1232,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-3
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '07'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1250,7 +1250,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-4
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '08'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1268,7 +1268,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Side
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '11'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1286,7 +1286,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// InnerLiner
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '12'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1306,7 +1306,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// WireChafer
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '09'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
                                         sb.AppendLine(PrepareStr(strGreentire) & ", ")
@@ -1343,7 +1343,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// NylonChafer
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '10'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
                                         sb.AppendLine(PrepareStr(strGreentire) & ", ")
@@ -1379,7 +1379,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Flipper
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = '22'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
                                         sb.AppendLine(PrepareStr(strGreentire) & ", ") 'TireCode
