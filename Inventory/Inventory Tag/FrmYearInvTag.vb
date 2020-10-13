@@ -996,22 +996,11 @@ Public Class FrmYearInvTag
                             Dim remark As String = dtRec.Rows(i)("Remark").ToString().Trim()
                             Dim updateDate As String = dtRec.Rows(i)("UpdateDate").ToString().Trim()
 
-                            ''Check format of Qty
-                            'Dim result As Decimal
-                            'If Not Decimal.TryParse(qty, result) Then
-                            '    'Qty is not decimal
-                            '    Continue For
-                            'Else
-                            '    If qty = 0.0 Then
-                            '        Continue For
-                            '    End If
-                            'End If
-
                             'Check empty data
                             ChkData(tagNo, code, typeCode, location, period, trxYear, qty, unit, updateDate)
 
                             'Check format data
-                            ChkFormat(tagNo, tagNoLen, tagNoSep, code, typeCode, location, period, trxYear, updateDate)
+                            ChkFormat(tagNo, tagNoLen, tagNoSep, code, typeCode, location, period, trxYear, qty, unit, updateDate)
 
                             'Set Tag No
                             Dim arrTagNo() As String = tagNo.Split(New Char() {tagNoSep})
@@ -1035,6 +1024,25 @@ Public Class FrmYearInvTag
                             'Set Unit
                             Dim arrUnitCode As DataRow() = DT_UNIT.Select("ShortUnitName = '" & unit & "'")
                             unit = arrUnitCode(0)("UnitCode")
+
+                            'Check format Type Code and Code
+                            sb.Clear()
+                            sb.AppendLine("SELECT c.Type TypeCode, c.Code, c.UnitBig Unit ")
+                            sb.AppendLine("FROM TBLConvert c ")
+                            sb.AppendLine("LEFT OUTER JOIN  TBLGroup g on c.Code = g.Code ")
+                            sb.AppendLine("WHERE c.Type = '" & typeCode & "' AND c.Code = '" & code & "' AND c.UnitBig = '" & unit & "' ")
+                            sb.AppendLine("UNION ")
+                            sb.AppendLine("SELECT g.TypeCode, m.MasterCode Code, 'KG' Unit ")
+                            sb.AppendLine("FROM TBLGroup g ")
+                            sb.AppendLine("LEFT OUTER JOIN TBLMASTER m on g.Code = m.MasterCode ")
+                            sb.AppendLine("WHERE g.TypeCode = '" & typeCode & "' AND m.MasterCode = '" & code & "' AND m.Unit = '" & unit & "'")
+                            sql = sb.ToString()
+                            Dim chkDT As DataTable = C1.GetDataset(sql).Tables(0)
+
+                            If chkDT.Rows.Count = 0 Then
+                                'Not found in master
+                                Throw New ApplicationException("Type Code """ & typeCode & """ and Code """ & code & """ and Unit """ & unit & """ does not find in system.")
+                            End If
 
                             Dim isExists As Boolean = ChkDataImport(tagNo, period, trxYear, typeCode, location)
 
@@ -1073,16 +1081,20 @@ Public Class FrmYearInvTag
                                 sb.Clear()
                                 sb.AppendLine("Update TBLTRX")
                                 sb.AppendLine(" Set ")
-                                sb.AppendLine(PrepareStr(code)) 'Code
-                                sb.AppendLine("," & PrepareStr(location)) 'Location
-                                sb.AppendLine("," & qty) 'Qty
-                                sb.AppendLine("," & PrepareStr(unit)) 'Uom
-                                sb.AppendLine("," & PrepareStr(strTrxDate)) 'TrxDate
-                                sb.AppendLine("," & PrepareStr(strTrxTime)) 'TrxTime
-                                sb.AppendLine("," & PrepareStr(CurrentIDUser.Trim())) 'UserID
-                                sb.AppendLine("," & PrepareStr(remark)) 'Remark
-                                sb.AppendLine("," & PrepareStr(strUpDateDate)) 'UpDateDate
-                                sb.AppendLine("," & PrepareStr(strUpdateTime)) 'UpDateTime
+                                sb.AppendLine("Code = " & PrepareStr(code)) 'Location
+                                sb.AppendLine(",Qty = " & qty) 'Qty
+                                sb.AppendLine(",Uom = " & PrepareStr(unit)) 'Uom
+                                sb.AppendLine(",TrxDate = " & PrepareStr(strTrxDate)) 'TrxDate
+                                sb.AppendLine(",TrxTime = " & PrepareStr(strTrxTime)) 'TrxTime
+                                sb.AppendLine(",UserID = " & PrepareStr(CurrentIDUser.Trim())) 'UserID
+                                sb.AppendLine(",Remark = " & PrepareStr(remark)) 'Remark
+                                sb.AppendLine(",UpDateDate = " & PrepareStr(strUpDateDate)) 'UpDateDate
+                                sb.AppendLine(",UpdateTime = " & PrepareStr(strUpdateTime)) 'UpDateTime
+                                sb.AppendLine(" WHERE TagNo = " & PrepareStr(tagNo) & " AND ")
+                                sb.AppendLine("period = " & PrepareStr(period) & " AND ")
+                                sb.AppendLine("TypeCode = " & PrepareStr(typeCode) & " AND ")
+                                sb.AppendLine("TrxYear = " & PrepareStr(trxYear) & " AND ")
+                                sb.AppendLine("Location = " & PrepareStr(location))
                                 sql = sb.ToString()
                                 cmSQL.CommandText = sql
                                 cmSQL.ExecuteNonQuery()
@@ -1578,7 +1590,7 @@ Public Class FrmYearInvTag
         End If
     End Sub
 
-    Private Sub ChkFormat(tagNo As String, tagNoLen As String, tagNoSep As String, code As String, typeCode As String, location As String, period As String, trxYear As String, updateDate As String)
+    Private Sub ChkFormat(tagNo As String, tagNoLen As String, tagNoSep As String, code As String, typeCode As String, location As String, period As String, trxYear As String, qty As String, unit As String, updateDate As String)
         Dim sql As String = String.Empty
         Dim sb As New StringBuilder()
         Dim chkDT As New DataTable("Check")
@@ -1642,8 +1654,8 @@ Public Class FrmYearInvTag
         End If
 
         'Format TrxYear
-        Dim result As Date
-        If Not DateTime.TryParseExact(trxYear, "yyyyMM", cult, System.Globalization.DateTimeStyles.None, result) Then
+        Dim resultTrxYear As Date
+        If Not DateTime.TryParseExact(trxYear, "yyyyMM", cult, System.Globalization.DateTimeStyles.None, resultTrxYear) Then
             Throw New ApplicationException("TrxYear """ & trxYear & """ is not format YYYYMM")
         End If
 
@@ -1653,8 +1665,27 @@ Public Class FrmYearInvTag
             End If
         End If
 
+        'Format of Qty
+        Dim resultQty As Decimal
+        If Not Decimal.TryParse(qty, resultQty) Then
+            'Qty is not decimal
+            Throw New ApplicationException("Qty """ & qty & """ is not decimal.")
+        Else
+            If qty = 0.0 Then
+                Throw New ApplicationException("Qty is not equal zero.")
+            End If
+        End If
+
+        'Format Unit
+        chkDR = DT_UNIT.Select("ShortUnitName = '" & unit & "'")
+
+        If chkDR.Length = 0 Then
+            'Not found in master
+            Throw New ApplicationException("Unit """ & unit & """ does not find in system.")
+        End If
+
         'Format UpdateDate
-        If Not DateTime.TryParseExact(updateDate, "dd/MM/yyyy", cult, System.Globalization.DateTimeStyles.None, result) Then
+        If Not DateTime.TryParseExact(updateDate, "dd/MM/yyyy", cult, System.Globalization.DateTimeStyles.None, resultTrxYear) Then
             Throw New ApplicationException("Update Date """ & updateDate & """ is not format DD/MM/YYYY")
         End If
     End Sub
