@@ -849,12 +849,12 @@ Public Class FrmSemi
                             Dim strRevision As String = dtRec.Rows(i)("SemiRevision").ToString().Trim()
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
 
-                            'Check Empty
+                            'Check empty value of Semi and Revision
                             If strSemi.Equals(String.Empty) Or strRevision.Equals(String.Empty) Then
-                                Throw New ApplicationException("Semi Code, Semi Revision is not empty.")
+                                Throw New ApplicationException("Semi Code and Semi Revision is not empty.")
                             End If
 
-                            'Check Type Material Master
+                            'Get Type Material Master
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
                             strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
 
@@ -867,12 +867,12 @@ Public Class FrmSemi
                                 Dim GridRow As DataRow()        '//Grid Data
                                 Dim ExcelRow As DataRow()       '//Excel Data
 
-                                'Check Unit Master
+                                'Get Unit Master
                                 Dim arrUnitCode As DataRow() = dtUnitCode.Select("ShortUnitName = '" & strUnit & "'")
                                 strUnit = arrUnitCode(0)("ShortUnitName")
 
                                 '//Check Qty input format as Number
-                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("Qty").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblQty) Then
                                         Throw New System.Exception("Please input Qty data as Number")
                                     End If
@@ -926,7 +926,7 @@ Public Class FrmSemi
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
                                     End If
-                                End If
+                                End If 'If GridRow.Count > 0
 
                                 '//For Check Data from above row on import file.
                                 Dim chkSamePreSemiBefore As String = String.Empty
@@ -1227,8 +1227,8 @@ Public Class FrmSemi
 
                                 End If
 
-                            End If
-                        Next
+                            End If 'If strTypeMaterial.Length > 0 And strSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0
+                        Next i
 
                         trans.Commit()
                         MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
