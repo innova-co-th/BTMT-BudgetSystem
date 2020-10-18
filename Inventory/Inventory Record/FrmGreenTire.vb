@@ -769,13 +769,14 @@ Public Class FrmGreenTire
                         Dim iTime As String = DateTime.Now.ToString("HHmm", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
                         'Get Master
                         Dim dtTypeMaterial As DataTable = GetTypeMaterial() 'Table TBLTypeMaterial
+                        Dim dtTireSize As DataTable = GetTireSize() 'Table TBLTireSize
 
                         '//Sort Data from Excel
                         dtRec.DefaultView.Sort = "GreenTire DESC, Revision DESC, TypeMaterial DESC"
                         dtRec = dtRec.DefaultView.ToTable
 
                         '//**Check All Import Data that all data still in TBLCompound, TBLMaster and TBLRM
-                        If ChkImportData_Correctly(dtRec, dtTypeMaterial) = False Then
+                        If ChkImportData_Correctly(dtRec, dtTypeMaterial, dtTireSize) = False Then
                             LoadTire() 'ReQuery and set datagrid
                             frmOverlay.Dispose()
                             Exit Sub
@@ -783,11 +784,11 @@ Public Class FrmGreenTire
 
 
                         For i As Integer = 0 To dtRec.Rows.Count - 1
-                            Dim strGreentire As String = dtRec(i)("GreenTire").ToString.Trim()
-                            Dim strRevision As String = dtRec(i)("Revision").ToString.Trim()
-                            Dim strBSJ As String = dtRec(i)("BSJ").ToString.Trim()
-                            Dim strRevisionBoss1st As String = dtRec(i)("RevisionBoss_1st").ToString.Trim()
-                            Dim strRevisionBoss2nd As String = dtRec(i)("RevisionBoss_2nd").ToString.Trim()
+                            Dim strGreentire As String = dtRec(i)("GreenTire").ToString().Trim()
+                            Dim strRevision As String = dtRec(i)("Revision").ToString().Trim()
+                            Dim strBSJ As String = dtRec(i)("BSJ").ToString().Trim()
+                            Dim strRevisionBoss1st As String = dtRec(i)("RevisionBoss_1st").ToString().Trim()
+                            Dim strRevisionBoss2nd As String = dtRec(i)("RevisionBoss_2nd").ToString().Trim()
                             Dim strTypeMaterial As String = dtRec.Rows(i)("TypeMaterial").ToString().Trim()
                             Dim GridRow As DataRow()        '//Grid Data
                             Dim ExcelRow As DataRow()       '//Excel Data
@@ -1519,7 +1520,7 @@ Public Class FrmGreenTire
         End If
     End Function
 
-    Private Function ChkImportData_Correctly(ByRef ImportTable As DataTable, dtTypeMaterial As DataTable) As Boolean
+    Private Function ChkImportData_Correctly(ByRef ImportTable As DataTable, dtTypeMaterial As DataTable, dtTireSize As DataTable) As Boolean
         Dim cnSQLRM As SqlConnection
         Dim cmSQLRM As SqlCommand
         Dim strSQL As String = String.Empty
@@ -1530,70 +1531,55 @@ Public Class FrmGreenTire
         Dim importRow As DataRow()
 
         Try
-
-            For y As Integer = 0 To ImportTable.Rows.Count - 1
-                Dim strGreenTireCode As String = ImportTable.Rows(y)("GreenTire").ToString().Trim()
-                Dim strRevision As String = ImportTable.Rows(y)("Revision").ToString().Trim()
-                Dim strBSJ As String = ImportTable.Rows(y)("BSJ").ToString().Trim() 'Tire Size
-                Dim strRevisionBoss1st As String = ImportTable.Rows(y)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
-                Dim strRevisionBoss2nd As String = ImportTable.Rows(y)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
-
-                Dim strTypeMaterial As String = ImportTable.Rows(y)("TypeMaterial").ToString().Trim()
+            'Check empty value
+            For x As Integer = 0 To ImportTable.Rows.Count - 1
+                Dim strGreenTireCode As String = ImportTable.Rows(x)("GreenTire").ToString().Trim()
+                Dim strRevision As String = ImportTable.Rows(x)("Revision").ToString().Trim()
+                Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim() 'Tire Size
+                Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
+                Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
+                Dim strTypeMaterial As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
+                Dim strSemiCode As String = ImportTable.Rows(x)("SemiCode").ToString().Trim()
 
                 strSQL = String.Empty
                 cnSQLRM = New SqlConnection(C1.Strcon)
                 cnSQLRM.Open()
 
-                If strGreenTireCode.Length > 0 Then
-
-                    '// 2.) Check Revision
-                    If strRevision.Length <= 0 Then
-                        Throw New System.Exception("Revision is not empty.")
-                    End If
-
-                    '// 3.) Check BSJ (TireSize)
-                    If strBSJ.Length <= 0 Then
-                        'Empty
-                        Throw New System.Exception("BSJ (Tire Size) is not empty.")
-                    Else
-                        strSQL = " SELECT COUNT(*) FROM  TblTiresize "
-                        strSQL += " WHERE BSJCode = '" & strBSJ & "' "
-                        cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
-                        Dim i As Long = cmSQLRM.ExecuteScalar()
-                        If i = 0 Then
-                            cmSQLRM.Dispose()
-                            Throw New System.Exception("This BSJ '" & strBSJ & "' is not found from Master")
-                        Else
-                            cmSQLRM.Dispose()
-                        End If
-                    End If
-
-                    '// 4.) Check RevisionBoss 1st
-                    If strRevisionBoss1st.Length <= 0 Then
-                        Throw New System.Exception("Revision of Boss 1st is not empty.")
-                    End If
-
-                    '// 5.) Check RevisionBoss 2nd
-                    If strRevisionBoss2nd.Length <= 0 Then
-                        Throw New System.Exception("Revision of Boss 2nd is not empty.")
-                    End If
-
-                    '//6.) Check Type Material
-                    If strTypeMaterial.Equals(String.Empty) Then
-                        Throw New ApplicationException("Type Material is not empty.")
-                    End If
-
-                    'Check Type Material Master
-                    Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
-                    If arrTypeMatCode.Length = 0 Then
-                        Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
-                    End If
-
-                Else
+                '// 1.) Check GreeTireCode
+                If strGreenTireCode.Length <= 0 Then
                     Throw New ApplicationException("Green Tire Code is not empty.")
                 End If
 
-            Next
+                '// 2.) Check Revision
+                If strRevision.Length <= 0 Then
+                    Throw New System.Exception("Revision is not empty.")
+                End If
+
+                '// 3.) Check BSJ (TireSize)
+                If strBSJ.Length <= 0 Then
+                    Throw New System.Exception("BSJ (Tire Size) is not empty.")
+                End If
+
+                '// 4.) Check RevisionBoss 1st
+                If strRevisionBoss1st.Length <= 0 Then
+                    Throw New System.Exception("Revision of Boss 1st is not empty.")
+                End If
+
+                '// 5.) Check RevisionBoss 2nd
+                If strRevisionBoss2nd.Length <= 0 Then
+                    Throw New System.Exception("Revision of Boss 2nd is not empty.")
+                End If
+
+                '//6.) Check Type Material
+                If strTypeMaterial.Equals(String.Empty) Then
+                    Throw New ApplicationException("Type Material is not empty.")
+                End If
+
+                '7.) Check Semi Code
+                If strSemiCode.Length <= 0 Then
+                    Throw New ApplicationException("Semi Code is not empty.")
+                End If
+            Next x
 
             For x As Integer = 0 To ImportTable.Rows.Count - 1
                 Dim strGreenTireCode As String = ImportTable.Rows(x)("GreenTire").ToString().Trim()
@@ -1601,15 +1587,13 @@ Public Class FrmGreenTire
                 Dim strBSJ As String = ImportTable.Rows(x)("BSJ").ToString().Trim() 'Tire Size
                 Dim strRevisionBoss1st As String = ImportTable.Rows(x)("RevisionBoss_1st").ToString().Trim() 'Revision of Boss 1st
                 Dim strRevisionBoss2nd As String = ImportTable.Rows(x)("RevisionBoss_2nd").ToString().Trim() 'Revision of Boss 2nd
-
                 Dim strTypeMaterial As String = ImportTable.Rows(x)("TypeMaterial").ToString().Trim()
-                Dim dblNum As Double
+                Dim dblNum As Double = 0.0
 
                 strSQL = String.Empty
                 cnSQLRM = New SqlConnection(C1.Strcon)
                 cnSQLRM.Open()
 
-                '// 1.) Check GreeTireCode
                 If strGreenTireCode.Length > 0 Then
                     '//For Check Data from above row on import file.
                     Dim chkSameGreenTireBefore As String = String.Empty
@@ -1623,57 +1607,26 @@ Public Class FrmGreenTire
                         chkSameRevisionBefore = String.Empty
                     End If
 
-                    ''// 2.) Check Revision
-                    'If strRevision.Length <= 0 Then
-                    '    Throw New System.Exception("Revision is not empty.")
-                    'End If
+                    'Check Tire Size in Master
+                    Dim arrTireSize As DataRow() = dtTireSize.Select("BSJCode = '" & strBSJ & "'")
+                    If arrTireSize.Length = 0 Then
+                        Throw New ApplicationException("BSJ Code: " & strBSJ & " is not found in master.")
+                    End If
 
-                    ''// 3.) Check BSJ (TireSize)
-                    'If strBSJ.Length <= 0 Then
-                    '    'Empty
-                    '    Throw New System.Exception("BSJ (Tire Size) is not empty.")
-                    'Else
-                    '    strSQL = " SELECT COUNT(*) FROM  TblTiresize "
-                    '    strSQL += " WHERE BSJCode = '" & strBSJ & "' "
-                    '    cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
-                    '    Dim i As Long = cmSQLRM.ExecuteScalar()
-                    '    If i = 0 Then
-                    '        cmSQLRM.Dispose()
-                    '        Throw New System.Exception("This BSJ '" & strBSJ & "' is not found from Master")
-                    '    Else
-                    '        cmSQLRM.Dispose()
-                    '    End If
-                    'End If
-
-                    ''// 4.) Check RevisionBoss 1st
-                    'If strRevisionBoss1st.Length <= 0 Then
-                    '    Throw New System.Exception("Revision of Boss 1st is not empty.")
-                    'End If
-
-                    ''// 5.) Check RevisionBoss 2nd
-                    'If strRevisionBoss2nd.Length <= 0 Then
-                    '    Throw New System.Exception("Revision of Boss 2nd is not empty.")
-                    'End If
-
-                    ''//6.) Check Type Material
-                    'If strTypeMaterial.Equals(String.Empty) Then
-                    '    Throw New ApplicationException("Type Material is not empty.")
-                    'End If
-
-                    ''Check Type Material Master
-                    'Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
-                    'If arrTypeMatCode.Length = 0 Then
-                    '    Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
-                    'End If
+                    'Check Type Material in Master
+                    Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
+                    If arrTypeMatCode.Length = 0 Then
+                        Throw New ApplicationException("Material Code: " & strTypeMaterial & " is not found in master.")
+                    End If
 
                     '// Check Each SemiCode in same group of GreenTire and Revision correctly
                     'For first GreenTire and Semi in each group
                     If strGreenTireCode <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
                         '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
-                        '// Tread
+#Region "Material Type TREAD"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
+                            If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Tread'.")
                             Else
                                 '//Check type number
@@ -1684,7 +1637,7 @@ Public Class FrmGreenTire
 
                             'Check Semi in master
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '13' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1694,7 +1647,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '13' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '13' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1706,13 +1659,14 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Tread' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Tread'")
                         End If
+#End Region
 
-                        '// BF
+#Region "Material Type BF"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
                         If importRow.Count > 0 Then
-                            If importRow(0)("Num").ToString.Length <= 0 Then
+                            If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'BF'.")
                             Else
                                 '//Check type number
@@ -1722,7 +1676,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '14' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1732,7 +1686,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '14' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '14' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1744,12 +1698,13 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'BF' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'BF'")
                         End If
+#End Region
                         '//---------------------------------------------------------------------------------------------------------------------------------
 
                         '// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
-                        '// Cussion
+#Region "Material Type Cussion"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -1770,7 +1725,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '03' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1780,7 +1735,7 @@ Public Class FrmGreenTire
                             Else
                                 'Geet QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '03' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '03' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1792,10 +1747,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Cussion' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Cussion'")
                         End If
+#End Region
 
-                        '// BodyPly
+#Region "Material Type BodyPly"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -1816,7 +1772,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '04' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1825,7 +1781,7 @@ Public Class FrmGreenTire
                                 Throw New System.Exception("Please check correctly BodyPly '" & importRow(0)("SemiCode").ToString().Trim() & "'")
                             Else
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '04' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '04' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1837,10 +1793,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'BodyPly' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'BodyPly'")
                         End If
+#End Region
 
-                        '// Belt-1
+#Region "Material Type Belt-1"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -1861,7 +1818,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '05' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1871,7 +1828,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '05' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '05' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1883,10 +1840,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Belt-1' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-1'")
                         End If
+#End Region
 
-                        '// Belt-2
+#Region "Material Type Belt-2"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -1907,7 +1865,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '06' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1917,7 +1875,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '06' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '06' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1929,10 +1887,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Belt-2' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-2'")
                         End If
+#End Region
 
-                        '// Belt-3
+#Region "Material Type Belt-3"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -1953,7 +1912,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '07' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1963,7 +1922,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '07' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '07' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -1975,10 +1934,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Belt-3' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-3'")
                         End If
+#End Region
 
-                        '// Belt-4
+#Region "Material Type Belt-4"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -1999,7 +1959,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '08' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2009,7 +1969,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '08' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '08' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2021,10 +1981,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Belt-4' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-4'")
                         End If
+#End Region
 
-                        '// Side
+#Region "Material Type Side"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -2045,7 +2006,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '11' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2055,7 +2016,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '11' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '11' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2067,10 +2028,11 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'Side' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Side'")
                         End If
+#End Region
 
-                        '// InnerLiner
+#Region "Material Type InnerLiner"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -2091,7 +2053,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '12' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2101,7 +2063,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '12' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '12' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2113,12 +2075,13 @@ Public Class FrmGreenTire
                                 cnSQLRM.Dispose()
                             End If
                         Else
-                            Throw New System.Exception("Please check type 'InnerLiner' input")
+                            Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'InnerLiner'")
                         End If
+#End Region
                         '//==================================================================================================================================
 
                         '// WireChafer, NylonChafer, Flipper (No Require, Need Num and Length) **************************************************************
-                        '// WireChafer
+#Region "Material Type WireChafer"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -2139,7 +2102,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '09' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2149,7 +2112,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '09' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '09' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2163,7 +2126,9 @@ Public Class FrmGreenTire
                         Else
                             '// Do nothing
                         End If
+#End Region
 
+#Region "Material Type NylonChafer"
                         '// NylonChafer
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
                         If importRow.Count > 0 Then
@@ -2185,7 +2150,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '10' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2195,7 +2160,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '10' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '10' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2209,8 +2174,9 @@ Public Class FrmGreenTire
                         Else
                             '// Do nothing
                         End If
+#End Region
 
-                        '// Flipper
+#Region "Material Type Flipper"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
@@ -2231,7 +2197,7 @@ Public Class FrmGreenTire
                             End If
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
-                            strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                            strSQL += " WHERE MaterialType = '22' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                             cnSQLRM = New SqlConnection(C1.Strcon)
                             cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2241,7 +2207,7 @@ Public Class FrmGreenTire
                             Else
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
-                                strSQL += " WHERE MaterialType = '22' AND active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
+                                strSQL += " WHERE MaterialType = '22' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
                                 cnSQLRM = New SqlConnection(C1.Strcon)
                                 cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
@@ -2255,11 +2221,9 @@ Public Class FrmGreenTire
                         Else
                             '// Do nothing
                         End If
+#End Region
                         '//**********************************************************************************************************************************
-                    End If
-                Else
-                    'Green Tire Code is not empty
-                    Throw New ApplicationException("Green Tire Code is not empty.")
+                    End If 'If strGreenTireCode <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore
                 End If 'If strGreenTireCode.Length > 0
 
                 cnSQLRM.Close()
@@ -2296,6 +2260,23 @@ Public Class FrmGreenTire
         Return dt
     End Function
 
+    Private Function GetTireSize() As DataTable
+        Dim daSQL As SqlDataAdapter
+        Dim strSQL As String = String.Empty
+        Dim dt As New DataTable()
+        Dim sb As New System.Text.StringBuilder()
+
+        Try
+            sb.AppendLine(" SELECT BSJCode FROM  TblTiresize ")
+            strSQL = sb.ToString()
+            daSQL = New SqlDataAdapter(strSQL, C1.Strcon)
+            daSQL.Fill(dt)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "General Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return dt
+    End Function
 #End Region
 
 #Region "SelectData"
