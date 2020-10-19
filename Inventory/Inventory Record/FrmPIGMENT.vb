@@ -626,6 +626,9 @@ Public Class FrmPIGMENT
                         For i As Integer = 0 To dtRec.Rows.Count - 1
                             Dim strEachPigmentCode As String = dtRec.Rows(i)("EachPigmentCode").ToString().Trim()
 
+                            If strEachPigmentCode.Length <= 0 Then
+                                Throw New System.Exception("Please input EachPigmentCode data.")
+                            End If
                             If strEachPigmentCode.Length > 0 Then
                                 Dim strEachRevision As String = dtRec.Rows(i)("EachRevision").ToString().Trim()
                                 Dim strRMCode As String = dtRec.Rows(i)("rmCode").ToString().Trim()
@@ -635,10 +638,6 @@ Public Class FrmPIGMENT
                                 If strEachRevision.Length = 0 Then
                                     Throw New System.Exception("Please input EachRevision data.")
                                 End If
-
-                                'If strRMCode.Equals(String.Empty) Then
-                                '    Throw New ApplicationException("Rm Code is not empty.")
-                                'End If
 
                                 'Check RmQty
                                 If dtRec.Rows(i)("RmQty").ToString().Length > 0 Then
@@ -901,7 +900,7 @@ Public Class FrmPIGMENT
                                         cmSQL.CommandText = StrSQL
                                         cmSQL.ExecuteNonQuery()
                                     End If
-                                End If
+                                End If 'If DTRow.Count > 0
                             End If 'If strEachPigmentCode.Length > 0
                         Next i
 
@@ -1105,7 +1104,7 @@ Public Class FrmPIGMENT
                     End If
                 Else
                     ret = False
-                    Throw New ApplicationException("Rm Code is not empty.")
+                    Throw New ApplicationException("RM Code is not empty.")
                 End If
             Next x
 

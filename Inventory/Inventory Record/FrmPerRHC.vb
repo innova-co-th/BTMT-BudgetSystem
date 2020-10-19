@@ -676,6 +676,18 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                             Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
 
+                            If strFinalCompoundCode.Length <= 0 Then
+                                Throw New System.Exception("Please input Final Compound data.")
+                            End If
+
+                            If strCompoundCode.Length <= 0 Then
+                                Throw New System.Exception("Please input Compound data.")
+                            End If
+
+                            If strRevision.Length <= 0 Then
+                                Throw New System.Exception("Please input Revision data.")
+                            End If
+
                             If strFinalCompoundCode.Length > 0 Then
                                 Dim dblPer As Double
                                 Dim dblRHC As Double
@@ -780,9 +792,7 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
                                 End If
-                            Else
-                                Throw New System.Exception("Please input Final Compound data.")
-                            End If
+                            End If 'If strFinalCompoundCode.Length > 0
                         Next i
 
                         trans.Commit()
@@ -848,7 +858,7 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                     If i = 0 Then
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
-                        Throw New System.Exception("This Group(" & Final & "), Compound(" & Comp & "), Revision(" & Rev & ") and RMCode(" & rmCode & ") is not available on RHC data")
+                        Throw New System.Exception("This Group """ & Final & """, Compound """ & Comp & """, Revision """ & Rev & """ and RMCode """ & rmCode & """ is not found in master.")
                     Else
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
@@ -858,7 +868,7 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                 Else
                     'Check empty
                     If rmCode.Equals(String.Empty) Then
-                        Throw New ApplicationException("Rm Code is not empty.")
+                        Throw New ApplicationException("RM Code is not empty.")
                     End If
                 End If
             Next x

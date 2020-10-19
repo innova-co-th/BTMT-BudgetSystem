@@ -882,14 +882,17 @@ Public Class FrmSemi
 
                                 GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
                                 If GridRow.Count > 0 Then
-
-                                    strTypeMaterialOriginal = GridRow(0)("MaterialCode").ToString
+                                    'Found data in data grid
+                                    'Check material type from data grid
+                                    strTypeMaterialOriginal = GridRow(0)("MaterialCode").ToString()
 
                                     '//Check Width,Length and N as Number by Condition
-                                    If GridRow(0)("MaterialCode").ToString = "13" Then
+                                    If GridRow(0)("MaterialCode").ToString() = "13" Then
+                                        'TREAD
                                         '//Just QTY
-                                    ElseIf GridRow(0)("MaterialCode").ToString = "14" Then
-                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                    ElseIf GridRow(0)("MaterialCode").ToString() = "14" Then
+                                        'BF (Upper,Lower,Center)
+                                        If dtRec.Rows(i)("N").ToString().Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
@@ -897,7 +900,8 @@ Public Class FrmSemi
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
                                     Else
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        'Other type (CUSSION,BODY PLY, BELT1-4,WIRE CHAFER,Nylon CHAFER,SIDE,INNERLINER,FLIPPER)
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
@@ -906,11 +910,15 @@ Public Class FrmSemi
                                         End If
                                     End If
                                 Else
+                                    'Not found data in data grid
+                                    'Check material type from excel
                                     '//Check Width,Length and N as Number by Condition
                                     If strTypeMaterial = "13" Then
+                                        'TREAD
                                         '//Just QTY
                                     ElseIf strTypeMaterial = "14" Then
-                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                        'BF (Upper,Lower,Center)
+                                        If dtRec.Rows(i)("N").ToString().Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
@@ -918,7 +926,8 @@ Public Class FrmSemi
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
                                     Else
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        'Other type
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
@@ -933,19 +942,21 @@ Public Class FrmSemi
                                 Dim chkSameRevisionBefore As String = String.Empty
                                 Dim chkSameSemiRevAbove As Boolean = False
                                 If i > 0 Then
-                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("Semi").ToString
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("SemiRevision").ToString
+                                    'Not first row
+                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("Semi").ToString()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("SemiRevision").ToString()
                                 Else
-                                    chkSamePreSemiBefore = ""
-                                    chkSameRevisionBefore = ""
+                                    chkSamePreSemiBefore = String.Empty
+                                    chkSameRevisionBefore = String.Empty
                                 End If
 
-                                '//Sumarize TotalQty
+                                '//Summarize TotalQty
                                 If strSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore Then
+                                    'Start new semi and revision in each group
                                     totalQty = 0
                                     GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
                                     If GridRow.Count > 0 Then '//Have Semi and Rev on DB so can use TypeMat from DB
-                                        Dim sameTypeMat As String = GridRow(0)("MaterialCode").ToString
+                                        Dim sameTypeMat As String = GridRow(0)("MaterialCode").ToString()
                                         For k As Integer = 0 To GridRow.Count - 1
                                             totalQty = totalQty + GridRow(k)("Qty")
                                         Next k
@@ -959,10 +970,13 @@ Public Class FrmSemi
                                             End If
 
                                             If sameTypeMat = "13" Then
+                                                'TREAD
                                                 totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
                                             ElseIf sameTypeMat = "14" Then
+                                                'BF (Upper,Lower,Center)
                                                 totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
                                             Else
+                                                'Other type
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             End If
                                         Next j
@@ -970,15 +984,18 @@ Public Class FrmSemi
                                         ExcelRow = dtRec.Select("Semi = '" & strSemi & "' AND SemiRevision = '" & strRevision & "'")
                                         For j As Integer = 0 To ExcelRow.Count - 1
                                             If ExcelRow(j)("TypeMaterial") = "13" Then
+                                                'TREAD
                                                 totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
                                             ElseIf ExcelRow(j)("TypeMaterial") = "14" Then
+                                                'BF (Upper,Lower,Center)
                                                 totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
                                             Else
+                                                'Other type
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             End If
                                         Next j
-                                    End If
-                                End If
+                                    End If 'If GridRow.Count > 0
+                                End If 'If strSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore
 
                                 '// 1.) Check Semi and Revision fron DB
                                 '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLSemi and TBLConvert
@@ -1004,10 +1021,13 @@ Public Class FrmSemi
                                         sb.AppendLine(" Qty = ")
 
                                         If strTypeMaterialOriginal = "13" Then
+                                            'TREAD
                                             sb.AppendLine(" '" & dblQty & "'")
                                         ElseIf strTypeMaterialOriginal = "14" Then
+                                            'BF (Upper,Lower,Center)
                                             sb.AppendLine(" '" & (dblQty / intN) & "'")
                                         Else
+                                            'Other type
                                             sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "'")
                                         End If
 
@@ -1116,7 +1136,7 @@ Public Class FrmSemi
                                     sb.AppendLine(" Insert TBLSemi ")
                                     sb.AppendLine(" Values (")
                                     sb.AppendLine(" '" & strSemi & "', ")           'Column Final
-                                    sb.AppendLine(" '" & strSemi & "', ")           'Column PsemiCode
+                                    sb.AppendLine(" '" & strSemi & "', ")           'Column SemiCode
                                     sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
                                     sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
                                     sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
@@ -1143,18 +1163,25 @@ Public Class FrmSemi
                                     sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
 
                                     If strTypeMaterial = "13" Then                  'Column CN
+                                        'TREAD
                                         sb.AppendLine(" '1' , ")
                                     ElseIf strTypeMaterial = "14" Then
+                                        'BF (Upper,Lower,Center)
                                         sb.AppendLine(" '1' , ")
                                     ElseIf strTypeMaterial = "07" Then
+                                        'BELT-3
                                         sb.AppendLine(" '1' , ")
                                     ElseIf strTypeMaterial = "08" Then
+                                        'BELT-4
                                         sb.AppendLine(" '1' , ")
                                     ElseIf strTypeMaterial = "12" Then
+                                        'INNERLINER
                                         sb.AppendLine(" '1' , ")
                                     ElseIf strTypeMaterial = "04" Then
+                                        'BODY PLY
                                         sb.AppendLine(" '1' , ")
                                     Else
+                                        'CUSSION,BELT-1,BELT-2,WIRE CHAFER,Nylon CHAFER,SIDE
                                         sb.AppendLine(" '2' , ")
                                     End If
 
@@ -1225,7 +1252,7 @@ Public Class FrmSemi
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
 
-                                End If
+                                End If 'If GridRow.Count > 0
 
                             End If 'If strTypeMaterial.Length > 0 And strSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0
                         Next i

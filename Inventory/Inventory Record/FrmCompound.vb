@@ -749,6 +749,10 @@ Public Class FrmCompound
                             '//Case 2.2 : [NEW] FinalCompoundCode, CompoundCode and Revision
 
                             Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            'Check empty
+                            If strFinalCompoundCode.Length <= 0 Then
+                                Throw New System.Exception("Please input Final Compound data.")
+                            End If
 
                             If strFinalCompoundCode.Length > 0 Then
                                 Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
@@ -768,7 +772,7 @@ Public Class FrmCompound
                                     Throw New System.Exception("Please input Revision data.")
                                 End If
 
-                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("Qty").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
                                         Throw New System.Exception("Please input Qty data as Number.")
                                     End If
@@ -794,13 +798,13 @@ Public Class FrmCompound
                                 Dim chkSameCompoundCodeBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
                                 If i > 0 Then
-                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString
-                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString
+                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString()
+                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString()
                                 Else
-                                    chkSameFinalCompoundCodeBefore = ""
-                                    chkSameCompoundCodeBefore = ""
-                                    chkSameRevisionBefore = ""
+                                    chkSameFinalCompoundCodeBefore = String.Empty
+                                    chkSameCompoundCodeBefore = String.Empty
+                                    chkSameRevisionBefore = String.Empty
                                 End If
                                 '//-------------------------------------------------------
 
@@ -935,7 +939,7 @@ Public Class FrmCompound
                                             cmSQL.CommandText = StrSQL
                                             cmSQL.ExecuteNonQuery()
 
-                                        End If
+                                        End If 'If GridRow.Count > 0 AndAlso CDbl(GridRow(0)("Qty")) <> dblRMQty
 
                                     Else '//Case 1.2 : [SAME] FinalCompoundCode but [DIFFERENCE] CompoundCode and Revision
 
@@ -996,7 +1000,7 @@ Public Class FrmCompound
                                         cmSQL.CommandText = StrSQL
                                         cmSQL.ExecuteNonQuery()
 
-                                    End If
+                                    End If 'If GridRow.Count > 0 Or chkCompANDRevBefore = True
                                 Else '//Case 2 : [NEW] FinalCompoundCode on Grid
 
                                     '//Next check Duplicate CompoundCode and Revision on Grid
@@ -1069,11 +1073,9 @@ Public Class FrmCompound
                                         cmSQL.CommandText = StrSQL
                                         cmSQL.ExecuteNonQuery()
 
-                                    End If
-                                End If
-                            Else
-                                Throw New System.Exception("Please input Final Compound data.")
-                            End If
+                                    End If 'If GridRow.Count > 0
+                                End If 'If GridRow.Count > 0 Or strFinalCompoundCode = chkSameFinalCompoundCodeBefore
+                            End If 'If strFinalCompoundCode.Length > 0
                         Next i
 
                         trans.Commit()

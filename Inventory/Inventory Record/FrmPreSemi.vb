@@ -857,7 +857,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 strUnit = arrUnitCode(0)("ShortUnitName")
 
                                 '//Check Qty input format as Number
-                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("Qty").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblQty) Then
                                         Throw New System.Exception("Please input Qty data as Number")
                                     End If
@@ -867,21 +867,25 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
                                 GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "'")
                                 If GridRow.Count > 0 Then
-
+                                    'Found data in data grid
+                                    'Check material type from data grid
                                     strTypeMaterialOriginal = GridRow(0)("MaterialType").ToString
 
                                     '//Check Width,Length and N as Number by Condition
-                                    If GridRow(0)("MaterialType").ToString = "01" Then
+                                    If GridRow(0)("MaterialType").ToString() = "01" Then
+                                        'STEEL CORD
                                         '//Just QTY
-                                    ElseIf GridRow(0)("MaterialType").ToString = "02" Then
-                                        If dtRec.Rows(i)("Width").ToString.Length > 0 Then
+                                    ElseIf GridRow(0)("MaterialType").ToString() = "02" Then
+                                        'COATED CORD
+                                        If dtRec.Rows(i)("Width").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Width"), dblLength) Then
                                                 Throw New System.Exception("Please input Width data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Width data as Number")
                                         End If
-                                    ElseIf GridRow(0)("MaterialType").ToString = "16" Then
+                                    ElseIf GridRow(0)("MaterialType").ToString() = "16" Then
+                                        'WCH-Hut Gum
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
@@ -889,7 +893,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
-                                    ElseIf GridRow(0)("MaterialType").ToString = "19" Then
+                                    ElseIf GridRow(0)("MaterialType").ToString() = "19" Then
+                                        'HEX BEAD
                                         If dtRec.Rows(i)("N").ToString.Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
@@ -897,7 +902,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         Else
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
-                                    ElseIf GridRow(0)("MaterialType").ToString = "21" Then
+                                    ElseIf GridRow(0)("MaterialType").ToString() = "21" Then
+                                        'WIRE CHAFER
                                         If dtRec.Rows(i)("Length").ToString.Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
@@ -906,7 +912,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
                                     Else
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        'Other type (NCH-Hut Gum, Bead Cover Gum, WCH-End Gum, Body Ply Insert)
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
@@ -914,7 +921,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
 
-                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                        If dtRec.Rows(i)("N").ToString().Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
@@ -923,11 +930,15 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         End If
                                     End If
                                 Else
+                                    'Not found data in data grid
+                                    'Check material type from excel
                                     '//Check Width,Length and N as Number by Condition
                                     If strTypeMaterial = "01" Then
+                                        'STEEL CORD
                                         '//Just QTY
                                     ElseIf strTypeMaterial = "02" Then
-                                        If dtRec.Rows(i)("Width").ToString.Length > 0 Then
+                                        'COATED CORE
+                                        If dtRec.Rows(i)("Width").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Width"), dblLength) Then
                                                 Throw New System.Exception("Please input Width data as Number")
                                             End If
@@ -935,7 +946,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input Width data as Number")
                                         End If
                                     ElseIf strTypeMaterial = "16" Then
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        'WCH-Hut Gum
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
@@ -943,7 +955,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
                                     ElseIf strTypeMaterial = "19" Then
-                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                        'HEX BEAD
+                                        If dtRec.Rows(i)("N").ToString().Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
@@ -951,7 +964,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
                                     ElseIf strTypeMaterial = "21" Then
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        'WIRE CHAFER
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
@@ -959,7 +973,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
                                     Else
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        'Other type
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
@@ -967,7 +982,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
 
-                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                        If dtRec.Rows(i)("N").ToString().Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
@@ -975,25 +990,25 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
                                     End If
-                                End If
+                                End If 'If GridRow.Count > 0
 
                                 '//For Check Data from above row on import file.
                                 Dim chkSamePreSemiBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
                                 Dim chkSamePreSemiRevAbove As Boolean = False
                                 If i > 0 Then
-                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("PreSemi").ToString
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("PreSemiRevision").ToString
+                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("PreSemi").ToString()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("PreSemiRevision").ToString()
                                 Else
-                                    chkSamePreSemiBefore = ""
-                                    chkSameRevisionBefore = ""
+                                    chkSamePreSemiBefore = String.Empty
+                                    chkSameRevisionBefore = String.Empty
                                 End If
 
                                 If strPreSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalQty = 0
                                     GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "'")
                                     If GridRow.Count > 0 Then '//Have PreSemi and Rev on DB so can use TypeMat from DB
-                                        Dim sameTypeMat As String = GridRow(0)("MaterialType").ToString
+                                        Dim sameTypeMat As String = GridRow(0)("MaterialType").ToString()
                                         For k As Integer = 0 To GridRow.Count - 1
                                             totalQty = totalQty + GridRow(k)("Qty")
                                         Next k
@@ -1007,16 +1022,22 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             End If
 
                                             If sameTypeMat = "01" Then
+                                                'STEEL CORD
                                                 totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
                                             ElseIf sameTypeMat = "02" Then
+                                                'COATED CORD
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) * dblWidth) / 1000)
                                             ElseIf sameTypeMat = "19" Then
+                                                'HEX BREAD
                                                 totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
                                             ElseIf sameTypeMat = "21" Then
+                                                'WIRE CHAFER
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             ElseIf sameTypeMat = "16" Then
+                                                'WCH-Hut Gum
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             Else
+                                                'Other type
                                                 totalQty = totalQty + (((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000) / intN)
                                             End If
                                         Next j
@@ -1024,23 +1045,29 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         ExcelRow = dtRec.Select("PreSemi = '" & strPreSemi & "' AND PreSemiRevision = '" & strRevision & "'")
                                         For j As Integer = 0 To ExcelRow.Count - 1
                                             If ExcelRow(j)("TypeMaterial") = "01" Then
+                                                'STEEL CORD
                                                 totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
                                             ElseIf ExcelRow(j)("TypeMaterial") = "02" Then
+                                                'COATED CORD
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) * dblWidth) / 1000)
                                             ElseIf ExcelRow(j)("TypeMaterial") = "19" Then
+                                                'HEX BEAD
                                                 totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
                                             ElseIf ExcelRow(j)("TypeMaterial") = "21" Then
+                                                'WIRE CHAFER
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             ElseIf ExcelRow(j)("TypeMaterial") = "16" Then
+                                                'WCH-Hut Gum
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             Else
+                                                'Other type
                                                 totalQty = totalQty + (((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000) / intN)
                                             End If
                                         Next j
-                                    End If
+                                    End If 'If GridRow.Count > 0
                                 Else
                                     chkSamePreSemiRevAbove = True
-                                End If
+                                End If 'If strPreSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore
 
                                 '// 1.) Check PreSemi and Revision fron DB
                                 '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLPreSemi and TBLConvert
@@ -1065,14 +1092,19 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         sb.AppendLine(" Set ")
 
                                         If strTypeMaterialOriginal = "01" Then
+                                            'STEEL CORD
                                             sb.AppendLine(" Qty = '" & dblQty & "' ")
                                         ElseIf strTypeMaterialOriginal = "02" Then
+                                            'COATED CORD
                                             sb.AppendLine(" Qty = '" & ((dblQty * dblWidth) / 1000) & "' ")
                                         ElseIf strTypeMaterialOriginal = "19" Then
+                                            'HEX BEAD
                                             sb.AppendLine(" Qty = '" & (dblQty / intN) & "' ")
                                         ElseIf strTypeMaterialOriginal = "16" Then
+                                            'WCH-Hut Gum
                                             sb.AppendLine(" Qty = '" & ((dblQty / dblLength) * 1000) & "' ")
                                         Else
+                                            'Other type
                                             sb.AppendLine(" Qty = '" & (((dblQty / dblLength) * 1000) / intN) & "' ")
                                         End If
 
@@ -1300,8 +1332,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
                                 End If
 
-                            End If
-                        Next
+                            End If 'If strTypeMaterial.Length > 0 And strPreSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0
+                        Next i
 
                         trans.Commit()
                         MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)

@@ -795,6 +795,18 @@ Public Class FrmRHC
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
                             Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
 
+                            If strFinalCompoundCode.Length <= 0 Then
+                                Throw New System.Exception("Please input Final Compound data.")
+                            End If
+
+                            If strCompoundCode.Length <= 0 Then
+                                Throw New System.Exception("Please input Compound data.")
+                            End If
+
+                            If strRevision.Length <= 0 Then
+                                Throw New System.Exception("Please input Revision data.")
+                            End If
+
                             If strFinalCompoundCode.Length > 0 Then
                                 Dim dblRMQty As Double
                                 Dim dblRHC As Double
@@ -1069,9 +1081,7 @@ Public Class FrmRHC
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
                                 End If
-                            Else
-                                Throw New System.Exception("Please input Final Compound data.")
-                            End If
+                            End If 'If strFinalCompoundCode.Length
                         Next i
 
                         trans.Commit()
@@ -1142,7 +1152,7 @@ Public Class FrmRHC
                     If i = 0 Then
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
-                        Throw New System.Exception("This RM Code '" & rmCode & "' not match with Group(" & Final & "), Compound(" & Comp & ") and Revision(" & Rev & ")")
+                        Throw New System.Exception("This Group """ & Final & """, Compound """ & Comp & """, Revision """ & Rev & """ and RMCode """ & rmCode & """ is not found in master.")
                     Else
                         cmSQLRM.Dispose()
                         cnSQLRM.Dispose()
@@ -1152,7 +1162,7 @@ Public Class FrmRHC
                 Else
                     'Check empty
                     If rmCode.Equals(String.Empty) Then
-                        Throw New ApplicationException("Rm Code is not empty.")
+                        Throw New ApplicationException("RM Code is not empty.")
                     End If
                 End If
             Next x
