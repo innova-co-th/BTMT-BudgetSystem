@@ -649,7 +649,6 @@ Public Class FrmPIGMENT
                                 End If
 
                                 Dim DTRow As DataRow()          '//Grid Data
-                                Dim dtRecRow As DataRow()       '//Excel Data
 
                                 '//Check is same {Pigmentcode} as above excel row
                                 Dim chkSameEachPigmentCodeBefore As String = String.Empty
@@ -662,16 +661,38 @@ Public Class FrmPIGMENT
                                     chkSameEachRevisionBefore = String.Empty
                                 End If
 
+                                'Filter data in data grid
                                 DTRow = DT.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
 
                                 '//Sum QTY each PigmentCode and Revision
-                                If strEachRevision <> chkSameEachPigmentCodeBefore Or strRMCode <> chkSameEachRevisionBefore Then
+                                If strEachRevision <> chkSameEachPigmentCodeBefore Or strEachRevision <> chkSameEachRevisionBefore Then
+                                    'First record of each pigment and each reivision
                                     totalQty = 0
-                                    dtRecRow = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
-                                    For j As Integer = 0 To dtRecRow.Count - 1
-                                        totalQty = totalQty + dtRecRow(j)("RmQty")
-                                    Next j
-                                End If
+
+                                    If DTRow.Length > 0 Then
+                                        'Found data in data grid
+                                        'Summarize QTY in data grid
+                                        For j As Integer = 0 To DTRow.Length - 1
+                                            'Check exist in excel
+                                            Dim dtRecRMCode As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' AND rmCode = '" & DTRow(j)("RMCode") & "' ")
+                                            If dtRecRMCode.Length > 0 Then
+                                                'Found RMCode in excel
+                                                'Summarize QTY from excel
+                                                totalQty = totalQty + dtRecRMCode(0)("RmQty")
+                                            Else
+                                                'Summarize QTY from data grid
+                                                totalQty = totalQty + Convert.ToDouble(DTRow(j)("RMQty"))
+                                            End If
+                                        Next j
+                                    Else
+                                        'New data
+                                        'Filter data in excel
+                                        Dim dtRecRMCode As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
+                                        For j As Integer = 0 To dtRecRMCode.Length - 1
+                                            totalQty = totalQty + dtRecRMCode(j)("RmQty")
+                                        Next j
+                                    End If
+                                End If 'If strEachRevision <> chkSameEachPigmentCodeBefore Or strEachRevision <> chkSameEachRevisionBefore
 
                                 '//Check matching between Excel and Grid
                                 If DTRow.Count > 0 Then 'Have data on Grid
@@ -683,7 +704,7 @@ Public Class FrmPIGMENT
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
                                         sb.AppendLine(" Qty = '" & dblRMQty & "'")
-                                        'sb.AppendLine(" , Per = '" & ((dblRMQty * 100) / totalQty) & "'")
+                                        sb.AppendLine(" , Per = '" & (dblRMQty * 100 / totalQty) & "'")
                                         sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision) & " AND RMCode = " & PrepareStr(strRMCode))
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -693,7 +714,7 @@ Public Class FrmPIGMENT
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                         sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -733,7 +754,7 @@ Public Class FrmPIGMENT
                                         sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
                                         sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
                                         sb.AppendLine("'KG', ")                                     'Column Unit
-                                        sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                        sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                         sb.AppendLine(" )")
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -743,7 +764,7 @@ Public Class FrmPIGMENT
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                         sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -786,7 +807,7 @@ Public Class FrmPIGMENT
                                             sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
                                             sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
                                             sb.AppendLine("'KG', ")                                     'Column Unit
-                                            sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                            sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                             sb.AppendLine(" )")
                                             StrSQL = sb.ToString()
                                             cmSQL.CommandText = StrSQL
@@ -796,7 +817,7 @@ Public Class FrmPIGMENT
                                             sb.Clear()
                                             sb.AppendLine(" Update TBLMASTER")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                            sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                             sb.AppendLine(" Where MasterCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
                                             StrSQL = sb.ToString()
                                             cmSQL.CommandText = StrSQL
@@ -839,7 +860,7 @@ Public Class FrmPIGMENT
                                             sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
                                             sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
                                             sb.AppendLine("'KG', ")                                     'Column Unit
-                                            sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                            sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                             sb.AppendLine(" )")
 
                                             StrSQL = sb.ToString()
@@ -893,7 +914,7 @@ Public Class FrmPIGMENT
                                         sb.AppendLine(PrepareStr("") & ", ")                        'Column RmRevision
                                         sb.AppendLine(PrepareStr(dblRMQty) & ", ")                  'Column Qty
                                         sb.AppendLine("'KG', ")                                     'Column Unit
-                                        sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                        sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                         sb.AppendLine(" )")
 
                                         StrSQL = sb.ToString()
