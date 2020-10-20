@@ -674,24 +674,34 @@ Public Class FrmPIGMENT
                                         'Summarize QTY in data grid
                                         For j As Integer = 0 To DTRow.Length - 1
                                             'Check exist in excel
-                                            Dim dtRecRMCode As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' AND rmCode = '" & DTRow(j)("RMCode") & "' ")
-                                            If dtRecRMCode.Length > 0 Then
+                                            Dim drRecRMCode As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' AND rmCode = '" & DTRow(j)("RMCode") & "' ")
+                                            If drRecRMCode.Length > 0 Then
                                                 'Found RMCode in excel
                                                 'Summarize QTY from excel
-                                                totalQty = totalQty + dtRecRMCode(0)("RmQty")
+                                                totalQty = totalQty + drRecRMCode(0)("RmQty")
                                             Else
                                                 'Summarize QTY from data grid
                                                 totalQty = totalQty + Convert.ToDouble(DTRow(j)("RMQty"))
                                             End If
                                         Next j
+
+                                        'Summarize QTY in excel which is not in data grid
+                                        Dim drRecExcel As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
+                                        For j As Integer = 0 To drRecExcel.Length - 1
+                                            'Check not exist in data grid
+                                            Dim drRecRMCode As DataRow() = DT.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' AND RMCode = '" & drRecExcel(j)("rmCode") & "' ")
+                                            If drRecRMCode.Length = 0 Then
+                                                totalQty = totalQty + drRecExcel(j)("RmQty")
+                                            End If
+                                        Next j
                                     Else
                                         'New data
                                         'Filter data in excel
-                                        Dim dtRecRMCode As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
-                                        For j As Integer = 0 To dtRecRMCode.Length - 1
-                                            totalQty = totalQty + dtRecRMCode(j)("RmQty")
+                                        Dim drRecExcel As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' ")
+                                        For j As Integer = 0 To drRecExcel.Length - 1
+                                            totalQty = totalQty + drRecExcel(j)("RmQty")
                                         Next j
-                                    End If
+                                    End If 'If DTRow.Length > 0
                                 End If 'If strEachRevision <> chkSameEachPigmentCodeBefore Or strEachRevision <> chkSameEachRevisionBefore
 
                                 '//Check matching between Excel and Grid
@@ -777,9 +787,9 @@ Public Class FrmPIGMENT
                                         sb.AppendLine(" Qty = '" & totalQty & "'")
                                         sb.AppendLine(" , Dateup = '" & strDate & "'")
                                         sb.AppendLine(" Where PIGMENTCode = " & PrepareStr(strEachPigmentCode) & " AND Revision = " & PrepareStr(strEachRevision))
-                                        'StrSQL = sb.ToString()
-                                        'cmSQL.CommandText = StrSQL
-                                        'cmSQL.ExecuteNonQuery()
+                                        StrSQL = sb.ToString()
+                                        cmSQL.CommandText = StrSQL
+                                        cmSQL.ExecuteNonQuery()
 
                                         sb.AppendLine(" ")
 
