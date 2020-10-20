@@ -1135,7 +1135,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                         sb.AppendLine(" Where MasterCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -1193,7 +1193,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                         sb.AppendLine(" Where MasterCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -1277,7 +1277,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     End If
 
                                     sb.AppendLine(" '" & strUnit & "' , ")                                      'Column Unit
-                                    sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                     'Column Per
+                                    sb.AppendLine(" '" & (dblQty * 100 / totalQty) & "'")                     'Column Per
                                     sb.AppendLine(" )")
 
                                     sb.AppendLine(" ")

@@ -1028,7 +1028,7 @@ Public Class FrmSemi
                                             sb.AppendLine(" '" & (dblQty / intN) & "'")
                                         Else
                                             'Other type
-                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "'")
+                                            sb.AppendLine(" '" & (dblQty / dblLength * 1000) & "'")
                                         End If
 
                                         sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "' ")
@@ -1058,7 +1058,7 @@ Public Class FrmSemi
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                         sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -1084,7 +1084,7 @@ Public Class FrmSemi
                                         End If
 
                                         sb.AppendLine(" '" & strUnit & "' , ")                                  'Column Unit
-                                        sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                 'Column Per
+                                        sb.AppendLine(" '" & (dblQty * 100 / totalQty) & "'")                 'Column Per
                                         sb.AppendLine(" )")
 
                                         sb.AppendLine(" ")
@@ -1112,7 +1112,7 @@ Public Class FrmSemi
                                         sb.Clear()
                                         sb.AppendLine(" Update TBLMASTER")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                        sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                         sb.AppendLine(" Where MasterCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL

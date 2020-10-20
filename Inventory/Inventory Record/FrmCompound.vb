@@ -810,20 +810,26 @@ Public Class FrmCompound
 
                                 '//Sum QTY each Compound Code and Revision
                                 If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
+                                    'First record of each final, each compound and each reivision
                                     totalQty = 0
+                                    'Summarize QTY in data grid
                                     GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For k As Integer = 0 To GridRow.Count - 1
                                         totalQty = totalQty + GridRow(k)("Qty")
                                     Next k
 
+                                    'Summarize QTY in excel
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
+                                        'Find data which is in excel
                                         GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "' AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
 
                                         If GridRow.Count > 0 Then
+                                            'Subtract QTY for data grid
                                             totalQty = totalQty - GridRow(0)("Qty")
                                         End If
 
+                                        'Add QTY for excel
                                         totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
                                     Next j
                                 End If
@@ -862,7 +868,7 @@ Public Class FrmCompound
                                             sb.Clear()
                                             sb.AppendLine(" Update TBLMASTER")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                            sb.AppendLine(" Per = Qty * 100 " & totalQty)
                                             sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
                                             StrSQL = sb.ToString()
                                             cmSQL.CommandText = StrSQL
@@ -903,7 +909,7 @@ Public Class FrmCompound
                                             sb.AppendLine(" NULL , ")                                   'Column RmRevision
                                             sb.AppendLine(" '" & dblRMQty & "', ")                      'Column Qty
                                             sb.AppendLine("'KG', ")                                     'Column Unit
-                                            sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                            sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                             sb.AppendLine(" )")
                                             StrSQL = sb.ToString()
                                             cmSQL.CommandText = StrSQL
@@ -913,7 +919,7 @@ Public Class FrmCompound
                                             sb.Clear()
                                             sb.AppendLine(" Update TBLMASTER")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" Per = Qty*(100/" & totalQty & ")")
+                                            sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                             sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
                                             StrSQL = sb.ToString()
                                             cmSQL.CommandText = StrSQL
@@ -993,7 +999,7 @@ Public Class FrmCompound
                                         sb.AppendLine(" NULL , ")                        'Column RmRevision
                                         sb.AppendLine(" '" & dblRMQty & "', ")                  'Column Qty
                                         sb.AppendLine(" 'KG', ")                                     'Column Unit
-                                        sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                        sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                         sb.AppendLine(" )")
 
                                         StrSQL = sb.ToString()
@@ -1066,7 +1072,7 @@ Public Class FrmCompound
                                         sb.AppendLine(" NULL , ")                        'Column RmRevision
                                         sb.AppendLine(" '" & dblRMQty & "', ")                  'Column Qty
                                         sb.AppendLine(" 'KG', ")                                     'Column Unit
-                                        sb.AppendLine(" '" & ((dblRMQty * 100) / totalQty) & "'")   'Column Per
+                                        sb.AppendLine(" '" & (dblRMQty * 100 / totalQty) & "'")   'Column Per
                                         sb.AppendLine(" )")
 
                                         StrSQL = sb.ToString()
