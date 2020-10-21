@@ -839,7 +839,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 Throw New ApplicationException("Presemi Code, Presemi Revision is not empty.")
                             End If
 
-                            'Check Type Material Master
+                            'Get Type Material Master
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
                             strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
 
@@ -1007,7 +1007,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 If strPreSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalQty = 0
                                     GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "'")
-                                    If GridRow.Count > 0 Then '//Have PreSemi and Rev on DB so can use TypeMat from DB
+                                    If GridRow.Count > 0 Then
+                                        '//Have PreSemi and Rev on DB so can use TypeMat from DB
                                         Dim sameTypeMat As String = GridRow(0)("MaterialType").ToString()
                                         For k As Integer = 0 To GridRow.Count - 1
                                             totalQty = totalQty + GridRow(k)("Qty")
@@ -1041,22 +1042,27 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                                 totalQty = totalQty + (((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000) / intN)
                                             End If
                                         Next j
-                                    Else '//New PreSemi and Rev so use TypeMat from ImportExcel
+                                    Else
+                                        '//New PreSemi and Rev so use TypeMat from ImportExcel
                                         ExcelRow = dtRec.Select("PreSemi = '" & strPreSemi & "' AND PreSemiRevision = '" & strRevision & "'")
                                         For j As Integer = 0 To ExcelRow.Count - 1
-                                            If ExcelRow(j)("TypeMaterial") = "01" Then
+                                            'Get Type Material Master
+                                            Dim arrCheckTypeMatCodeExcel As DataRow() = dtTypeMaterial.Select("MaterialName = '" & ExcelRow(j)("TypeMaterial") & "'")
+                                            Dim strCheckTypeMaterialCode As String = arrCheckTypeMatCodeExcel(0)("MaterialCode")
+
+                                            If strCheckTypeMaterialCode = "01" Then
                                                 'STEEL CORD
                                                 totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
-                                            ElseIf ExcelRow(j)("TypeMaterial") = "02" Then
+                                            ElseIf strCheckTypeMaterialCode = "02" Then
                                                 'COATED CORD
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) * dblWidth) / 1000)
-                                            ElseIf ExcelRow(j)("TypeMaterial") = "19" Then
+                                            ElseIf strCheckTypeMaterialCode = "19" Then
                                                 'HEX BEAD
                                                 totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
-                                            ElseIf ExcelRow(j)("TypeMaterial") = "21" Then
+                                            ElseIf strCheckTypeMaterialCode = "21" Then
                                                 'WIRE CHAFER
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
-                                            ElseIf ExcelRow(j)("TypeMaterial") = "16" Then
+                                            ElseIf strCheckTypeMaterialCode = "16" Then
                                                 'WCH-Hut Gum
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             Else
@@ -1247,9 +1253,10 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
 
                                     If strTypeMaterial = "16" Then                  'Column CN
-                                        sb.AppendLine(" '2' , ")
+                                        'WCH-Hut Gum
+                                        sb.AppendLine(" '2' ")
                                     Else
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     End If
 
                                     sb.AppendLine(" )")

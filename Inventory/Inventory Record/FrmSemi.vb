@@ -955,7 +955,8 @@ Public Class FrmSemi
                                     'Start new semi and revision in each group
                                     totalQty = 0
                                     GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
-                                    If GridRow.Count > 0 Then '//Have Semi and Rev on DB so can use TypeMat from DB
+                                    If GridRow.Count > 0 Then
+                                        '//Have Semi and Rev on DB so can use TypeMat from DB
                                         Dim sameTypeMat As String = GridRow(0)("MaterialCode").ToString()
                                         For k As Integer = 0 To GridRow.Count - 1
                                             totalQty = totalQty + GridRow(k)("Qty")
@@ -980,13 +981,18 @@ Public Class FrmSemi
                                                 totalQty = totalQty + ((CDbl(ExcelRow(j)("Qty")) / dblLength) * 1000)
                                             End If
                                         Next j
-                                    Else '//New PreSemi and Rev so use TypeMat from ImportExcel
+                                    Else
+                                        '//New PreSemi and Rev so use TypeMat from ImportExcel
                                         ExcelRow = dtRec.Select("Semi = '" & strSemi & "' AND SemiRevision = '" & strRevision & "'")
                                         For j As Integer = 0 To ExcelRow.Count - 1
-                                            If ExcelRow(j)("TypeMaterial") = "13" Then
+                                            'Get Type Material Master
+                                            Dim arrCheckTypeMatCodeExcel As DataRow() = dtTypeMaterial.Select("MaterialName = '" & ExcelRow(j)("TypeMaterial") & "'")
+                                            Dim strCheckTypeMaterialCode As String = arrCheckTypeMatCodeExcel(0)("MaterialCode")
+
+                                            If strCheckTypeMaterialCode = "13" Then
                                                 'TREAD
                                                 totalQty = totalQty + CDbl(ExcelRow(j)("Qty"))
-                                            ElseIf ExcelRow(j)("TypeMaterial") = "14" Then
+                                            ElseIf strCheckTypeMaterialCode = "14" Then
                                                 'BF (Upper,Lower,Center)
                                                 totalQty = totalQty + (CDbl(ExcelRow(j)("Qty")) / intN)
                                             Else
@@ -1076,11 +1082,14 @@ Public Class FrmSemi
                                         sb.AppendLine(" NULL , ")                                               'Column RmRevision
 
                                         If strTypeMaterialOriginal = "13" Then                                  'Column Qty
-                                            sb.AppendLine(" '" & dblQty & "'")
+                                            'TREAD
+                                            sb.AppendLine(" '" & dblQty & "',")
                                         ElseIf strTypeMaterialOriginal = "14" Then
-                                            sb.AppendLine(" '" & (dblQty / intN) & "'")
+                                            'BF (Upper,Lower,Center)
+                                            sb.AppendLine(" '" & (dblQty / intN) & "',")
                                         Else
-                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "'")
+                                            'Other type
+                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "',")
                                         End If
 
                                         sb.AppendLine(" '" & strUnit & "' , ")                                  'Column Unit
@@ -1164,25 +1173,25 @@ Public Class FrmSemi
 
                                     If strTypeMaterial = "13" Then                  'Column CN
                                         'TREAD
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     ElseIf strTypeMaterial = "14" Then
                                         'BF (Upper,Lower,Center)
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     ElseIf strTypeMaterial = "07" Then
                                         'BELT-3
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     ElseIf strTypeMaterial = "08" Then
                                         'BELT-4
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     ElseIf strTypeMaterial = "12" Then
                                         'INNERLINER
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     ElseIf strTypeMaterial = "04" Then
                                         'BODY PLY
-                                        sb.AppendLine(" '1' , ")
+                                        sb.AppendLine(" '1' ")
                                     Else
                                         'CUSSION,BELT-1,BELT-2,WIRE CHAFER,Nylon CHAFER,SIDE
-                                        sb.AppendLine(" '2' , ")
+                                        sb.AppendLine(" '2' ")
                                     End If
 
                                     sb.AppendLine(" )")
