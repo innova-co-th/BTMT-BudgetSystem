@@ -868,7 +868,7 @@ Public Class FrmCompound
                                             sb.Clear()
                                             sb.AppendLine(" Update TBLMASTER")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" Per = Qty * 100 " & totalQty)
+                                            sb.AppendLine(" Per = Qty * 100 / " & totalQty)
                                             sb.AppendLine(" Where MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' ")
                                             StrSQL = sb.ToString()
                                             cmSQL.CommandText = StrSQL
