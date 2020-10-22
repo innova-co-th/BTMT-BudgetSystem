@@ -749,9 +749,19 @@ Public Class FrmCompound
                             '//Case 2.2 : [NEW] FinalCompoundCode, CompoundCode and Revision
 
                             Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            Dim strSeq As String = dtRec.Rows(i)("Seq_No").ToString().Trim()
                             'Check empty
                             If strFinalCompoundCode.Length <= 0 Then
                                 Throw New System.Exception("Please input Final Compound data.")
+                            End If
+
+                            If strSeq.Length <= 0 Then
+                                Throw New System.Exception("Please input Seq data.")
+                            Else
+                                Dim intSeq As Integer = 0
+                                If Not Int32.TryParse(dtRec.Rows(i)("Seq_No"), intSeq) Then
+                                    Throw New System.Exception("Please input Seq data as Number.")
+                                End If
                             End If
 
                             If strFinalCompoundCode.Length > 0 Then
@@ -770,6 +780,8 @@ Public Class FrmCompound
 
                                 If strRevision.Length = 0 Then
                                     Throw New System.Exception("Please input Revision data.")
+                                ElseIf strRevision.Length > 3 Then
+                                    Throw New System.Exception("Revision data must less than 4 digits.")
                                 End If
 
                                 If dtRec.Rows(i)("Qty").ToString().Length > 0 Then

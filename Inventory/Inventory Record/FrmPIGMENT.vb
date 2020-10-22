@@ -637,6 +637,8 @@ Public Class FrmPIGMENT
                                 'Check empty
                                 If strEachRevision.Length = 0 Then
                                     Throw New System.Exception("Please input EachRevision data.")
+                                ElseIf strEachRevision.Length > 3 Then
+                                    Throw New System.Exception("EachRevision data must less than 4 digits.")
                                 End If
 
                                 'Check RmQty

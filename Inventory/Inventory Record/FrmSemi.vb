@@ -853,6 +853,9 @@ Public Class FrmSemi
                             If strSemi.Equals(String.Empty) Or strRevision.Equals(String.Empty) Then
                                 Throw New ApplicationException("Semi Code and Semi Revision is not empty.")
                             End If
+                            If strRevision.Length > 3 Then
+                                Throw New System.Exception("Revision must less than 4 digits.")
+                            End If
 
                             'Get Type Material Master
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")

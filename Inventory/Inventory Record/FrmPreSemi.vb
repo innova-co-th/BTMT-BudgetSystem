@@ -838,6 +838,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                             If strPreSemi.Equals(String.Empty) Or strRevision.Equals(String.Empty) Then
                                 Throw New ApplicationException("Presemi Code, Presemi Revision is not empty.")
                             End If
+                            If strRevision.Length > 3 Then
+                                Throw New System.Exception("Revision must less than 4 digits.")
+                            End If
 
                             'Get Type Material Master
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")

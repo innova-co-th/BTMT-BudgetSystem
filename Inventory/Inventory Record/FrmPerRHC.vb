@@ -686,6 +686,8 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
 
                             If strRevision.Length <= 0 Then
                                 Throw New System.Exception("Please input Revision data.")
+                            ElseIf strRevision.Length > 3 Then
+                                Throw New System.Exception("Revision data must less than 4 digits.")
                             End If
 
                             If strFinalCompoundCode.Length > 0 Then

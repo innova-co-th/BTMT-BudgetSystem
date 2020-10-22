@@ -793,8 +793,25 @@ Public Class FrmRHC
                             Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
                             Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
                             Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+
+                            'Check empty
+                            If strFinalCompoundCode.Length <= 0 Then
+                                Throw New System.Exception("Please input Final Compound data.")
+                            End If
+
+                            If dtRec.Rows(i)("Seq_No").ToString().Trim().Length <= 0 Then
+                                Throw New System.Exception("Please input Seq data.")
+                            Else
+                                Dim intSeqResult As Integer = 0
+                                If Not Int32.TryParse(dtRec.Rows(i)("Seq_No"), intSeqResult) Then
+                                    Throw New System.Exception("Please input Seq data as Number.")
+                                End If
+                            End If
+
+                            'Declare and convert seq to integer
                             Dim intSeq As Integer = dtRec.Rows(i)("Seq_No")
 
+                            'Check empty
                             If strFinalCompoundCode.Length <= 0 Then
                                 Throw New System.Exception("Please input Final Compound data.")
                             End If
@@ -805,6 +822,8 @@ Public Class FrmRHC
 
                             If strRevision.Length <= 0 Then
                                 Throw New System.Exception("Please input Revision data.")
+                            ElseIf strRevision.Length > 3 Then
+                                Throw New System.Exception("Revision data must less than 4 digits.")
                             End If
 
                             If strFinalCompoundCode.Length > 0 Then
