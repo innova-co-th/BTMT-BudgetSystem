@@ -40,14 +40,14 @@
     <PublishUrl>D:\Project\BTMTInventoryTagPublish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\10.30.99.232\Inventory\</InstallUrl>
+    <InstallUrl>\\10.30.99.232\Install\Inventory\</InstallUrl>
     <SupportUrl>https://www.bridgestone.co.th/th</SupportUrl>
     <ErrorReportUrl>https://www.bridgestone.co.th/th</ErrorReportUrl>
     <ProductName>Inventory Tag System</ProductName>
@@ -55,8 +55,8 @@
     <SuiteName>Inventory Tag System</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>Inventory Tag.html</WebPage>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>2.0.0.1</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
