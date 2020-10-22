@@ -610,7 +610,9 @@ Public Class FrmGreenTire
         Dim FAddGreenTire As New FrmAddGreenTire
         FAddGreenTire.Text = "Edit GreenTire"
         FAddGreenTire.CmdSave.Text = "Edit"
-        If GrdDV.Item(oldrow).Row("Final") = "" Then
+
+        If GrdDV.Item(oldrow).Row("Final").Equals(DBNull.Value) Or GrdDV.Item(oldrow).Row("Final").Equals(String.Empty) Then
+            MessageBox.Show("Please select row which specify ""Tire"" value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         Else
             FAddGreenTire.TxtCode.Text = GrdDV.Item(oldrow).Row("Final")
@@ -622,74 +624,100 @@ Public Class FrmGreenTire
             FAddGreenTire.txtremark.Text = Strremark(0)
             FAddGreenTire.txtremark2.Text = Strremark(1)
 
-            For i = 0 To 12
-                If i = 1 Then
+            For i = 0 To 13
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("BELT-1") Then
+                    'Belt-1
                     FAddGreenTire.TxtB1_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtB1_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.B1code = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 2 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("BELT-2") Then
+                    'Belt-2
                     FAddGreenTire.TxtB2_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtB2_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.B2code = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 3 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("BELT-3") Then
+                    'Belt-3
                     FAddGreenTire.TxtB3_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtB3_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.B3code = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 4 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("BELT-4") Then
+                    'Belt-4
                     FAddGreenTire.TxtB4_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtB4_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.B4code = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 5 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("BF (Upper,Lower,Center)") Then
+                    'BF (Upper,Lower,Center)
                     FAddGreenTire.txtBF_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.BFcode = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 6 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("BODY PLY") Then
+                    'Body Ply
                     FAddGreenTire.TxtBP_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtBp_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.Bpcode = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 7 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("CUSSION") Then
+                    'Cussion
                     FAddGreenTire.TxtCu_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtCU_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.CUcode = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 8 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("FLIPPER") Then
+                    'Flipper
+                    If GrdDV.Item(oldrow + i).Row("Semicode") <> "No Use" Then
+                        FAddGreenTire.TxtFP_N.Text = GrdDV.Item(oldrow + i).Row("Number")
+                        FAddGreenTire.TxtFP_L.Text = GrdDV.Item(oldrow + i).Row("Length")
+                        FAddGreenTire.FPcode = GrdDV.Item(oldrow + i).Row("Semicode")
+                    Else
+                        'Nothing
+                    End If
+                End If
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("INNERLINER") Then
+                    'InnerLiner
                     FAddGreenTire.TxtIN_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtIN_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.INcode = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 9 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("Nylon CHAFER") Then
+                    'Nylon Chafer
                     If GrdDV.Item(oldrow + i).Row("Semicode") <> "No Use" Then
                         FAddGreenTire.CheckBoxNy.Checked = True
                         FAddGreenTire.TxtNy_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                         FAddGreenTire.TxtNy_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                         FAddGreenTire.NYcode = GrdDV.Item(oldrow + i).Row("Semicode")
                     Else
+                        'Nothing
                     End If
                 End If
-                If i = 10 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("SIDE") Then
+                    'Side
                     FAddGreenTire.TxtSD_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TxtSD_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                     FAddGreenTire.SDcode = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 11 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("TREAD") Then
+                    'Tread
                     FAddGreenTire.TxtTT_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                     FAddGreenTire.TTcode = GrdDV.Item(oldrow + i).Row("Semicode")
                 End If
-                If i = 12 Then
+                If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("WIRE CHAFER") Then
+                    'Wire Chafer
                     If GrdDV.Item(oldrow + i).Row("Semicode") <> "No Use" Then
                         FAddGreenTire.CheckBoxWf.Checked = True
                         FAddGreenTire.TxtWf_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                         FAddGreenTire.TxtWf_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                         FAddGreenTire.Wfcode = GrdDV.Item(oldrow + i).Row("Semicode")
                     Else
+                        'Nothing
                     End If
+
+                    Exit For 'Exit loop because it is last record of Group
                 End If
-            Next
+            Next i
 
             FAddGreenTire.ShowDialog()
             LoadTire()
@@ -701,7 +729,7 @@ Public Class FrmGreenTire
     Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
         Dim ttype As String
         Dim FAddGreenTire As New FrmAddGreenTire
-        ttype = CmbTire.Text.Trim
+        ttype = CmbTire.Text.Trim()
         FAddGreenTire.CmdSave.Text = "Save"
         FAddGreenTire.ShowDialog()
         LoadTire()
@@ -1553,6 +1581,8 @@ Public Class FrmGreenTire
                 '// 2.) Check Revision
                 If strRevision.Length <= 0 Then
                     Throw New System.Exception("Revision is not empty.")
+                ElseIf strRevision.Length > 3 Then
+                    Throw New System.Exception("Revision must less than 4 digits.")
                 End If
 
                 '// 3.) Check BSJ (TireSize)
