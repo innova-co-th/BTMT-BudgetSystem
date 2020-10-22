@@ -48,14 +48,14 @@ Public Class FrmAddGreenTire
     Friend iCmb As String
 #End Region
     Friend TTcode, BFcode, Bpcode, CUcode, SDcode, INcode,
-            B1code, B2code, B3code, B4code, Wfcode, NYcode, BSJCode, FlipperCode As String
+            B1code, B2code, B3code, B4code, Wfcode, NYcode, BSJCode, FPcode As String
     Friend WithEvents GroupBox13 As GroupBox
-    Friend WithEvents TxtFlipper_L As TextBox
-    Friend WithEvents TxtFlipper_N As TextBox
+    Friend WithEvents TxtFP_L As TextBox
+    Friend WithEvents TxtFP_N As TextBox
     Friend WithEvents Label29 As Label
     Friend WithEvents Label30 As Label
-    Friend WithEvents CheckBoxFlipper As CheckBox
-    Friend WithEvents cmbFlipper As ComboBox
+    Friend WithEvents CheckBoxFP As CheckBox
+    Friend WithEvents cmbFP As ComboBox
 
 #Region " Windows Form Designer generated code "
 
@@ -262,12 +262,12 @@ Public Class FrmAddGreenTire
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.GroupBox13 = New System.Windows.Forms.GroupBox()
-        Me.TxtFlipper_L = New System.Windows.Forms.TextBox()
-        Me.TxtFlipper_N = New System.Windows.Forms.TextBox()
+        Me.TxtFP_L = New System.Windows.Forms.TextBox()
+        Me.TxtFP_N = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.CheckBoxFlipper = New System.Windows.Forms.CheckBox()
-        Me.cmbFlipper = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxFP = New System.Windows.Forms.CheckBox()
+        Me.cmbFP = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -292,58 +292,58 @@ Public Class FrmAddGreenTire
         Me.GroupBox1.Controls.Add(Me.CheckBoxWf)
         Me.GroupBox1.Controls.Add(Me.cmbWf)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox1.Location = New System.Drawing.Point(317, 65)
+        Me.GroupBox1.Location = New System.Drawing.Point(264, 56)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(278, 83)
+        Me.GroupBox1.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Wire Chafer"
         '
         'TxtWf_L
         '
-        Me.TxtWf_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtWf_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtWf_L.Name = "TxtWf_L"
-        Me.TxtWf_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtWf_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtWf_L.TabIndex = 2
         '
         'TxtWf_N
         '
-        Me.TxtWf_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtWf_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtWf_N.Name = "TxtWf_N"
-        Me.TxtWf_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtWf_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtWf_N.TabIndex = 1
         '
         'Label23
         '
-        Me.Label23.Location = New System.Drawing.Point(163, 46)
+        Me.Label23.Location = New System.Drawing.Point(136, 40)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(48, 19)
+        Me.Label23.Size = New System.Drawing.Size(40, 16)
         Me.Label23.TabIndex = 10
         Me.Label23.Text = "Length"
         '
         'Label24
         '
-        Me.Label24.Location = New System.Drawing.Point(163, 18)
+        Me.Label24.Location = New System.Drawing.Point(136, 16)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(39, 19)
+        Me.Label24.Size = New System.Drawing.Size(32, 16)
         Me.Label24.TabIndex = 9
         Me.Label24.Text = "Num"
         '
         'CheckBoxWf
         '
         Me.CheckBoxWf.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBoxWf.Location = New System.Drawing.Point(10, 18)
+        Me.CheckBoxWf.Location = New System.Drawing.Point(8, 16)
         Me.CheckBoxWf.Name = "CheckBoxWf"
-        Me.CheckBoxWf.Size = New System.Drawing.Size(67, 19)
+        Me.CheckBoxWf.Size = New System.Drawing.Size(56, 16)
         Me.CheckBoxWf.TabIndex = 30
         Me.CheckBoxWf.Text = "Use"
         '
         'cmbWf
         '
         Me.cmbWf.Enabled = False
-        Me.cmbWf.Location = New System.Drawing.Point(10, 46)
+        Me.cmbWf.Location = New System.Drawing.Point(8, 40)
         Me.cmbWf.Name = "cmbWf"
-        Me.cmbWf.Size = New System.Drawing.Size(144, 24)
+        Me.cmbWf.Size = New System.Drawing.Size(120, 21)
         Me.cmbWf.TabIndex = 0
         Me.cmbWf.Text = "Select"
         '
@@ -353,33 +353,33 @@ Public Class FrmAddGreenTire
         Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Controls.Add(Me.cmbBF)
         Me.GroupBox2.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox2.Location = New System.Drawing.Point(19, 65)
+        Me.GroupBox2.Location = New System.Drawing.Point(16, 56)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(279, 55)
+        Me.GroupBox2.Size = New System.Drawing.Size(232, 48)
         Me.GroupBox2.TabIndex = 3
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "BF (Upper-Lower-Center)"
         '
         'txtBF_N
         '
-        Me.txtBF_N.Location = New System.Drawing.Point(211, 18)
+        Me.txtBF_N.Location = New System.Drawing.Point(176, 16)
         Me.txtBF_N.Name = "txtBF_N"
-        Me.txtBF_N.Size = New System.Drawing.Size(58, 22)
+        Me.txtBF_N.Size = New System.Drawing.Size(48, 20)
         Me.txtBF_N.TabIndex = 1
         '
         'Label6
         '
-        Me.Label6.Location = New System.Drawing.Point(163, 21)
+        Me.Label6.Location = New System.Drawing.Point(136, 18)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(39, 18)
+        Me.Label6.Size = New System.Drawing.Size(32, 16)
         Me.Label6.TabIndex = 5
         Me.Label6.Text = "Num"
         '
         'cmbBF
         '
-        Me.cmbBF.Location = New System.Drawing.Point(10, 18)
+        Me.cmbBF.Location = New System.Drawing.Point(8, 16)
         Me.cmbBF.Name = "cmbBF"
-        Me.cmbBF.Size = New System.Drawing.Size(144, 24)
+        Me.cmbBF.Size = New System.Drawing.Size(120, 21)
         Me.cmbBF.TabIndex = 0
         Me.cmbBF.Text = "Select"
         '
@@ -391,48 +391,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox3.Controls.Add(Me.Label16)
         Me.GroupBox3.Controls.Add(Me.cmbB1)
         Me.GroupBox3.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox3.Location = New System.Drawing.Point(317, 157)
+        Me.GroupBox3.Location = New System.Drawing.Point(264, 136)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(278, 83)
+        Me.GroupBox3.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox3.TabIndex = 10
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Belt-1"
         '
         'TxtB1_L
         '
-        Me.TxtB1_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtB1_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtB1_L.Name = "TxtB1_L"
-        Me.TxtB1_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB1_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtB1_L.TabIndex = 2
         '
         'TxtB1_N
         '
-        Me.TxtB1_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtB1_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtB1_N.Name = "TxtB1_N"
-        Me.TxtB1_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB1_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtB1_N.TabIndex = 1
         '
         'Label15
         '
-        Me.Label15.Location = New System.Drawing.Point(163, 46)
+        Me.Label15.Location = New System.Drawing.Point(136, 40)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(48, 19)
+        Me.Label15.Size = New System.Drawing.Size(40, 16)
         Me.Label15.TabIndex = 10
         Me.Label15.Text = "Length"
         '
         'Label16
         '
-        Me.Label16.Location = New System.Drawing.Point(163, 18)
+        Me.Label16.Location = New System.Drawing.Point(136, 16)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(39, 19)
+        Me.Label16.Size = New System.Drawing.Size(32, 16)
         Me.Label16.TabIndex = 9
         Me.Label16.Text = "Num"
         '
         'cmbB1
         '
-        Me.cmbB1.Location = New System.Drawing.Point(10, 18)
+        Me.cmbB1.Location = New System.Drawing.Point(8, 16)
         Me.cmbB1.Name = "cmbB1"
-        Me.cmbB1.Size = New System.Drawing.Size(144, 24)
+        Me.cmbB1.Size = New System.Drawing.Size(120, 21)
         Me.cmbB1.TabIndex = 0
         Me.cmbB1.Text = "Select"
         '
@@ -444,48 +444,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox4.Controls.Add(Me.Label18)
         Me.GroupBox4.Controls.Add(Me.cmbB2)
         Me.GroupBox4.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox4.Location = New System.Drawing.Point(317, 249)
+        Me.GroupBox4.Location = New System.Drawing.Point(264, 216)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(278, 83)
+        Me.GroupBox4.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox4.TabIndex = 11
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Belt-2"
         '
         'TxtB2_L
         '
-        Me.TxtB2_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtB2_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtB2_L.Name = "TxtB2_L"
-        Me.TxtB2_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB2_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtB2_L.TabIndex = 2
         '
         'TxtB2_N
         '
-        Me.TxtB2_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtB2_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtB2_N.Name = "TxtB2_N"
-        Me.TxtB2_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB2_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtB2_N.TabIndex = 1
         '
         'Label17
         '
-        Me.Label17.Location = New System.Drawing.Point(163, 46)
+        Me.Label17.Location = New System.Drawing.Point(136, 40)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(48, 19)
+        Me.Label17.Size = New System.Drawing.Size(40, 16)
         Me.Label17.TabIndex = 10
         Me.Label17.Text = "Length"
         '
         'Label18
         '
-        Me.Label18.Location = New System.Drawing.Point(163, 18)
+        Me.Label18.Location = New System.Drawing.Point(136, 16)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(39, 19)
+        Me.Label18.Size = New System.Drawing.Size(32, 16)
         Me.Label18.TabIndex = 9
         Me.Label18.Text = "Num"
         '
         'cmbB2
         '
-        Me.cmbB2.Location = New System.Drawing.Point(10, 18)
+        Me.cmbB2.Location = New System.Drawing.Point(8, 16)
         Me.cmbB2.Name = "cmbB2"
-        Me.cmbB2.Size = New System.Drawing.Size(144, 24)
+        Me.cmbB2.Size = New System.Drawing.Size(120, 21)
         Me.cmbB2.TabIndex = 0
         Me.cmbB2.Text = "Select"
         '
@@ -497,48 +497,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox5.Controls.Add(Me.Label20)
         Me.GroupBox5.Controls.Add(Me.cmbB3)
         Me.GroupBox5.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox5.Location = New System.Drawing.Point(317, 342)
+        Me.GroupBox5.Location = New System.Drawing.Point(264, 296)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(278, 83)
+        Me.GroupBox5.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox5.TabIndex = 12
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Belt-3"
         '
         'TxtB3_L
         '
-        Me.TxtB3_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtB3_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtB3_L.Name = "TxtB3_L"
-        Me.TxtB3_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB3_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtB3_L.TabIndex = 2
         '
         'TxtB3_N
         '
-        Me.TxtB3_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtB3_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtB3_N.Name = "TxtB3_N"
-        Me.TxtB3_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB3_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtB3_N.TabIndex = 1
         '
         'Label19
         '
-        Me.Label19.Location = New System.Drawing.Point(163, 46)
+        Me.Label19.Location = New System.Drawing.Point(136, 40)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(48, 19)
+        Me.Label19.Size = New System.Drawing.Size(40, 16)
         Me.Label19.TabIndex = 10
         Me.Label19.Text = "Length"
         '
         'Label20
         '
-        Me.Label20.Location = New System.Drawing.Point(163, 18)
+        Me.Label20.Location = New System.Drawing.Point(136, 16)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(39, 19)
+        Me.Label20.Size = New System.Drawing.Size(32, 16)
         Me.Label20.TabIndex = 9
         Me.Label20.Text = "Num"
         '
         'cmbB3
         '
-        Me.cmbB3.Location = New System.Drawing.Point(10, 18)
+        Me.cmbB3.Location = New System.Drawing.Point(8, 16)
         Me.cmbB3.Name = "cmbB3"
-        Me.cmbB3.Size = New System.Drawing.Size(144, 24)
+        Me.cmbB3.Size = New System.Drawing.Size(120, 21)
         Me.cmbB3.TabIndex = 0
         Me.cmbB3.Text = "Select"
         '
@@ -550,48 +550,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox6.Controls.Add(Me.Label22)
         Me.GroupBox6.Controls.Add(Me.cmbB4)
         Me.GroupBox6.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox6.Location = New System.Drawing.Point(317, 434)
+        Me.GroupBox6.Location = New System.Drawing.Point(264, 376)
         Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(278, 83)
+        Me.GroupBox6.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox6.TabIndex = 13
         Me.GroupBox6.TabStop = False
         Me.GroupBox6.Text = "Belt-4"
         '
         'TxtB4_L
         '
-        Me.TxtB4_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtB4_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtB4_L.Name = "TxtB4_L"
-        Me.TxtB4_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB4_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtB4_L.TabIndex = 2
         '
         'TxtB4_N
         '
-        Me.TxtB4_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtB4_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtB4_N.Name = "TxtB4_N"
-        Me.TxtB4_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtB4_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtB4_N.TabIndex = 1
         '
         'Label21
         '
-        Me.Label21.Location = New System.Drawing.Point(163, 46)
+        Me.Label21.Location = New System.Drawing.Point(136, 40)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(48, 19)
+        Me.Label21.Size = New System.Drawing.Size(40, 16)
         Me.Label21.TabIndex = 10
         Me.Label21.Text = "Length"
         '
         'Label22
         '
-        Me.Label22.Location = New System.Drawing.Point(163, 18)
+        Me.Label22.Location = New System.Drawing.Point(136, 16)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(39, 19)
+        Me.Label22.Size = New System.Drawing.Size(32, 16)
         Me.Label22.TabIndex = 9
         Me.Label22.Text = "Num"
         '
         'cmbB4
         '
-        Me.cmbB4.Location = New System.Drawing.Point(10, 18)
+        Me.cmbB4.Location = New System.Drawing.Point(8, 16)
         Me.cmbB4.Name = "cmbB4"
-        Me.cmbB4.Size = New System.Drawing.Size(144, 24)
+        Me.cmbB4.Size = New System.Drawing.Size(120, 21)
         Me.cmbB4.TabIndex = 0
         Me.cmbB4.Text = "Select"
         '
@@ -603,48 +603,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox7.Controls.Add(Me.Label10)
         Me.GroupBox7.Controls.Add(Me.cmbIN)
         Me.GroupBox7.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox7.Location = New System.Drawing.Point(19, 222)
+        Me.GroupBox7.Location = New System.Drawing.Point(16, 192)
         Me.GroupBox7.Name = "GroupBox7"
-        Me.GroupBox7.Size = New System.Drawing.Size(279, 83)
+        Me.GroupBox7.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox7.TabIndex = 5
         Me.GroupBox7.TabStop = False
         Me.GroupBox7.Text = "INNERLINER"
         '
         'TxtIN_L
         '
-        Me.TxtIN_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtIN_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtIN_L.Name = "TxtIN_L"
-        Me.TxtIN_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtIN_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtIN_L.TabIndex = 2
         '
         'TxtIN_N
         '
-        Me.TxtIN_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtIN_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtIN_N.Name = "TxtIN_N"
-        Me.TxtIN_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtIN_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtIN_N.TabIndex = 1
         '
         'Label9
         '
-        Me.Label9.Location = New System.Drawing.Point(163, 46)
+        Me.Label9.Location = New System.Drawing.Point(136, 40)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(48, 19)
+        Me.Label9.Size = New System.Drawing.Size(40, 16)
         Me.Label9.TabIndex = 10
         Me.Label9.Text = "Length"
         '
         'Label10
         '
-        Me.Label10.Location = New System.Drawing.Point(163, 18)
+        Me.Label10.Location = New System.Drawing.Point(136, 16)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(39, 19)
+        Me.Label10.Size = New System.Drawing.Size(32, 16)
         Me.Label10.TabIndex = 9
         Me.Label10.Text = "Num"
         '
         'cmbIN
         '
-        Me.cmbIN.Location = New System.Drawing.Point(10, 18)
+        Me.cmbIN.Location = New System.Drawing.Point(8, 16)
         Me.cmbIN.Name = "cmbIN"
-        Me.cmbIN.Size = New System.Drawing.Size(144, 24)
+        Me.cmbIN.Size = New System.Drawing.Size(120, 21)
         Me.cmbIN.TabIndex = 0
         Me.cmbIN.Text = "Select"
         '
@@ -656,63 +656,63 @@ Public Class FrmAddGreenTire
         Me.GroupBox8.Controls.Add(Me.Label8)
         Me.GroupBox8.Controls.Add(Me.cmbSD)
         Me.GroupBox8.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox8.Location = New System.Drawing.Point(19, 129)
+        Me.GroupBox8.Location = New System.Drawing.Point(16, 112)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(279, 83)
+        Me.GroupBox8.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox8.TabIndex = 4
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Side"
         '
         'TxtSD_L
         '
-        Me.TxtSD_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtSD_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtSD_L.Name = "TxtSD_L"
-        Me.TxtSD_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtSD_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtSD_L.TabIndex = 2
         '
         'TxtSD_N
         '
-        Me.TxtSD_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtSD_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtSD_N.Name = "TxtSD_N"
-        Me.TxtSD_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtSD_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtSD_N.TabIndex = 1
         '
         'Label7
         '
-        Me.Label7.Location = New System.Drawing.Point(163, 46)
+        Me.Label7.Location = New System.Drawing.Point(136, 40)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(48, 19)
+        Me.Label7.Size = New System.Drawing.Size(40, 16)
         Me.Label7.TabIndex = 10
         Me.Label7.Text = "Length"
         '
         'Label8
         '
-        Me.Label8.Location = New System.Drawing.Point(163, 18)
+        Me.Label8.Location = New System.Drawing.Point(136, 16)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(39, 19)
+        Me.Label8.Size = New System.Drawing.Size(32, 16)
         Me.Label8.TabIndex = 9
         Me.Label8.Text = "Num"
         '
         'cmbSD
         '
-        Me.cmbSD.Location = New System.Drawing.Point(10, 18)
+        Me.cmbSD.Location = New System.Drawing.Point(8, 16)
         Me.cmbSD.Name = "cmbSD"
-        Me.cmbSD.Size = New System.Drawing.Size(144, 24)
+        Me.cmbSD.Size = New System.Drawing.Size(120, 21)
         Me.cmbSD.TabIndex = 0
         Me.cmbSD.Text = "Select"
         '
         'TxtRev
         '
-        Me.TxtRev.Location = New System.Drawing.Point(336, 18)
+        Me.TxtRev.Location = New System.Drawing.Point(280, 16)
         Me.TxtRev.Name = "TxtRev"
-        Me.TxtRev.Size = New System.Drawing.Size(48, 22)
+        Me.TxtRev.Size = New System.Drawing.Size(40, 20)
         Me.TxtRev.TabIndex = 1
         '
         'Label3
         '
-        Me.Label3.Location = New System.Drawing.Point(269, 21)
+        Me.Label3.Location = New System.Drawing.Point(224, 18)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(57, 18)
+        Me.Label3.Size = New System.Drawing.Size(48, 16)
         Me.Label3.TabIndex = 24
         Me.Label3.Text = "Revision"
         '
@@ -720,25 +720,25 @@ Public Class FrmAddGreenTire
         '
         Me.lblError.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.lblError.ForeColor = System.Drawing.Color.Red
-        Me.lblError.Location = New System.Drawing.Point(230, 25)
+        Me.lblError.Location = New System.Drawing.Point(192, 22)
         Me.lblError.Name = "lblError"
-        Me.lblError.Size = New System.Drawing.Size(29, 10)
+        Me.lblError.Size = New System.Drawing.Size(24, 8)
         Me.lblError.TabIndex = 23
         Me.lblError.Text = "***"
         Me.lblError.Visible = False
         '
         'TxtCode
         '
-        Me.TxtCode.Location = New System.Drawing.Point(106, 18)
+        Me.TxtCode.Location = New System.Drawing.Point(88, 16)
         Me.TxtCode.Name = "TxtCode"
-        Me.TxtCode.Size = New System.Drawing.Size(120, 22)
+        Me.TxtCode.Size = New System.Drawing.Size(100, 20)
         Me.TxtCode.TabIndex = 0
         '
         'Label2
         '
-        Me.Label2.Location = New System.Drawing.Point(19, 21)
+        Me.Label2.Location = New System.Drawing.Point(16, 18)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(87, 18)
+        Me.Label2.Size = New System.Drawing.Size(72, 16)
         Me.Label2.TabIndex = 22
         Me.Label2.Text = "Green Tire"
         '
@@ -747,18 +747,18 @@ Public Class FrmAddGreenTire
         Me.CheckBoxTire.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CheckBoxTire.Checked = True
         Me.CheckBoxTire.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBoxTire.Location = New System.Drawing.Point(739, 21)
+        Me.CheckBoxTire.Location = New System.Drawing.Point(766, 18)
         Me.CheckBoxTire.Name = "CheckBoxTire"
-        Me.CheckBoxTire.Size = New System.Drawing.Size(135, 18)
+        Me.CheckBoxTire.Size = New System.Drawing.Size(112, 16)
         Me.CheckBoxTire.TabIndex = 20
         Me.CheckBoxTire.Text = "Final   GreenTire"
         '
         'GPTire
         '
         Me.GPTire.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GPTire.Location = New System.Drawing.Point(614, 249)
+        Me.GPTire.Location = New System.Drawing.Point(512, 216)
         Me.GPTire.Name = "GPTire"
-        Me.GPTire.Size = New System.Drawing.Size(269, 268)
+        Me.GPTire.Size = New System.Drawing.Size(224, 232)
         Me.GPTire.TabIndex = 15
         Me.GPTire.TabStop = False
         Me.GPTire.Text = "Green Tire"
@@ -772,48 +772,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox10.Controls.Add(Me.Label1)
         Me.GroupBox10.Controls.Add(Me.cmbCU)
         Me.GroupBox10.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox10.Location = New System.Drawing.Point(19, 314)
+        Me.GroupBox10.Location = New System.Drawing.Point(16, 272)
         Me.GroupBox10.Name = "GroupBox10"
-        Me.GroupBox10.Size = New System.Drawing.Size(279, 83)
+        Me.GroupBox10.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox10.TabIndex = 6
         Me.GroupBox10.TabStop = False
         Me.GroupBox10.Text = "Cussion"
         '
         'TxtCU_L
         '
-        Me.TxtCU_L.Location = New System.Drawing.Point(211, 46)
+        Me.TxtCU_L.Location = New System.Drawing.Point(176, 40)
         Me.TxtCU_L.Name = "TxtCU_L"
-        Me.TxtCU_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtCU_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtCU_L.TabIndex = 2
         '
         'TxtCu_N
         '
-        Me.TxtCu_N.Location = New System.Drawing.Point(211, 18)
+        Me.TxtCu_N.Location = New System.Drawing.Point(176, 16)
         Me.TxtCu_N.Name = "TxtCu_N"
-        Me.TxtCu_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtCu_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtCu_N.TabIndex = 1
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(163, 48)
+        Me.Label4.Location = New System.Drawing.Point(136, 42)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(48, 19)
+        Me.Label4.Size = New System.Drawing.Size(40, 16)
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "Length"
         '
         'Label1
         '
-        Me.Label1.Location = New System.Drawing.Point(163, 21)
+        Me.Label1.Location = New System.Drawing.Point(136, 18)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(39, 18)
+        Me.Label1.Size = New System.Drawing.Size(32, 16)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Num"
         '
         'cmbCU
         '
-        Me.cmbCU.Location = New System.Drawing.Point(10, 18)
+        Me.cmbCU.Location = New System.Drawing.Point(8, 16)
         Me.cmbCU.Name = "cmbCU"
-        Me.cmbCU.Size = New System.Drawing.Size(144, 24)
+        Me.cmbCU.Size = New System.Drawing.Size(120, 21)
         Me.cmbCU.TabIndex = 0
         Me.cmbCU.Text = "Select"
         '
@@ -823,33 +823,33 @@ Public Class FrmAddGreenTire
         Me.GroupBox11.Controls.Add(Me.TxtTT_N)
         Me.GroupBox11.Controls.Add(Me.Label12)
         Me.GroupBox11.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox11.Location = New System.Drawing.Point(19, 406)
+        Me.GroupBox11.Location = New System.Drawing.Point(16, 352)
         Me.GroupBox11.Name = "GroupBox11"
-        Me.GroupBox11.Size = New System.Drawing.Size(279, 56)
+        Me.GroupBox11.Size = New System.Drawing.Size(232, 48)
         Me.GroupBox11.TabIndex = 7
         Me.GroupBox11.TabStop = False
         Me.GroupBox11.Text = "Tread"
         '
         'cmbTT
         '
-        Me.cmbTT.Location = New System.Drawing.Point(10, 16)
+        Me.cmbTT.Location = New System.Drawing.Point(8, 14)
         Me.cmbTT.Name = "cmbTT"
-        Me.cmbTT.Size = New System.Drawing.Size(144, 24)
+        Me.cmbTT.Size = New System.Drawing.Size(120, 21)
         Me.cmbTT.TabIndex = 0
         Me.cmbTT.Text = "Select"
         '
         'TxtTT_N
         '
-        Me.TxtTT_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtTT_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtTT_N.Name = "TxtTT_N"
-        Me.TxtTT_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtTT_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtTT_N.TabIndex = 1
         '
         'Label12
         '
-        Me.Label12.Location = New System.Drawing.Point(163, 18)
+        Me.Label12.Location = New System.Drawing.Point(136, 16)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(39, 19)
+        Me.Label12.Size = New System.Drawing.Size(32, 16)
         Me.Label12.TabIndex = 9
         Me.Label12.Text = "Num"
         '
@@ -862,58 +862,58 @@ Public Class FrmAddGreenTire
         Me.GroupBox12.Controls.Add(Me.CheckBoxNy)
         Me.GroupBox12.Controls.Add(Me.cmbNy)
         Me.GroupBox12.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox12.Location = New System.Drawing.Point(614, 65)
+        Me.GroupBox12.Location = New System.Drawing.Point(512, 56)
         Me.GroupBox12.Name = "GroupBox12"
-        Me.GroupBox12.Size = New System.Drawing.Size(269, 83)
+        Me.GroupBox12.Size = New System.Drawing.Size(224, 72)
         Me.GroupBox12.TabIndex = 14
         Me.GroupBox12.TabStop = False
         Me.GroupBox12.Text = "Nylon Chafer"
         '
         'TxtNy_L
         '
-        Me.TxtNy_L.Location = New System.Drawing.Point(202, 44)
+        Me.TxtNy_L.Location = New System.Drawing.Point(168, 38)
         Me.TxtNy_L.Name = "TxtNy_L"
-        Me.TxtNy_L.Size = New System.Drawing.Size(57, 22)
+        Me.TxtNy_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtNy_L.TabIndex = 2
         '
         'TxtNy_N
         '
-        Me.TxtNy_N.Location = New System.Drawing.Point(202, 16)
+        Me.TxtNy_N.Location = New System.Drawing.Point(168, 14)
         Me.TxtNy_N.Name = "TxtNy_N"
-        Me.TxtNy_N.Size = New System.Drawing.Size(57, 22)
+        Me.TxtNy_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtNy_N.TabIndex = 1
         '
         'Label25
         '
-        Me.Label25.Location = New System.Drawing.Point(154, 46)
+        Me.Label25.Location = New System.Drawing.Point(128, 40)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(48, 19)
+        Me.Label25.Size = New System.Drawing.Size(40, 16)
         Me.Label25.TabIndex = 10
         Me.Label25.Text = "Length"
         '
         'Label26
         '
-        Me.Label26.Location = New System.Drawing.Point(154, 18)
+        Me.Label26.Location = New System.Drawing.Point(128, 16)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(38, 19)
+        Me.Label26.Size = New System.Drawing.Size(32, 16)
         Me.Label26.TabIndex = 9
         Me.Label26.Text = "Num"
         '
         'CheckBoxNy
         '
         Me.CheckBoxNy.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBoxNy.Location = New System.Drawing.Point(10, 18)
+        Me.CheckBoxNy.Location = New System.Drawing.Point(8, 16)
         Me.CheckBoxNy.Name = "CheckBoxNy"
-        Me.CheckBoxNy.Size = New System.Drawing.Size(67, 19)
+        Me.CheckBoxNy.Size = New System.Drawing.Size(56, 16)
         Me.CheckBoxNy.TabIndex = 0
         Me.CheckBoxNy.Text = "use"
         '
         'cmbNy
         '
         Me.cmbNy.Enabled = False
-        Me.cmbNy.Location = New System.Drawing.Point(10, 46)
+        Me.cmbNy.Location = New System.Drawing.Point(8, 40)
         Me.cmbNy.Name = "cmbNy"
-        Me.cmbNy.Size = New System.Drawing.Size(144, 24)
+        Me.cmbNy.Size = New System.Drawing.Size(120, 21)
         Me.cmbNy.TabIndex = 0
         Me.cmbNy.Text = "Select"
         '
@@ -925,48 +925,48 @@ Public Class FrmAddGreenTire
         Me.GroupBox9.Controls.Add(Me.Label13)
         Me.GroupBox9.Controls.Add(Me.Label14)
         Me.GroupBox9.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox9.Location = New System.Drawing.Point(19, 471)
+        Me.GroupBox9.Location = New System.Drawing.Point(16, 408)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(279, 83)
+        Me.GroupBox9.Size = New System.Drawing.Size(232, 72)
         Me.GroupBox9.TabIndex = 8
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Body Ply"
         '
         'cmbBp
         '
-        Me.cmbBp.Location = New System.Drawing.Point(10, 18)
+        Me.cmbBp.Location = New System.Drawing.Point(8, 16)
         Me.cmbBp.Name = "cmbBp"
-        Me.cmbBp.Size = New System.Drawing.Size(144, 24)
+        Me.cmbBp.Size = New System.Drawing.Size(120, 21)
         Me.cmbBp.TabIndex = 0
         Me.cmbBp.Text = "Select"
         '
         'TxtBp_L
         '
-        Me.TxtBp_L.Location = New System.Drawing.Point(211, 44)
+        Me.TxtBp_L.Location = New System.Drawing.Point(176, 38)
         Me.TxtBp_L.Name = "TxtBp_L"
-        Me.TxtBp_L.Size = New System.Drawing.Size(58, 22)
+        Me.TxtBp_L.Size = New System.Drawing.Size(48, 20)
         Me.TxtBp_L.TabIndex = 2
         '
         'TxtBP_N
         '
-        Me.TxtBP_N.Location = New System.Drawing.Point(211, 16)
+        Me.TxtBP_N.Location = New System.Drawing.Point(176, 14)
         Me.TxtBP_N.Name = "TxtBP_N"
-        Me.TxtBP_N.Size = New System.Drawing.Size(58, 22)
+        Me.TxtBP_N.Size = New System.Drawing.Size(48, 20)
         Me.TxtBP_N.TabIndex = 1
         '
         'Label13
         '
-        Me.Label13.Location = New System.Drawing.Point(163, 46)
+        Me.Label13.Location = New System.Drawing.Point(136, 40)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(48, 19)
+        Me.Label13.Size = New System.Drawing.Size(40, 16)
         Me.Label13.TabIndex = 10
         Me.Label13.Text = "Length"
         '
         'Label14
         '
-        Me.Label14.Location = New System.Drawing.Point(163, 18)
+        Me.Label14.Location = New System.Drawing.Point(136, 16)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(39, 19)
+        Me.Label14.Size = New System.Drawing.Size(32, 16)
         Me.Label14.TabIndex = 9
         Me.Label14.Text = "Num"
         '
@@ -975,9 +975,9 @@ Public Class FrmAddGreenTire
         Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClose.Location = New System.Drawing.Point(787, 531)
+        Me.CmdClose.Location = New System.Drawing.Point(806, 540)
         Me.CmdClose.Name = "CmdClose"
-        Me.CmdClose.Size = New System.Drawing.Size(96, 65)
+        Me.CmdClose.Size = New System.Drawing.Size(80, 57)
         Me.CmdClose.TabIndex = 18
         Me.CmdClose.Text = "Close"
         Me.CmdClose.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -987,9 +987,9 @@ Public Class FrmAddGreenTire
         Me.CmdSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdSave.Image = CType(resources.GetObject("CmdSave.Image"), System.Drawing.Image)
         Me.CmdSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdSave.Location = New System.Drawing.Point(691, 531)
+        Me.CmdSave.Location = New System.Drawing.Point(726, 540)
         Me.CmdSave.Name = "CmdSave"
-        Me.CmdSave.Size = New System.Drawing.Size(96, 65)
+        Me.CmdSave.Size = New System.Drawing.Size(80, 57)
         Me.CmdSave.TabIndex = 17
         Me.CmdSave.Text = "Save"
         Me.CmdSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -997,133 +997,133 @@ Public Class FrmAddGreenTire
         'CheckAll
         '
         Me.CheckAll.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckAll.Location = New System.Drawing.Point(614, 572)
+        Me.CheckAll.Location = New System.Drawing.Point(662, 496)
         Me.CheckAll.Name = "CheckAll"
-        Me.CheckAll.Size = New System.Drawing.Size(68, 19)
+        Me.CheckAll.Size = New System.Drawing.Size(56, 16)
         Me.CheckAll.TabIndex = 19
         Me.CheckAll.Text = "Add"
         '
         'Label5
         '
-        Me.Label5.Location = New System.Drawing.Point(403, 21)
+        Me.Label5.Location = New System.Drawing.Point(336, 18)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(67, 18)
+        Me.Label5.Size = New System.Drawing.Size(56, 16)
         Me.Label5.TabIndex = 27
         Me.Label5.Text = "BSJ Code"
         '
         'Label11
         '
-        Me.Label11.Location = New System.Drawing.Point(346, 528)
+        Me.Label11.Location = New System.Drawing.Point(288, 458)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(115, 19)
+        Me.Label11.Size = New System.Drawing.Size(96, 16)
         Me.Label11.TabIndex = 29
         Me.Label11.Text = "Revision of Boss"
         '
         'txtremark
         '
-        Me.txtremark.Location = New System.Drawing.Point(490, 526)
+        Me.txtremark.Location = New System.Drawing.Point(408, 456)
         Me.txtremark.Name = "txtremark"
-        Me.txtremark.Size = New System.Drawing.Size(57, 22)
+        Me.txtremark.Size = New System.Drawing.Size(48, 20)
         Me.txtremark.TabIndex = 15
         '
         'CmbBSJCode
         '
-        Me.CmbBSJCode.Location = New System.Drawing.Point(480, 18)
+        Me.CmbBSJCode.Location = New System.Drawing.Point(400, 16)
         Me.CmbBSJCode.Name = "CmbBSJCode"
-        Me.CmbBSJCode.Size = New System.Drawing.Size(145, 24)
+        Me.CmbBSJCode.Size = New System.Drawing.Size(121, 21)
         Me.CmbBSJCode.TabIndex = 2
         Me.CmbBSJCode.Text = "Select"
         '
         'txtremark2
         '
-        Me.txtremark2.Location = New System.Drawing.Point(605, 526)
+        Me.txtremark2.Location = New System.Drawing.Point(504, 456)
         Me.txtremark2.Name = "txtremark2"
-        Me.txtremark2.Size = New System.Drawing.Size(57, 22)
+        Me.txtremark2.Size = New System.Drawing.Size(48, 20)
         Me.txtremark2.TabIndex = 16
         '
         'Label27
         '
-        Me.Label27.Location = New System.Drawing.Point(557, 528)
+        Me.Label27.Location = New System.Drawing.Point(464, 458)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(38, 19)
+        Me.Label27.Size = New System.Drawing.Size(32, 16)
         Me.Label27.TabIndex = 32
         Me.Label27.Text = "2 ND"
         '
         'Label28
         '
-        Me.Label28.Location = New System.Drawing.Point(451, 528)
+        Me.Label28.Location = New System.Drawing.Point(376, 458)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(39, 19)
+        Me.Label28.Size = New System.Drawing.Size(32, 16)
         Me.Label28.TabIndex = 33
         Me.Label28.Text = "1 ST"
         '
         'GroupBox13
         '
-        Me.GroupBox13.Controls.Add(Me.TxtFlipper_L)
-        Me.GroupBox13.Controls.Add(Me.TxtFlipper_N)
+        Me.GroupBox13.Controls.Add(Me.TxtFP_L)
+        Me.GroupBox13.Controls.Add(Me.TxtFP_N)
         Me.GroupBox13.Controls.Add(Me.Label29)
         Me.GroupBox13.Controls.Add(Me.Label30)
-        Me.GroupBox13.Controls.Add(Me.CheckBoxFlipper)
-        Me.GroupBox13.Controls.Add(Me.cmbFlipper)
+        Me.GroupBox13.Controls.Add(Me.CheckBoxFP)
+        Me.GroupBox13.Controls.Add(Me.cmbFP)
         Me.GroupBox13.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox13.Location = New System.Drawing.Point(614, 157)
+        Me.GroupBox13.Location = New System.Drawing.Point(512, 136)
         Me.GroupBox13.Name = "GroupBox13"
-        Me.GroupBox13.Size = New System.Drawing.Size(269, 83)
+        Me.GroupBox13.Size = New System.Drawing.Size(224, 72)
         Me.GroupBox13.TabIndex = 15
         Me.GroupBox13.TabStop = False
         Me.GroupBox13.Text = "Flipper"
         '
-        'TxtFlipper_L
+        'TxtFP_L
         '
-        Me.TxtFlipper_L.Location = New System.Drawing.Point(202, 44)
-        Me.TxtFlipper_L.Name = "TxtFlipper_L"
-        Me.TxtFlipper_L.Size = New System.Drawing.Size(57, 22)
-        Me.TxtFlipper_L.TabIndex = 2
+        Me.TxtFP_L.Location = New System.Drawing.Point(168, 38)
+        Me.TxtFP_L.Name = "TxtFP_L"
+        Me.TxtFP_L.Size = New System.Drawing.Size(48, 20)
+        Me.TxtFP_L.TabIndex = 2
         '
-        'TxtFlipper_N
+        'TxtFP_N
         '
-        Me.TxtFlipper_N.Location = New System.Drawing.Point(202, 16)
-        Me.TxtFlipper_N.Name = "TxtFlipper_N"
-        Me.TxtFlipper_N.Size = New System.Drawing.Size(57, 22)
-        Me.TxtFlipper_N.TabIndex = 1
+        Me.TxtFP_N.Location = New System.Drawing.Point(168, 14)
+        Me.TxtFP_N.Name = "TxtFP_N"
+        Me.TxtFP_N.Size = New System.Drawing.Size(48, 20)
+        Me.TxtFP_N.TabIndex = 1
         '
         'Label29
         '
-        Me.Label29.Location = New System.Drawing.Point(154, 46)
+        Me.Label29.Location = New System.Drawing.Point(128, 40)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(48, 19)
+        Me.Label29.Size = New System.Drawing.Size(40, 16)
         Me.Label29.TabIndex = 10
         Me.Label29.Text = "Length"
         '
         'Label30
         '
-        Me.Label30.Location = New System.Drawing.Point(154, 18)
+        Me.Label30.Location = New System.Drawing.Point(128, 16)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(38, 19)
+        Me.Label30.Size = New System.Drawing.Size(32, 16)
         Me.Label30.TabIndex = 9
         Me.Label30.Text = "Num"
         '
-        'CheckBoxFlipper
+        'CheckBoxFP
         '
-        Me.CheckBoxFlipper.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CheckBoxFlipper.Location = New System.Drawing.Point(10, 18)
-        Me.CheckBoxFlipper.Name = "CheckBoxFlipper"
-        Me.CheckBoxFlipper.Size = New System.Drawing.Size(67, 19)
-        Me.CheckBoxFlipper.TabIndex = 0
-        Me.CheckBoxFlipper.Text = "use"
+        Me.CheckBoxFP.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CheckBoxFP.Location = New System.Drawing.Point(8, 16)
+        Me.CheckBoxFP.Name = "CheckBoxFP"
+        Me.CheckBoxFP.Size = New System.Drawing.Size(56, 16)
+        Me.CheckBoxFP.TabIndex = 0
+        Me.CheckBoxFP.Text = "use"
         '
-        'cmbFlipper
+        'cmbFP
         '
-        Me.cmbFlipper.Enabled = False
-        Me.cmbFlipper.Location = New System.Drawing.Point(10, 46)
-        Me.cmbFlipper.Name = "cmbFlipper"
-        Me.cmbFlipper.Size = New System.Drawing.Size(144, 24)
-        Me.cmbFlipper.TabIndex = 0
-        Me.cmbFlipper.Text = "Select"
+        Me.cmbFP.Enabled = False
+        Me.cmbFP.Location = New System.Drawing.Point(8, 40)
+        Me.cmbFP.Name = "cmbFP"
+        Me.cmbFP.Size = New System.Drawing.Size(120, 21)
+        Me.cmbFP.TabIndex = 0
+        Me.cmbFP.Text = "Select"
         '
         'FrmAddGreenTire
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(6, 15)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(902, 603)
         Me.Controls.Add(Me.GroupBox13)
         Me.Controls.Add(Me.Label28)
@@ -1516,9 +1516,9 @@ Public Class FrmAddGreenTire
         dt.TableName = TBL_Flipper
         GrdDVFlipper = dt.DefaultView
         '************************************
-        cmbFlipper.DisplayMember = "Final"
-        cmbFlipper.ValueMember = "QPU"
-        cmbFlipper.DataSource = dt
+        cmbFP.DisplayMember = "Final"
+        cmbFP.ValueMember = "QPU"
+        cmbFP.DataSource = dt
         Me.Cursor = System.Windows.Forms.Cursors.Default
     End Sub
 #End Region
@@ -1537,22 +1537,22 @@ Public Class FrmAddGreenTire
         LoadBp()
         chkWf()
         chkNy()
-        chkFlipper()
+        chkFP()
 
         If CmdSave.Text = "Save" Then
-            SDcode = cmbSD.Text.Trim
-            CUcode = cmbCU.Text.Trim
-            BFcode = cmbBF.Text.Trim
-            INcode = cmbIN.Text.Trim
-            TTcode = cmbTT.Text.Trim
-            B1code = cmbB1.Text.Trim
-            B2code = cmbB2.Text.Trim
-            B3code = cmbB3.Text.Trim
-            B4code = cmbB4.Text.Trim
-            Bpcode = cmbBp.Text.Trim
-            Wfcode = cmbWf.Text.Trim
-            NYcode = cmbNy.Text.Trim
-            FlipperCode = cmbFlipper.Text.Trim
+            SDcode = cmbSD.Text.Trim()
+            CUcode = cmbCU.Text.Trim()
+            BFcode = cmbBF.Text.Trim()
+            INcode = cmbIN.Text.Trim()
+            TTcode = cmbTT.Text.Trim()
+            B1code = cmbB1.Text.Trim()
+            B2code = cmbB2.Text.Trim()
+            B3code = cmbB3.Text.Trim()
+            B4code = cmbB4.Text.Trim()
+            Bpcode = cmbBp.Text.Trim()
+            Wfcode = cmbWf.Text.Trim()
+            NYcode = cmbNy.Text.Trim()
+            FPcode = cmbFP.Text.Trim()
         ElseIf CmdSave.Text = "Edit" Then
             TxtCode.Enabled = True
             cmbBF.Text = BFcode
@@ -1568,7 +1568,7 @@ Public Class FrmAddGreenTire
             cmbWf.Text = Wfcode
             cmbNy.Text = NYcode
             CmbBSJCode.Text = BSJCode
-            cmbFlipper.Text = FlipperCode
+            cmbFP.Text = FPcode
         End If
     End Sub
 
@@ -1584,8 +1584,8 @@ Public Class FrmAddGreenTire
         chkNy()
     End Sub
 
-    Private Sub CheckBoxFlipper_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxFlipper.CheckedChanged
-        chkFlipper()
+    Private Sub CheckBoxFlipper_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxFP.CheckedChanged
+        chkFP()
     End Sub
 
     Sub chkWf()
@@ -1606,13 +1606,13 @@ Public Class FrmAddGreenTire
             cmbNy.Text = "Select"
         End If
     End Sub
-    Sub chkFlipper()
-        If CheckBoxFlipper.Checked Then
-            cmbFlipper.Enabled = True
+    Sub chkFP()
+        If CheckBoxFP.Checked Then
+            cmbFP.Enabled = True
             LoadFlipper()
         Else
-            cmbFlipper.Enabled = False
-            cmbFlipper.Text = "Select"
+            cmbFP.Enabled = False
+            cmbFP.Text = "Select"
         End If
     End Sub
 
@@ -1640,51 +1640,51 @@ Public Class FrmAddGreenTire
         End If
 
         If cmbBF.Text <> "select" Then
-            BFcode = cmbBF.Text.Trim
+            BFcode = cmbBF.Text.Trim()
             If txtBF_N.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 txtBF_N.Focus()
                 QBF = 0
                 Exit Sub
             Else
-                QBF = cmbBF.SelectedValue * txtBF_N.Text.Trim
+                QBF = cmbBF.SelectedValue * txtBF_N.Text.Trim()
             End If
         End If
         If cmbSD.Text <> "select" Then
-            SDcode = cmbSD.Text.Trim
+            SDcode = cmbSD.Text.Trim()
             If TxtSD_N.Text = "" Or TxtSD_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtSD_N.Focus()
                 QSD = 0
                 Exit Sub
             Else
-                QSD = (cmbSD.SelectedValue * (TxtSD_L.Text.Trim / 1000))
+                QSD = (cmbSD.SelectedValue * (TxtSD_L.Text.Trim() / 1000))
             End If
         End If
         If cmbIN.Text <> "select" Then
-            INcode = cmbIN.Text.Trim
+            INcode = cmbIN.Text.Trim()
             If TxtIN_N.Text = "" Or TxtIN_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtIN_N.Focus()
                 QIN = 0
                 Exit Sub
             Else
-                QIN = (cmbIN.SelectedValue * (TxtIN_L.Text.Trim / 1000))
+                QIN = (cmbIN.SelectedValue * (TxtIN_L.Text.Trim() / 1000))
             End If
         End If
         If cmbCU.Text <> "select" Then
-            CUcode = cmbCU.Text.Trim
+            CUcode = cmbCU.Text.Trim()
             If TxtCu_N.Text = "" Or TxtCU_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtCu_N.Focus()
                 QCU = 0
                 Exit Sub
             Else
-                QCU = (cmbCU.SelectedValue * (TxtCU_L.Text.Trim / 1000))
+                QCU = (cmbCU.SelectedValue * (TxtCU_L.Text.Trim() / 1000))
             End If
         End If
         If cmbTT.Text <> "select" Then
-            TTcode = cmbTT.Text.Trim
+            TTcode = cmbTT.Text.Trim()
             If TxtTT_N.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtTT_N.Focus()
@@ -1695,100 +1695,100 @@ Public Class FrmAddGreenTire
             End If
         End If
         If cmbBp.Text <> "select" Then
-            Bpcode = cmbBp.Text.Trim
+            Bpcode = cmbBp.Text.Trim()
             If TxtBP_N.Text = "" Or TxtBp_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtBP_N.Focus()
                 QBp = 0
                 Exit Sub
             Else
-                QBp = (cmbBp.SelectedValue * (TxtBp_L.Text.Trim / 1000))
+                QBp = (cmbBp.SelectedValue * (TxtBp_L.Text.Trim() / 1000))
             End If
         End If
         If cmbB1.Text <> "select" Then
-            B1code = cmbB1.Text.Trim
+            B1code = cmbB1.Text.Trim()
             If TxtB1_N.Text = "" Or TxtB1_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtB1_N.Focus()
                 QB1 = 0
                 Exit Sub
             Else
-                QB1 = (cmbB1.SelectedValue * (TxtB1_L.Text.Trim / 1000))
+                QB1 = (cmbB1.SelectedValue * (TxtB1_L.Text.Trim() / 1000))
             End If
         End If
         If cmbB2.Text <> "select" Then
-            B2code = cmbB2.Text.Trim
+            B2code = cmbB2.Text.Trim()
             If TxtB2_N.Text = "" Or TxtB2_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtB2_N.Focus()
                 QB2 = 0
                 Exit Sub
             Else
-                QB2 = (cmbB2.SelectedValue * (TxtB2_L.Text.Trim / 1000))
+                QB2 = (cmbB2.SelectedValue * (TxtB2_L.Text.Trim() / 1000))
             End If
         End If
         If cmbB3.Text <> "select" Then
-            B3code = cmbB3.Text.Trim
+            B3code = cmbB3.Text.Trim()
             If TxtB3_N.Text = "" Or TxtB3_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtB3_N.Focus()
                 QB3 = 0
                 Exit Sub
             Else
-                QB3 = (cmbB3.SelectedValue * (TxtB3_L.Text.Trim / 1000))
+                QB3 = (cmbB3.SelectedValue * (TxtB3_L.Text.Trim() / 1000))
             End If
         End If
         If cmbB4.Text <> "select" Then
-            B4code = cmbB4.Text.Trim
+            B4code = cmbB4.Text.Trim()
             If TxtB4_N.Text = "" Or TxtB4_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtB4_N.Focus()
                 QB4 = 0
                 Exit Sub
             Else
-                QB4 = (cmbB4.SelectedValue * (TxtB4_L.Text.Trim / 1000))
+                QB4 = (cmbB4.SelectedValue * (TxtB4_L.Text.Trim() / 1000))
             End If
         End If
         If CheckBoxWf.Checked Then
-            Wfcode = cmbWf.Text.Trim
+            Wfcode = cmbWf.Text.Trim()
             If TxtWf_N.Text = "" Or TxtWf_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtWf_N.Focus()
                 QWf = 0
                 Exit Sub
             Else
-                QWf = (cmbWf.SelectedValue * (TxtWf_L.Text.Trim / 1000))
+                QWf = (cmbWf.SelectedValue * (TxtWf_L.Text.Trim() / 1000))
             End If
         Else
             Wfcode = ""
             QWf = 0
         End If
         If CheckBoxNy.Checked Then
-            NYcode = cmbNy.Text.Trim
+            NYcode = cmbNy.Text.Trim()
             If TxtNy_N.Text = "" Or TxtNy_L.Text = "" Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
                 TxtNy_N.Focus()
                 QNY = 0
                 Exit Sub
             Else
-                QNY = (cmbNy.SelectedValue * (TxtNy_L.Text.Trim / 1000))
+                QNY = (cmbNy.SelectedValue * (TxtNy_L.Text.Trim() / 1000))
             End If
         Else
             NYcode = ""
             QNY = 0
         End If
-        If CheckBoxFlipper.Checked Then
-            FlipperCode = cmbFlipper.Text.Trim
-            If TxtFlipper_N.Text = "" Or TxtFlipper_L.Text = "" Then
+        If CheckBoxFP.Checked Then
+            FPcode = cmbFP.Text.Trim()
+            If TxtFP_N.Text = String.Empty Or TxtFP_L.Text = String.Empty Then
                 MsgBox("Please check data again.", MsgBoxStyle.Exclamation)
-                TxtFlipper_N.Focus()
+                TxtFP_N.Focus()
                 QFlipper = 0
                 Exit Sub
             Else
-                QFlipper = (cmbFlipper.SelectedValue * (TxtFlipper_L.Text.Trim / 1000))
+                QFlipper = (cmbFP.SelectedValue * (TxtFP_L.Text.Trim() / 1000))
             End If
         Else
-            FlipperCode = ""
+            FPcode = String.Empty
             QFlipper = 0
         End If
     End Sub
@@ -1842,8 +1842,8 @@ Public Class FrmAddGreenTire
         TxtNy_N.Focus()
     End Sub
 
-    Private Sub cmbFlipper_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbFlipper.SelectedIndexChanged
-        TxtFlipper_N.Focus()
+    Private Sub cmbFlipper_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbFP.SelectedIndexChanged
+        TxtFP_N.Focus()
     End Sub
 #End Region
 
@@ -1940,7 +1940,7 @@ Public Class FrmAddGreenTire
     End Sub
     Private Sub TxtM_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtB1_N.KeyPress _
    , TxtB2_N.KeyPress, TxtB3_N.KeyPress, TxtB4_N.KeyPress, txtBF_N.KeyPress, TxtBP_N.KeyPress, TxtCu_N.KeyPress, TxtIN_N.KeyPress _
-   , TxtNy_N.KeyPress, TxtWf_N.KeyPress, TxtSD_N.KeyPress, TxtTT_N.KeyPress, TxtRev.KeyPress, TxtFlipper_N.KeyPress
+   , TxtNy_N.KeyPress, TxtWf_N.KeyPress, TxtSD_N.KeyPress, TxtTT_N.KeyPress, TxtRev.KeyPress, TxtFP_N.KeyPress
         Select Case Asc(e.KeyChar)
             Case 8
             Case 13
@@ -1968,7 +1968,7 @@ Public Class FrmAddGreenTire
     End Sub
     Private Sub TxtL_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles TxtB1_L.KeyPress _
         , TxtB2_L.KeyPress, TxtB3_L.KeyPress, TxtB4_L.KeyPress, TxtBp_L.KeyPress, TxtCU_L.KeyPress, TxtIN_L.KeyPress _
-        , TxtNy_L.KeyPress, TxtWf_L.KeyPress, TxtSD_L.KeyPress, txtremark.KeyPress, txtremark2.KeyPress, TxtFlipper_L.KeyPress
+        , TxtNy_L.KeyPress, TxtWf_L.KeyPress, TxtSD_L.KeyPress, txtremark.KeyPress, txtremark2.KeyPress, TxtFP_L.KeyPress
         Select Case Asc(e.KeyChar)
             Case 8
             Case 13
@@ -2003,11 +2003,11 @@ Public Class FrmAddGreenTire
         Dim strSQL As String = String.Empty
         Try
             strSQL = " Select count(*) from TBLGroup "
-            strSQL += " Where Code = " & PrepareStr(TxtCode.Text.Trim)
+            strSQL += " Where Code = " & PrepareStr(TxtCode.Text.Trim())
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
             cmSQL = New SqlCommand(strSQL, cnSQL)
-            Dim i As Long = cmSQL.ExecuteScalar
+            Dim i As Long = cmSQL.ExecuteScalar()
             If i = 0 Then
                 ChkGP = True
             End If
@@ -2030,12 +2030,12 @@ Public Class FrmAddGreenTire
         Dim strSQL As String = String.Empty
         Try
             strSQL = " Select count(*) from TBLGTHdr "
-            strSQL += " Where TireCode = " & PrepareStr(TxtCode.Text.Trim)
-            strSQL += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+            strSQL += " Where TireCode = " & PrepareStr(TxtCode.Text.Trim())
+            strSQL += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
             cmSQL = New SqlCommand(strSQL, cnSQL)
-            Dim i As Long = cmSQL.ExecuteScalar
+            Dim i As Long = cmSQL.ExecuteScalar()
             If i = 0 Then
                 ChkEditData = True
             End If
@@ -2058,12 +2058,12 @@ Public Class FrmAddGreenTire
         Dim strSQL As String = String.Empty
         Try
             strSQL = " Select count(*) from TBLGTHdr "
-            strSQL += " Where TireCode = " & PrepareStr(TxtCode.Text.Trim)
-            strSQL += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+            strSQL += " Where TireCode = " & PrepareStr(TxtCode.Text.Trim())
+            strSQL += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
             cmSQL = New SqlCommand(strSQL, cnSQL)
-            Dim i As Long = cmSQL.ExecuteScalar
+            Dim i As Long = cmSQL.ExecuteScalar()
             If i <> 0 Then
                 ChkData = True
             End If
@@ -2090,7 +2090,7 @@ Public Class FrmAddGreenTire
             ' Build Insert statement to insert 
             strSQL = "  SELECT   top 1 Rev "
             strSQL &= "  FROM   TBLGTHdr"
-            strSQL &= " Where TireCode  = '" & TxtCode.Text.Trim & "'"
+            strSQL &= " Where TireCode  = '" & TxtCode.Text.Trim() & "'"
             strSQL &= "  order by Rev desc"
 
             cnSQL = New SqlConnection(C1.Strcon)
@@ -2121,7 +2121,7 @@ Public Class FrmAddGreenTire
         Dim cn As New SqlConnection(C1.Strcon)
         Dim cmd As New SqlCommand(strsql, cn)
         cn.Open()
-        Dim t1 As SqlTransaction = cn.BeginTransaction
+        Dim t1 As SqlTransaction = cn.BeginTransaction()
         cmd.Transaction = t1
         Dim strDate, str() As String
         str = Split(Now.Date.ToShortDateString, "/")
@@ -2130,108 +2130,121 @@ Public Class FrmAddGreenTire
         Try
             For i = 1 To 12
                 strsql = "Insert TBLGTDtl"
-                strsql += " Values(" & PrepareStr(TxtCode.Text.Trim)
+                strsql += " Values(" & PrepareStr(TxtCode.Text.Trim())
                 strsql += "," & PrepareStr(TxtRev.Text.Trim)
                 If i = 1 Then
+                    'BF (Upper,Lower,Center)
                     strsql += "," & PrepareStr("14")
                     strsql += "," & PrepareStr(BFcode)
                     strsql += "," & PrepareStr("")
-                    strsql += "," & PrepareStr(txtBF_N.Text.Trim)
-                    strsql += "," & PrepareStr(cmbBF.SelectedValue * txtBF_N.Text.Trim)
+                    strsql += "," & PrepareStr(txtBF_N.Text.Trim())
+                    strsql += "," & PrepareStr(cmbBF.SelectedValue * txtBF_N.Text.Trim())
                 ElseIf i = 2 Then
+                    'SIDE
                     strsql += "," & PrepareStr("11")
                     strsql += "," & PrepareStr(SDcode)
-                    strsql += "," & PrepareStr(TxtSD_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtSD_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbSD.SelectedValue * (TxtSD_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtSD_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtSD_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbSD.SelectedValue * (TxtSD_L.Text.Trim() / 1000)))
                 ElseIf i = 3 Then
+                    'INNERLINER
                     strsql += "," & PrepareStr("12")
                     strsql += "," & PrepareStr(INcode)
-                    strsql += "," & PrepareStr(TxtIN_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtIN_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbIN.SelectedValue * (TxtIN_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtIN_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtIN_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbIN.SelectedValue * (TxtIN_L.Text.Trim() / 1000)))
                 ElseIf i = 4 Then
+                    'CUSSION
                     strsql += "," & PrepareStr("03")
                     strsql += "," & PrepareStr(CUcode)
-                    strsql += "," & PrepareStr(TxtCU_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtCu_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbCU.SelectedValue * (TxtCU_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtCU_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtCu_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbCU.SelectedValue * (TxtCU_L.Text.Trim() / 1000)))
                 ElseIf i = 5 Then
+                    'TREAD
                     strsql += "," & PrepareStr("13")
                     strsql += "," & PrepareStr(TTcode)
                     strsql += "," & PrepareStr("")
-                    strsql += "," & PrepareStr(TxtTT_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbTT.SelectedValue * TxtTT_N.Text.Trim))
+                    strsql += "," & PrepareStr(TxtTT_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbTT.SelectedValue * TxtTT_N.Text.Trim()))
                 ElseIf i = 6 Then
+                    'BODY PLY
                     strsql += "," & PrepareStr("04")
                     strsql += "," & PrepareStr(Bpcode)
-                    strsql += "," & PrepareStr(TxtBp_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtBP_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbBp.SelectedValue * (TxtBp_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtBp_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtBP_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbBp.SelectedValue * (TxtBp_L.Text.Trim() / 1000)))
                 ElseIf i = 7 Then
+                    'WIRE CHAFER
                     If CheckBoxWf.Checked Then
                         strsql += "," & PrepareStr("09")
                         strsql += "," & PrepareStr(Wfcode)
-                        strsql += "," & PrepareStr(TxtWf_L.Text.Trim)
-                        strsql += "," & PrepareStr(TxtWf_N.Text.Trim)
-                        strsql += "," & PrepareStr((cmbWf.SelectedValue * (TxtWf_L.Text.Trim / 1000)))
+                        strsql += "," & PrepareStr(TxtWf_L.Text.Trim())
+                        strsql += "," & PrepareStr(TxtWf_N.Text.Trim())
+                        strsql += "," & PrepareStr((cmbWf.SelectedValue * (TxtWf_L.Text.Trim() / 1000)))
                     Else
                         strsql += "," & PrepareStr("09")
                         strsql += "," & PrepareStr(Wfcode)
-                        strsql += "," & PrepareStr(TxtWf_L.Text.Trim)
-                        strsql += "," & PrepareStr(TxtWf_N.Text.Trim)
+                        strsql += "," & PrepareStr(TxtWf_L.Text.Trim())
+                        strsql += "," & PrepareStr(TxtWf_N.Text.Trim())
                         strsql += "," & PrepareStr("")
                     End If
                 ElseIf i = 8 Then
+                    'BELT-1
                     strsql += "," & PrepareStr("05")
                     strsql += "," & PrepareStr(B1code)
-                    strsql += "," & PrepareStr(TxtB1_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtB1_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbB1.SelectedValue * (TxtB1_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtB1_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtB1_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbB1.SelectedValue * (TxtB1_L.Text.Trim() / 1000)))
                 ElseIf i = 9 Then
+                    'BELT-2
                     strsql += "," & PrepareStr("06")
                     strsql += "," & PrepareStr(B2code)
-                    strsql += "," & PrepareStr(TxtB2_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtB2_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbB2.SelectedValue * (TxtB2_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtB2_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtB2_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbB2.SelectedValue * (TxtB2_L.Text.Trim() / 1000)))
                 ElseIf i = 10 Then
+                    'BELT-3
                     strsql += "," & PrepareStr("07")
                     strsql += "," & PrepareStr(B3code)
-                    strsql += "," & PrepareStr(TxtB3_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtB3_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbB3.SelectedValue * (TxtB3_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtB3_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtB3_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbB3.SelectedValue * (TxtB3_L.Text.Trim() / 1000)))
                 ElseIf i = 11 Then
+                    'BELT-4
                     strsql += "," & PrepareStr("08")
                     strsql += "," & PrepareStr(B4code)
-                    strsql += "," & PrepareStr(TxtB4_L.Text.Trim)
-                    strsql += "," & PrepareStr(TxtB4_N.Text.Trim)
-                    strsql += "," & PrepareStr((cmbB4.SelectedValue * (TxtB4_L.Text.Trim / 1000)))
+                    strsql += "," & PrepareStr(TxtB4_L.Text.Trim())
+                    strsql += "," & PrepareStr(TxtB4_N.Text.Trim())
+                    strsql += "," & PrepareStr((cmbB4.SelectedValue * (TxtB4_L.Text.Trim() / 1000)))
                 ElseIf i = 12 Then
+                    'NYLON CHAFER
                     If CheckBoxNy.Checked Then
                         strsql += "," & PrepareStr("10")
                         strsql += "," & PrepareStr(NYcode)
-                        strsql += "," & PrepareStr(TxtNy_L.Text.Trim)
-                        strsql += "," & PrepareStr(TxtNy_N.Text.Trim)
-                        strsql += "," & PrepareStr((cmbNy.SelectedValue * (TxtNy_L.Text.Trim / 1000)))
+                        strsql += "," & PrepareStr(TxtNy_L.Text.Trim())
+                        strsql += "," & PrepareStr(TxtNy_N.Text.Trim())
+                        strsql += "," & PrepareStr((cmbNy.SelectedValue * (TxtNy_L.Text.Trim() / 1000)))
                     Else
                         strsql += "," & PrepareStr("10")
                         strsql += "," & PrepareStr(NYcode)
-                        strsql += "," & PrepareStr(TxtNy_L.Text.Trim)
-                        strsql += "," & PrepareStr(TxtNy_N.Text.Trim)
+                        strsql += "," & PrepareStr(TxtNy_L.Text.Trim())
+                        strsql += "," & PrepareStr(TxtNy_N.Text.Trim())
                         strsql += "," & PrepareStr("")
                     End If
                 ElseIf i = 13 Then
-                    If CheckBoxFlipper.Checked Then
+                    'FLIPPER
+                    If CheckBoxFP.Checked Then
                         strsql += "," & PrepareStr("22")
-                        strsql += "," & PrepareStr(FlipperCode)
-                        strsql += "," & PrepareStr(TxtFlipper_L.Text.Trim)
-                        strsql += "," & PrepareStr(TxtFlipper_N.Text.Trim)
-                        strsql += "," & PrepareStr((cmbFlipper.SelectedValue * (TxtFlipper_L.Text.Trim / 1000)))
+                        strsql += "," & PrepareStr(FPcode)
+                        strsql += "," & PrepareStr(TxtFP_L.Text.Trim())
+                        strsql += "," & PrepareStr(TxtFP_N.Text.Trim())
+                        strsql += "," & PrepareStr((cmbFP.SelectedValue * (TxtFP_L.Text.Trim() / 1000)))
                     Else
                         strsql += "," & PrepareStr("22")
-                        strsql += "," & PrepareStr(FlipperCode)
-                        strsql += "," & PrepareStr(TxtFlipper_L.Text.Trim)
-                        strsql += "," & PrepareStr(TxtFlipper_N.Text.Trim)
+                        strsql += "," & PrepareStr(FPcode)
+                        strsql += "," & PrepareStr(TxtFP_L.Text.Trim())
+                        strsql += "," & PrepareStr(TxtFP_N.Text.Trim())
                         strsql += "," & PrepareStr("")
                     End If
                 End If
@@ -2256,7 +2269,7 @@ Public Class FrmAddGreenTire
         Dim cn As New SqlConnection(C1.Strcon)
         Dim cmd As New SqlCommand(strsql, cn)
         cn.Open()
-        Dim t1 As SqlTransaction = cn.BeginTransaction
+        Dim t1 As SqlTransaction = cn.BeginTransaction()
         cmd.Transaction = t1
         Dim strDate, str() As String
         str = Split(Now.Date.ToShortDateString, "/")
@@ -2267,30 +2280,30 @@ Public Class FrmAddGreenTire
             If ChkGP() Then
                 strsql += "Insert  TblGroup "
                 strsql += " values ( '06',"
-                strsql += PrepareStr(TxtCode.Text.Trim) & ")"
+                strsql += PrepareStr(TxtCode.Text.Trim()) & ")"
             End If
 
             strsql += " "
             strsql += "Insert  TBLGTHdr "
-            strsql += " values (" & PrepareStr(TxtCode.Text.Trim) & ","
-            strsql += PrepareStr(TxtCode.Text.Trim) & ","
-            strsql += PrepareStr(TxtRev.Text.Trim) & ","
-            strsql += PrepareStr(CmbBSJCode.Text.Trim) & ","
+            strsql += " values (" & PrepareStr(TxtCode.Text.Trim()) & ","
+            strsql += PrepareStr(TxtCode.Text.Trim()) & ","
+            strsql += PrepareStr(TxtRev.Text.Trim()) & ","
+            strsql += PrepareStr(CmbBSJCode.Text.Trim()) & ","
             strsql += PrepareStr(CSng(iTotal)) & ","
             If CheckBoxTire.Checked = True Then
                 strsql += PrepareStr(1) & ","
             Else
                 strsql += PrepareStr(0) & ","
             End If
-            strsql += PrepareStr(strDate.Trim) & ","
-            strsql += PrepareStr(txtremark.Text.Trim + "," + txtremark2.Text.Trim) & ")"
+            strsql += PrepareStr(strDate.Trim()) & ","
+            strsql += PrepareStr(txtremark.Text.Trim() + "," + txtremark2.Text.Trim()) & ")"
 
             strsql += ""
             strsql += " Insert TBLConvert "
             strsql += " Values('06'"
-            strsql += "," & PrepareStr(TxtCode.Text.Trim)
-            strsql += "," & PrepareStr(TxtCode.Text.Trim)
-            strsql += "," & PrepareStr(TxtRev.Text.Trim)
+            strsql += "," & PrepareStr(TxtCode.Text.Trim())
+            strsql += "," & PrepareStr(TxtCode.Text.Trim())
+            strsql += "," & PrepareStr(TxtRev.Text.Trim())
             strsql += "," & PrepareStr("UT")
             strsql += "," & PrepareStr("KG")
             strsql += "," & PrepareStr(1)
@@ -2300,9 +2313,9 @@ Public Class FrmAddGreenTire
             strsql += ""
             strsql += " Insert TBLConvert "
             strsql += " Values('06'"
-            strsql += "," & PrepareStr(TxtCode.Text.Trim)
-            strsql += "," & PrepareStr(TxtCode.Text.Trim)
-            strsql += "," & PrepareStr(TxtRev.Text.Trim)
+            strsql += "," & PrepareStr(TxtCode.Text.Trim())
+            strsql += "," & PrepareStr(TxtCode.Text.Trim())
+            strsql += "," & PrepareStr(TxtRev.Text.Trim())
             strsql += "," & PrepareStr("KG")
             strsql += "," & PrepareStr("KG")
             strsql += "," & PrepareStr(1)
@@ -2336,16 +2349,16 @@ Public Class FrmAddGreenTire
                 strsql = " "
                 strsql += "Update  TBLGTHdr "
                 strsql += " set Qty  = " & PrepareStr(CSng(iTotal)) & ","
-                strsql += " Remark =  " & PrepareStr(txtremark.Text.Trim + "," + txtremark2.Text.Trim) & ","
-                strsql += " Dateup =  " & PrepareStr(strDate.Trim)
-                strsql += " Where Tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                strsql += " Remark =  " & PrepareStr(txtremark.Text.Trim() + "," + txtremark2.Text.Trim()) & ","
+                strsql += " Dateup =  " & PrepareStr(strDate.Trim())
+                strsql += " Where Tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
 
                 strsql += ""
                 strsql += " Update TBLConvert "
                 strsql += " set SQty = " & PrepareStr(CSng(iTotal / 1000))
-                strsql += " where code  = " & PrepareStr(TxtCode.Text.Trim)
-                strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                strsql += " where code  = " & PrepareStr(TxtCode.Text.Trim())
+                strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                 strsql += " and UnitBig = 'UT'"
 
                 cmd.CommandText = strsql
@@ -2367,7 +2380,7 @@ Public Class FrmAddGreenTire
         Dim cn As New SqlConnection(C1.Strcon)
         Dim cmd As New SqlCommand(strsql, cn)
         cn.Open()
-        Dim t1 As SqlTransaction = cn.BeginTransaction
+        Dim t1 As SqlTransaction = cn.BeginTransaction()
         cmd.Transaction = t1
         Dim strDate, str() As String
         str = Split(Now.Date.ToShortDateString, "/")
@@ -2377,167 +2390,180 @@ Public Class FrmAddGreenTire
             Try
                 For i = 1 To 12
                     If i = 1 Then
+                        'BF
                         strsql = "Update TBLGTDtl"
-                        strsql += " set number = " & PrepareStr(txtBF_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr(cmbBF.SelectedValue * txtBF_N.Text.Trim)
+                        strsql += " set number = " & PrepareStr(txtBF_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr(cmbBF.SelectedValue * txtBF_N.Text.Trim())
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(BFcode)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("14")
                     ElseIf i = 2 Then
+                        'SIDE
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtSD_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtSD_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbSD.SelectedValue * (TxtSD_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtSD_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtSD_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbSD.SelectedValue * (TxtSD_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(SDcode)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("11")
                     ElseIf i = 3 Then
+                        'INNERLINER
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtIN_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtIN_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbIN.SelectedValue * (TxtIN_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtIN_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtIN_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbIN.SelectedValue * (TxtIN_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(INcode)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("12")
                     ElseIf i = 4 Then
+                        'CUSSION
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtCU_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtCu_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbCU.SelectedValue * (TxtCU_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtCU_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtCu_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbCU.SelectedValue * (TxtCU_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(CUcode)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("03")
                     ElseIf i = 5 Then
+                        'TREAD
                         strsql = "Update TBLGTDtl"
-                        strsql += " set number = " & PrepareStr(TxtTT_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr(cmbTT.SelectedValue * TxtTT_N.Text.Trim)
+                        strsql += " set number = " & PrepareStr(TxtTT_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr(cmbTT.SelectedValue * TxtTT_N.Text.Trim())
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(TTcode)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("13")
                     ElseIf i = 6 Then
+                        'BODY PLY
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtBp_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtBP_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbBp.SelectedValue * (TxtBp_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtBp_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtBP_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbBp.SelectedValue * (TxtBp_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(Bpcode)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("04")
                     ElseIf i = 7 Then
+                        'WIRE CHAFER
                         If CheckBoxWf.Checked Then
                             strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtWf_L.Text.Trim)
-                            strsql += " , number = " & PrepareStr(TxtWf_N.Text.Trim)
-                            strsql += " , QTU = " & PrepareStr((cmbWf.SelectedValue * (TxtWf_L.Text.Trim / 1000)))
+                            strsql += " set Length = " & PrepareStr(TxtWf_L.Text.Trim())
+                            strsql += " , number = " & PrepareStr(TxtWf_N.Text.Trim())
+                            strsql += " , QTU = " & PrepareStr((cmbWf.SelectedValue * (TxtWf_L.Text.Trim() / 1000)))
                             strsql += " , Dateup =  " & PrepareStr(strDate)
                             strsql += " ,  semicode = " & PrepareStr(Wfcode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                             strsql += " and MaterialType = " & PrepareStr("09")
                         Else
                             strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtWf_L.Text.Trim)
-                            strsql += " , number = " & PrepareStr(TxtWf_N.Text.Trim)
+                            strsql += " set Length = " & PrepareStr(TxtWf_L.Text.Trim())
+                            strsql += " , number = " & PrepareStr(TxtWf_N.Text.Trim())
                             strsql += " , QTU = " & PrepareStr("")
                             strsql += " , Dateup =  " & PrepareStr(strDate)
                             strsql += " ,  semicode = " & PrepareStr(Wfcode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                             strsql += " and MaterialType = " & PrepareStr("09")
                         End If
                     ElseIf i = 8 Then
+                        'BELT-1
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtB1_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtB1_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbB1.SelectedValue * (TxtB1_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtB1_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtB1_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbB1.SelectedValue * (TxtB1_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(B1code)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("05")
                     ElseIf i = 9 Then
+                        'BELT-2
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtB2_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtB2_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbB2.SelectedValue * (TxtB2_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtB2_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtB2_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbB2.SelectedValue * (TxtB2_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(B2code)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("06")
                     ElseIf i = 10 Then
+                        'BELT-3
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtB3_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtB3_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbB3.SelectedValue * (TxtB3_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtB3_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtB3_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbB3.SelectedValue * (TxtB3_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(B3code)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("07")
                     ElseIf i = 11 Then
+                        'BELT-4
                         strsql = "Update TBLGTDtl"
-                        strsql += " set Length = " & PrepareStr(TxtB4_L.Text.Trim)
-                        strsql += " , number = " & PrepareStr(TxtB4_N.Text.Trim)
-                        strsql += " , QTU = " & PrepareStr((cmbB4.SelectedValue * (TxtB4_L.Text.Trim / 1000)))
+                        strsql += " set Length = " & PrepareStr(TxtB4_L.Text.Trim())
+                        strsql += " , number = " & PrepareStr(TxtB4_N.Text.Trim())
+                        strsql += " , QTU = " & PrepareStr((cmbB4.SelectedValue * (TxtB4_L.Text.Trim() / 1000)))
                         strsql += " , Dateup =  " & PrepareStr(strDate)
                         strsql += " ,  semicode = " & PrepareStr(B4code)
-                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                        strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                        strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                         strsql += " and MaterialType = " & PrepareStr("08")
                     ElseIf i = 12 Then
+                        'Nylon CHAFER
                         If CheckBoxNy.Checked Then
                             strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtNy_L.Text.Trim)
-                            strsql += " , number = " & PrepareStr(TxtNy_N.Text.Trim)
-                            strsql += " , QTU = " & PrepareStr((cmbNy.SelectedValue * (TxtNy_L.Text.Trim / 1000)))
+                            strsql += " set Length = " & PrepareStr(TxtNy_L.Text.Trim())
+                            strsql += " , number = " & PrepareStr(TxtNy_N.Text.Trim())
+                            strsql += " , QTU = " & PrepareStr((cmbNy.SelectedValue * (TxtNy_L.Text.Trim() / 1000)))
                             strsql += " , Dateup =  " & PrepareStr(strDate)
                             strsql += " ,  semicode = " & PrepareStr(NYcode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                             strsql += " and MaterialType = " & PrepareStr("10")
                         Else
                             strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtNy_L.Text.Trim)
-                            strsql += " , number = " & PrepareStr(TxtNy_N.Text.Trim)
+                            strsql += " set Length = " & PrepareStr(TxtNy_L.Text.Trim())
+                            strsql += " , number = " & PrepareStr(TxtNy_N.Text.Trim())
                             strsql += " , QTU = " & PrepareStr("")
                             strsql += " , Dateup =  " & PrepareStr(strDate)
                             strsql += " ,  semicode = " & PrepareStr(NYcode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                             strsql += " and MaterialType = " & PrepareStr("10")
                         End If
                     ElseIf i = 13 Then
-                        If CheckBoxNy.Checked Then
+                        'FLIPPER
+                        If CheckBoxFP.Checked Then
                             strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtFlipper_L.Text.Trim)
-                            strsql += " , number = " & PrepareStr(TxtFlipper_N.Text.Trim)
-                            strsql += " , QTU = " & PrepareStr((cmbFlipper.SelectedValue * (TxtFlipper_L.Text.Trim / 1000)))
+                            strsql += " set Length = " & PrepareStr(TxtFP_L.Text.Trim())
+                            strsql += " , number = " & PrepareStr(TxtFP_N.Text.Trim())
+                            strsql += " , QTU = " & PrepareStr((cmbFP.SelectedValue * (TxtFP_L.Text.Trim() / 1000)))
                             strsql += " , Dateup =  " & PrepareStr(strDate)
-                            strsql += " ,  semicode = " & PrepareStr(FlipperCode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                            strsql += " ,  semicode = " & PrepareStr(FPcode)
+                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                             strsql += " and MaterialType = " & PrepareStr("22")
                         Else
                             strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtFlipper_L.Text.Trim)
-                            strsql += " , number = " & PrepareStr(TxtFlipper_N.Text.Trim)
+                            strsql += " set Length = " & PrepareStr(TxtFP_L.Text.Trim())
+                            strsql += " , number = " & PrepareStr(TxtFP_N.Text.Trim())
                             strsql += " , QTU = " & PrepareStr("")
                             strsql += " , Dateup =  " & PrepareStr(strDate)
-                            strsql += " ,  semicode = " & PrepareStr(FlipperCode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim)
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim)
+                            strsql += " ,  semicode = " & PrepareStr(FPcode)
+                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
                             strsql += " and MaterialType = " & PrepareStr("22")
                         End If
                     End If
@@ -2565,12 +2591,12 @@ Public Class FrmAddGreenTire
         Try
             strSQL = " Update TblGTHdr"
             strSQL &= " set Active = 0 "
-            strSQL &= " where TireCode = '" & TxtCode.Text.Trim & "'"
+            strSQL &= " where TireCode = '" & TxtCode.Text.Trim() & "'"
             strSQL &= "  "
             strSQL &= " Update TblGTHdr"
             strSQL &= " set Active = 1 "
-            strSQL &= " where TireCode = '" & TxtCode.Text.Trim & "'"
-            strSQL &= " and Rev = '" & TxtRev.Text.Trim & "'"
+            strSQL &= " where TireCode = '" & TxtCode.Text.Trim() & "'"
+            strSQL &= " and Rev = '" & TxtRev.Text.Trim() & "'"
 
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
@@ -2614,8 +2640,8 @@ Public Class FrmAddGreenTire
         TxtWf_L.Text = ""
         TxtNy_N.Text = ""
         TxtNy_L.Text = ""
-        TxtFlipper_N.Text = ""
-        TxtFlipper_L.Text = ""
+        TxtFP_N.Text = ""
+        TxtFP_L.Text = ""
     End Sub
 #Region "PrepareStr"
     Private Function PrepareStr(ByVal strValue As String) As String
