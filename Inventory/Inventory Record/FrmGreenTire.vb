@@ -338,7 +338,7 @@ Public Class FrmGreenTire
         sb.AppendLine("  LEFT OUTER JOIN TBLTypeMaterial tm on dt.MaterialType = tm.MaterialCode")
         sb.AppendLine("  LEFT OUTER JOIN TBLGTHdr hd on dt.tirecode+dt.Rev = hd.Tirecode+hd.Rev")
         sb.AppendLine(") Tire")
-        sb.AppendLine("ORDER BY Tirecode,Rev,Final DESC")
+        sb.AppendLine("ORDER BY Tirecode,Rev,Final DESC, MaterialName")
         StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
