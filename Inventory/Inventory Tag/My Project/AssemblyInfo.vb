@@ -9,8 +9,8 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Inventory Tag System")>
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("Bridgestone Tire Manufacturing (Thailand) Co., Ltd.")>
 <Assembly: AssemblyProduct("Inventory Tag System")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")> 
 <Assembly: AssemblyTrademark("")> 
@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
 
-<Assembly: AssemblyVersion("2.0.0.0")>
-<Assembly: AssemblyFileVersion("2.0.0.0")>
+<Assembly: AssemblyVersion("2.0.0.1")>
+<Assembly: AssemblyFileVersion("2.0.0.1")>
