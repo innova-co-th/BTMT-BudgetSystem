@@ -682,7 +682,7 @@ Public Class FrmAddSemi
     End Sub
 
     Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
-        If TxtCode.Text.Trim = "" Then
+        If TxtCode.Text.Trim() = "" Then
             TxtCode.Focus()
             lblError.Visible = True
             Exit Sub
@@ -707,9 +707,9 @@ Public Class FrmAddSemi
                         If CmbMaterial.SelectedValue = "13" Then
                             qq = .Item("Qty")
                         ElseIf CmbMaterial.SelectedValue = "14" Then
-                            qq = .Item("Qty") / TxtNum.Text.Trim
+                            qq = .Item("Qty") / TxtNum.Text.Trim()
                         Else
-                            qq = ((.Item("Qty") / TxtLenght.Text.Trim) * 1000)
+                            qq = ((.Item("Qty") / TxtLenght.Text.Trim()) * 1000)
                         End If
                         iTotal = CSng(iTotal + qq)
                         tTotal = CSng(tTotal + .Item("Qty"))
@@ -1312,5 +1312,19 @@ Public Class FrmAddSemi
                 End If
 
         End Select
+    End Sub
+
+    Private Sub CmbMaterial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbMaterial.SelectedIndexChanged
+        If CmbMaterial.SelectedValue.Equals("22") Then
+            'Flipper
+            GrdDV.RowFilter = "descName like '%Flipper%'"
+        ElseIf CmbMaterial.SelectedValue.Equals("10") Then
+            'Nylon Chafer
+            GrdDV.RowFilter = "descName like '%Nylon%'"
+        Else
+            GrdDV.RowFilter = ""
+        End If
+
+        DataGridRM.DataSource = GrdDV
     End Sub
 End Class
