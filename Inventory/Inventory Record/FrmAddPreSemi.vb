@@ -785,7 +785,7 @@ Public Class FrmAddPreSemi
     End Sub
 
     Private Sub CmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdSave.Click
-        If TxtCode.Text.Trim = "" Then
+        If TxtCode.Text.Trim() = "" Then
             TxtCode.Focus()
             lblError.Visible = True
             Exit Sub
@@ -817,18 +817,25 @@ Public Class FrmAddPreSemi
                 If IIf(.Item("Code") Is System.DBNull.Value, "", .Item("Code")) <> "" Then
                     If CmdSave.Text = "Save" Then
                         If CmbMaterial.SelectedValue = "01" Then
+                            'STEEL CORD
                             qq = (.Item("Qty"))
                         ElseIf CmbMaterial.SelectedValue = "02" Then
-                            qq = (((.Item("Qty") * TxtWidth.Text.Trim) / 1000))
+                            'COATED CORED
+                            qq = (((.Item("Qty") * TxtWidth.Text.Trim()) / 1000))
                         ElseIf CmbMaterial.SelectedValue = "19" Then
-                            qq = .Item("Qty") / TxtN.Text.Trim
+                            'HEX BEAD
+                            qq = .Item("Qty") / TxtN.Text.Trim()
                         ElseIf CmbMaterial.SelectedValue = "21" Then
-                            qq = ((.Item("Qty") / txtlenght.Text.Trim) * 1000)
+                            'WIRE CHAFER
+                            qq = ((.Item("Qty") / txtlenght.Text.Trim()) * 1000)
                         ElseIf CmbMaterial.SelectedValue = "16" Then
-                            qq = ((.Item("Qty") / txtlenght.Text.Trim) * 1000)
+                            'WCH-Hut Gum
+                            qq = ((.Item("Qty") / txtlenght.Text.Trim()) * 1000)
                         Else
-                            qq = ((.Item("Qty") / txtlenght.Text.Trim) * 1000) / TxtN.Text.Trim
+                            'Other type (NCH-Hut Gum, Bead Cover Gum, WCH-End Gum, Body Ply Insert)
+                            qq = ((.Item("Qty") / txtlenght.Text.Trim()) * 1000) / TxtN.Text.Trim()
                         End If
+
                         iTotal = CSng(iTotal + qq)
                         tTotal = CSng(tTotal + .Item("Qty"))
                     Else
@@ -853,7 +860,7 @@ Public Class FrmAddPreSemi
             Exit Sub
         End If
 
-        msg = "Pre Semi(Material) Total Qty :  " & qsum & "  " & Tut.Trim & ".  Total Qty Per (Meter/Line) :  " & CSng(iTotal) & "  " & Tut.Trim & "."  ' Define message.
+        msg = "Pre Semi(Material) Total Qty :  " & qsum & "  " & Tut.Trim() & ".  Total Qty Per (Meter/Line) :  " & CSng(iTotal) & "  " & Tut.Trim() & "."  ' Define message.
         style = MsgBoxStyle.DefaultButton2 Or _
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Pre Semi(Material)"   ' Define title.
