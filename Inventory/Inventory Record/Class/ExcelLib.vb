@@ -82,7 +82,7 @@ Public Class ExcelLib
             Next i
 
             'Convert Array to Datatable
-            dtTemp = ConvertArrayToDatatable(arr, dtTemp)
+            dtTemp = ConvertArrayToDatatable(arr, dtTemp, tableName)
 
             ReleaseObject(xlWorkSheet)
             xlWorkBook.Close(False)
@@ -261,14 +261,33 @@ Public Class ExcelLib
         End Try
     End Function
 
-    Private Shared Function ConvertArrayToDatatable(arr As Object(,), dt As DataTable) As DataTable
+    ''' <summary>
+    ''' Convert data from array to datatable
+    ''' </summary>
+    ''' <param name="arr">Data Source</param>
+    ''' <param name="dt">Data Destination</param>
+    ''' <param name="tableName">Type Code</param>
+    ''' <returns></returns>
+    Private Shared Function ConvertArrayToDatatable(arr As Object(,), dt As DataTable, tableName As String) As DataTable
         Try
             For i As Integer = 2 To arr.GetLength(0)
                 Dim dr As DataRow = dt.NewRow()
+
                 For j As Integer = 1 To arr.GetLength(1)
-                    'Check third row when second row nothing
+                    'Check nothing
                     If IsNothing(arr(i, j)) Then
-                        dr(j - 1) = ""
+                        If tableName.Equals("TBL_PreSemi") Then
+                            'PreSemi type
+                            If j = 4 Or j = 5 Or j = 6 Then
+                                'Column Width, Length, N
+                                dr(j - 1) = 0.0
+                            End If
+                        ElseIf tableName.Equals("TBL_Semi") Then
+                            'Semi type
+                        Else
+                            'Other type (R/M, Pigment, Compound, Green Tire)
+                            dr(j - 1) = ""
+                        End If 'If tableName.Equals("TBL_PreSemi")
                     Else
                         If arr(i, j).GetType().Equals(GetType(Double)) Then
                             'Datatype Double
@@ -277,16 +296,9 @@ Public Class ExcelLib
                             'Other
                             dr(j - 1) = arr(i, j)
                         End If
-                    End If
-
-                    'If arr(i, j).GetType().Equals(GetType(Double)) Then
-                    '    'Datatype Double
-                    '    dr(j - 1) = CDec(arr(i, j))
-                    'Else
-                    '    'Other
-                    '    dr(j - 1) = arr(i, j)
-                    'End If
+                    End If 'If IsNothing(arr(i, j))
                 Next j
+
                 dt.Rows.Add(dr)
             Next i
 
