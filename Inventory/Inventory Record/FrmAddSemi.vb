@@ -476,7 +476,7 @@ Public Class FrmAddSemi
             sb.AppendLine("    UNION")
             sb.AppendLine("    SELECT RMcode,DescName,RMcode, 0.00 Qty")
             sb.AppendLine("    FROM TblRM")
-            sb.AppendLine("    WHERE descName like '%Steel%' or descName like '%Bead%' or descName like '%Nylon%' ")
+            sb.AppendLine("    WHERE descName like '%Steel%' or descName like '%Bead%' or descName like '%Nylon%' or descName like '%Flipper%' ")
             sb.AppendLine("  ) b on a.code = b.compcode")
             sb.AppendLine("  WHERE b.code is not null")
             sb.AppendLine("  ORDER BY descName DESC,typecode DESC ,b.code")
