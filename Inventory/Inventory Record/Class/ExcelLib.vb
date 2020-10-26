@@ -52,7 +52,7 @@ Public Class ExcelLib
             'Check format of import file
             If numCols <> arrColumn.Length Then
                 'Error
-                Throw New ApplicationException("Number columns of import is incorrect!!!")
+                Throw New ApplicationException("Number columns of import is incorrect!!!" & vbCrLf & "It have empty column " & numCols & " column(s). Please remove column header.")
             End If
 
             'Check column header
