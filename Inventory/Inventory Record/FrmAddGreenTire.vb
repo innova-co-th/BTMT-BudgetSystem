@@ -1889,6 +1889,7 @@ Public Class FrmAddGreenTire
                 End If
             Else
                 If ChkEditData() Then
+                    'Not found data
                     If Tire_Hdr() Then
                         If Tire_Dtl() Then
                             UpTire()
@@ -1900,6 +1901,7 @@ Public Class FrmAddGreenTire
                         End If
                     End If
                 Else
+                    'Found data
                     If UPTire_Hdr() Then
                         If UPTire_Dtl() Then
                             UpTire()
@@ -1997,6 +1999,45 @@ Public Class FrmAddGreenTire
 #End Region
 
 #Region "RM"
+    ''' <summary>
+    ''' Check material type "Flipper"
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function ChkEditDataFlipper() As Boolean
+        Dim cnSQL As SqlConnection
+        Dim cmSQL As SqlCommand
+        Dim strSQL As String = String.Empty
+        Dim ret As Boolean = False
+
+        Try
+            strSQL = " SELECT count(*) FROM TBLGTDtl "
+            strSQL += " WHERE TireCode = " & PrepareStr(TxtCode.Text.Trim())
+            strSQL += " AND Rev = " & PrepareStr(TxtRev.Text.Trim())
+            strSQL += " AND MaterialType = '22'"
+
+            cnSQL = New SqlConnection(C1.Strcon)
+            cnSQL.Open()
+            cmSQL = New SqlCommand(strSQL, cnSQL)
+            Dim i As Long = cmSQL.ExecuteScalar()
+            If i = 0 Then
+                ret = True
+            End If
+            cmSQL = New SqlCommand(strSQL, cnSQL)
+            cmSQL.ExecuteNonQuery()
+            cnSQL.Close()
+
+            cmSQL.Dispose()
+            cnSQL.Dispose()
+            '--------------------------------------------------------------------------------------
+        Catch Exp As SqlException
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "SQL Error")
+        Catch Exp As Exception
+            MsgBox(Exp.Message, MsgBoxStyle.Critical, "General Error")
+        End Try
+
+        Return ret
+    End Function
+
     Private Function ChkGP() As Boolean
         Dim cnSQL As SqlConnection
         Dim cmSQL As SqlCommand
@@ -2123,15 +2164,14 @@ Public Class FrmAddGreenTire
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction()
         cmd.Transaction = t1
-        Dim strDate, str() As String
-        str = Split(Now.Date.ToShortDateString, "/")
-        strDate = str(2) + str(1) + str(0)
+        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
         Dim i As Integer
         Try
-            For i = 1 To 12
+            For i = 1 To 13
                 strsql = "Insert TBLGTDtl"
                 strsql += " Values(" & PrepareStr(TxtCode.Text.Trim())
-                strsql += "," & PrepareStr(TxtRev.Text.Trim)
+                strsql += "," & PrepareStr(TxtRev.Text.Trim())
+
                 If i = 1 Then
                     'BF (Upper,Lower,Center)
                     strsql += "," & PrepareStr("14")
@@ -2271,9 +2311,7 @@ Public Class FrmAddGreenTire
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction()
         cmd.Transaction = t1
-        Dim strDate, str() As String
-        str = Split(Now.Date.ToShortDateString, "/")
-        strDate = str(2) + str(1) + str(0)
+        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
         Try
             strsql = " "
 
@@ -2341,9 +2379,7 @@ Public Class FrmAddGreenTire
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction
         cmd.Transaction = t1
-        Dim strDate, str() As String
-        str = Split(Now.Date.ToShortDateString, "/")
-        strDate = str(2) + str(1) + str(0)
+        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
         If CmdSave.Text = "Edit" Then
             Try
                 strsql = " "
@@ -2382,13 +2418,11 @@ Public Class FrmAddGreenTire
         cn.Open()
         Dim t1 As SqlTransaction = cn.BeginTransaction()
         cmd.Transaction = t1
-        Dim strDate, str() As String
-        str = Split(Now.Date.ToShortDateString, "/")
-        strDate = str(2) + str(1) + str(0)
+        Dim strDate As String = DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))
         If CmdSave.Text = "Edit" Then
             Dim i As Integer
             Try
-                For i = 1 To 12
+                For i = 1 To 13
                     If i = 1 Then
                         'BF
                         strsql = "Update TBLGTDtl"
@@ -2545,27 +2579,55 @@ Public Class FrmAddGreenTire
                         End If
                     ElseIf i = 13 Then
                         'FLIPPER
-                        If CheckBoxFP.Checked Then
-                            strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtFP_L.Text.Trim())
-                            strsql += " , number = " & PrepareStr(TxtFP_N.Text.Trim())
-                            strsql += " , QTU = " & PrepareStr((cmbFP.SelectedValue * (TxtFP_L.Text.Trim() / 1000)))
-                            strsql += " , Dateup =  " & PrepareStr(strDate)
-                            strsql += " ,  semicode = " & PrepareStr(FPcode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
-                            strsql += " and MaterialType = " & PrepareStr("22")
+                        If ChkEditDataFlipper() Then
+                            'Not found Flipper
+                            If CheckBoxFP.Checked Then
+                                strsql = "INSERT INTO TBLGTDtl"
+                                strsql += " Values(" & PrepareStr(TxtCode.Text.Trim())
+                                strsql += "," & PrepareStr(TxtRev.Text.Trim())
+                                strsql += "," & PrepareStr("22")
+                                strsql += "," & PrepareStr(FPcode)
+                                strsql += "," & PrepareStr(TxtFP_L.Text.Trim())
+                                strsql += "," & PrepareStr(TxtFP_N.Text.Trim())
+                                strsql += "," & PrepareStr((cmbFP.SelectedValue * (TxtFP_L.Text.Trim() / 1000)))
+                                strsql += "," & PrepareStr("g")
+                                strsql += "," & PrepareStr(strDate) & ")"
+                            Else
+                                strsql = "INSERT INTO TBLGTDtl"
+                                strsql += " Values(" & PrepareStr(TxtCode.Text.Trim())
+                                strsql += "," & PrepareStr(TxtRev.Text.Trim())
+                                strsql += "," & PrepareStr("22")
+                                strsql += "," & PrepareStr(FPcode)
+                                strsql += "," & PrepareStr(TxtFP_L.Text.Trim())
+                                strsql += "," & PrepareStr(TxtFP_N.Text.Trim())
+                                strsql += "," & PrepareStr("")
+                                strsql += "," & PrepareStr("g")
+                                strsql += "," & PrepareStr(strDate) & ")"
+                            End If
                         Else
-                            strsql = "Update TBLGTDtl"
-                            strsql += " set Length = " & PrepareStr(TxtFP_L.Text.Trim())
-                            strsql += " , number = " & PrepareStr(TxtFP_N.Text.Trim())
-                            strsql += " , QTU = " & PrepareStr("")
-                            strsql += " , Dateup =  " & PrepareStr(strDate)
-                            strsql += " ,  semicode = " & PrepareStr(FPcode)
-                            strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
-                            strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
-                            strsql += " and MaterialType = " & PrepareStr("22")
-                        End If
+                            'Found Flipper
+                            If CheckBoxFP.Checked Then
+                                strsql = "Update TBLGTDtl"
+                                strsql += " set Length = " & PrepareStr(TxtFP_L.Text.Trim())
+                                strsql += " , number = " & PrepareStr(TxtFP_N.Text.Trim())
+                                strsql += " , QTU = " & PrepareStr((cmbFP.SelectedValue * (TxtFP_L.Text.Trim() / 1000)))
+                                strsql += " , Dateup =  " & PrepareStr(strDate)
+                                strsql += " ,  semicode = " & PrepareStr(FPcode)
+                                strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                                strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
+                                strsql += " and MaterialType = " & PrepareStr("22")
+                            Else
+                                strsql = "Update TBLGTDtl"
+                                strsql += " set Length = " & PrepareStr(TxtFP_L.Text.Trim())
+                                strsql += " , number = " & PrepareStr(TxtFP_N.Text.Trim())
+                                strsql += " , QTU = " & PrepareStr("")
+                                strsql += " , Dateup =  " & PrepareStr(strDate)
+                                strsql += " ,  semicode = " & PrepareStr(FPcode)
+                                strsql += " where tirecode = " & PrepareStr(TxtCode.Text.Trim())
+                                strsql += " and Rev = " & PrepareStr(TxtRev.Text.Trim())
+                                strsql += " and MaterialType = " & PrepareStr("22")
+                            End If
+                        End If 'If ChkEditDataFlipper()
                     End If
 
                     cmd.CommandText = strsql
