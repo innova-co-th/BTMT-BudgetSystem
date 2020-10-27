@@ -27,7 +27,7 @@ Public Class FrmAddCvt
     Dim GrdDV As New DataView
     Public Shared cmG As CurrencyManager
     Dim C1 As New SQLData("ACCINV")
-    Friend StrType, StrMaterial As String
+    Public StrType, StrMaterial As String 'It is used in Inventory Tag
 #End Region
 
 #Region " Windows Form Designer generated code "
