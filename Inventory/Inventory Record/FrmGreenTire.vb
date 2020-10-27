@@ -669,6 +669,7 @@ Public Class FrmGreenTire
                 If GrdDV.Item(oldrow + i).Row("MaterialName").Equals("FLIPPER") Then
                     'Flipper
                     If GrdDV.Item(oldrow + i).Row("Semicode") <> "No Use" Then
+                        FAddGreenTire.CheckBoxFP.Checked = True
                         FAddGreenTire.TxtFP_N.Text = GrdDV.Item(oldrow + i).Row("Number")
                         FAddGreenTire.TxtFP_L.Text = GrdDV.Item(oldrow + i).Row("Length")
                         FAddGreenTire.FPcode = GrdDV.Item(oldrow + i).Row("Semicode")
