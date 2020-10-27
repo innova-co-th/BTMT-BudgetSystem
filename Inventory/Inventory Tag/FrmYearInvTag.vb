@@ -1014,6 +1014,7 @@ Public Class FrmYearInvTag
                             End If
 
                             'Set Type Code
+                            Dim typeCodeName As String = typeCode
                             Dim arrTypeCode As DataRow() = DT_TYPE.Select("TypeName = '" & typeCode & "'")
                             typeCode = arrTypeCode(0)("TypeCode")
 
@@ -1041,7 +1042,7 @@ Public Class FrmYearInvTag
 
                             If chkDT.Rows.Count = 0 Then
                                 'Not found in master
-                                Throw New ApplicationException("Type Code """ & typeCode & """ and Code """ & code & """ and Unit """ & unit & """ does not find in system.")
+                                Throw New ApplicationException("Type Code """ & typeCodeName & """ and Code """ & code & """ and Unit """ & unit & """ does not find in system.")
                             End If
 
                             Dim isExists As Boolean = ChkDataImport(tagNo, period, trxYear, typeCode, location)
