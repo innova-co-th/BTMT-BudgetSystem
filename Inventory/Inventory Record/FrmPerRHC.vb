@@ -694,14 +694,14 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                 Dim dblPer As Double
                                 Dim dblRHC As Double
 
-                                If dtRec.Rows(i)("Percent").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("Percent").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Percent"), dblPer) Then
                                         Throw New System.Exception("Please input Percent data as Number")
                                     End If
                                 Else
                                     Throw New System.Exception("Please input Percent data as Number")
                                 End If
-                                If dtRec.Rows(i)("RHC").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("RHC").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("RHC"), dblRHC) Then
                                         Throw New System.Exception("Please input RHC data as Number")
                                     End If
@@ -776,8 +776,8 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                     sb.Clear()
                                     sb.AppendLine(" Update TBLRHCDtl")
                                     sb.AppendLine(" Set ")
-                                    sb.AppendLine(" PER = '" & totalPer & "'")
-                                    sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                    sb.AppendLine(" PER = '" & dblPer & "'")
+                                    sb.AppendLine(" , RHC = '" & dblRHC & "'")
                                     sb.AppendLine(" , Dateup = '" & strDate & "'")
                                     sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
 

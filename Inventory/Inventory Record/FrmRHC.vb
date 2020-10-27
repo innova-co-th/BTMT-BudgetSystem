@@ -830,14 +830,14 @@ Public Class FrmRHC
                                 Dim dblRMQty As Double
                                 Dim dblRHC As Double
 
-                                If dtRec.Rows(i)("Qty").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("Qty").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("Qty"), dblRMQty) Then
                                         Throw New System.Exception("Please input Qty data as Number")
                                     End If
                                 Else
                                     Throw New System.Exception("Please input Qty data as Number")
                                 End If
-                                If dtRec.Rows(i)("RHC").ToString.Length > 0 Then
+                                If dtRec.Rows(i)("RHC").ToString().Length > 0 Then
                                     If Not Double.TryParse(dtRec.Rows(i)("RHC"), dblRHC) Then
                                         Throw New System.Exception("Please input RHC data as Number")
                                     End If
@@ -912,8 +912,8 @@ Public Class FrmRHC
                                                 sb.Clear()
                                                 sb.AppendLine(" Update TBLRHCDtl")
                                                 sb.AppendLine(" Set ")
-                                                sb.AppendLine(" Weight = '" & totalQty & "'")
-                                                sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                                sb.AppendLine(" Weight = '" & dblRMQty & "'")
+                                                sb.AppendLine(" , RHC = '" & dblRHC & "'")
                                                 sb.AppendLine(" , Dateup = '" & strDate & "'")
                                                 sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
 
@@ -937,8 +937,8 @@ Public Class FrmRHC
                                             sb.Clear()
                                             sb.AppendLine(" Update TBLRHCDtl")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" Weight = '" & totalQty & "'")
-                                            sb.AppendLine(" , RHC = '" & totalRHC & "'")
+                                            sb.AppendLine(" Weight = '" & dblRMQty & "'")
+                                            sb.AppendLine(" , RHC = '" & dblRHC & "'")
                                             sb.AppendLine(" , Dateup = '" & strDate & "'")
                                             sb.AppendLine(" Where Final = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
 
@@ -988,15 +988,15 @@ Public Class FrmRHC
                                         sb.Clear()
                                         sb.AppendLine(" Insert TBLRHCDtl ")
                                         sb.AppendLine(" Values (")
-                                        sb.AppendLine(intSeq & ", ")               'Column MasterCode
-                                        sb.AppendLine(" '" & strFinalCompoundCode & "', ")                   'Column Revision
-                                        sb.AppendLine(" '" & strCompoundCode & "', ")                     'Column RMCode
-                                        sb.AppendLine(" '" & strRevision & "', ")                                   'Column RmRevision
-                                        sb.AppendLine(" '" & strRMCode & "', ")                      'Column Qty
-                                        sb.AppendLine(" '" & dblRMQty & "', ")                                     'Column Unit
-                                        sb.AppendLine(" '" & dblRHC & "', ")   'Column Per
-                                        sb.AppendLine(" NULL, ")   'Column Per
-                                        sb.AppendLine(" '" & strDate & "' ")   'Column Per
+                                        sb.AppendLine(intSeq & ", ")                       'Column Seq
+                                        sb.AppendLine(" '" & strFinalCompoundCode & "', ") 'Column Final
+                                        sb.AppendLine(" '" & strCompoundCode & "', ")      'Column MasterCode
+                                        sb.AppendLine(" '" & strRevision & "', ")          'Column Revision
+                                        sb.AppendLine(" '" & strRMCode & "', ")            'Column RMCode
+                                        sb.AppendLine(" '" & dblRMQty & "', ")             'Column Weight
+                                        sb.AppendLine(" '" & dblRHC & "', ")               'Column RHC
+                                        sb.AppendLine(" NULL, ")                           'Column PER
+                                        sb.AppendLine(" '" & strDate & "' ")               'Column Dateup
                                         sb.AppendLine(" )")
                                         StrSQL = sb.ToString()
                                         cmSQL.CommandText = StrSQL
@@ -1048,15 +1048,15 @@ Public Class FrmRHC
                                     sb.Clear()
                                     sb.AppendLine(" Insert TBLRHCDtl ")
                                     sb.AppendLine(" Values (")
-                                    sb.AppendLine(intSeq & ", ")               'Column MasterCode
-                                    sb.AppendLine(" '" & strFinalCompoundCode & "', ")                   'Column Revision
-                                    sb.AppendLine(" '" & strCompoundCode & "', ")                     'Column RMCode
-                                    sb.AppendLine(" '" & strRevision & "', ")                                   'Column RmRevision
-                                    sb.AppendLine(" '" & strRMCode & "', ")                      'Column Qty
-                                    sb.AppendLine(" '" & dblRMQty & "', ")                                     'Column Unit
-                                    sb.AppendLine(" '" & dblRHC & "', ")   'Column Per
-                                    sb.AppendLine(" NULL, ")   'Column Per
-                                    sb.AppendLine(" '" & strDate & "' ")   'Column Per
+                                    sb.AppendLine(intSeq & ", ")                           'Column Seq
+                                    sb.AppendLine(" '" & strFinalCompoundCode & "', ")     'Column Final
+                                    sb.AppendLine(" '" & strCompoundCode & "', ")          'Column MasterCode
+                                    sb.AppendLine(" '" & strRevision & "', ")              'Column Revision
+                                    sb.AppendLine(" '" & strRMCode & "', ")                'Column RMCode
+                                    sb.AppendLine(" '" & dblRMQty & "', ")                 'Column Weight
+                                    sb.AppendLine(" '" & dblRHC & "', ")                   'Column RHC
+                                    sb.AppendLine(" NULL, ")                               'Column PER
+                                    sb.AppendLine(" '" & strDate & "' ")                   'Column Dateup
                                     sb.AppendLine(" )")
                                     StrSQL = sb.ToString()
                                     cmSQL.CommandText = StrSQL
