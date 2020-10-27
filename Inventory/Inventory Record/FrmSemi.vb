@@ -18,6 +18,7 @@ Public Class FrmSemi
     Protected Const TBL_RM As String = "TBL_RM"
     Dim GrdDVPreSemi As New DataView
     Protected Const TBL_PreSemi As String = "TBL_PreSemi"
+    Protected Const TBL_Semi As String = "TBL_Semi"
     Dim GrdDVType As New DataView
     Protected Const TBL_Type As String = "TBL_Type"
     Dim C1 As New SQLData("ACCINV")
@@ -811,7 +812,7 @@ Public Class FrmSemi
             frm.Show()
 
             'Read excel file
-            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_Semi, arrColumn)
 
             'Save
             If dtRec IsNot Nothing Then
@@ -893,6 +894,9 @@ Public Class FrmSemi
                                     If GridRow(0)("MaterialCode").ToString() = "13" Then
                                         'TREAD
                                         '//Just QTY
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Double.TryParse(dtRec.Rows(i)("Length"), dblLength)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     ElseIf GridRow(0)("MaterialCode").ToString() = "14" Then
                                         'BF (Upper,Lower,Center)
                                         If dtRec.Rows(i)("N").ToString().Length > 0 Then
@@ -902,6 +906,9 @@ Public Class FrmSemi
                                         Else
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Double.TryParse(dtRec.Rows(i)("Length"), dblLength)
                                     Else
                                         'Other type (CUSSION,BODY PLY, BELT1-4,WIRE CHAFER,Nylon CHAFER,SIDE,INNERLINER,FLIPPER)
                                         If dtRec.Rows(i)("Length").ToString().Length > 0 Then
@@ -911,6 +918,9 @@ Public Class FrmSemi
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     End If
                                 Else
                                     'Not found data in data grid
@@ -919,6 +929,9 @@ Public Class FrmSemi
                                     If strTypeMaterial = "13" Then
                                         'TREAD
                                         '//Just QTY
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Double.TryParse(dtRec.Rows(i)("Length"), dblLength)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     ElseIf strTypeMaterial = "14" Then
                                         'BF (Upper,Lower,Center)
                                         If dtRec.Rows(i)("N").ToString().Length > 0 Then
@@ -928,6 +941,9 @@ Public Class FrmSemi
                                         Else
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Double.TryParse(dtRec.Rows(i)("Length"), dblLength)
                                     Else
                                         'Other type
                                         If dtRec.Rows(i)("Length").ToString().Length > 0 Then
@@ -937,24 +953,27 @@ Public Class FrmSemi
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     End If
                                 End If 'If GridRow.Count > 0
 
                                 '//For Check Data from above row on import file.
-                                Dim chkSamePreSemiBefore As String = String.Empty
+                                Dim chkSameSemiBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
-                                Dim chkSameSemiRevAbove As Boolean = False
+
                                 If i > 0 Then
                                     'Not first row
-                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("Semi").ToString()
+                                    chkSameSemiBefore = dtRec.Rows(i - 1)("Semi").ToString()
                                     chkSameRevisionBefore = dtRec.Rows(i - 1)("SemiRevision").ToString()
                                 Else
-                                    chkSamePreSemiBefore = String.Empty
+                                    chkSameSemiBefore = String.Empty
                                     chkSameRevisionBefore = String.Empty
                                 End If
 
                                 '//Summarize TotalQty
-                                If strSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore Then
+                                If strSemi <> chkSameSemiBefore Or strRevision <> chkSameRevisionBefore Then
                                     'Start new semi and revision in each group
                                     totalQty = 0
                                     GridRow = DT.Select("Mastercode = '" & strSemi & "' AND MRev = '" & strRevision & "'")
@@ -1134,72 +1153,115 @@ Public Class FrmSemi
 
                                 Else '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLPreSemi and TBLConvert
 
-                                    '//Insert TBLGroup
                                     sb.Clear()
-                                    sb.AppendLine(" Insert  TBLGroup ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine("'05' , ")                'Column TypeCode
-                                    sb.AppendLine("'" & strSemi & "'")      'Column Code
-                                    sb.AppendLine(" )")
 
-                                    sb.AppendLine(" ")
+                                    If strSemi <> chkSameSemiBefore Or strRevision <> chkSameRevisionBefore Then
+                                        'Semi and Revision is new group
+                                        '//Insert TBLGroup
+                                        sb.AppendLine(" Insert  TBLGroup ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine("'05' , ")                'Column TypeCode
+                                        sb.AppendLine("'" & strSemi & "'")      'Column Code
+                                        sb.AppendLine(" )")
 
-                                    '//Insert TBLPreSemi
-                                    sb.AppendLine(" Insert TBLSemi ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '" & strSemi & "', ")           'Column Final
-                                    sb.AppendLine(" '" & strSemi & "', ")           'Column SemiCode
-                                    sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
-                                    sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
-                                    sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
+                                        sb.AppendLine(" ")
 
-                                    If dblWidth = 0 Then                            'Column Width
-                                        sb.AppendLine(" NULL , ")
-                                    Else
-                                        sb.AppendLine(" '" & dblWidth & "' , ")
-                                    End If
+                                        '//Insert TBLSemi
+                                        sb.AppendLine(" Insert TBLSemi ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(" '" & strSemi & "', ")           'Column Final
+                                        sb.AppendLine(" '" & strSemi & "', ")           'Column SemiCode
+                                        sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
+                                        sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
+                                        sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
 
-                                    If dblLength = 0 Then                           'Column Length
-                                        sb.AppendLine(" NULL , ")
-                                    Else
-                                        sb.AppendLine(" '" & dblLength & "' , ")
-                                    End If
+                                        If dblWidth = 0 Then                            'Column Width
+                                            sb.AppendLine(" NULL , ")
+                                        Else
+                                            sb.AppendLine(" '" & dblWidth & "' , ")
+                                        End If
 
-                                    If intN = 0 Then                                'Column N
-                                        sb.AppendLine(" NULL , ")
-                                    Else
-                                        sb.AppendLine(" '" & intN & "', ")
-                                    End If
+                                        If dblLength = 0 Then                           'Column Length
+                                            sb.AppendLine(" NULL , ")
+                                        Else
+                                            sb.AppendLine(" '" & dblLength & "' , ")
+                                        End If
 
-                                    sb.AppendLine(" '0' , ")                        'Column Active
-                                    sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
+                                        If intN = 0 Then                                'Column N
+                                            sb.AppendLine(" NULL , ")
+                                        Else
+                                            sb.AppendLine(" '" & intN & "', ")
+                                        End If
 
-                                    If strTypeMaterial = "13" Then                  'Column CN
-                                        'TREAD
-                                        sb.AppendLine(" '1' ")
-                                    ElseIf strTypeMaterial = "14" Then
-                                        'BF (Upper,Lower,Center)
-                                        sb.AppendLine(" '1' ")
-                                    ElseIf strTypeMaterial = "07" Then
-                                        'BELT-3
-                                        sb.AppendLine(" '1' ")
-                                    ElseIf strTypeMaterial = "08" Then
-                                        'BELT-4
-                                        sb.AppendLine(" '1' ")
-                                    ElseIf strTypeMaterial = "12" Then
-                                        'INNERLINER
-                                        sb.AppendLine(" '1' ")
-                                    ElseIf strTypeMaterial = "04" Then
-                                        'BODY PLY
-                                        sb.AppendLine(" '1' ")
-                                    Else
-                                        'CUSSION,BELT-1,BELT-2,WIRE CHAFER,Nylon CHAFER,SIDE
-                                        sb.AppendLine(" '2' ")
-                                    End If
+                                        sb.AppendLine(" '0' , ")                        'Column Active
+                                        sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
 
-                                    sb.AppendLine(" )")
+                                        If strTypeMaterial = "13" Then                  'Column CN
+                                            'TREAD
+                                            sb.AppendLine(" '1' ")
+                                        ElseIf strTypeMaterial = "14" Then
+                                            'BF (Upper,Lower,Center)
+                                            sb.AppendLine(" '1' ")
+                                        ElseIf strTypeMaterial = "07" Then
+                                            'BELT-3
+                                            sb.AppendLine(" '1' ")
+                                        ElseIf strTypeMaterial = "08" Then
+                                            'BELT-4
+                                            sb.AppendLine(" '1' ")
+                                        ElseIf strTypeMaterial = "12" Then
+                                            'INNERLINER
+                                            sb.AppendLine(" '1' ")
+                                        ElseIf strTypeMaterial = "04" Then
+                                            'BODY PLY
+                                            sb.AppendLine(" '1' ")
+                                        Else
+                                            'CUSSION,BELT-1,BELT-2,WIRE CHAFER,Nylon CHAFER,SIDE
+                                            sb.AppendLine(" '2' ")
+                                        End If
 
-                                    sb.AppendLine(" ")
+                                        sb.AppendLine(" )")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Insert TblConvert #1
+                                        sb.AppendLine(" Insert  TblConvert ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(" '05' , ")                   'Column Type
+                                        sb.AppendLine(" '" & strSemi & "', ")       'Column Final
+                                        sb.AppendLine(" '" & strSemi & "', ")       'Column Code
+                                        sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
+                                        sb.AppendLine(" 'KG' , ")                   'Column UnitBig
+                                        sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
+                                        sb.AppendLine(" '1' , ")                    'Column BQty
+                                        sb.AppendLine(" '1' ")                      'Column SQty
+                                        sb.AppendLine(" )")
+
+                                        '//Insert TblConvert #2
+                                        sb.AppendLine(" ")
+
+                                        sb.AppendLine(" Insert  TblConvert ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(" '05' , ")                       'Column Type
+                                        sb.AppendLine(" '" & strSemi & "', ")           'Column Final
+                                        sb.AppendLine(" '" & strSemi & "', ")           'Column Code
+                                        sb.AppendLine(" '" & strRevision & "' , ")      'Column Rev
+
+                                        If strTypeMaterial = "13" Then                  'Column UnitBig
+                                            'TREAD
+                                            sb.AppendLine(" 'UT' , ")
+                                        ElseIf strTypeMaterial = "14" Then
+                                            'BF (Upper,Lower,Center)
+                                            sb.AppendLine(" 'UT' , ")
+                                        Else
+                                            sb.AppendLine(" 'M' , ")
+                                        End If
+
+                                        sb.AppendLine(" 'KG' , ")                       'Column UnitSmall
+                                        sb.AppendLine(" '1' , ")                        'Column BQty
+                                        sb.AppendLine(" '" & (totalQty / 1000) & "' ")  'Column SQty
+
+                                        sb.AppendLine(" )")
+                                    End If 'If strSemi <> chkSameSemiBefore Or strRevision <> chkSameRevisionBefore
 
                                     '//Insert TblMaster
                                     sb.AppendLine(" Insert  TBLMASTER ")
@@ -1210,54 +1272,18 @@ Public Class FrmSemi
                                     sb.AppendLine(" NULL , ")                                               'Column RmRevision
 
                                     If strTypeMaterial = "13" Then                                          'Column Qty
+                                        'TREAD
                                         sb.AppendLine(" '" & dblQty & "', ")
                                     ElseIf strTypeMaterial = "14" Then
+                                        'BF (Upper,Lower,Center)
                                         sb.AppendLine(" '" & (dblQty / intN) & "', ")
                                     Else
+                                        'Other type
                                         sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
                                     End If
 
                                     sb.AppendLine(" '" & strUnit & "' , ")                                  'Column Unit
                                     sb.AppendLine(" '" & ((dblQty * 100) / totalQty) & "'")                 'Column Per
-                                    sb.AppendLine(" )")
-
-                                    sb.AppendLine(" ")
-
-                                    '//Insert TblConvert #1
-                                    sb.AppendLine(" Insert  TblConvert ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '05' , ")                   'Column Type
-                                    sb.AppendLine(" '" & strSemi & "', ")       'Column Final
-                                    sb.AppendLine(" '" & strSemi & "', ")       'Column Code
-                                    sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
-                                    sb.AppendLine(" 'KG' , ")                   'Column UnitBig
-                                    sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
-                                    sb.AppendLine(" '1' , ")                    'Column BQty
-                                    sb.AppendLine(" '1' ")                      'Column SQty
-                                    sb.AppendLine(" )")
-
-                                    '//Insert TblConvert #2
-                                    sb.AppendLine(" ")
-
-                                    sb.AppendLine(" Insert  TblConvert ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '05' , ")                       'Column Type
-                                    sb.AppendLine(" '" & strSemi & "', ")           'Column Final
-                                    sb.AppendLine(" '" & strSemi & "', ")           'Column Code
-                                    sb.AppendLine(" '" & strRevision & "' , ")      'Column Rev
-
-                                    If strTypeMaterial = "13" Then                  'Column UnitBig
-                                        sb.AppendLine(" 'UT' , ")
-                                    ElseIf strTypeMaterial = "14" Then
-                                        sb.AppendLine(" 'UT' , ")
-                                    Else
-                                        sb.AppendLine(" 'M' , ")
-                                    End If
-
-                                    sb.AppendLine(" 'KG' , ")                       'Column UnitSmall
-                                    sb.AppendLine(" '1' , ")                        'Column BQty
-                                    sb.AppendLine(" '" & (totalQty / 1000) & "' ")  'Column SQty
-
                                     sb.AppendLine(" )")
 
                                     StrSQL = sb.ToString()

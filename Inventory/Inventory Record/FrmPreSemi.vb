@@ -796,7 +796,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
             frm.Show()
 
             'Read excel file
-            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_PreSemi, arrColumn)
 
             'Save
             If dtRec IsNot Nothing Then
@@ -881,7 +881,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     ElseIf GridRow(0)("MaterialType").ToString() = "02" Then
                                         'COATED CORD
                                         If dtRec.Rows(i)("Width").ToString().Length > 0 Then
-                                            If Not Double.TryParse(dtRec.Rows(i)("Width"), dblLength) Then
+                                            If Not Double.TryParse(dtRec.Rows(i)("Width"), dblWidth) Then
                                                 Throw New System.Exception("Please input Width data as Number")
                                             End If
                                         Else
@@ -889,16 +889,19 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         End If
                                     ElseIf GridRow(0)("MaterialType").ToString() = "16" Then
                                         'WCH-Hut Gum
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     ElseIf GridRow(0)("MaterialType").ToString() = "19" Then
                                         'HEX BEAD
-                                        If dtRec.Rows(i)("N").ToString.Length > 0 Then
+                                        If dtRec.Rows(i)("N").ToString().Length > 0 Then
                                             If Not Integer.TryParse(dtRec.Rows(i)("N"), intN) Then
                                                 Throw New System.Exception("Please input N data as Number")
                                             End If
@@ -907,13 +910,16 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         End If
                                     ElseIf GridRow(0)("MaterialType").ToString() = "21" Then
                                         'WIRE CHAFER
-                                        If dtRec.Rows(i)("Length").ToString.Length > 0 Then
+                                        If dtRec.Rows(i)("Length").ToString().Length > 0 Then
                                             If Not Double.TryParse(dtRec.Rows(i)("Length"), dblLength) Then
                                                 Throw New System.Exception("Please input Length data as Number")
                                             End If
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     Else
                                         'Other type (NCH-Hut Gum, Bead Cover Gum, WCH-End Gum, Body Ply Insert)
                                         If dtRec.Rows(i)("Length").ToString().Length > 0 Then
@@ -931,6 +937,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         Else
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
                                     End If
                                 Else
                                     'Not found data in data grid
@@ -942,7 +950,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     ElseIf strTypeMaterial = "02" Then
                                         'COATED CORE
                                         If dtRec.Rows(i)("Width").ToString().Length > 0 Then
-                                            If Not Double.TryParse(dtRec.Rows(i)("Width"), dblLength) Then
+                                            If Not Double.TryParse(dtRec.Rows(i)("Width"), dblWidth) Then
                                                 Throw New System.Exception("Please input Width data as Number")
                                             End If
                                         Else
@@ -957,6 +965,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     ElseIf strTypeMaterial = "19" Then
                                         'HEX BEAD
                                         If dtRec.Rows(i)("N").ToString().Length > 0 Then
@@ -975,6 +986,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         Else
                                             Throw New System.Exception("Please input Length data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
+                                        Integer.TryParse(dtRec.Rows(i)("N"), intN)
                                     Else
                                         'Other type
                                         If dtRec.Rows(i)("Length").ToString().Length > 0 Then
@@ -992,13 +1006,15 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         Else
                                             Throw New System.Exception("Please input N data as Number")
                                         End If
+
+                                        Double.TryParse(dtRec.Rows(i)("Width"), dblWidth)
                                     End If
                                 End If 'If GridRow.Count > 0
 
                                 '//For Check Data from above row on import file.
                                 Dim chkSamePreSemiBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
-                                Dim chkSamePreSemiRevAbove As Boolean = False
+
                                 If i > 0 Then
                                     chkSamePreSemiBefore = dtRec.Rows(i - 1)("PreSemi").ToString()
                                     chkSameRevisionBefore = dtRec.Rows(i - 1)("PreSemiRevision").ToString()
@@ -1074,8 +1090,6 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             End If
                                         Next j
                                     End If 'If GridRow.Count > 0
-                                Else
-                                    chkSamePreSemiRevAbove = True
                                 End If 'If strPreSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore
 
                                 '// 1.) Check PreSemi and Revision fron DB
@@ -1088,7 +1102,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 '// 1.) Check PreSemi and Revision fron DB
                                 GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "'")
 
-                                If GridRow.Count > 0 Or chkSamePreSemiRevAbove = True Then '// 1.2) [OK] Find Import RMCode on DB
+                                If GridRow.Count > 0 Then '// 1.2) [OK] Find Import RMCode on DB
 
                                     GridRow = DT.Select("Mastercode = '" & strPreSemi & "' AND MRev = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
 
@@ -1109,6 +1123,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         ElseIf strTypeMaterialOriginal = "19" Then
                                             'HEX BEAD
                                             sb.AppendLine(" Qty = '" & (dblQty / intN) & "' ")
+                                        ElseIf strTypeMaterialOriginal = "21" Then
+                                            'WIRE CHAFER
+                                            sb.AppendLine(" Qty = '" & ((dblQty / dblLength) * 1000) & "' ")
                                         ElseIf strTypeMaterialOriginal = "16" Then
                                             'WCH-Hut Gum
                                             sb.AppendLine(" Qty = '" & ((dblQty / dblLength) * 1000) & "' ")
@@ -1162,14 +1179,22 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         sb.AppendLine(" NULL , ")                                                   'Column RmRevision
 
                                         If strTypeMaterialOriginal = "01" Then                                              'Column Qty
+                                            'STEEL CORD
                                             sb.AppendLine(" '" & dblQty & "', ")
                                         ElseIf strTypeMaterialOriginal = "02" Then
+                                            'COATED CORD
                                             sb.AppendLine(" '" & ((dblQty * dblWidth) / 1000) & "', ")
                                         ElseIf strTypeMaterialOriginal = "19" Then
+                                            'HEX BEAD
                                             sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                        ElseIf strTypeMaterialOriginal = "21" Then
+                                            'WIRE CHAFER
+                                            sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
                                         ElseIf strTypeMaterialOriginal = "16" Then
+                                            'WCH-Hut Gum
                                             sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
                                         Else
+                                            'Other type
                                             sb.AppendLine(" '" & (((dblQty / dblLength) * 1000) / intN) & "', ")
                                         End If
 
@@ -1212,59 +1237,112 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
                                 Else '// 1.1) [NG] Insert TBLMASTER,TBLGroup,TBLPreSemi and TBLConvert
 
-                                    '//Insert TBLGroup
                                     sb.Clear()
-                                    sb.AppendLine(" Insert  TBLGroup ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine("'04' , ")                    'Column TypeCode
-                                    sb.AppendLine("'" & strPreSemi & "'")       'Column Code
-                                    sb.AppendLine(" )")
 
-                                    sb.AppendLine(" ")
+                                    If strPreSemi <> chkSamePreSemiBefore Or strRevision <> chkSameRevisionBefore Then
+                                        'PreSemi and Revision is new group
+                                        '//Insert TBLGroup
+                                        sb.AppendLine(" Insert  TBLGroup ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine("'04' , ")                    'Column TypeCode
+                                        sb.AppendLine("'" & strPreSemi & "'")       'Column Code
+                                        sb.AppendLine(" )")
 
-                                    '//Insert TBLPreSemi
-                                    sb.AppendLine(" Insert TBLPreSemi ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '" & strPreSemi & "', ")        'Column Final
-                                    sb.AppendLine(" '" & strPreSemi & "', ")        'Column PsemiCode
-                                    sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
-                                    sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
-                                    sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
+                                        sb.AppendLine(" ")
 
-                                    If intN = 0 Then                                'Column N
-                                        sb.AppendLine(" NULL , ")
-                                    Else
-                                        sb.AppendLine(" '" & intN & "', ")
-                                    End If
+                                        '//Insert TBLPreSemi
+                                        sb.AppendLine(" Insert TBLPreSemi ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(" '" & strPreSemi & "', ")        'Column Final
+                                        sb.AppendLine(" '" & strPreSemi & "', ")        'Column PsemiCode
+                                        sb.AppendLine(" '" & strRevision & "', ")       'Column Revision
+                                        sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
+                                        sb.AppendLine(" '" & totalQty & "', ")          'Column QPU
 
-                                    If dblLength = 0 Then                           'Column Length
-                                        sb.AppendLine(" NULL , ")
-                                    Else
-                                        sb.AppendLine(" '" & dblLength & "' , ")
-                                    End If
+                                        If intN = 0 Then                                'Column N
+                                            sb.AppendLine(" NULL , ")
+                                        Else
+                                            sb.AppendLine(" '" & intN & "', ")
+                                        End If
 
-                                    sb.AppendLine(" NULL , ")                       'Column gmeter
+                                        If dblLength = 0 Then                           'Column Length
+                                            sb.AppendLine(" NULL , ")
+                                        Else
+                                            sb.AppendLine(" '" & dblLength & "' , ")
+                                        End If
 
-                                    If dblWidth = 0 Then                            'Column Width
-                                        sb.AppendLine(" NULL , ")
-                                    Else
-                                        sb.AppendLine(" '" & dblWidth & "' , ")
-                                    End If
+                                        sb.AppendLine(" NULL , ")                       'Column gmeter
 
-                                    sb.AppendLine(" NULL , ")                       'Column Gauge
-                                    sb.AppendLine(" '0' , ")                        'Column Active
-                                    sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
+                                        If dblWidth = 0 Then                            'Column Width
+                                            sb.AppendLine(" NULL , ")
+                                        Else
+                                            sb.AppendLine(" '" & dblWidth & "' , ")
+                                        End If
 
-                                    If strTypeMaterial = "16" Then                  'Column CN
-                                        'WCH-Hut Gum
-                                        sb.AppendLine(" '2' ")
-                                    Else
-                                        sb.AppendLine(" '1' ")
-                                    End If
+                                        sb.AppendLine(" NULL , ")                       'Column Gauge
+                                        sb.AppendLine(" '0' , ")                        'Column Active
+                                        sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
 
-                                    sb.AppendLine(" )")
+                                        If strTypeMaterial = "16" Then                  'Column CN
+                                            'WCH-Hut Gum
+                                            sb.AppendLine(" '2' ")
+                                        Else
+                                            sb.AppendLine(" '1' ")
+                                        End If
 
-                                    sb.AppendLine(" ")
+                                        sb.AppendLine(" )")
+
+                                        sb.AppendLine(" ")
+
+                                        '//Insert TblConvert #1
+                                        sb.AppendLine(" Insert  TblConvert ")
+                                        sb.AppendLine(" Values (")
+                                        sb.AppendLine(" '04' , ")                   'Column Type
+                                        sb.AppendLine(" '" & strPreSemi & "', ")    'Column Final
+                                        sb.AppendLine(" '" & strPreSemi & "', ")    'Column Code
+                                        sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
+                                        sb.AppendLine(" 'KG' , ")                   'Column UnitBig
+                                        sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
+                                        sb.AppendLine(" '1' , ")                    'Column BQty
+                                        sb.AppendLine(" '1' ")                      'Column SQty
+                                        sb.AppendLine(" )")
+
+                                        '//Insert TblConvert #2
+                                        If strTypeMaterial <> "01" Then
+                                            sb.AppendLine(" ")
+
+                                            sb.AppendLine(" Insert  TblConvert ")
+                                            sb.AppendLine(" Values (")
+                                            sb.AppendLine(" '04' , ")                   'Column Type
+                                            sb.AppendLine(" '" & strPreSemi & "', ")    'Column Final
+                                            sb.AppendLine(" '" & strPreSemi & "', ")    'Column Code
+                                            sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
+
+                                            If strTypeMaterial = "02" Then              'Column UnitBig
+                                                'COATED CORD
+                                                sb.AppendLine(" 'M' , ")
+                                            ElseIf strTypeMaterial = "19" Then
+                                                'HEX BEAD
+                                                sb.AppendLine(" 'UT' , ")
+                                            Else
+                                                'Other type
+                                                sb.AppendLine(" 'M' , ")
+                                            End If
+
+                                            sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
+                                            sb.AppendLine(" '1' , ")                    'Column BQty
+
+                                            If strUnit = "KG" Then                      'Column SQty
+                                                sb.AppendLine(" '" & totalQty & "' ")
+                                            Else
+                                                sb.AppendLine(" '" & (totalQty / 1000) & "' ")
+                                            End If
+
+                                            sb.AppendLine(" )")
+                                        End If
+
+                                        sb.AppendLine(" ")
+                                    End If 'If strPreSemi = chkSamePreSemiBefore And strRevision = chkSameRevisionBefore
 
                                     '//Insert TblMaster
                                     sb.AppendLine(" Insert  TBLMASTER ")
@@ -1275,14 +1353,22 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     sb.AppendLine(" NULL , ")                                                   'Column RmRevision
 
                                     If strTypeMaterial = "01" Then                                              'Column Qty
+                                        'STEEL CORD
                                         sb.AppendLine(" '" & dblQty & "', ")
                                     ElseIf strTypeMaterial = "02" Then
+                                        'COATED CORD
                                         sb.AppendLine(" '" & ((dblQty * dblWidth) / 1000) & "', ")
                                     ElseIf strTypeMaterial = "19" Then
+                                        'HEX BEAD
                                         sb.AppendLine(" '" & (dblQty / intN) & "', ")
+                                    ElseIf strTypeMaterial = "21" Then
+                                        'WIRE CHAFER
+                                        sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
                                     ElseIf strTypeMaterial = "16" Then
+                                        'WCH-Hut Gum
                                         sb.AppendLine(" '" & ((dblQty / dblLength) * 1000) & "', ")
                                     Else
+                                        'Other type
                                         sb.AppendLine(" '" & (((dblQty / dblLength) * 1000) / intN) & "', ")
                                     End If
 
@@ -1290,57 +1376,11 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     sb.AppendLine(" '" & (dblQty * 100 / totalQty) & "'")                     'Column Per
                                     sb.AppendLine(" )")
 
-                                    sb.AppendLine(" ")
-
-                                    '//Insert TblConvert #1
-                                    sb.AppendLine(" Insert  TblConvert ")
-                                    sb.AppendLine(" Values (")
-                                    sb.AppendLine(" '04' , ")                   'Column Type
-                                    sb.AppendLine(" '" & strPreSemi & "', ")    'Column Final
-                                    sb.AppendLine(" '" & strPreSemi & "', ")    'Column Code
-                                    sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
-                                    sb.AppendLine(" 'KG' , ")                   'Column UnitBig
-                                    sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
-                                    sb.AppendLine(" '1' , ")                    'Column BQty
-                                    sb.AppendLine(" '1' ")                      'Column SQty
-                                    sb.AppendLine(" )")
-
-                                    '//Insert TblConvert #2
-                                    If strTypeMaterial <> "01" Then
-                                        sb.AppendLine(" ")
-
-                                        sb.AppendLine(" Insert  TblConvert ")
-                                        sb.AppendLine(" Values (")
-                                        sb.AppendLine(" '04' , ")                   'Column Type
-                                        sb.AppendLine(" '" & strPreSemi & "', ")    'Column Final
-                                        sb.AppendLine(" '" & strPreSemi & "', ")    'Column Code
-                                        sb.AppendLine(" '" & strRevision & "' , ")  'Column Rev
-
-                                        If strTypeMaterial = "02" Then              'Column UnitBig
-                                            sb.AppendLine(" 'M' , ")
-                                        ElseIf strTypeMaterial = "19" Then
-                                            sb.AppendLine(" 'UT' , ")
-                                        Else
-                                            sb.AppendLine(" 'M' , ")
-                                        End If
-
-                                        sb.AppendLine(" 'KG' , ")                   'Column UnitSmall
-                                        sb.AppendLine(" '1' , ")                    'Column BQty
-
-                                        If strUnit = "KG" Then                      'Column SQty
-                                            sb.AppendLine(" '" & totalQty & "' ")
-                                        Else
-                                            sb.AppendLine(" '" & (totalQty / 1000) & "' ")
-                                        End If
-
-                                        sb.AppendLine(" )")
-                                    End If
-
                                     StrSQL = sb.ToString()
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
 
-                                End If
+                                End If 'If GridRow.Count > 0
 
                             End If 'If strTypeMaterial.Length > 0 And strPreSemi.Length > 0 And strRevision.Length > 0 And strRMCode.Length > 0
                         Next i
