@@ -640,6 +640,8 @@ Public Class FrmEdit
     Private Sub cmdUnit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUnit.Click
         Dim fcvt As New Inventory_Record.FrmAddCvt
         fcvt.Text = "Save"
+        fcvt.StrType = cmbType.SelectedValue.ToString()
+        fcvt.StrMaterial = cmbCode.SelectedValue.ToString()
         fcvt.ShowDialog()
         LoadType()
         LoadLoc()
