@@ -265,7 +265,6 @@ Public Class FrmRHC
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.CmdSave)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(1018, 671)
         Me.Name = "FrmRHC"
@@ -280,7 +279,8 @@ Public Class FrmRHC
 #End Region
 
 #Region "CONSTANT"
-    Dim DT As New DataTable
+    Dim DT As New DataTable() 'Compound Data which is filter by Seq
+    Dim DTALL As New DataTable() 'Compound Data
     Dim StrSQL As String
     Dim oldrow As Integer
 #End Region
@@ -290,6 +290,49 @@ Public Class FrmRHC
         Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
+        'Load all compound data
+        sb.AppendLine("SELECT * ")
+        sb.AppendLine("FROM ( ")
+        sb.AppendLine("  SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
+        sb.AppendLine("  ,CompCode+','+Revision Code")
+        sb.AppendLine("  ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty,'' as FinalCompound_Code,'' as Revision_No,'' as Seq_No")
+        sb.AppendLine("  FROM         TBLCompound")
+        sb.AppendLine("  UNION")
+        sb.AppendLine("  SELECT c.Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active")
+        sb.AppendLine("  ,c.CRev,m.Code,m.Rev,m.RMCode,m.mRHC,m.mQty,c.FinalCompound as FinalCompound_Code,c.Revision as Revision_No,c.Seq as Seq_No")
+        sb.AppendLine("  FROM (        ")
+        sb.AppendLine("    SELECT  seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active")
+        sb.AppendLine("    FROM  TBLCompound")
+        sb.AppendLine("  ) c")
+        sb.AppendLine("  LEFT OUTER JOIN ( ")
+        sb.AppendLine("    SELECT MasterCode Code,Revision Rev")
+        sb.AppendLine("    ,mastercode+','+Revision MRev,RMcode,RHC mRHC,Weight mQty")
+        sb.AppendLine("    FROM   TBLRHCDtl")
+        sb.AppendLine("    WHERE Mastercode in ( SELECT  compcode FROM TBLCompound)")
+        sb.AppendLine("  ) m on c.CRev = m.MRev")
+        sb.AppendLine(") aa ")
+        sb.AppendLine("ORDER BY Code, TQty DESC")
+        StrSQL = sb.ToString()
+
+        If Not DTALL Is Nothing Then
+            If DTALL.Rows.Count >= 1 Then
+                DTALL.Clear()
+            End If
+        End If
+
+        Dim DAALL As SqlDataAdapter
+        Try
+            DAALL = New SqlDataAdapter(StrSQL, C1.Strcon)
+            DTALL = New DataTable()
+            DAALL.Fill(DTALL)
+        Catch
+            MsgBox("Can't Select Data.", MsgBoxStyle.Critical, "Load Data")
+        End Try
+
+        DTALL.TableName = TBL_Comp
+
+        'Load compound data by seq
+        sb.Clear()
         sb.AppendLine("SELECT * ")
         sb.AppendLine("FROM ( ")
         sb.AppendLine("  SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
@@ -327,8 +370,7 @@ Public Class FrmRHC
             DT = New DataTable
             DA.Fill(DT)
         Catch
-            MsgBox("Can't Select Data.", MsgBoxStyle.Critical, "Load Data")
-        Finally
+            'Nothing
         End Try
         '************************************
         DT.TableName = TBL_RM
@@ -867,7 +909,7 @@ Public Class FrmRHC
                                 If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalQty = 0
                                     totalRHC = 0
-                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For k As Integer = 0 To GridRow.Count - 1
                                         totalQty = totalQty + GridRow(k)("Qty")
                                         totalRHC = totalRHC + GridRow(k)("mRHC")
@@ -875,7 +917,7 @@ Public Class FrmRHC
 
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
-                                        GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
+                                        GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
 
                                         If GridRow.Count > 0 Then
                                             totalQty = totalQty - GridRow(0)("Qty")
@@ -896,11 +938,11 @@ Public Class FrmRHC
                                 '//Case 1.2 : [Found No] Final,Comp,Rev on TBLRHCDtl So Next Add data to TBLRHCDtl
 
                                 '//Case 1 : Start With Check FinalCompoundCode, CompoundCode and Revision on Grid (TBLRHCDtl, TBLCompound)
-                                GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
 
                                 If GridRow.Count > 0 Then '//Case 1.1 : [Found] Final,Comp,Rev So Next Check RMCode
 
-                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & strRMCode & "'")
+                                    GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & strRMCode & "'")
 
                                     If GridRow.Count > 0 Then '//Case 1.1.1 : [Found] RMCode So Next Check RHC and QTY
 
