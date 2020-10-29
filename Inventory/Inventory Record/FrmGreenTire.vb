@@ -19,6 +19,7 @@ Public Class FrmGreenTire
     Protected Const TBL_PreSemi As String = "TBL_PreSemi"
     Dim GrdDVType As New DataView
     Protected Const TBL_Type As String = "TBL_Type"
+    Protected Const TBL_GT As String = "TBL_GT"
     Dim C1 As New SQLData("ACCINV")
     Friend WithEvents CmdImport As System.Windows.Forms.Button
     Friend WithEvents CmdExport As System.Windows.Forms.Button
@@ -779,7 +780,7 @@ Public Class FrmGreenTire
             frm.Show()
 
             'Read excel file
-            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_RM, arrColumn)
+            dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_GT, arrColumn)
             dtRec.Columns.Add("QTU", GetType(Double))
 
             'Save
