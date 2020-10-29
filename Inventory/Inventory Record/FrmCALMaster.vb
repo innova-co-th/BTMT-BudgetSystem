@@ -862,7 +862,7 @@ Public Class FrmCALMaster
         sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi)")
         sb.AppendLine("       GROUP BY code,Rev,width,length")
         sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
-        sb.AppendLine("     WHERE materialType IN ('19')")
+        sb.AppendLine("     WHERE materialType IN ('19')") 'HEX BEAD
         sb.AppendLine("   ) xx")
         sb.AppendLine("   UNION")
         sb.AppendLine("   SELECT code, Rev, round(sum(std)/1000,3,1) STD, round(sum(Act)/1000,3,1) ACT")
@@ -876,7 +876,7 @@ Public Class FrmCALMaster
         sb.AppendLine("         FROM TBLMasterPriceRM")
         sb.AppendLine("         WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi)")
         sb.AppendLine("       ) m on p.psemicode+p.Revision = m.code+m.Rev")
-        sb.AppendLine("       WHERE materialtype NOT IN ('01','02','19') AND active = 1")
+        sb.AppendLine("       WHERE materialtype NOT IN ('01','02','19') AND active = 1") 'It is not STEEL CORD, COATED CORD and HEX BEAD
         sb.AppendLine("     ) xx")
         sb.AppendLine("   ) xxx")
         sb.AppendLine("   GROUP BY code,Rev")
@@ -896,7 +896,7 @@ Public Class FrmCALMaster
         sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi)")
         sb.AppendLine("       GROUP BY code,Rev,width,length")
         sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
-        sb.AppendLine("     WHERE materialType in ('02') ")
+        sb.AppendLine("     WHERE materialType in ('02') ") 'COATED CORD
         sb.AppendLine("     UNION")
         sb.AppendLine("     SELECT code,Rev,MaterialType,Length/1000 wt,Qty,std/(Length/1000) std,act/(Length/1000) act")
         sb.AppendLine("     FROM (")
@@ -905,14 +905,15 @@ Public Class FrmCALMaster
         sb.AppendLine("     ) p")
         sb.AppendLine("     LEFT OUTER JOIN (")
         sb.AppendLine("       SELECT code,Rev,isnull(Length,'1000')/1000 wt")
-        sb.AppendLine("       ,sum(Qty) Qty,sum(STD)STD,sum(ACT) ACT ")
+        sb.AppendLine("       ,sum(Qty) Qty,sum(STD)STD,sum(ACT) ACT ") 'Length
         sb.AppendLine("       FROM TBLMasterPriceRM")
         sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi) ")
         sb.AppendLine("       GROUP BY code,Rev,width,length")
         sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
-        sb.AppendLine("     WHERE materialType IN ('01') ")
+        sb.AppendLine("     WHERE materialType IN ('01') ") 'STEEL CORD
         sb.AppendLine("   ) xx ")
         sb.AppendLine(" ) KG on pm.mastercode = kg.code")
+        sb.AppendLine(" ORDER BY MT, Code")
         StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
@@ -1134,6 +1135,7 @@ Public Class FrmCALMaster
         sb.AppendLine("   ) mp on se.semicode+se.Revision =mp.mastercode+mp.revision")
         sb.AppendLine("   WHERE active = 1 AND materialType IN ('10')") 'Material Type Nylon Chafer
         sb.AppendLine(" ) xx")
+        sb.AppendLine(" ORDER BY MT, final")
         StrSQL = sb.ToString()
 
         If Not DT Is Nothing Then
