@@ -284,8 +284,14 @@ Public Class ExcelLib
                             End If
                         ElseIf tableName.Equals("TBL_Semi") Then
                             'Semi type
+                        ElseIf tableName.Equals("TBL_GT") Then
+                            'Green Tire
+                            If j = 9 Then
+                                'Column Length
+                                dr(j - 1) = 0.0
+                            End If
                         Else
-                            'Other type (R/M, Pigment, Compound, Green Tire)
+                            'Other type (R/M, Pigment, Compound)
                             dr(j - 1) = ""
                         End If 'If tableName.Equals("TBL_PreSemi")
                     Else
