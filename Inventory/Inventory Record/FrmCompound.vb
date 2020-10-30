@@ -69,20 +69,20 @@ Public Class FrmCompound
     Friend WithEvents CmdExport As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmCompound))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridCOM = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.CmbCompound = New System.Windows.Forms.ComboBox
-        Me.CheckBoxCompoud = New System.Windows.Forms.CheckBox
-        Me.CheckBoxGP = New System.Windows.Forms.CheckBox
-        Me.CmbGroup = New System.Windows.Forms.ComboBox
-        Me.CmdDelete = New System.Windows.Forms.Button
-        Me.cmdAvtive = New System.Windows.Forms.Button
-        Me.ChkActive = New System.Windows.Forms.CheckBox
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridCOM = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.CmbCompound = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxCompoud = New System.Windows.Forms.CheckBox()
+        Me.CheckBoxGP = New System.Windows.Forms.CheckBox()
+        Me.CmbGroup = New System.Windows.Forms.ComboBox()
+        Me.CmdDelete = New System.Windows.Forms.Button()
+        Me.cmdAvtive = New System.Windows.Forms.Button()
+        Me.ChkActive = New System.Windows.Forms.CheckBox()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -90,8 +90,8 @@ Public Class FrmCompound
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridCOM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 64)
@@ -255,7 +255,6 @@ Public Class FrmCompound
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.CmdSave)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmCompound"
         Me.Text = "Compound (Weight)"

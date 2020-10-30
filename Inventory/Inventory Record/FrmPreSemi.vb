@@ -255,7 +255,6 @@ Public Class FrmPreSemi
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.CmdSave)
         Me.Controls.Add(Me.GroupBox1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmPreSemi"
         Me.Text = "Pre Semi (Material)"

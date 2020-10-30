@@ -53,12 +53,12 @@ Public Class FrmUnit
     Friend WithEvents CmdEdit As System.Windows.Forms.Button
     Friend WithEvents DataGridUnit As System.Windows.Forms.DataGrid
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmUnit))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridUnit = New System.Windows.Forms.DataGrid
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdAdd = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmUnit))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridUnit = New System.Windows.Forms.DataGrid()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdAdd = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridUnit, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -66,20 +66,22 @@ Public Class FrmUnit
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridUnit)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 0)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(250, 272)
+        Me.GroupBox1.Size = New System.Drawing.Size(258, 272)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
         'DataGridUnit
         '
+        Me.DataGridUnit.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DataGridUnit.DataMember = ""
-        Me.DataGridUnit.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridUnit.HeaderForeColor = System.Drawing.SystemColors.ControlText
         Me.DataGridUnit.Location = New System.Drawing.Point(3, 16)
         Me.DataGridUnit.Name = "DataGridUnit"
@@ -88,6 +90,7 @@ Public Class FrmUnit
         '
         'CmdClose
         '
+        Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.CmdClose.Location = New System.Drawing.Point(176, 280)
@@ -99,6 +102,7 @@ Public Class FrmUnit
         '
         'CmdAdd
         '
+        Me.CmdAdd.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdAdd.Image = CType(resources.GetObject("CmdAdd.Image"), System.Drawing.Image)
         Me.CmdAdd.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.CmdAdd.Location = New System.Drawing.Point(16, 280)
@@ -110,6 +114,7 @@ Public Class FrmUnit
         '
         'CmdEdit
         '
+        Me.CmdEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdEdit.Image = CType(resources.GetObject("CmdEdit.Image"), System.Drawing.Image)
         Me.CmdEdit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.CmdEdit.Location = New System.Drawing.Point(96, 280)
@@ -122,12 +127,11 @@ Public Class FrmUnit
         'FrmUnit
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(266, 344)
+        Me.ClientSize = New System.Drawing.Size(274, 344)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.CmdEdit)
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.CmdAdd)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "FrmUnit"
         Me.Text = "Unit"

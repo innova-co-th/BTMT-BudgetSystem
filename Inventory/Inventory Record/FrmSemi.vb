@@ -75,26 +75,26 @@ Public Class FrmSemi
     Friend WithEvents MainMenu1 As System.Windows.Forms.MainMenu
     Friend WithEvents MenuItem1 As System.Windows.Forms.MenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmSemi))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridCOM = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
-        Me.CmbSemi = New System.Windows.Forms.ComboBox
-        Me.CheckBoxPreSemi = New System.Windows.Forms.CheckBox
-        Me.CmbMaterial = New System.Windows.Forms.ComboBox
-        Me.CheckBoxType = New System.Windows.Forms.CheckBox
-        Me.CmdDel = New System.Windows.Forms.Button
-        Me.CheckBoxTire = New System.Windows.Forms.CheckBox
-        Me.CmbTire = New System.Windows.Forms.ComboBox
-        Me.cmdActive = New System.Windows.Forms.Button
-        Me.ChkAvtive = New System.Windows.Forms.CheckBox
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridCOM = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
+        Me.CmbSemi = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxPreSemi = New System.Windows.Forms.CheckBox()
+        Me.CmbMaterial = New System.Windows.Forms.ComboBox()
+        Me.CheckBoxType = New System.Windows.Forms.CheckBox()
+        Me.CmdDel = New System.Windows.Forms.Button()
+        Me.CheckBoxTire = New System.Windows.Forms.CheckBox()
+        Me.CmbTire = New System.Windows.Forms.ComboBox()
+        Me.cmdActive = New System.Windows.Forms.Button()
+        Me.ChkAvtive = New System.Windows.Forms.CheckBox()
         Me.MainMenu1 = New System.Windows.Forms.MainMenu(Me.components)
-        Me.MenuItem1 = New System.Windows.Forms.MenuItem
-        Me.CmdImport = New System.Windows.Forms.Button
-        Me.CmdExport = New System.Windows.Forms.Button
+        Me.MenuItem1 = New System.Windows.Forms.MenuItem()
+        Me.CmdImport = New System.Windows.Forms.Button()
+        Me.CmdExport = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -102,8 +102,8 @@ Public Class FrmSemi
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridCOM)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 72)
@@ -269,7 +269,7 @@ Public Class FrmSemi
         'CmdExport
         '
         Me.CmdExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.CmdExport.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.CmdExport.Image = CType(resources.GetObject("CmdExport.Image"), System.Drawing.Image)
         Me.CmdExport.ImageAlign = System.Drawing.ContentAlignment.TopCenter
         Me.CmdExport.Location = New System.Drawing.Point(803, 594)
         Me.CmdExport.Name = "CmdExport"
@@ -297,7 +297,6 @@ Public Class FrmSemi
         Me.Controls.Add(Me.CmdSave)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.ChkAvtive)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Menu = Me.MainMenu1
         Me.Name = "FrmSemi"
@@ -1696,10 +1695,10 @@ Public Class FrmSemi
             strSQL &= " and Revision = '" & GrdDV.Item(oldrow).Row("Revision") & "'"
             strSQL &= "  "
             If ChkDel() Then
-                'I Think it look something wrong
-            Else
                 strSQL &= " Delete TblGroup"
                 strSQL &= " where Code = '" & GrdDV.Item(oldrow).Row("SemiCode") & "'"
+            Else
+                'Nothing
             End If
             strSQL &= "  "
             strSQL &= " Delete Tblconvert"
