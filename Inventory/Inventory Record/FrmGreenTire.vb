@@ -1418,9 +1418,9 @@ Public Class FrmGreenTire
                                         sb.AppendLine(PrepareStr("22") & ", ") 'MaterialType
                                         sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ") 'Semicode
                                         sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ") 'length
-                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ") 'number
+                                        sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ") 'number
 
-                                        sb.AppendLine(PrepareStr(ExcelRow(0)("QTU")) & ", ") 'QTU
+                                        sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ") 'QTU
                                         sb.AppendLine(PrepareStr("g") & ", ") 'Unit
                                         sb.AppendLine(PrepareStr(strDate)) 'Dateup
                                         sb.AppendLine(") ")
