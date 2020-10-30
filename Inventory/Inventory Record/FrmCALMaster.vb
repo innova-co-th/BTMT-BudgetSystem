@@ -846,7 +846,7 @@ Public Class FrmCALMaster
         sb.AppendLine("   LEFT OUTER JOIN TBLPresemi se on pre.Mastercode+pre.Revision = se.psemicode+se.Revision")
         sb.AppendLine("   WHERE MaterialType NOT IN ('19','02','01')") 'Material Type which is not COATED CORD, STEEL CORD and HEX BEAD
         sb.AppendLine(" ) PM ")
-        sb.AppendLine(" LEFT OUTER JOIN (")
+        sb.AppendLine(" LEFT OUTER JOIN (") 'Join stdKG and actKG
         sb.AppendLine("   SELECT code, Rev, std stdKG, act actKG ")
         sb.AppendLine("   FROM (")
         sb.AppendLine("     SELECT code,Rev,MaterialType,n,cn,Qty,Round(std/qty,3,1) STD,Round(act/qty,3,1) ACT")
@@ -898,19 +898,19 @@ Public Class FrmCALMaster
         sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
         sb.AppendLine("     WHERE materialType in ('02') ") 'COATED CORD
         sb.AppendLine("     UNION")
-        sb.AppendLine("     SELECT code,Rev,MaterialType,Length/1000 wt,Qty,std/(Length/1000) std,act/(Length/1000) act")
+        sb.AppendLine("     SELECT Code,Rev,MaterialType,ISNULL(Length,1000)/1000 wt,Qty,std/(ISNULL(Length,1000)/1000) std,act/(ISNULL(Length,1000)/1000) act") 'Length of type Steel Cord is empty
         sb.AppendLine("     FROM (")
         sb.AppendLine("       SELECT * ")
         sb.AppendLine("       FROM TBLPresemi ")
         sb.AppendLine("     ) p")
         sb.AppendLine("     LEFT OUTER JOIN (")
-        sb.AppendLine("       SELECT code,Rev,isnull(Length,'1000')/1000 wt")
-        sb.AppendLine("       ,sum(Qty) Qty,sum(STD)STD,sum(ACT) ACT ") 'Length
+        sb.AppendLine("       SELECT Code,Rev,ISNULL(Length,'1000')/1000 wt")
+        sb.AppendLine("       ,SUM(Qty) Qty,SUM(STD)STD,SUM(ACT) ACT ")
         sb.AppendLine("       FROM TBLMasterPriceRM")
-        sb.AppendLine("       WHERE code+Rev IN (SELECT psemicode+Revision FROM TBLPresemi) ")
-        sb.AppendLine("       GROUP BY code,Rev,width,length")
-        sb.AppendLine("     ) m on p.psemicode+p.Revision = m.code+m.rev")
-        sb.AppendLine("     WHERE materialType IN ('01') ") 'STEEL CORD
+        sb.AppendLine("       WHERE Code+Rev IN (SELECT PsemiCode+Revision FROM TBLPresemi) ")
+        sb.AppendLine("       GROUP BY Code,Rev,Width,Length")
+        sb.AppendLine("     ) m on p.PsemiCode+p.Revision = m.Code+m.Rev")
+        sb.AppendLine("     WHERE MaterialType IN ('01') ") 'STEEL CORD
         sb.AppendLine("   ) xx ")
         sb.AppendLine(" ) KG on pm.mastercode = kg.code")
         sb.AppendLine(" ORDER BY MT, Code")
