@@ -840,7 +840,7 @@ Public Class FrmGreenTire
 
                             GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "'")
                             If GridRow.Count > 0 Then '//Case Update
-                                If strGreentire <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
+                                If strGreentire <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then
 
                                     '//Update TblGtDtl
                                     '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
@@ -1145,7 +1145,7 @@ Public Class FrmGreenTire
 
                             Else '//Case Insert
 
-                                If strGreentire <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
+                                If strGreentire <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then
 
                                     '//Insert TblGtDtl
                                     '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
@@ -1512,7 +1512,7 @@ Public Class FrmGreenTire
                                     cmSQL.CommandText = StrSQL
                                     cmSQL.ExecuteNonQuery()
                                 End If
-                            End If
+                            End If 'If GridRow.Count > 0
                         Next i
 
                         trans.Commit()
@@ -1653,7 +1653,7 @@ Public Class FrmGreenTire
 
                     '// Check Each SemiCode in same group of GreenTire and Revision correctly
                     'For first GreenTire and Semi in each group
-                    If strGreenTireCode <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore Then
+                    If strGreenTireCode <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then
                         '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
 #Region "Material Type TREAD"
                         importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
@@ -2255,7 +2255,7 @@ Public Class FrmGreenTire
                         End If
 #End Region
                         '//**********************************************************************************************************************************
-                    End If 'If strGreenTireCode <> chkSameGreenTireBefore And strRevision <> chkSameRevisionBefore
+                    End If 'If strGreenTireCode <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore
                 End If 'If strGreenTireCode.Length > 0
 
                 cnSQLRM.Close()
