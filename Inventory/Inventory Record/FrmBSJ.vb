@@ -53,12 +53,12 @@ Public Class FrmBSJ
     Friend WithEvents CmdClose As System.Windows.Forms.Button
     Friend WithEvents CmdEdit As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(FrmBSJ))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridType = New System.Windows.Forms.DataGrid
-        Me.CmdSave = New System.Windows.Forms.Button
-        Me.CmdClose = New System.Windows.Forms.Button
-        Me.CmdEdit = New System.Windows.Forms.Button
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmBSJ))
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridType = New System.Windows.Forms.DataGrid()
+        Me.CmdSave = New System.Windows.Forms.Button()
+        Me.CmdClose = New System.Windows.Forms.Button()
+        Me.CmdEdit = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridType, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -66,13 +66,13 @@ Public Class FrmBSJ
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GroupBox1.Controls.Add(Me.DataGridType)
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(8, 8)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(426, 418)
+        Me.GroupBox1.Size = New System.Drawing.Size(426, 591)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         '
@@ -83,7 +83,7 @@ Public Class FrmBSJ
         Me.DataGridType.HeaderForeColor = System.Drawing.SystemColors.ControlText
         Me.DataGridType.Location = New System.Drawing.Point(3, 16)
         Me.DataGridType.Name = "DataGridType"
-        Me.DataGridType.Size = New System.Drawing.Size(420, 399)
+        Me.DataGridType.Size = New System.Drawing.Size(420, 572)
         Me.DataGridType.TabIndex = 0
         '
         'CmdSave
@@ -91,7 +91,7 @@ Public Class FrmBSJ
         Me.CmdSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdSave.Image = CType(resources.GetObject("CmdSave.Image"), System.Drawing.Image)
         Me.CmdSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdSave.Location = New System.Drawing.Point(208, 426)
+        Me.CmdSave.Location = New System.Drawing.Point(208, 599)
         Me.CmdSave.Name = "CmdSave"
         Me.CmdSave.Size = New System.Drawing.Size(72, 56)
         Me.CmdSave.TabIndex = 1
@@ -103,7 +103,7 @@ Public Class FrmBSJ
         Me.CmdClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdClose.Image = CType(resources.GetObject("CmdClose.Image"), System.Drawing.Image)
         Me.CmdClose.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdClose.Location = New System.Drawing.Point(354, 426)
+        Me.CmdClose.Location = New System.Drawing.Point(354, 599)
         Me.CmdClose.Name = "CmdClose"
         Me.CmdClose.Size = New System.Drawing.Size(75, 56)
         Me.CmdClose.TabIndex = 2
@@ -115,7 +115,7 @@ Public Class FrmBSJ
         Me.CmdEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CmdEdit.Image = CType(resources.GetObject("CmdEdit.Image"), System.Drawing.Image)
         Me.CmdEdit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CmdEdit.Location = New System.Drawing.Point(280, 426)
+        Me.CmdEdit.Location = New System.Drawing.Point(280, 599)
         Me.CmdEdit.Name = "CmdEdit"
         Me.CmdEdit.Size = New System.Drawing.Size(75, 56)
         Me.CmdEdit.TabIndex = 3
@@ -125,7 +125,7 @@ Public Class FrmBSJ
         'FrmBSJ
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.ClientSize = New System.Drawing.Size(442, 488)
+        Me.ClientSize = New System.Drawing.Size(442, 661)
         Me.Controls.Add(Me.CmdEdit)
         Me.Controls.Add(Me.CmdClose)
         Me.Controls.Add(Me.CmdSave)
@@ -133,6 +133,7 @@ Public Class FrmBSJ
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "FrmBSJ"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "BSJCode"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.DataGridType, System.ComponentModel.ISupportInitialize).EndInit()
@@ -152,7 +153,7 @@ Public Class FrmBSJ
     Private Sub LoadBsj()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        StrSQL = "select * from TBLTireSize"
+        StrSQL = "SELECT * FROM TBLTireSize ORDER BY TireCode"
         If Not DT Is Nothing Then
             If DT.Rows.Count >= 1 Then
                 DT.Clear()
