@@ -738,9 +738,16 @@ grdColStyle11, grdColStyle8, grdColStyle9})
         Dim title As String
         Dim style As MsgBoxStyle
         Dim response As MsgBoxResult
+
+        If GrdDV.Count = 0 Then
+            MessageBox.Show("Not found data which is actived. Please display data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
+
         If GrdDV.Item(oldrow).Row("Pcode") = "" Then
             Exit Sub
         End If
+
         msg = "Change Active Semi(Material) : " & GrdDV.Item(oldrow).Row("Pcode") _
         & "  Revision :" & GrdDV.Item(oldrow).Row("Revision") 'Define message.
         style = MsgBoxStyle.DefaultButton2 Or
