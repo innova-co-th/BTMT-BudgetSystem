@@ -537,7 +537,8 @@ Public Class FrmBSJ
 
         Try
             strSQL &= " Select COUNT(*) From TBLGTHdr "
-            strSQL &= " Where TireCode  = '" & GrdDV.Item(oldrow).Row("TireCode") & "' And TireSize = '" & GrdDV.Item(oldrow).Row("BSJCode") & "'"
+            'strSQL &= " Where TireCode  = '" & GrdDV.Item(oldrow).Row("TireCode") & "' And TireSize = '" & GrdDV.Item(oldrow).Row("BSJCode") & "'"
+            strSQL &= " Where TireCode  = '" & GrdDV.Item(oldrow).Row("TireCode") & "'" 'Primary key is "TireCode"
             cnSQL = New SqlConnection(C1.Strcon)
             cnSQL.Open()
             cmSQL = New SqlCommand(strSQL, cnSQL)
