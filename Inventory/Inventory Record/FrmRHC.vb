@@ -1160,6 +1160,133 @@ Public Class FrmRHC
                         cnSQL.Dispose()
                     End Try
                 End Using 'Using cnSQL
+
+                'Calculate Percent and Total Percent
+                Using cnSQL As New SqlConnection(C1.Strcon)
+                    cnSQL.Open()
+                    Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+                    Dim trans As SqlTransaction = cnSQL.BeginTransaction("RMTransaction")
+
+                    cmSQL.Connection = cnSQL
+                    cmSQL.Transaction = trans
+
+                    Try
+                        For i As Integer = 0 To dtRec.Rows.Count - 1
+                            Dim strFinalCompoundCode As String = dtRec.Rows(i)("FinalCompound_Code").ToString().Trim()
+                            Dim strCompoundCode As String = dtRec.Rows(i)("Compound_Code").ToString().Trim()
+                            Dim strRevision As String = dtRec.Rows(i)("Revision_No").ToString().Trim()
+                            Dim strRMCode As String = dtRec.Rows(i)("RMCode").ToString().Trim()
+                            Dim dblRMQty As Double = dtRec.Rows(i)("Qty")
+                            Dim dblRHC As Double = dtRec.Rows(i)("RHC")
+
+                            Dim chkSameFinalCompoundCodeBefore As String = String.Empty
+                            Dim chkSameCompoundCodeBefore As String = String.Empty
+                            Dim chkSameRevisionBefore As String = String.Empty
+                            If i > 0 Then
+                                chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString()
+                                chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString()
+                                chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString()
+                            Else
+                                chkSameFinalCompoundCodeBefore = dtRec.Rows(i)("FinalCompound_Code").ToString()
+                                chkSameCompoundCodeBefore = dtRec.Rows(i)("Compound_Code").ToString()
+                                chkSameRevisionBefore = dtRec.Rows(i)("Revision_No").ToString()
+                            End If
+
+                            'Calculate Percent
+                            sb.Clear()
+                            sb.AppendLine(" UPDATE TBLRHCDtl ")
+                            sb.AppendLine(" SET Per = (     ")
+                            sb.AppendLine("   SELECT Per FROM ( ")
+                            sb.AppendLine("     SELECT Seq,Final,CRev,xx.compcode,mm.Rev,mm.RMCode,mQty,mm.mRHC,Per")
+                            sb.AppendLine("     FROM (  ")
+                            sb.AppendLine("       SELECT seq,final,compcode,Revision REV,cRev,RHC,Active,RMcode,mRHC,mQty ")
+                            sb.AppendLine("       FROM (")
+                            sb.AppendLine("         SELECT  seq, Finalcompound final, compcode, Revision, compcode +','+Revision CRev,RHC,Active ")
+                            sb.AppendLine("         FROM  TBLCompound")
+                            sb.AppendLine("       ) c")
+                            sb.AppendLine("       LEFT OUTER JOIN ( ")
+                            sb.AppendLine("         SELECT mastercode code,Revision Rev,mastercode+','+Revision MRev,RMcode,RHC mRHC,Weight mQty ")
+                            sb.AppendLine("         FROM   TBLRHCDtl ")
+                            sb.AppendLine("         WHERE Mastercode in (SELECT  compcode FROM  TBLCompound)")
+                            sb.AppendLine("       ) m on c.CRev = m.MRev ")
+                            sb.AppendLine("       WHERE Final = '" & strFinalCompoundCode & "'  AND  Compcode = '" & strCompoundCode & "' and  Rev = '" & strRevision & "' and RMCode = '" & strRMCode & "'")
+                            sb.AppendLine("     ) mm ")
+                            sb.AppendLine("     LEFT OUTER JOIN ( ")
+                            sb.AppendLine("       SELECT aa.compcode,aa.Rev,Rmcode rcode,mrhc,mQty Qty,aa.Per ")
+                            sb.AppendLine("       FROM (")
+                            sb.AppendLine("         SELECT  cc.Seq, cc.FinalCompound Final, cc.CompCode, cc.Revision REV, aa.RMCode,mQty, cc.RHC, aa.mRHC, ROUND(aa.mRHC / cc.RHC * 100, 3) AS per, cc.Active ")
+                            sb.AppendLine("         FROM (")
+                            sb.AppendLine("           SELECT     Seq, FinalCompound, CompCode, Revision, Qty TQty, RHC, Active, CompCode + ',' + Revision Code")
+                            sb.AppendLine("           FROM       TBLCompound")
+                            sb.AppendLine("         ) cc ")
+                            sb.AppendLine("         LEFT OUTER JOIN (")
+                            sb.AppendLine("           SELECT     CRev, Code, Rev, RMCode, mRHC, mQty")
+                            sb.AppendLine("           FROM  (")
+                            sb.AppendLine("             SELECT     seq, Finalcompound, compcode + ',' + Revision CRev, RHC, Active")
+                            sb.AppendLine("             FROM       TBLCompound")
+                            sb.AppendLine("           ) c ")
+                            sb.AppendLine("           LEFT OUTER JOIN ( ")
+                            sb.AppendLine("             SELECT     mastercode code, Revision Rev, mastercode + ',' + Revision MRev, RMcode, RHC mRHC, Weight mQty")
+                            sb.AppendLine("             FROM          TBLRHCDtl ")
+                            sb.AppendLine("             WHERE      Mastercode In (SELECT     compcode FROM          TBLCompound) ")
+                            sb.AppendLine("           ) m ON c.CRev = m.MRev")
+                            sb.AppendLine("         ) aa ON cc.Code = aa.CRev")
+                            sb.AppendLine("       ) aa ")
+                            sb.AppendLine("     ) xx on mm.CRev+mm.RMCode  = xx.compcode+','+xx.Rev+xx.rcode and  mm.mrhc = xx.mrhc and mQty = Qty ")
+                            sb.AppendLine("   ) zz ")
+                            sb.AppendLine("   WHERE Final = '" & strFinalCompoundCode & "'  and  Compcode = '" & strCompoundCode & "' and  Rev = '" & strRevision & "' and RMcode = '" & strRMCode & "' and mRHC = '" & dblRHC & "' and mQty = '" & dblRMQty & "'")
+                            sb.AppendLine(" )")
+                            sb.AppendLine(" WHERE Final = '" & strFinalCompoundCode & "'  and  Mastercode = '" & strCompoundCode & "' and  Revision = '" & strRevision & "' and RMcode = '" & strRMCode & "' and RHC = '" & dblRHC & "'  and Weight = '" & dblRMQty & "'")
+                            StrSQL = sb.ToString()
+                            cmSQL.CommandText = StrSQL
+                            cmSQL.ExecuteNonQuery()
+
+                            If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
+                                'Calculate total percent when it is last row of group
+                                sb.Clear()
+                                sb.AppendLine("UPDATE TBLcompound ")
+                                sb.AppendLine("SET Per = (")
+                                sb.AppendLine("  SELECT SUM(Per) Per ")
+                                sb.AppendLine("  FROM TBLRHCDtl ")
+                                sb.AppendLine("  WHERE Final = '" & chkSameFinalCompoundCodeBefore & "' and  Mastercode = '" & chkSameCompoundCodeBefore & "' and  Revision = '" & chkSameRevisionBefore & "' ")
+                                sb.AppendLine("  GROUP BY Final,Mastercode,Revision")
+                                sb.AppendLine(") ")
+                                sb.AppendLine("WHERE FinalCompound = '" & chkSameFinalCompoundCodeBefore & "'  and  Compcode = '" & chkSameCompoundCodeBefore & "' and  Revision = '" & chkSameRevisionBefore & "'")
+                                StrSQL = sb.ToString()
+                                cmSQL.CommandText = StrSQL
+                                cmSQL.ExecuteNonQuery()
+                            End If
+                        Next i
+
+                        'Calculate total percent of last group
+                        sb.Clear()
+                        sb.AppendLine("UPDATE TBLcompound ")
+                        sb.AppendLine("SET Per = (")
+                        sb.AppendLine("  SELECT SUM(Per) Per ")
+                        sb.AppendLine("  FROM TBLRHCDtl ")
+                        sb.AppendLine("  WHERE Final = '" & dtRec.Rows(dtRec.Rows.Count - 1)("FinalCompound_Code").ToString() & "' and  Mastercode = '" & dtRec.Rows(dtRec.Rows.Count - 1)("Compound_Code").ToString() & "' and  Revision = '" & dtRec.Rows(dtRec.Rows.Count - 1)("Revision_No").ToString() & "' ")
+                        sb.AppendLine("  GROUP BY Final,Mastercode,Revision")
+                        sb.AppendLine(") ")
+                        sb.AppendLine("WHERE FinalCompound = '" & dtRec.Rows(dtRec.Rows.Count - 1)("FinalCompound_Code").ToString() & "'  and  Compcode = '" & dtRec.Rows(dtRec.Rows.Count - 1)("Compound_Code").ToString() & "' and  Revision = '" & dtRec.Rows(dtRec.Rows.Count - 1)("Revision_No").ToString() & "'")
+                        StrSQL = sb.ToString()
+                        cmSQL.CommandText = StrSQL
+                        cmSQL.ExecuteNonQuery()
+
+                        trans.Commit()
+                        MessageBox.Show("Calculate complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As SqlException
+                        MsgBox("Calculate error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
+                        trans.Rollback()
+                    Catch ex As Exception
+                        MsgBox("Calculate error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "General Error")
+                        trans.Rollback()
+                    Finally
+                        trans.Dispose()
+                        cmSQL.Dispose()
+                        cnSQL.Close()
+                        cnSQL.Dispose()
+                    End Try
+                End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
             LoadCOM() 'ReQuery and set datagrid
@@ -1236,6 +1363,78 @@ Public Class FrmRHC
         End Try
 
         Return ret
+    End Function
+
+    Private Function CalTotalPercent(ByVal final As String, ByVal Mastercode As String, ByVal Rev As String) As Boolean
+        'Me.Cursor = System.Windows.Forms.Cursors.WaitCursor()
+        Dim ret As Boolean = False
+
+        Dim cnn As New SqlConnection(C1.Strcon)
+
+        Dim cmd2 As SqlClient.SqlCommand
+        cmd2 = New SqlClient.SqlCommand
+        cmd2.CommandTimeout = 0
+        cmd2.CommandType = CommandType.StoredProcedure
+        cmd2.CommandText = "CalTotalPercent"
+        cmd2.Connection = cnn
+
+        Dim sparam0 As SqlClient.SqlParameter
+        sparam0 = New SqlClient.SqlParameter
+        sparam0.ParameterName = "@Final"
+        sparam0.SqlDbType = SqlDbType.Char
+        sparam0.Size = 20
+        sparam0.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam0)
+
+        Dim sparam1 As SqlClient.SqlParameter
+        sparam1 = New SqlClient.SqlParameter
+        sparam1.ParameterName = "@MasterCode"
+        sparam1.SqlDbType = SqlDbType.Char
+        sparam1.Size = 20
+        sparam1.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam1)
+
+        Dim sparam2 As SqlClient.SqlParameter
+        sparam2 = New SqlClient.SqlParameter
+        sparam2.ParameterName = "@REV"
+        sparam2.SqlDbType = SqlDbType.Char
+        sparam2.Size = 3
+        sparam2.Direction = ParameterDirection.Input
+        cmd2.Parameters.Add(sparam2)
+
+        Dim sparam3 As SqlClient.SqlParameter
+        sparam3 = New SqlClient.SqlParameter
+        sparam3.ParameterName = "@errID"
+        sparam3.SqlDbType = SqlDbType.Char
+        sparam3.Size = 4
+        sparam3.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam3)
+
+        Dim sparam4 As SqlClient.SqlParameter
+        sparam4 = New SqlClient.SqlParameter
+        sparam4.ParameterName = "@errMsg"
+        sparam4.SqlDbType = SqlDbType.Char
+        sparam4.Size = 40
+        sparam4.Direction = ParameterDirection.Output
+        cmd2.Parameters.Add(sparam4)
+
+        Dim Reader As SqlClient.SqlDataReader
+        cmd2.Parameters("@Final").Value = final.Trim
+        cmd2.Parameters("@MasterCode").Value = Mastercode.Trim
+        cmd2.Parameters("@Rev").Value = Rev.Trim
+
+        cnn.Open()
+        Try
+            Reader = cmd2.ExecuteReader()
+            ret = True
+        Catch ex As Exception
+            MsgBox("It may fail for calculation sum total. Please verify percent of sum total again.", 48)
+            ret = False
+        End Try
+        cnn.Close()
+
+        Return ret
+        'Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Function
 #End Region
 
