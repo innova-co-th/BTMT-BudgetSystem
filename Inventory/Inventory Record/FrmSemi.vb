@@ -959,6 +959,12 @@ Public Class FrmSemi
                                     End If
                                 End If 'If GridRow.Count > 0
 
+                                'Check duplicate Of TypeMaterial, Semi, SemiRevision And RMCode
+                                Dim duplicateRow As DataRow() = dtRec.Select("TypeMaterial = '" & dtRec.Rows(i)("TypeMaterial").ToString().Trim() & "' AND Semi = '" & strSemi & "' AND SemiRevision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+                                If duplicateRow.Length > 1 Then
+                                    Throw New System.Exception("TypeMaterial:" & dtRec.Rows(i)("TypeMaterial").ToString().Trim() & ", Semi:" & strSemi & ", SemiRevision:" & strRevision & ", RMCode:" & strRMCode & " have more 1 rows in excel.")
+                                End If
+
                                 '//For Check Data from above row on import file.
                                 Dim chkSameSemiBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
@@ -1216,7 +1222,7 @@ Public Class FrmSemi
                                             sb.AppendLine(" '" & intN & "', ")
                                         End If
 
-                                        sb.AppendLine(" '0' , ")                        'Column Active
+                                        sb.AppendLine(" '1' , ")                        'Column Active, It is required from BTMT's user
                                         sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
 
                                         If strTypeMaterial = "13" Then                  'Column CN

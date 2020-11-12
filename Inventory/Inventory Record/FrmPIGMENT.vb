@@ -652,6 +652,12 @@ Public Class FrmPIGMENT
 
                                 Dim DTRow As DataRow()          '//Grid Data
 
+                                'Check duplicate Of EachPigmentCode, EachRevision And rmCode
+                                Dim duplicateRow As DataRow() = dtRec.Select("EachPigmentCode = '" & strEachPigmentCode & "' AND EachRevision = '" & strEachRevision & "' AND rmCode = '" & strRMCode & "'")
+                                If duplicateRow.Length > 1 Then
+                                    Throw New System.Exception("EachPigmentCode:" & strEachPigmentCode & ", EachRevision:" & strEachRevision & ", rmCode:" & strRMCode & " have more 1 rows in excel.")
+                                End If
+
                                 '//Check is same {Pigmentcode} as above excel row
                                 Dim chkSameEachPigmentCodeBefore As String = String.Empty
                                 Dim chkSameEachRevisionBefore As String = String.Empty

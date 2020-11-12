@@ -1018,6 +1018,12 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                     End If
                                 End If 'If GridRow.Count > 0
 
+                                'Check duplicate Of TypeMaterial, PreSemi, PreSemiRevision And RMCode
+                                Dim duplicateRow As DataRow() = dtRec.Select("TypeMaterial = '" & dtRec.Rows(i)("TypeMaterial").ToString().Trim() & "' AND PreSemi = '" & strPreSemi & "' AND PreSemiRevision = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+                                If duplicateRow.Length > 1 Then
+                                    Throw New System.Exception("TypeMaterial:" & dtRec.Rows(i)("TypeMaterial").ToString().Trim() & ", PreSemi:" & strPreSemi & ", PreSemiRevision:" & strRevision & ", RMCode:" & strRMCode & " have more 1 rows in excel.")
+                                End If
+
                                 '//For Check Data from above row on import file.
                                 Dim chkSamePreSemiBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
@@ -1295,7 +1301,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         End If
 
                                         sb.AppendLine(" NULL , ")                       'Column Gauge
-                                        sb.AppendLine(" '0' , ")                        'Column Active
+                                        sb.AppendLine(" '1' , ")                        'Column Active, It is required from BTMT's user
                                         sb.AppendLine(" '" & strDate & "' , ")          'Column DateUp
 
                                         If strTypeMaterial = "16" Then                  'Column CN
@@ -1618,6 +1624,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
             CmbMaterial.Enabled = False
             CmbPreSemi.Enabled = True
         ElseIf CheckBoxPreSemi.Checked = False And CheckBoxType.Checked = False And ChkAvtive.Checked = False Then
+            'All not checked
+            GrdDVPreSemi.RowFilter = " "
+            CmbPreSemi.DataSource = GrdDVPreSemi
             GrdDV.RowFilter = " "
             DataGridCom.DataSource = GrdDV
             CmbMaterial.Enabled = False
@@ -1648,6 +1657,9 @@ grdColStyle11, grdColStyle8, grdColStyle9})
             CmbMaterial.Enabled = False
             CmbPreSemi.Enabled = True
         Else : CheckBoxPreSemi.Checked = False And CheckBoxType.Checked = False And ChkAvtive.Checked = True
+            'Comment because it is set before initial
+            'GrdDVPreSemi.RowFilter = " "
+            'CmbPreSemi.DataSource = GrdDVPreSemi
             GrdDV.RowFilter = " Ac = 1 "
             DataGridCom.DataSource = GrdDV
             CmbMaterial.Enabled = False

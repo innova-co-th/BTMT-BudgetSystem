@@ -827,6 +827,12 @@ Public Class FrmGreenTire
                             Dim arrTypeMatCode As DataRow() = dtTypeMaterial.Select("MaterialName = '" & strTypeMaterial & "'")
                             strTypeMaterial = arrTypeMatCode(0)("MaterialCode")
 
+                            'Check duplicate Of TypeMaterial, GreenTire, Revision And SemiCode
+                            Dim duplicateRow As DataRow() = dtRec.Select("TypeMaterial = '" & dtRec.Rows(i)("TypeMaterial").ToString().Trim() & "' AND GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND SemiCode = '" & dtRec.Rows(i)("SemiCode").ToString().Trim() & "'")
+                            If duplicateRow.Length > 1 Then
+                                Throw New System.Exception("TypeMaterial:" & dtRec.Rows(i)("TypeMaterial").ToString().Trim() & ", GreenTire:" & strGreentire & ", Revision:" & strRevision & ", SemiCode:" & dtRec.Rows(i)("SemiCode").ToString().Trim() & " have more 1 rows in excel.")
+                            End If
+
                             '//For Check Data from above row on import file.
                             Dim chkSameGreenTireBefore As String = String.Empty
                             Dim chkSameRevisionBefore As String = String.Empty
@@ -1471,7 +1477,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")                               'Column Rev
                                     sb.AppendLine(PrepareStr(strBSJ) & ", ")                                    'Column TireSize
                                     sb.AppendLine(PrepareStr(totalQty) & ", ")                                  'Column Qty
-                                    sb.AppendLine(PrepareStr(0) & ", ")                                         'Column Active
+                                    sb.AppendLine(PrepareStr(1) & ", ")                                         'Column Active, It is required by BTMT's user
                                     sb.AppendLine(PrepareStr(strDate) & ", ")                                   'Column Dateup
                                     sb.AppendLine(PrepareStr(strRevisionBoss1st + "," + strRevisionBoss2nd))    'Column remark
                                     sb.AppendLine(" )")
