@@ -1023,8 +1023,8 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                 Dim chkSameRevisionBefore As String = String.Empty
 
                                 If i > 0 Then
-                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("PreSemi").ToString()
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("PreSemiRevision").ToString()
+                                    chkSamePreSemiBefore = dtRec.Rows(i - 1)("PreSemi").ToString().Trim()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("PreSemiRevision").ToString().Trim()
                                 Else
                                     chkSamePreSemiBefore = String.Empty
                                     chkSameRevisionBefore = String.Empty

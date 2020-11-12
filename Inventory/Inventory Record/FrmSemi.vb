@@ -965,8 +965,8 @@ Public Class FrmSemi
 
                                 If i > 0 Then
                                     'Not first row
-                                    chkSameSemiBefore = dtRec.Rows(i - 1)("Semi").ToString()
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("SemiRevision").ToString()
+                                    chkSameSemiBefore = dtRec.Rows(i - 1)("Semi").ToString().Trim()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("SemiRevision").ToString().Trim()
                                 Else
                                     chkSameSemiBefore = String.Empty
                                     chkSameRevisionBefore = String.Empty

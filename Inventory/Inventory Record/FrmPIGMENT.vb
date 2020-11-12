@@ -656,8 +656,8 @@ Public Class FrmPIGMENT
                                 Dim chkSameEachPigmentCodeBefore As String = String.Empty
                                 Dim chkSameEachRevisionBefore As String = String.Empty
                                 If i > 0 Then
-                                    chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString()
-                                    chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString()
+                                    chkSameEachPigmentCodeBefore = dtRec.Rows(i - 1)("EachPigmentCode").ToString().Trim()
+                                    chkSameEachRevisionBefore = dtRec.Rows(i - 1)("EachRevision").ToString().Trim()
                                 Else
                                     chkSameEachPigmentCodeBefore = String.Empty
                                     chkSameEachRevisionBefore = String.Empty

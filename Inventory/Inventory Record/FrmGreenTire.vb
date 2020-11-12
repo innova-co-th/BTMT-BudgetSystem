@@ -831,8 +831,8 @@ Public Class FrmGreenTire
                             Dim chkSameGreenTireBefore As String = String.Empty
                             Dim chkSameRevisionBefore As String = String.Empty
                             If i > 0 Then
-                                chkSameGreenTireBefore = dtRec.Rows(i - 1)("GreenTire").ToString
-                                chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision").ToString
+                                chkSameGreenTireBefore = dtRec.Rows(i - 1)("GreenTire").ToString().Trim()
+                                chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision").ToString().Trim()
                             Else
                                 chkSameGreenTireBefore = String.Empty
                                 chkSameRevisionBefore = String.Empty
