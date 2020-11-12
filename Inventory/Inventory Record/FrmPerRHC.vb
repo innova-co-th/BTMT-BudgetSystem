@@ -22,8 +22,6 @@ Public Class FrmPerRHC
 
     Protected DefaultGridBorderStyle As BorderStyle
     Dim C1 As New SQLData("ACCINV")
-    Friend WithEvents CmdImport As System.Windows.Forms.Button
-    Friend WithEvents CmdExport As System.Windows.Forms.Button
     Dim StrData As String
 #End Region
 
@@ -62,12 +60,15 @@ Public Class FrmPerRHC
     Friend WithEvents CheckBoxGP As System.Windows.Forms.CheckBox
     Friend WithEvents CmbGroup As System.Windows.Forms.ComboBox
     Friend WithEvents CmdDelete As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ComboBoxStage As System.Windows.Forms.ComboBox
+    Friend WithEvents CmbStage As System.Windows.Forms.ComboBox
     Friend WithEvents RbP100 As System.Windows.Forms.RadioButton
     Friend WithEvents RbNP100 As System.Windows.Forms.RadioButton
     Friend WithEvents CheckBoxFinal As System.Windows.Forms.CheckBox
     Friend WithEvents RbAll As System.Windows.Forms.RadioButton
+    Friend WithEvents CmdImport As System.Windows.Forms.Button
+    Friend WithEvents CmdExport As System.Windows.Forms.Button
+    Friend WithEvents CheckBoxStage As CheckBox
+
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPerRHC))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -77,14 +78,14 @@ Public Class FrmPerRHC
         Me.CheckBoxGP = New System.Windows.Forms.CheckBox()
         Me.CmbGroup = New System.Windows.Forms.ComboBox()
         Me.CmdDelete = New System.Windows.Forms.Button()
-        Me.ComboBoxStage = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.CmbStage = New System.Windows.Forms.ComboBox()
         Me.RbP100 = New System.Windows.Forms.RadioButton()
         Me.RbNP100 = New System.Windows.Forms.RadioButton()
         Me.CheckBoxFinal = New System.Windows.Forms.CheckBox()
         Me.RbAll = New System.Windows.Forms.RadioButton()
         Me.CmdImport = New System.Windows.Forms.Button()
         Me.CmdExport = New System.Windows.Forms.Button()
+        Me.CheckBoxStage = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -165,22 +166,15 @@ Public Class FrmPerRHC
         Me.CmdDelete.Text = "Del"
         Me.CmdDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
-        'ComboBoxStage
+        'CmbStage
         '
-        Me.ComboBoxStage.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.ComboBoxStage.Location = New System.Drawing.Point(96, 8)
-        Me.ComboBoxStage.Name = "ComboBoxStage"
-        Me.ComboBoxStage.Size = New System.Drawing.Size(120, 21)
-        Me.ComboBoxStage.TabIndex = 13
-        Me.ComboBoxStage.Text = "Select"
-        '
-        'Label1
-        '
-        Me.Label1.Location = New System.Drawing.Point(16, 10)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(56, 16)
-        Me.Label1.TabIndex = 14
-        Me.Label1.Text = "Stage"
+        Me.CmbStage.Enabled = False
+        Me.CmbStage.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9"})
+        Me.CmbStage.Location = New System.Drawing.Point(96, 8)
+        Me.CmbStage.Name = "CmbStage"
+        Me.CmbStage.Size = New System.Drawing.Size(120, 21)
+        Me.CmbStage.TabIndex = 13
+        Me.CmbStage.Text = "Select"
         '
         'RbP100
         '
@@ -241,18 +235,26 @@ Public Class FrmPerRHC
         Me.CmdExport.Text = "Export"
         Me.CmdExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
+        'CheckBoxStage
+        '
+        Me.CheckBoxStage.Location = New System.Drawing.Point(17, 10)
+        Me.CheckBoxStage.Name = "CheckBoxStage"
+        Me.CheckBoxStage.Size = New System.Drawing.Size(72, 16)
+        Me.CheckBoxStage.TabIndex = 21
+        Me.CheckBoxStage.Text = "Stage"
+        '
         'FrmPerRHC
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(890, 632)
+        Me.Controls.Add(Me.CheckBoxStage)
         Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
         Me.Controls.Add(Me.RbAll)
         Me.Controls.Add(Me.CheckBoxFinal)
         Me.Controls.Add(Me.RbNP100)
         Me.Controls.Add(Me.RbP100)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.ComboBoxStage)
+        Me.Controls.Add(Me.CmbStage)
         Me.Controls.Add(Me.CmdDelete)
         Me.Controls.Add(Me.CheckBoxGP)
         Me.Controls.Add(Me.CmbGroup)
@@ -283,14 +285,14 @@ Public Class FrmPerRHC
         Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        sb.AppendLine(" SELECT    seq,finalcompound,Compcode,Revision,Qty,RHC,Per,per Tper,Active")
+        sb.AppendLine(" SELECT  Seq SeqShow,Seq,Finalcompound,Compcode,Revision,Qty,RHC,Per,per Tper,Active")
         sb.AppendLine(" ,finalcompound Final,Compcode+Revision CRev,null rmcode,null mQty,null mRHC,null mPer, CompCode as mCompCode, Revision as mRev")
         sb.AppendLine(" FROM     TBLCompound  ")
         sb.AppendLine(" UNION")
-        sb.AppendLine(" SELECT  seq,null finalcompound,null Compcode,null Revision,null Qty,null RHC,null Per,Tper,Active")
+        sb.AppendLine(" SELECT  null SeqShow,Seq,null Finalcompound,null Compcode,null Revision,null Qty,null RHC,null Per,Tper,Active")
         sb.AppendLine(" ,final,mastercode+Revision MRev,rmcode,weight mQty,RHC mRHC,per mPer, mCompCode, mRev ")
         sb.AppendLine(" FROM (")
-        sb.AppendLine("   SELECT dt.seq,dt.final,dt.mastercode,dt.revision,dt.rmcode,dt.weight,dt.RHC,dt.per,")
+        sb.AppendLine("   SELECT dt.Seq,dt.Final,dt.MasterCode,dt.Revision,dt.RMCode,dt.Weight,dt.RHC,dt.PER,")
         sb.AppendLine("   c.Per Tper,c.Active, dt.MasterCode as mCompCode, dt.Revision as mRev")
         sb.AppendLine("   FROM         TBLRHCDtl dt")
         sb.AppendLine("   LEFT OUTER JOIN TBLcompound c on dt.final+dt.Mastercode+dt.Revision = c.Finalcompound+c.compcode+c.revision ")
@@ -365,6 +367,15 @@ Public Class FrmPerRHC
             .MappingName = TBL_RM
             .PreferredColumnWidth = 125
             .PreferredRowHeight = 15
+        End With
+        Dim grdColStyle0_0 As New DataGridColoredLine2
+        With grdColStyle0_0
+            .HeaderText = "Stage"
+            .MappingName = "SeqShow"
+            .NullText = ""
+            .Width = 50
+            .ReadOnly = True
+            .Alignment = HorizontalAlignment.Center
         End With
         Dim grdColStyle0 As New DataGridColoredLine2
         With grdColStyle0
@@ -463,7 +474,7 @@ Public Class FrmPerRHC
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle0, grdColStyle1, grdColStyle1_1, grdColStyle2,
+    {grdColStyle0_0, grdColStyle0, grdColStyle1, grdColStyle1_1, grdColStyle2,
      grdColStyle4_1, grdColStyle3_1, grdColStyle4, grdColStyle3, grdColStyle5, grdColStyle5_1})
 
         DataGridCOM.TableStyles.Add(grdTableStyle1)
@@ -496,6 +507,7 @@ Public Class FrmPerRHC
 
 #Region "Form Event"
     Private Sub FrmPerRHC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        CmbStage.SelectedIndex = 1
         Loadgroup()
         LoadCOM()
         SetTotal() 'Set number of items
@@ -534,7 +546,7 @@ Public Class FrmPerRHC
         Me.Close()
     End Sub
 
-Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
+    Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdEdit.Click
 
         Dim fAddpRHC As New FrmAddPerRHC
         fAddpRHC.CmdSave.Text = "Edit"
@@ -544,7 +556,7 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
         fAddpRHC.TStep = GrdDV.Item(oldrow).Row("seq")
         fAddpRHC.ShowDialog()
         LoadCOM()
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub DataGridCOM_CurrentCellChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridCOM.CurrentCellChanged
@@ -574,8 +586,17 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
 
     End Sub
 
-    Private Sub ComboBoxStage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxStage.SelectedIndexChanged
-        Selectcompcound()
+    Private Sub CheckBoxStage_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxStage.CheckedChanged
+        If CheckBoxStage.Checked = True Then
+            CmbStage.Enabled = True
+        Else
+            CmbStage.Enabled = False
+        End If
+        SelectCompound()
+    End Sub
+
+    Private Sub ComboBoxStage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbStage.SelectedIndexChanged
+        SelectCompound()
     End Sub
 
     Private Sub CheckBoxGP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxGP.CheckedChanged
@@ -584,27 +605,27 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
         Else
             CmbGroup.Enabled = False
         End If
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub CmbGroup_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbGroup.SelectedIndexChanged
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub CheckBoxFinal_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxFinal.CheckedChanged
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub RbAll_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RbAll.CheckedChanged
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub RbP100_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RbP100.CheckedChanged
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub RbNP100_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RbNP100.CheckedChanged
-        Selectcompcound()
+        SelectCompound()
     End Sub
 
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
@@ -717,9 +738,9 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
                                 Dim chkSameCompoundCodeBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
                                 If i > 0 Then
-                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString
-                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString
+                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString().Trim()
+                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString().Trim()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString().Trim()
                                 Else
                                     chkSameFinalCompoundCodeBefore = ""
                                     chkSameCompoundCodeBefore = ""
@@ -949,20 +970,21 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Sub
 
-    Sub Selectcompcound()
+    Sub SelectCompound()
         Dim StrSearch As String
         Dim k As Integer = 0
+
         If CheckBoxFinal.Checked = True Then
             StrSearch = " Active  =  '1'"
             'RbAll.Checked = True
-            ComboBoxStage.Text = "Select"
+            'CmbStage.Text = "Select"
         Else
             StrSearch = " "
         End If
 
         If RbAll.Checked = True Then
             If CheckBoxFinal.Checked = True Then
-                StrSearch += "and" & " Tper <> 0"
+                StrSearch += "AND" & " Tper <> 0"
             Else
                 StrSearch += " Tper <> 0"
             End If
@@ -974,7 +996,7 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
 
         If RbP100.Checked = True Then
             If CheckBoxFinal.Checked = True Then
-                StrSearch += "and" & "  Tper ='100.000'"
+                StrSearch += "AND" & "  Tper ='100.000'"
             Else
                 StrSearch += "  Tper ='100.000'"
             End If
@@ -986,7 +1008,7 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
 
         If RbNP100.Checked = True Then
             If CheckBoxFinal.Checked = True Then
-                StrSearch += "and" & "  Tper <> '100.000'"
+                StrSearch += "AND" & "  Tper <> '100.000'"
             Else
                 StrSearch += "  Tper <> '100.000'"
             End If
@@ -1000,27 +1022,27 @@ Private Sub CmdEdit_Click(ByVal sender As System.Object, ByVal e As System.Event
             If CheckBoxFinal.Checked = False Then
                 If RbAll.Checked = False And RbP100.Checked = False _
               And RbNP100.Checked = False And CheckBoxGP.Checked = False Then
-                    StrSearch += " Final like'%" & CmbGroup.Text.Trim & "%'"
+                    StrSearch += " Final like'%" & CmbGroup.Text.Trim() & "%'"
                 Else
-                    StrSearch += "and" & " Final like'%" & CmbGroup.Text.Trim & "%'"
+                    StrSearch += "AND" & " Final like'%" & CmbGroup.Text.Trim() & "%'"
                 End If
             Else
-                StrSearch += "and" & " Final like'%" & CmbGroup.Text.Trim & "%'"
+                StrSearch += "AND" & " Final like'%" & CmbGroup.Text.Trim() & "%'"
             End If
         Else
             StrSearch += " "
         End If
 
-        If ComboBoxStage.Text <> "Select" Then
+        If CheckBoxStage.Checked = True Then
             If CheckBoxFinal.Checked = False Then
                 If RbAll.Checked = False And RbP100.Checked = False _
                 And RbNP100.Checked = False And CheckBoxGP.Checked = False Then
-                    StrSearch += " seq = '" & ComboBoxStage.Text.Trim & "'"
+                    StrSearch += " Seq = '" & CmbStage.Text.Trim() & "'"
                 Else
-                    StrSearch += "and" & " seq = '" & ComboBoxStage.Text.Trim & "'"
+                    StrSearch += "AND" & " Seq = '" & CmbStage.Text.Trim() & "'"
                 End If
             Else
-                StrSearch += "and" & " seq = '" & ComboBoxStage.Text.Trim & "'"
+                StrSearch += "AND" & " Seq = '" & CmbStage.Text.Trim() & "'"
             End If
         Else
             StrSearch += " "

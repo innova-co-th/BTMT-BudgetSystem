@@ -22,8 +22,6 @@ Public Class FrmRHC
 
     Protected DefaultGridBorderStyle As BorderStyle
     Dim C1 As New SQLData("ACCINV")
-    Friend WithEvents CmdImport As System.Windows.Forms.Button
-    Friend WithEvents CmdExport As System.Windows.Forms.Button
     Dim StrData As String
 #End Region
 
@@ -65,9 +63,11 @@ Public Class FrmRHC
     Friend WithEvents CheckBoxGP As System.Windows.Forms.CheckBox
     Friend WithEvents CmbGroup As System.Windows.Forms.ComboBox
     Friend WithEvents CmdDelete As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents ComboBoxStage As System.Windows.Forms.ComboBox
+    Friend WithEvents CmbStage As System.Windows.Forms.ComboBox
     Friend WithEvents CmdView As System.Windows.Forms.Button
+    Friend WithEvents CmdImport As System.Windows.Forms.Button
+    Friend WithEvents CmdExport As System.Windows.Forms.Button
+    Friend WithEvents CheckBoxStage As CheckBox
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmRHC))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -80,11 +80,11 @@ Public Class FrmRHC
         Me.CheckBoxGP = New System.Windows.Forms.CheckBox()
         Me.CmbGroup = New System.Windows.Forms.ComboBox()
         Me.CmdDelete = New System.Windows.Forms.Button()
-        Me.ComboBoxStage = New System.Windows.Forms.ComboBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.CmbStage = New System.Windows.Forms.ComboBox()
         Me.CmdView = New System.Windows.Forms.Button()
         Me.CmdImport = New System.Windows.Forms.Button()
         Me.CmdExport = New System.Windows.Forms.Button()
+        Me.CheckBoxStage = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -195,22 +195,15 @@ Public Class FrmRHC
         Me.CmdDelete.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.CmdDelete.Visible = False
         '
-        'ComboBoxStage
+        'CmbStage
         '
-        Me.ComboBoxStage.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.ComboBoxStage.Location = New System.Drawing.Point(96, 8)
-        Me.ComboBoxStage.Name = "ComboBoxStage"
-        Me.ComboBoxStage.Size = New System.Drawing.Size(72, 21)
-        Me.ComboBoxStage.TabIndex = 13
-        Me.ComboBoxStage.Text = "Select"
-        '
-        'Label1
-        '
-        Me.Label1.Location = New System.Drawing.Point(16, 10)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(56, 16)
-        Me.Label1.TabIndex = 14
-        Me.Label1.Text = "Stage"
+        Me.CmbStage.Enabled = False
+        Me.CmbStage.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9"})
+        Me.CmbStage.Location = New System.Drawing.Point(96, 8)
+        Me.CmbStage.Name = "CmbStage"
+        Me.CmbStage.Size = New System.Drawing.Size(72, 21)
+        Me.CmbStage.TabIndex = 13
+        Me.CmbStage.Text = "Select"
         '
         'CmdView
         '
@@ -247,15 +240,23 @@ Public Class FrmRHC
         Me.CmdExport.Text = "Export"
         Me.CmdExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
+        'CheckBoxStage
+        '
+        Me.CheckBoxStage.Location = New System.Drawing.Point(16, 10)
+        Me.CheckBoxStage.Name = "CheckBoxStage"
+        Me.CheckBoxStage.Size = New System.Drawing.Size(72, 16)
+        Me.CheckBoxStage.TabIndex = 18
+        Me.CheckBoxStage.Text = "Stage"
+        '
         'FrmRHC
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1002, 632)
+        Me.Controls.Add(Me.CheckBoxStage)
         Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
         Me.Controls.Add(Me.CmdView)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.ComboBoxStage)
+        Me.Controls.Add(Me.CmbStage)
         Me.Controls.Add(Me.CmdDelete)
         Me.Controls.Add(Me.CheckBoxGP)
         Me.Controls.Add(Me.CmbGroup)
@@ -279,8 +280,7 @@ Public Class FrmRHC
 #End Region
 
 #Region "CONSTANT"
-    Dim DT As New DataTable() 'Compound Data which is filter by Seq
-    Dim DTALL As New DataTable() 'Compound Data
+    Dim DT As New DataTable()
     Dim StrSQL As String
     Dim oldrow As Integer
 #End Region
@@ -290,60 +290,19 @@ Public Class FrmRHC
         Dim sb As New System.Text.StringBuilder()
         Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-        'Load all compound data
-        sb.AppendLine("SELECT * ")
-        sb.AppendLine("FROM ( ")
-        sb.AppendLine("  SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
-        sb.AppendLine("  ,CompCode+','+Revision Code")
-        sb.AppendLine("  ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty,'' as FinalCompound_Code,'' as Revision_No,'' as Seq_No")
-        sb.AppendLine("  FROM         TBLCompound")
-        sb.AppendLine("  UNION")
-        sb.AppendLine("  SELECT c.Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active")
-        sb.AppendLine("  ,c.CRev,m.Code,m.Rev,m.RMCode,m.mRHC,m.mQty,c.FinalCompound as FinalCompound_Code,c.Revision as Revision_No,c.Seq as Seq_No")
-        sb.AppendLine("  FROM (        ")
-        sb.AppendLine("    SELECT  seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active")
-        sb.AppendLine("    FROM  TBLCompound")
-        sb.AppendLine("  ) c")
-        sb.AppendLine("  LEFT OUTER JOIN ( ")
-        sb.AppendLine("    SELECT MasterCode Code,Revision Rev")
-        sb.AppendLine("    ,mastercode+','+Revision MRev,RMcode,RHC mRHC,Weight mQty")
-        sb.AppendLine("    FROM   TBLRHCDtl")
-        sb.AppendLine("    WHERE Mastercode in ( SELECT  compcode FROM TBLCompound)")
-        sb.AppendLine("  ) m on c.CRev = m.MRev")
-        sb.AppendLine(") aa ")
-        sb.AppendLine("ORDER BY Code, TQty DESC")
-        StrSQL = sb.ToString()
-
-        If Not DTALL Is Nothing Then
-            If DTALL.Rows.Count >= 1 Then
-                DTALL.Clear()
-            End If
-        End If
-
-        Dim DAALL As SqlDataAdapter
-        Try
-            DAALL = New SqlDataAdapter(StrSQL, C1.Strcon)
-            DTALL = New DataTable()
-            DAALL.Fill(DTALL)
-        Catch
-            MsgBox("Can't Select Data.", MsgBoxStyle.Critical, "Load Data")
-        End Try
-
-        DTALL.TableName = TBL_Comp
-
         'Load compound data by seq
         sb.Clear()
         sb.AppendLine("SELECT * ")
         sb.AppendLine("FROM ( ")
-        sb.AppendLine("  SELECT  Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
+        sb.AppendLine("  SELECT Seq SeqShow,Seq,FinalCompound,CompCode,Revision,FinalCompound cc,RHC,Qty TQty,Active")
         sb.AppendLine("  ,CompCode+','+Revision Code")
         sb.AppendLine("  ,'' MasterCode,isnull(Revision,'') MRev,'' RMcode,null mRHC,null Qty,'' as FinalCompound_Code,'' as Revision_No,'' as Seq_No")
         sb.AppendLine("  FROM         TBLCompound")
         sb.AppendLine("  UNION")
-        sb.AppendLine("  SELECT c.Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active")
+        sb.AppendLine("  SELECT null SeqShow,c.Seq,c.Finalcompound,'' code,'' rev,'' cc,null RHC,null TQty,'' Active")
         sb.AppendLine("  ,c.CRev,m.Code,m.Rev,m.RMCode,m.mRHC,m.mQty,c.FinalCompound as FinalCompound_Code,c.Revision as Revision_No,c.Seq as Seq_No")
         sb.AppendLine("  FROM (        ")
-        sb.AppendLine("    SELECT  seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active")
+        sb.AppendLine("    SELECT Seq,Finalcompound,compcode,Revision,compcode+','+Revision CRev,RHC,Active")
         sb.AppendLine("    FROM  TBLCompound")
         sb.AppendLine("  ) c")
         sb.AppendLine("  LEFT OUTER JOIN ( ")
@@ -353,7 +312,7 @@ Public Class FrmRHC
         sb.AppendLine("    WHERE Mastercode in ( SELECT  compcode FROM TBLCompound)")
         sb.AppendLine("  ) m on c.CRev = m.MRev")
         sb.AppendLine(") aa ")
-        sb.AppendLine("WHERE Seq = " & ComboBoxStage.Text.Trim())
+        'sb.AppendLine("WHERE Seq = " & ComboBoxStage.Text.Trim()) 'Default is All data
         sb.AppendLine("ORDER BY Code, TQty DESC")
         StrSQL = sb.ToString()
 
@@ -423,6 +382,15 @@ Public Class FrmRHC
             .MappingName = TBL_RM
             .PreferredColumnWidth = 125
             .PreferredRowHeight = 15
+        End With
+        Dim grdColStyle0_0 As New DataGridColoredLine2
+        With grdColStyle0_0
+            .HeaderText = "Stage"
+            .MappingName = "SeqShow"
+            .NullText = ""
+            .Width = 50
+            .ReadOnly = True
+            .Alignment = HorizontalAlignment.Center
         End With
         Dim grdColStyle0 As New DataGridColoredLine2
         With grdColStyle0
@@ -499,7 +467,7 @@ Public Class FrmRHC
         End With
         grdTableStyle1.GridColumnStyles.AddRange _
     (New DataGridColumnStyle() _
-    {grdColStyle0, grdColStyle1, grdColStyle1_1, grdColStyle2,
+    {grdColStyle0_0, grdColStyle0, grdColStyle1, grdColStyle1_1, grdColStyle2,
      grdColStyle4_1, grdColStyle3_1, grdColStyle4, grdColStyle3})
 
         DataGridCOM.TableStyles.Add(grdTableStyle1)
@@ -582,7 +550,7 @@ Public Class FrmRHC
 
 #Region "Form Event"
     Private Sub FrmRHC_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        ComboBoxStage.SelectedIndex = 1
+        CmbStage.SelectedIndex = 1
         LoadCOM()
         Loadgroup()
         LoadCompound()
@@ -646,66 +614,47 @@ Public Class FrmRHC
         oldrow = DataGridCOM.CurrentCell.RowNumber
     End Sub
 
+    Private Sub CheckBoxStage_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxStage.CheckedChanged
+        If CheckBoxStage.Checked = True Then
+            CmbStage.Enabled = True
+        Else
+            CmbStage.Enabled = False
+        End If
+
+        Chk()
+        StrData = CmbGroup.Text.Trim()
+    End Sub
+
     Private Sub CheckBoxCompoud_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxCompoud.CheckedChanged
-        If CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim &
-                              "%' and  Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-            CmbCompound.Enabled = True
-        ElseIf CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
+        If CheckBoxCompoud.Checked = True Then
             CmbCompound.Enabled = True
         Else
-            GrdDV.RowFilter = " "
-            DataGridCOM.DataSource = GrdDV
             CmbCompound.Enabled = False
         End If
+
         Chk()
+        StrData = CmbGroup.Text.Trim()
     End Sub
 
     Private Sub CmbCompound_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbCompound.SelectedIndexChanged
-        If ComboBoxStage.Text <> "Select" Then
-            LoadCOM()
-        End If
-
-        If CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim &
-                              "%' and  Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-            CmbCompound.Enabled = True
-        ElseIf CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-            CmbCompound.Enabled = True
-        Else
-            GrdDV.RowFilter = " "
-            DataGridCOM.DataSource = GrdDV
-            CmbCompound.Enabled = False
-        End If
-
         Chk()
         StrData = CmbGroup.Text.Trim
-
     End Sub
 
     Private Sub CheckBoxGP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxGP.CheckedChanged
         If CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
             CmbGroup.Enabled = True
         Else
-            GrdDV.RowFilter = " "
-            DataGridCOM.DataSource = GrdDV
             CmbGroup.Enabled = False
         End If
-        StrData = CmbGroup.Text.Trim
-        Chk()
+
+        Chk ()
+        StrData = CmbGroup.Text.Trim()
     End Sub
 
     Private Sub CmbGroup_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbGroup.SelectedIndexChanged
         Chk()
-        StrData = CmbGroup.Text.Trim
+        StrData = CmbGroup.Text.Trim()
     End Sub
 
     Private Sub CmdDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdDelete.Click
@@ -743,28 +692,14 @@ Public Class FrmRHC
 
     End Sub
 
-    Private Sub ComboBoxStage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBoxStage.SelectedIndexChanged
-        If ComboBoxStage.Text <> "Select" Then
-            LoadCOM()
-            'Loadgroup()
-            'LoadCompound()
-            Chk()
-            StrData = CmbGroup.Text.Trim
-        Else
-        End If
+    Private Sub ComboBoxStage_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbStage.SelectedIndexChanged
+        Chk()
+        StrData = CmbGroup.Text.Trim
     End Sub
 
     Private Sub CmdView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmdView.Click
-        If ComboBoxStage.Text <> "Select" Then
-            LoadCOM()
-            ' Loadgroup()
-            'LoadCompound()
-        Else
-        End If
-
         Chk()
         StrData = CmbGroup.Text.Trim
-
     End Sub
 
     Private Sub CmdExport_Click(sender As Object, e As EventArgs) Handles CmdExport.Click
@@ -890,14 +825,20 @@ Public Class FrmRHC
                                 Dim GridRow As DataRow()        '//Grid Data
                                 Dim ExcelRow As DataRow()       '//Excel Data
 
+                                'Check duplicate Of FinalCompound, CompoundCode, Revision And RMCode
+                                Dim duplicateRow As DataRow() = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+                                If duplicateRow.Length > 1 Then
+                                    Throw New System.Exception("FinalCompound:" & strFinalCompoundCode & ", Compound:" & strCompoundCode & ", Revision:" & strRevision & ", RMCode:" & strRMCode & " have more 1 rows in excel.")
+                                End If
+
                                 '//Get Data on above row on Excel ------------------------
                                 Dim chkSameFinalCompoundCodeBefore As String = String.Empty
                                 Dim chkSameCompoundCodeBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
                                 If i > 0 Then
-                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString
-                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString
+                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString().Trim()
+                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString().Trim()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString().Trim()
                                 Else
                                     chkSameFinalCompoundCodeBefore = ""
                                     chkSameCompoundCodeBefore = ""
@@ -909,7 +850,7 @@ Public Class FrmRHC
                                 If strFinalCompoundCode <> chkSameFinalCompoundCodeBefore Or strCompoundCode <> chkSameCompoundCodeBefore Or strRevision <> chkSameRevisionBefore Then
                                     totalQty = 0
                                     totalRHC = 0
-                                    GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For k As Integer = 0 To GridRow.Count - 1
                                         totalQty = totalQty + GridRow(k)("Qty")
                                         totalRHC = totalRHC + GridRow(k)("mRHC")
@@ -917,7 +858,7 @@ Public Class FrmRHC
 
                                     ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
                                     For j As Integer = 0 To ExcelRow.Count - 1
-                                        GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
+                                        GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & ExcelRow(j)("RMCode") & "'")
 
                                         If GridRow.Count > 0 Then
                                             totalQty = totalQty - GridRow(0)("Qty")
@@ -938,11 +879,11 @@ Public Class FrmRHC
                                 '//Case 1.2 : [Found No] Final,Comp,Rev on TBLRHCDtl So Next Add data to TBLRHCDtl
 
                                 '//Case 1 : Start With Check FinalCompoundCode, CompoundCode and Revision on Grid (TBLRHCDtl, TBLCompound)
-                                GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
 
                                 If GridRow.Count > 0 Then '//Case 1.1 : [Found] Final,Comp,Rev So Next Check RMCode
 
-                                    GridRow = DTALL.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & strRMCode & "'")
+                                    GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND MasterCode = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'AND RMCode = '" & strRMCode & "'")
 
                                     If GridRow.Count > 0 Then '//Case 1.1.1 : [Found] RMCode So Next Check RHC and QTY
 
@@ -1146,7 +1087,7 @@ Public Class FrmRHC
                         Next i
 
                         trans.Commit()
-                        MessageBox.Show("Import complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        MessageBox.Show("Import complete and calculating percent", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Catch ex As SqlException
                         MsgBox("Import error" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "SQL Error")
                         trans.Rollback()
@@ -1495,22 +1436,34 @@ Public Class FrmRHC
     End Sub
 
     Sub Chk()
-        If CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = False Then
-            GrdDV.RowFilter = " seq = '" & ComboBoxStage.Text.Trim & "'"
-            DataGridCOM.DataSource = GrdDV
-        ElseIf CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = True Then
-            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
+        If CheckBoxStage.Checked = False And CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = False Then
+            'All uncheck
+            GrdDV.RowFilter = " "
+        ElseIf CheckBoxStage.Checked = True And CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = False Then
+            'Check Stage
+            GrdDV.RowFilter = " Seq = " & CmbStage.Text.Trim()
+        ElseIf CheckBoxStage.Checked = False And CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = True Then
+            'Check Group
+            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim() & "%'"
             StrData = CmbGroup.Text.Trim
-        ElseIf CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
-            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
-        Else : CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True
-            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim & "%'" _
-                            & " and Code like'%" & CmbCompound.Text.Trim & "%'"
-            DataGridCOM.DataSource = GrdDV
+        ElseIf CheckBoxStage.Checked = False And CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
+            'Check Compound
+            GrdDV.RowFilter = " Code like'%" & CmbCompound.Text.Trim() & "%'"
+        ElseIf CheckBoxStage.Checked = True And CheckBoxCompoud.Checked = False And CheckBoxGP.Checked = True Then
+            'Check Stage and Group
+            GrdDV.RowFilter = "Seq = " & CmbStage.Text.Trim() & " AND Finalcompound like'%" & CmbGroup.Text.Trim() & "%'"
+        ElseIf CheckBoxStage.Checked = True And CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = False Then
+            'Check Stage and Compound
+            GrdDV.RowFilter = "Seq = " & CmbStage.Text.Trim() & " AND Code like'%" & CmbCompound.Text.Trim() & "%'"
+        ElseIf CheckBoxStage.Checked = False And CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
+            'Check Group and Compound
+            GrdDV.RowFilter = " Finalcompound like'%" & CmbGroup.Text.Trim() & "%' AND Code like'%" & CmbCompound.Text.Trim() & "%'"
+        ElseIf CheckBoxStage.Checked = True And CheckBoxCompoud.Checked = True And CheckBoxGP.Checked = True Then
+            'All check
+            GrdDV.RowFilter = "Seq = " & CmbStage.Text.Trim() & " AND Finalcompound like'%" & CmbGroup.Text.Trim() & "%' AND Code like'%" & CmbCompound.Text.Trim() & "%'"
         End If
 
+        DataGridCOM.DataSource = GrdDV
         SetTotal() 'Set number of items
     End Sub
 

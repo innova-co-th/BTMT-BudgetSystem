@@ -791,6 +791,12 @@ Public Class FrmCompound
                                     Throw New System.Exception("Please input Qty data as Number.")
                                 End If
 
+                                'Check duplicate Of FinalCompound, CompoundCode, Revision And RMCode
+                                Dim duplicateRow As DataRow() = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "' AND RMCode = '" & strRMCode & "'")
+                                If duplicateRow.Length > 1 Then
+                                    Throw New System.Exception("FinalCompound:" & strFinalCompoundCode & ", Compound:" & strCompoundCode & ", Revision:" & strRevision & ", RMCode:" & strRMCode & " have more 1 rows in excel.")
+                                End If
+
                                 '//Case Special [Check Duplicate CompoundCode and Revision on Excel]
                                 Dim ImportTable As New DataTable
                                 ExcelRow = dtRec.Select("Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
@@ -809,9 +815,9 @@ Public Class FrmCompound
                                 Dim chkSameCompoundCodeBefore As String = String.Empty
                                 Dim chkSameRevisionBefore As String = String.Empty
                                 If i > 0 Then
-                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString()
-                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString()
-                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString()
+                                    chkSameFinalCompoundCodeBefore = dtRec.Rows(i - 1)("FinalCompound_Code").ToString().Trim()
+                                    chkSameCompoundCodeBefore = dtRec.Rows(i - 1)("Compound_Code").ToString().Trim()
+                                    chkSameRevisionBefore = dtRec.Rows(i - 1)("Revision_No").ToString().Trim()
                                 Else
                                     chkSameFinalCompoundCodeBefore = String.Empty
                                     chkSameCompoundCodeBefore = String.Empty
