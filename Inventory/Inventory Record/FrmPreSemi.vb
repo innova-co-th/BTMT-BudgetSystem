@@ -1105,7 +1105,13 @@ grdColStyle11, grdColStyle8, grdColStyle9})
 
                                     If GridRow.Count > 0 Then
 
-                                        If CDbl(GridRow(0)("Qty")) <> dblQty Then '// 1.2.2) [OK] Compare QTY from Import file and DB
+                                        'Find N,Length,Width from DataGrid in Header of each PreSemi
+                                        Dim GridRowHeader As DataRow() = DT.Select("Pcode = '" & strPreSemi & "' AND Revision = '" & strRevision & "'")
+
+                                        If CDbl(GridRow(0)("Qty")) <> dblQty Or
+                                            (Not GridRowHeader(0)("N").Equals(DBNull.Value) AndAlso CInt(GridRowHeader(0)("N")) <> intN) Or
+                                            (Not GridRowHeader(0)("Length").Equals(DBNull.Value) AndAlso CDbl(GridRowHeader(0)("Length")) <> dblLength) Or
+                                            (Not GridRowHeader(0)("Width").Equals(DBNull.Value) AndAlso CDbl(GridRowHeader(0)("Width")) <> dblWidth) Then '// 1.2.2) [OK] Compare QTY, N, Length, Width from Import file and DB
                                             '// 1.2.2.1) [NG] Update TBLMASTER,TBLPreSemi,TBLConvert
                                             '//Update TBLMASTER
                                             sb.Clear()
@@ -1140,7 +1146,10 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             '//Update TBLPreSemi
                                             sb.AppendLine(" Update TBLPreSemi")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" QPU = '" & QPU & "'")
+                                            sb.AppendLine(" QPU = '" & QPU & "',")
+                                            sb.AppendLine(" N = '" & intN & "',")
+                                            sb.AppendLine(" Length = '" & dblLength & "',")
+                                            sb.AppendLine(" Width = '" & dblWidth & "'")
                                             sb.AppendLine(" Where PSemiCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
 
                                             sb.AppendLine(" ")
@@ -1176,7 +1185,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                             'StrSQL = sb.ToString()
                                             'cmSQL.CommandText = StrSQL
                                             'cmSQL.ExecuteNonQuery()
-                                        End If 'If CDbl(GridRow(0)("Qty")) <> dblQty
+                                        End If 'CDbl(GridRow(0)("Qty")) <> dblQty Or CInt(GridRowHeader(0)("N")) <> intN Or CDbl(GridRowHeader(0)("Length")) <> dblLength Or
 
                                     Else '// 1.2.1) [NG] Insert TBLMASTER / Update TBLPreSemi,TBLConvert
 
@@ -1218,7 +1227,10 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                                         '//Update TBLPreSemi
                                         sb.AppendLine(" Update TBLPreSemi")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" QPU = '" & QPU & "'")
+                                        sb.AppendLine(" QPU = '" & QPU & "',")
+                                        sb.AppendLine(" N = '" & intN & "',")
+                                        sb.AppendLine(" Length = '" & dblLength & "',")
+                                        sb.AppendLine(" Width = '" & dblWidth & "'")
                                         sb.AppendLine(" Where PSemiCode = '" & strPreSemi & "' AND Revision = '" & strRevision & "' ")
 
                                         sb.AppendLine(" ")

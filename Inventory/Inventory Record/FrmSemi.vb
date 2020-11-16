@@ -1047,7 +1047,13 @@ Public Class FrmSemi
 
                                     If GridRow.Count > 0 Then
 
-                                        If CDbl(GridRow(0)("Qty")) <> dblQty Then '// 1.2.2) [OK] Compare QTY from Import file and DB
+                                        'Find num,length,width from DataGrid in Header of each PreSemi
+                                        Dim GridRowHeader As DataRow() = DT.Select("Semicode = '" & strSemi & "' AND Revision = '" & strRevision & "'")
+
+                                        If CDbl(GridRow(0)("Qty")) <> dblQty Or
+                                            (Not GridRowHeader(0)("num").Equals(DBNull.Value) AndAlso CInt(GridRowHeader(0)("num")) <> intN) Or
+                                            (Not GridRowHeader(0)("Length").Equals(DBNull.Value) AndAlso CDbl(GridRowHeader(0)("Length")) <> dblLength) Or
+                                            (Not GridRowHeader(0)("width").Equals(DBNull.Value) AndAlso CDbl(GridRowHeader(0)("width")) <> dblWidth) Then '// 1.2.2) [OK] Compare QTY from Import file and DB
                                             '// 1.2.2.1) [NG] Update TBLMASTER,TBLPreSemi,TBLConvert
                                             '//Update TBLMASTER
                                             sb.Clear()
@@ -1074,7 +1080,10 @@ Public Class FrmSemi
                                             '//Update TBLPreSemi
                                             sb.AppendLine(" Update TBLSemi")
                                             sb.AppendLine(" Set ")
-                                            sb.AppendLine(" QPU = '" & QPU & "'")
+                                            sb.AppendLine(" QPU = '" & QPU & "',")
+                                            sb.AppendLine(" width = '" & dblWidth & "',")
+                                            sb.AppendLine(" length = '" & dblLength & "',")
+                                            sb.AppendLine(" num = '" & intN & "'")
                                             sb.AppendLine(" Where SemiCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
 
                                             sb.AppendLine(" ")
@@ -1109,7 +1118,7 @@ Public Class FrmSemi
                                             'StrSQL = sb.ToString()
                                             'cmSQL.CommandText = StrSQL
                                             'cmSQL.ExecuteNonQuery()
-                                        End If 'If CDbl(GridRow(0)("Qty")) <> dblQty
+                                        End If 'If CDbl(GridRow(0)("Qty")) <> dblQty Or CInt(GridRowHeader(0)("num")) <> intN Or CDbl(GridRowHeader(0)("Length")) <> dblLength Or
 
                                     Else '// 1.2.1) [NG] Insert TBLMASTER / Update TBLPreSemi,TBLConvert
 
@@ -1139,10 +1148,13 @@ Public Class FrmSemi
 
                                         sb.AppendLine(" ")
 
-                                        '//Update TBLPreSemi
+                                        '//Update TBLSemi
                                         sb.AppendLine(" Update TBLSemi")
                                         sb.AppendLine(" Set ")
-                                        sb.AppendLine(" QPU = '" & QPU & "'")
+                                        sb.AppendLine(" QPU = '" & QPU & "',")
+                                        sb.AppendLine(" width = '" & dblWidth & "',")
+                                        sb.AppendLine(" length = '" & dblLength & "',")
+                                        sb.AppendLine(" num = '" & intN & "'")
                                         sb.AppendLine(" Where semiCode = '" & strSemi & "' AND Revision = '" & strRevision & "' ")
 
                                         sb.AppendLine(" ")
@@ -1204,19 +1216,19 @@ Public Class FrmSemi
                                         sb.AppendLine(" '" & strTypeMaterial & "', ")   'Column MaterialType
                                         sb.AppendLine(" '" & QPU & "', ")               'Column QPU
 
-                                        If dblWidth = 0 Then                            'Column Width
+                                        If dblWidth = 0 Then                            'Column width
                                             sb.AppendLine(" NULL , ")
                                         Else
                                             sb.AppendLine(" '" & dblWidth & "' , ")
                                         End If
 
-                                        If dblLength = 0 Then                           'Column Length
+                                        If dblLength = 0 Then                           'Column length
                                             sb.AppendLine(" NULL , ")
                                         Else
                                             sb.AppendLine(" '" & dblLength & "' , ")
                                         End If
 
-                                        If intN = 0 Then                                'Column N
+                                        If intN = 0 Then                                'Column num
                                             sb.AppendLine(" NULL , ")
                                         Else
                                             sb.AppendLine(" '" & intN & "', ")
