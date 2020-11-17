@@ -1013,15 +1013,6 @@ Public Class FrmYearInvTag
                                 'Nothing because call sub ChkFormat
                             End If
 
-                            'Set Type Code
-                            Dim typeCodeName As String = typeCode
-                            Dim arrTypeCode As DataRow() = DT_TYPE.Select("TypeName = '" & typeCode & "'")
-                            typeCode = arrTypeCode(0)("TypeCode")
-
-                            'Set Location
-                            Dim arrLocation As DataRow() = DT_LOCATION.Select("DeptName = '" & location & "'")
-                            location = arrLocation(0)("DeptCode")
-
                             'Set Unit
                             Dim arrUnitCode As DataRow() = DT_UNIT.Select("ShortUnitName = '" & unit & "'")
                             unit = arrUnitCode(0)("UnitCode")
@@ -1042,7 +1033,13 @@ Public Class FrmYearInvTag
 
                             If chkDT.Rows.Count = 0 Then
                                 'Not found in master
-                                Throw New ApplicationException("Type Code """ & typeCodeName & """ and Code """ & code & """ and Unit """ & unit & """ does not find in system.")
+                                Throw New ApplicationException("Type Code """ & typeCode & """ and Code """ & code & """ and Unit """ & unit & """ does not find in system.")
+                            End If
+
+                            'Check duplicate Of TagNo, TypeCode, Location, Period And TrxYear
+                            Dim duplicateRow As DataRow() = dtRec.Select("TagNo = '" & dtRec.Rows(i)("TagNo").ToString().Trim() & "' AND TypeCode = '" & typeCode & "' AND Location = '" & location & "' AND Period = '" & period & "' AND TrxYear = '" & trxYear & "'")
+                            If duplicateRow.Length > 1 Then
+                                Throw New System.Exception("TagNo:" & dtRec.Rows(i)("TagNo").ToString().Trim() & ", TypeCode:" & typeCode & ", Location:" & location & ", Period:" & period & ", TrxYear:" & trxYear & " have more 1 rows in excel.")
                             End If
 
                             Dim isExists As Boolean = ChkDataImport(tagNo, period, trxYear, typeCode, location)
@@ -1634,7 +1631,7 @@ Public Class FrmYearInvTag
         End If
 
         'Format Type Code
-        chkDR = DT_TYPE.Select("TypeName = '" & typeCode & "'")
+        chkDR = DT_TYPE.Select("TypeCode = '" & typeCode & "'")
 
         If chkDR.Length = 0 Then
             'Not found in master
@@ -1642,7 +1639,7 @@ Public Class FrmYearInvTag
         End If
 
         'Format Location
-        chkDR = DT_LOCATION.Select("DeptName = '" & location & "'")
+        chkDR = DT_LOCATION.Select("DeptCode = '" & location & "'")
 
         If chkDR.Length = 0 Then
             'Not found in master
