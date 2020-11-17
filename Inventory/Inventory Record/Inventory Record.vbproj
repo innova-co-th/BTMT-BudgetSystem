@@ -55,8 +55,8 @@
     <SuiteName>Inventory Record System</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>Inventory Record.html</WebPage>
-    <ApplicationRevision>10</ApplicationRevision>
-    <ApplicationVersion>2.0.0.10</ApplicationVersion>
+    <ApplicationRevision>11</ApplicationRevision>
+    <ApplicationVersion>2.0.0.11</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
