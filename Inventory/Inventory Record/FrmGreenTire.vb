@@ -1578,8 +1578,6 @@ Public Class FrmGreenTire
                 Dim strSemiCode As String = ImportTable.Rows(x)("SemiCode").ToString().Trim()
 
                 strSQL = String.Empty
-                cnSQLRM = New SqlConnection(C1.Strcon)
-                cnSQLRM.Open()
 
                 '// 1.) Check GreeTireCode
                 If strGreenTireCode.Length <= 0 Then
@@ -1676,8 +1674,6 @@ Public Class FrmGreenTire
                             'Check Semi in master
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '13' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1686,16 +1682,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '13' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QTread = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QTread
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Tread'")
                         End If
@@ -1715,8 +1710,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '14' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1725,16 +1718,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '14' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBF = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QBF
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'BF'")
                         End If
@@ -1764,8 +1756,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '03' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1774,16 +1764,15 @@ Public Class FrmGreenTire
                                 'Geet QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '03' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QCussion = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QCussion
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Cussion'")
                         End If
@@ -1811,8 +1800,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '04' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1820,16 +1807,15 @@ Public Class FrmGreenTire
                             Else
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '04' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBodyPly = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QBodyPly
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'BodyPly'")
                         End If
@@ -1857,8 +1843,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '05' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1867,16 +1851,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '05' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt1 = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QBelt1
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-1'")
                         End If
@@ -1904,8 +1887,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '06' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1914,16 +1895,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '06' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt2 = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QBelt2
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-2'")
                         End If
@@ -1951,8 +1931,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '07' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -1961,16 +1939,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '07' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt3 = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QBelt3
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-3'")
                         End If
@@ -1998,8 +1975,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '08' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -2008,16 +1983,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '08' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt4 = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QBelt4
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Belt-4'")
                         End If
@@ -2045,8 +2019,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '11' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -2055,16 +2027,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '11' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QSide = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QSide
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'Side'")
                         End If
@@ -2092,8 +2063,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '12' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -2102,16 +2071,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '12' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QInnerLiner = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QInnerLiner
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             Throw New System.Exception("Green Tire: " & strGreenTireCode & " and Revision: " & strRevision & " does not found type 'InnerLiner'")
                         End If
@@ -2141,8 +2109,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '09' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -2151,16 +2117,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '09' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QWireChafer = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QWireChafer
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             '// Do nothing
                         End If
@@ -2189,8 +2154,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '10' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -2199,16 +2162,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '10' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QNylonChafer = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QNylonChafer
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             '// Do nothing
                         End If
@@ -2236,8 +2198,6 @@ Public Class FrmGreenTire
 
                             strSQL = " SELECT COUNT(*)  FROM  TblSemi  "
                             strSQL += " WHERE MaterialType = '22' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                            cnSQLRM = New SqlConnection(C1.Strcon)
-                            cnSQLRM.Open()
                             cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
                             Dim i As Long = cmSQLRM.ExecuteScalar()
                             If i = 0 Then
@@ -2246,16 +2206,15 @@ Public Class FrmGreenTire
                                 'Get QPU
                                 strSQL = " SELECT Round(QPU,4) QPU  FROM  TblSemi  "
                                 strSQL += " WHERE MaterialType = '22' AND Active = '1' AND Final = '" & importRow(0)("SemiCode").ToString().Trim() & "' "
-                                cnSQLRM = New SqlConnection(C1.Strcon)
-                                cnSQLRM.Open()
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QFlipper = cmSQLRM.ExecuteScalar()
                                 importRow(0)("QTU") = QFlipper
 
                                 cmSQLRM.Dispose()
-                                cnSQLRM.Dispose()
                             End If
+
+                            cmSQLRM.Dispose()
                         Else
                             '// Do nothing
                         End If
