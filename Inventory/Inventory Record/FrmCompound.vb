@@ -970,6 +970,12 @@ Public Class FrmCompound
                                         End If 'If GridRow.Count > 0 AndAlso CDbl(GridRow(0)("Qty")) <> dblRMQty
 
                                     Else '//Case 1.2 : [SAME] FinalCompoundCode but [DIFFERENCE] CompoundCode and Revision
+                                        'Fix version 2.0.0.12
+                                        'Check duplication FinalCompoundCode and CompoundCode in DB
+                                        GridRow = DT.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No <> '" & strRevision & "'")
+                                        If GridRow.Count > 0 Then
+                                            Throw New Exception("This FinalCompound: " & strFinalCompoundCode & " and Compound: " & strCompoundCode & " and Revision: " & strRevision & " is Duplicate on other Revision.")
+                                        End If
 
                                         '//Insert TBLGroup
                                         sb.Clear()
@@ -1033,6 +1039,9 @@ Public Class FrmCompound
 
                                     '//Next check Duplicate CompoundCode and Revision on Grid
                                     GridRow = DT.Select("Compound_Code = '" & strCompoundCode & "' AND Revision_No = '" & strRevision & "'")
+                                    'Fix version 2.0.0.12
+                                    'Check duplication FinalCompoundCode and CompoundCode in excel
+                                    ExcelRow = dtRec.Select("FinalCompound_Code = '" & strFinalCompoundCode & "' AND Compound_Code = '" & strCompoundCode & "' AND Revision_No <> '" & strRevision & "'")
 
                                     If GridRow.Count > 0 Then '//Case 2.1 : [NEW] FinalCompoundCode but [SAME] CompoundCode and Revision [IN Other] FinalCompoundCode
 
@@ -1041,7 +1050,9 @@ Public Class FrmCompound
                                         LoadCOM() 'ReQuery and set datagrid
                                         frmOverlay.Dispose()
                                         Exit Sub
-
+                                    ElseIf ExcelRow.Count > 0 Then
+                                        'Check duplication
+                                        Throw New Exception("This FinalCompound: " & strFinalCompoundCode & " and Compound: " & strCompoundCode & " and Revision: " & strRevision & " is Duplicate on other Revision.")
                                     Else '//Case 2.2 : [NEW] FinalCompoundCode, CompoundCode and Revision
 
                                         '//Insert TBLGroup
