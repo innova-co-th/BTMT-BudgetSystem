@@ -1436,6 +1436,7 @@ grdColStyle11, grdColStyle8, grdColStyle9})
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
+            LoadPreSemi() 'ReQuery and set PreSemi combobox
             LoadSemi() 'ReQuery and set datagrid
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK

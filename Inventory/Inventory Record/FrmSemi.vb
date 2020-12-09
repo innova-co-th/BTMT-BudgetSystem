@@ -1353,6 +1353,7 @@ Public Class FrmSemi
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
+            LoadPSemi() 'ReQuery and set Semi combobox
             LoadSemi() 'ReQuery and set datagrid
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
