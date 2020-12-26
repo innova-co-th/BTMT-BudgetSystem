@@ -21,9 +21,6 @@ Public Class FrmGreenTire
     Protected Const TBL_Type As String = "TBL_Type"
     Protected Const TBL_GT As String = "TBL_GT"
     Dim C1 As New SQLData("ACCINV")
-    Friend WithEvents CmdImport As System.Windows.Forms.Button
-    Friend WithEvents CmdExport As System.Windows.Forms.Button
-
     Protected DefaultGridBorderStyle As BorderStyle
 
 #End Region
@@ -61,16 +58,18 @@ Public Class FrmGreenTire
     Friend WithEvents CmdClose As System.Windows.Forms.Button
     Friend WithEvents CmdEdit As System.Windows.Forms.Button
     Friend WithEvents DataGridCOM As System.Windows.Forms.DataGrid
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents CmdDel As System.Windows.Forms.Button
     Friend WithEvents CheckBoxTire As System.Windows.Forms.CheckBox
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
     Friend WithEvents CmbTire As System.Windows.Forms.ComboBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblSize As System.Windows.Forms.Label
     Friend WithEvents cmdView As System.Windows.Forms.Button
     Friend WithEvents txtsize As System.Windows.Forms.TextBox
     Friend WithEvents CHKActive As System.Windows.Forms.CheckBox
     Friend WithEvents cmdActive As System.Windows.Forms.Button
+    Friend WithEvents CmdImport As System.Windows.Forms.Button
+    Friend WithEvents CmdExport As System.Windows.Forms.Button
+    Friend WithEvents CmdCALWeight As Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmGreenTire))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -82,13 +81,14 @@ Public Class FrmGreenTire
         Me.CheckBoxTire = New System.Windows.Forms.CheckBox()
         Me.CmdDel = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblSize = New System.Windows.Forms.Label()
         Me.txtsize = New System.Windows.Forms.TextBox()
         Me.cmdView = New System.Windows.Forms.Button()
         Me.CHKActive = New System.Windows.Forms.CheckBox()
         Me.cmdActive = New System.Windows.Forms.Button()
         Me.CmdImport = New System.Windows.Forms.Button()
         Me.CmdExport = New System.Windows.Forms.Button()
+        Me.CmdCALWeight = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridCOM, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -191,14 +191,14 @@ Public Class FrmGreenTire
         Me.PictureBox1.TabIndex = 22
         Me.PictureBox1.TabStop = False
         '
-        'Label1
+        'lblSize
         '
-        Me.Label1.Location = New System.Drawing.Point(16, 48)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(100, 16)
-        Me.Label1.TabIndex = 23
-        Me.Label1.Text = "Size"
-        Me.Label1.Visible = False
+        Me.lblSize.Location = New System.Drawing.Point(16, 48)
+        Me.lblSize.Name = "lblSize"
+        Me.lblSize.Size = New System.Drawing.Size(100, 16)
+        Me.lblSize.TabIndex = 23
+        Me.lblSize.Text = "Size"
+        Me.lblSize.Visible = False
         '
         'txtsize
         '
@@ -262,16 +262,29 @@ Public Class FrmGreenTire
         Me.CmdExport.Text = "Export"
         Me.CmdExport.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         '
+        'CmdCALWeight
+        '
+        Me.CmdCALWeight.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.CmdCALWeight.Image = CType(resources.GetObject("CmdCALWeight.Image"), System.Drawing.Image)
+        Me.CmdCALWeight.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.CmdCALWeight.Location = New System.Drawing.Point(100, 647)
+        Me.CmdCALWeight.Name = "CmdCALWeight"
+        Me.CmdCALWeight.Size = New System.Drawing.Size(80, 56)
+        Me.CmdCALWeight.TabIndex = 30
+        Me.CmdCALWeight.Text = "CAL Weight"
+        Me.CmdCALWeight.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        '
         'FrmGreenTire
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(1084, 711)
+        Me.Controls.Add(Me.CmdCALWeight)
         Me.Controls.Add(Me.CmdExport)
         Me.Controls.Add(Me.CmdImport)
         Me.Controls.Add(Me.CHKActive)
         Me.Controls.Add(Me.cmdView)
         Me.Controls.Add(Me.txtsize)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lblSize)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.CmdDel)
         Me.Controls.Add(Me.CheckBoxTire)
@@ -328,13 +341,14 @@ Public Class FrmGreenTire
         sb.AppendLine("SELECT * ")
         sb.AppendLine("FROM (")
         sb.AppendLine("  SELECT final,TireSize,Round(Qty,1) TQty,")
-        sb.AppendLine("  substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'")
-        sb.AppendLine("  +substring(DateUp,1,4) dateup,TireSize TSize,Tirecode,Rev,null MaterialName")
-        sb.AppendLine("  ,null Semicode,null Length,null number,null QTU,null Unit,Remark,Active,Active AC,'' as EachGreenTire, '' as EachRevision, '' as EachBSJ, '' as MaterialCode ")
+        sb.AppendLine("  substring(DateUp,7,2)+'/'+substring(DateUp,5,2)+'/'+substring(DateUp,1,4) dateup,TireSize TSize,Tirecode,Rev,null MaterialName")
+        sb.AppendLine("  ,null Semicode,null Length,null number,null QTU,null Unit,Remark,Active,Active AC")
+        sb.AppendLine("  ,'' as EachGreenTire, '' as EachRevision, '' as EachBSJ, '' as MaterialCode ")
         sb.AppendLine("  FROM TblGtHdr")
         sb.AppendLine("  UNION")
         sb.AppendLine("  SELECT null final,null TireSize,null TQty,null dateup,tiresize TSize,dt.Tirecode,dt.Rev,MaterialName")
-        sb.AppendLine("  ,isnull(Semicode,'No Use') Semicode,Length,number, round(QTU,3) Qty, Unit ,null Remark ,null Active,Active AC, dt.TireCode as EachGreenTire, dt.Rev as EachRevision, TireSize as EachBSJ, MaterialCode ")
+        sb.AppendLine("  ,isnull(Semicode,'No Use') Semicode,Length,number, round(QTU,3) Qty, Unit ,null Remark ,null Active,Active AC")
+        sb.AppendLine("  ,dt.TireCode as EachGreenTire, dt.Rev as EachRevision, TireSize as EachBSJ, MaterialCode ")
         sb.AppendLine("  FROM TblGtDtl dt")
         sb.AppendLine("  LEFT OUTER JOIN TBLTypeMaterial tm on dt.MaterialType = tm.MaterialCode")
         sb.AppendLine("  LEFT OUTER JOIN TBLGTHdr hd on dt.tirecode+dt.Rev = hd.Tirecode+hd.Rev")
@@ -781,7 +795,7 @@ Public Class FrmGreenTire
 
             'Read excel file
             dtRec = ExcelLib.Import(importDialog.FileName, Me, GrdDV, TBL_GT, arrColumn)
-            dtRec.Columns.Add("QTU", GetType(Double))
+            dtRec.Columns.Add("QTU", GetType(Double)) 'Add column QTU for excel file
 
             'Save
             If dtRec IsNot Nothing Then
@@ -844,39 +858,47 @@ Public Class FrmGreenTire
                                 chkSameRevisionBefore = String.Empty
                             End If
 
-                            GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "'")
+                            GridRow = DT.Select("EachGreenTire = '" & strGreentire & "'") 'Version 2.0.0.13
+                            'GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "'")
                             If GridRow.Count > 0 Then '//Case Update
-                                If strGreentire <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then
+                                If strGreentire <> chkSameGreenTireBefore Then 'Version 2.0.0.13
+                                    'If strGreentire <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then 'Use only GreenTire for Primary Key
 
                                     '//Update TblGtDtl
                                     '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
                                     '// Tread
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'TREAD'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'") 'Use only GreenTire for Primary Key
 
                                     sb.Clear()
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
-                                    sb.AppendLine(" QTU = " & PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
+                                    sb.AppendLine(" QTU = " & PrepareStr(ExcelRow(0)("QTU")) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '13'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '13'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '13'") 'Use only GreenTire for Primary Key
 
                                     QTread = ExcelRow(0)("QTU")
 
                                     sb.AppendLine(" ")
 
                                     ''// BF
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '14'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '14'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '14'") 'Use only GreenTire for Primary Key
 
                                     QBF = ExcelRow(0)("QTU") * ExcelRow(0)("Num")
                                     ''//---------------------------------------------------------------------------------------------------------------------------------
@@ -885,120 +907,144 @@ Public Class FrmGreenTire
 
                                     ''// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
                                     ''// Cussion
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'CUSSION'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '03'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '03'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '03'") 'Use only GreenTire for Primary Key
 
                                     QCussion = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// BodyPly
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BODY PLY'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '04'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '04'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '04'") 'Use only GreenTire for Primary Key
 
                                     QBodyPly = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// Belt-1
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-1'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '05'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '05'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '05'") 'Use only GreenTire for Primary Key
 
                                     QBelt1 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// Belt-2
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-2'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '06'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '06'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '06'") 'Use only GreenTire for Primary Key
 
                                     QBelt2 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// Belt-3
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-3'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '07'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '07'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '07'") 'Use only GreenTire for Primary Key
 
                                     QBelt3 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// Belt-4
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-4'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '08'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '08'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '08'") 'Use only GreenTire for Primary Key
 
                                     QBelt4 = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// Side
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'SIDE'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '11'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '11'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '11'") 'Use only GreenTire for Primary Key
 
                                     QSide = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
 
                                     sb.AppendLine(" ")
 
                                     ''// InnerLiner
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'INNERLINER'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'") 'Use only GreenTire for Primary Key
                                     sb.AppendLine(" Update TblGtDtl")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                     sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                     sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                     sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '12'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '12'") 'Version 2.0.0.14
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '12'") 'Use only GreenTire for Primary Key
 
                                     QInnerLiner = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
                                     ''//==================================================================================================================================
@@ -1007,27 +1053,32 @@ Public Class FrmGreenTire
                                     sb.AppendLine(" ")
 
                                     ''// WireChafer
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'WIRE CHAFER'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'") 'Use only GreenTire for Primary Key
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" Update TblGtDtl")
                                         sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                         sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                         sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                         sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                         sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                         sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '09'")
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '09'") 'Version 2.0.0.14
+                                        'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '09'") 'Use only GreenTire for Primary Key
 
                                         QWireChafer = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
                                     Else
                                         sb.AppendLine(" Update TblGtDtl")
                                         sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Rev = " & PrepareStr(strRevision) & ", ") 'Version 2.0.0.14
                                         sb.AppendLine(" Semicode = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" length = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" number = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" QTU = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '09'")
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '09'") 'Version 2.0.0.14
+                                        'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '09'") 'Use only GreenTire for Primary Key
 
                                         QWireChafer = 0
                                     End If
@@ -1035,27 +1086,32 @@ Public Class FrmGreenTire
                                     sb.AppendLine(" ")
 
                                     ''// NylonChafer
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'Nylon CHAFER'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'") 'Use only GreenTire for Primary Key
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" Update TblGtDtl")
                                         sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                         sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                         sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                         sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                         sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                         sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '10'")
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '10'") 'Version 2.0.0.14
+                                        'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '10'") 'Use only GreenTire for Primary Key
 
                                         QNylonChafer = (ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000
                                     Else
                                         sb.AppendLine(" Update TblGtDtl")
                                         sb.AppendLine(" Set ")
+                                        sb.AppendLine(" Rev = " & PrepareStr(strRevision) & ", ") 'Version 2.0.0.14
                                         sb.AppendLine(" Semicode = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" length = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" number = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" QTU = " & PrepareStr("") & ", ")
                                         sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '10'")
+                                        sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '10'") 'Version 2.0.0.14
+                                        'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '10'") 'Use only GreenTire for Primary Key
 
                                         QNylonChafer = 0
                                     End If
@@ -1063,30 +1119,34 @@ Public Class FrmGreenTire
                                     sb.AppendLine(" ")
 
                                     ''// Flipper
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
-                                    GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "' AND MaterialCode = '22'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'FLIPPER'") 'Version 2.0.0.14
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'") 'Use only GreenTire for Primary Key
+                                    GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND MaterialCode = '22'") 'Version 2.0.0.14
+                                    'GridRow = DT.Select("EachGreenTire = '" & strGreentire & "' AND EachRevision = '" & strRevision & "' AND MaterialCode = '22'") 'Use only GreenTire for Primary Key
                                     If ExcelRow.Count > 0 Then
                                         If GridRow.Count > 0 Then
                                             sb.AppendLine(" Update TblGtDtl")
                                             sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Rev = " & PrepareStr(ExcelRow(0)("Revision")) & ", ") 'Version 2.0.0.14
                                             sb.AppendLine(" Semicode = " & PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                             sb.AppendLine(" length = " & PrepareStr(ExcelRow(0)("Length")) & ", ")
                                             sb.AppendLine(" number = " & PrepareStr(ExcelRow(0)("Num")) & ", ")
                                             sb.AppendLine(" QTU = " & PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
                                             sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                            sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '22'")
+                                            sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '22'") 'Version 2.0.0.14
+                                            'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '22'") 'Use only GreenTire for Primary Key
                                         Else
                                             sb.AppendLine(" Insert TblGtDtl ")
                                             sb.AppendLine(" Values ")
                                             sb.AppendLine(" (")
-                                            sb.AppendLine(PrepareStr(strGreentire) & ", ")
-                                            sb.AppendLine(PrepareStr(strRevision) & ", ")
-                                            sb.AppendLine(PrepareStr("22") & ", ")
+                                            sb.AppendLine(PrepareStr(strGreentire) & ", ") 'TireCode
+                                            sb.AppendLine(PrepareStr(strRevision) & ", ") 'Rev
+                                            sb.AppendLine(PrepareStr("22") & ", ") 'Material Type
                                             sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ")
                                             sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ")
-                                            sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ")
-                                            sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ")
-                                            sb.AppendLine(PrepareStr("g") & ", ")
+                                            sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ") 'Number
+                                            sb.AppendLine(PrepareStr(((ExcelRow(0)("QTU") * ExcelRow(0)("Length")) / 1000)) & ", ") 'QTU
+                                            sb.AppendLine(PrepareStr("g") & ", ") 'Unit
                                             sb.AppendLine(PrepareStr(strDate))
                                             sb.AppendLine(") ")
                                         End If
@@ -1096,12 +1156,14 @@ Public Class FrmGreenTire
                                         If GridRow.Count > 0 Then
                                             sb.AppendLine(" Update TblGtDtl")
                                             sb.AppendLine(" Set ")
+                                            sb.AppendLine(" Rev = " & PrepareStr(strRevision) & ", ") 'Version 2.0.0.14
                                             sb.AppendLine(" Semicode = " & PrepareStr("") & ", ")
                                             sb.AppendLine(" length = " & PrepareStr("") & ", ")
                                             sb.AppendLine(" number = " & PrepareStr("") & ", ")
                                             sb.AppendLine(" QTU = " & PrepareStr("") & ", ")
                                             sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                            sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '22'")
+                                            sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND MaterialType = '22'") 'Version 2.0.0.14
+                                            'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND MaterialType = '22'") 'Use only GreenTire for Primary Key
                                         Else
                                             sb.AppendLine(" Insert TblGtDtl ")
                                             sb.AppendLine(" Values ")
@@ -1130,18 +1192,22 @@ Public Class FrmGreenTire
                                     '//Update TBLGTHdr
                                     sb.AppendLine(" Update TBLGTHdr")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(strRevision) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" Qty = " & PrepareStr(totalQty) & ", ")
                                     sb.AppendLine(" remark = " & PrepareStr(strRevisionBoss1st + "," + strRevisionBoss2nd) & ", ")
                                     sb.AppendLine(" Dateup = " & PrepareStr(strDate))
-                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "'")
+                                    sb.AppendLine(" Where TireCode = '" & strGreentire & "'")
+                                    'sb.AppendLine(" Where TireCode = '" & strGreentire & "' AND Rev = '" & strRevision & "'") 'Use only GreenTire for Primary Key
 
                                     sb.AppendLine(" ")
 
                                     '//Update TblConvert
                                     sb.AppendLine(" Update TblConvert")
                                     sb.AppendLine(" Set ")
+                                    sb.AppendLine(" Rev = " & PrepareStr(strRevision) & ", ") 'Version 2.0.0.14
                                     sb.AppendLine(" SQty = " & PrepareStr((totalQty / 1000)))
-                                    sb.AppendLine(" Where Code = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND UnitBig = 'UT'")
+                                    sb.AppendLine(" Where Code = '" & strGreentire & "' AND UnitBig = 'UT'")
+                                    'sb.AppendLine(" Where Code = '" & strGreentire & "' AND Rev = '" & strRevision & "' AND UnitBig = 'UT'") 'Use only GreenTire for Primary Key
 
                                     StrSQL = sb.ToString()
                                     cmSQL.CommandText = StrSQL
@@ -1151,12 +1217,14 @@ Public Class FrmGreenTire
 
                             Else '//Case Insert
 
-                                If strGreentire <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then
+                                If strGreentire <> chkSameGreenTireBefore Then
+                                    'If strGreentire <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then 'Use only GreenTire for Primary Key
 
                                     '//Insert TblGtDtl
                                     '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
                                     '// Tread
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'TREAD'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
                                     sb.Clear()
                                     sb.AppendLine(" Insert INTO TblGtDtl(TireCode,Rev,MaterialType,Semicode,length,number,QTU,Unit,Dateup) ")
                                     sb.AppendLine(" Values ")
@@ -1167,7 +1235,7 @@ Public Class FrmGreenTire
                                     sb.AppendLine(PrepareStr(ExcelRow(0)("SemiCode")) & ", ") 'Semicode
                                     sb.AppendLine(PrepareStr(ExcelRow(0)("Length")) & ", ") 'length
                                     sb.AppendLine(PrepareStr(ExcelRow(0)("Num")) & ", ") 'number
-                                    sb.AppendLine(PrepareStr((ExcelRow(0)("QTU") * ExcelRow(0)("Num"))) & ", ") 'QTU
+                                    sb.AppendLine(PrepareStr(ExcelRow(0)("QTU")) & ", ") 'QTU
                                     sb.AppendLine(PrepareStr("g") & ", ") 'Unit
                                     sb.AppendLine(PrepareStr(strDate)) 'Dateup
                                     sb.AppendLine(") ")
@@ -1177,7 +1245,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// BF
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1197,7 +1266,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Cussion
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'CUSSION'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1215,7 +1285,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// BodyPly
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BODY PLY'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1233,7 +1304,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-1
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-1'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1251,7 +1323,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-2
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-2'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1269,7 +1342,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-3
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-3'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1287,7 +1361,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Belt-4
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'BELT-4'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1305,7 +1380,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Side
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'SIDE'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1323,7 +1399,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// InnerLiner
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'INNERLINER'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
                                     sb.AppendLine(" (")
                                     sb.AppendLine(PrepareStr(strGreentire) & ", ")
                                     sb.AppendLine(PrepareStr(strRevision) & ", ")
@@ -1343,7 +1420,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// WireChafer
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'WIRE CHAFER'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
                                         sb.AppendLine(PrepareStr(strGreentire) & ", ")
@@ -1380,7 +1458,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// NylonChafer
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'Nylon CHAFER'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
                                         sb.AppendLine(PrepareStr(strGreentire) & ", ")
@@ -1416,7 +1495,8 @@ Public Class FrmGreenTire
                                     sb.AppendLine(", ")
 
                                     ''// Flipper
-                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
+                                    ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND TypeMaterial = 'FLIPPER'", "Revision ASC") 'Version 2.0.0.13
+                                    'ExcelRow = dtRec.Select("GreenTire = '" & strGreentire & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
                                     If ExcelRow.Count > 0 Then
                                         sb.AppendLine(" (")
                                         sb.AppendLine(PrepareStr(strGreentire) & ", ") 'TireCode
@@ -1538,9 +1618,160 @@ Public Class FrmGreenTire
                 End Using 'Using cnSQL
             End If 'If dtRec IsNot Nothing Then
 
+            LoadTireGroup() 'ReQuery and set Tire combobox
             LoadTire() 'ReQuery and set datagrid
             frmOverlay.Dispose()
         End If 'If importDialog.ShowDialog() = Windows.Forms.DialogResult.OK
+    End Sub
+
+    ''' <summary>
+    ''' Recalculate weight after change QTY of Semi
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks>Version 2.0.0.13</remarks>
+    Private Sub CmdCALWeight_Click(sender As Object, e As EventArgs) Handles CmdCALWeight.Click
+        'Create Calculation of overlay
+        Dim frmOverlay As New Form()
+        Dim frm As New Calculation()
+        frmOverlay.StartPosition = FormStartPosition.Manual
+        frmOverlay.FormBorderStyle = FormBorderStyle.None
+        frmOverlay.Opacity = 0.5D
+        frmOverlay.BackColor = Color.Black
+        frmOverlay.WindowState = FormWindowState.Maximized
+        frmOverlay.TopMost = True
+        frmOverlay.Location = Me.Location
+        frmOverlay.ShowInTaskbar = False
+        frmOverlay.Show()
+        frm.Owner = frmOverlay
+        ExcelLib.CenterForm(frm, Me)
+        frm.Show()
+        MessageBox.Show("System is calculating" & vbCrLf & "Please wait a moment", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Dim sb As New System.Text.StringBuilder()
+        Dim dtSemi As DataTable = New DataTable("Semi")
+        Dim dtGreenTire As DataTable = New DataTable("GreenTire")
+
+        'Get data of Semi
+        Dim sql As String = "SELECT SemiCode, MaterialType, QPU FROM TBLSemi"
+        Dim da As SqlDataAdapter
+        da = New SqlDataAdapter(sql, C1.Strcon)
+        da.Fill(dtSemi)
+
+        'Get data of GreenTire
+        sql = "SELECT TireCode FROM TBLGTHdr"
+        da = New SqlDataAdapter(sql, C1.Strcon)
+        da.Fill(dtGreenTire)
+
+        Using cnSQL As New SqlConnection(C1.Strcon)
+            cnSQL.Open()
+            Dim cmSQL As SqlCommand = cnSQL.CreateCommand()
+            Dim trans As SqlTransaction = cnSQL.BeginTransaction("TireTransaction")
+
+            cmSQL.Connection = cnSQL
+            cmSQL.Transaction = trans
+
+            Try
+                'Recalculate QTY of table TBLGTHdr
+                If dtGreenTire.Rows.Count > 0 Then
+                    For i As Integer = 0 To dtGreenTire.Rows.Count - 1
+                        Dim tireCode As String = dtGreenTire.Rows(i)("TireCode").ToString()
+
+                        'Get total QTY of each Tire Code
+                        sb.Clear()
+                        sb.AppendLine("SELECT SUM(QPU) AS QTY ")
+                        sb.AppendLine("FROM (")
+                        'TREAD Material Type
+                        sb.AppendLine("  SELECT A.QPU ")
+                        sb.AppendLine("  FROM TBLSemi A ")
+                        sb.AppendLine("  WHERE A.SemiCode IN (SELECT Semicode FROM TBLGTDtl WHERE TireCode = '" & tireCode & "' AND Semicode IS NOT NULL AND MaterialType = '13') ")
+                        sb.AppendLine("  UNION ")
+                        'BF Material Type
+                        sb.AppendLine("  SELECT A.QPU * B.number AS QPU ")
+                        sb.AppendLine("  FROM TBLSemi A ")
+                        sb.AppendLine("  INNER JOIN TBLGTDtl B ON A.SemiCode = B.Semicode ")
+                        sb.AppendLine("  WHERE B.TireCode = '" & tireCode & "' AND ")
+                        sb.AppendLine("  A.SemiCode IN (SELECT Semicode FROM TBLGTDtl WHERE TireCode = '" & tireCode & "' AND Semicode IS NOT NULL AND MaterialType = '14') ")
+                        sb.AppendLine("  UNION ")
+                        'Other material Type
+                        sb.AppendLine("  SELECT SUM(A.QPU * B.length / 1000) AS QPU ")
+                        sb.AppendLine("  FROM TBLSemi A ")
+                        sb.AppendLine("  INNER JOIN TBLGTDtl B ON A.SemiCode = B.Semicode ")
+                        sb.AppendLine("  WHERE B.TireCode = '" & tireCode & "' AND ")
+                        sb.AppendLine("  A.SemiCode IN (SELECT Semicode FROM TBLGTDtl WHERE TireCode = '" & tireCode & "' AND Semicode IS NOT NULL AND MaterialType NOT IN ('13','14')) ")
+                        sb.AppendLine(") AS Q")
+                        sql = sb.ToString()
+
+                        Dim tmpConn As New SqlConnection(C1.Strcon)
+                        Dim tmpCmd As New SqlCommand(sql, tmpConn)
+                        tmpConn.Open()
+                        Dim totalQTY As Double = Convert.ToDouble(tmpCmd.ExecuteScalar()) 'Get Total QTY
+                        tmpCmd.Dispose()
+                        tmpConn.Close()
+                        tmpConn.Dispose()
+
+                        sb.Clear()
+                        sb.AppendLine("UPDATE TBLGTHdr ")
+                        sb.AppendLine("SET ")
+                        sb.AppendLine("Qty = " & totalQTY & " ")
+                        sb.AppendLine("WHERE TireCode = '" & tireCode & "'")
+
+                        sb.AppendLine(" ")
+
+                        sb.AppendLine("UPDATE TBLConvert ")
+                        sb.AppendLine("SET ")
+                        sb.AppendLine("SQty = " & (totalQTY / 1000) & " ")
+                        sb.AppendLine("WHERE Code = '" & tireCode & "' AND UnitBig = 'UT'")
+                        sql = sb.ToString()
+                        cmSQL.CommandText = sql
+                        cmSQL.ExecuteNonQuery()
+                    Next i
+                End If 'If dtGreenTire.Rows.Count > 0
+
+                'Recalculate Weight of table TBLGTDtl
+                If dtSemi.Rows.Count > 0 Then
+                    For i As Integer = 0 To dtSemi.Rows.Count - 1
+                        Dim semiCode As String = dtSemi.Rows(i)("SemiCode").ToString()
+                        Dim materialType As String = dtSemi.Rows(i)("MaterialType").ToString()
+                        Dim qpu As String = dtSemi.Rows(i)("QPU").ToString()
+
+                        sb.Clear()
+                        sb.AppendLine("UPDATE TBLGTDtl ")
+                        sb.AppendLine("SET ")
+
+                        If materialType.Equals("13") Then
+                            'TREAD
+                            sb.AppendLine("QTU = " & qpu)
+                        ElseIf materialType.Equals("13") Or materialType.Equals("14") Then
+                            'BF
+                            sb.AppendLine("QTU = " & qpu & " * number ")
+                        Else
+                            'Other material type
+                            sb.AppendLine("QTU = " & qpu & " * length / 1000 ")
+                        End If
+
+                        sb.AppendLine("WHERE Semicode = '" & semiCode & "' AND MaterialType = '" & materialType & "'")
+                        sql = sb.ToString()
+                        cmSQL.CommandText = sql
+                        cmSQL.ExecuteNonQuery()
+                    Next i
+                End If 'If dtSemi.Rows.Count > 0
+
+                trans.Commit()
+                MessageBox.Show("Calculate Weight complete", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Catch ex As Exception
+                MessageBox.Show("Calculate Weight error" & vbCrLf & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                trans.Rollback()
+            Finally
+                trans.Dispose()
+                cmSQL.Dispose()
+                cnSQL.Close()
+                cnSQL.Dispose()
+            End Try
+        End Using
+
+        LoadTire() 'ReQuery and set datagrid
+        frmOverlay.Dispose()
     End Sub
 #End Region
 
@@ -1657,10 +1888,12 @@ Public Class FrmGreenTire
 
                     '// Check Each SemiCode in same group of GreenTire and Revision correctly
                     'For first GreenTire and Semi in each group
-                    If strGreenTireCode <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then
+                    'If strGreenTireCode <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore Then 'Use only GreenTireCode for Primary Key
+                    If strGreenTireCode <> chkSameGreenTireBefore Then 'Version 2.0.0.13
                         '// Tread and BF (Require, Need only Num) ------------------------------------------------------------------------------------------
 #Region "Material Type TREAD"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'TREAD'", "Revision ASC")
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'TREAD'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Tread'.")
@@ -1685,7 +1918,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QTread = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QTread
+                                importRow(0)("QTU") = QTread 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1697,7 +1930,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type BF"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BF (Upper,Lower,Center)'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'BF'.")
@@ -1721,7 +1955,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBF = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QBF
+                                importRow(0)("QTU") = QBF 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1735,7 +1969,8 @@ Public Class FrmGreenTire
 
                         '// Cussion, BodyPly, Belt-1, Belt-2, Belt-3, Belt-4, Side, InnerLiner (Require, Need Num and Length) ==============================
 #Region "Material Type Cussion"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'CUSSION'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'CUSSION'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Cussion'.")
@@ -1767,7 +2002,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QCussion = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QCussion
+                                importRow(0)("QTU") = QCussion 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1779,7 +2014,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type BodyPly"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'BODY PLY'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BODY PLY'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'BodyPly'.")
@@ -1810,7 +2046,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBodyPly = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QBodyPly
+                                importRow(0)("QTU") = QBodyPly 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1822,7 +2058,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type Belt-1"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'BELT-1'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-1'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Belt-1'.")
@@ -1854,7 +2091,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt1 = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QBelt1
+                                importRow(0)("QTU") = QBelt1 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1866,7 +2103,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type Belt-2"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'BELT-2'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-2'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Belt-2'.")
@@ -1898,7 +2136,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt2 = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QBelt2
+                                importRow(0)("QTU") = QBelt2 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1910,7 +2148,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type Belt-3"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'BELT-3'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-3'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Belt-3'.")
@@ -1942,7 +2181,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt3 = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QBelt3
+                                importRow(0)("QTU") = QBelt3 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1954,7 +2193,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type Belt-4"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'BELT-4'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'BELT-4'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Belt-4'.")
@@ -1986,7 +2226,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QBelt4 = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QBelt4
+                                importRow(0)("QTU") = QBelt4 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -1998,7 +2238,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type Side"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'SIDE'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'SIDE'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Side'.")
@@ -2030,7 +2271,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QSide = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QSide
+                                importRow(0)("QTU") = QSide 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -2042,7 +2283,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type InnerLiner"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'INNERLINER'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'INNERLINER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'InnerLiner'.")
@@ -2074,7 +2316,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QInnerLiner = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QInnerLiner
+                                importRow(0)("QTU") = QInnerLiner 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -2088,7 +2330,8 @@ Public Class FrmGreenTire
 
                         '// WireChafer, NylonChafer, Flipper (No Require, Need Num and Length) **************************************************************
 #Region "Material Type WireChafer"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'WIRE CHAFER'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'WIRE CHAFER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Wire Chafer'.")
@@ -2120,7 +2363,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QWireChafer = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QWireChafer
+                                importRow(0)("QTU") = QWireChafer 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -2133,7 +2376,8 @@ Public Class FrmGreenTire
 
 #Region "Material Type NylonChafer"
                         '// NylonChafer
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'Nylon CHAFER'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'Nylon CHAFER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Nylon Chafer'.")
@@ -2165,7 +2409,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QNylonChafer = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QNylonChafer
+                                importRow(0)("QTU") = QNylonChafer 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -2177,7 +2421,8 @@ Public Class FrmGreenTire
 #End Region
 
 #Region "Material Type Flipper"
-                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
+                        importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND TypeMaterial = 'FLIPPER'", "Revision ASC") 'Version 2.0.0.13
+                        'importRow = ImportTable.Select("GreenTire = '" & strGreenTireCode & "' AND Revision = '" & strRevision & "' AND TypeMaterial = 'FLIPPER'")
                         If importRow.Count > 0 Then
                             If importRow(0)("Num").ToString().Length <= 0 Then
                                 Throw New System.Exception("Please check Num value of type 'Flipper'")
@@ -2209,7 +2454,7 @@ Public Class FrmGreenTire
                                 cmSQLRM = New SqlCommand(strSQL, cnSQLRM)
 
                                 QFlipper = cmSQLRM.ExecuteScalar()
-                                importRow(0)("QTU") = QFlipper
+                                importRow(0)("QTU") = QFlipper 'Update QTU in excel file
 
                                 cmSQLRM.Dispose()
                             End If
@@ -2220,7 +2465,8 @@ Public Class FrmGreenTire
                         End If
 #End Region
                         '//**********************************************************************************************************************************
-                    End If 'If strGreenTireCode <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore
+                    End If 'If strGreenTireCode <> chkSameGreenTireBefore
+                    'End If 'If strGreenTireCode <> chkSameGreenTireBefore Or strRevision <> chkSameRevisionBefore 'Use only GreenTireCode for Primary Key
                 End If 'If strGreenTireCode.Length > 0
 
                 cnSQLRM.Close()
@@ -2337,7 +2583,7 @@ Public Class FrmGreenTire
 
         msg = "Delete Green Tire : " & GrdDV.Item(oldrow).Row("final") _
             & " Revision : " & GrdDV.Item(oldrow).Row("Rev")  'Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Green Tire"   ' Define title.
         ' Display message.
@@ -2349,7 +2595,7 @@ Public Class FrmGreenTire
                 CheckBox()
                 oldrow = 0
             Else
-                MsgBox("Can't Delete. Please check Usage.", MsgBoxStyle.OKOnly, "Tire")
+                MsgBox("Can't Delete. Please check Usage.", MsgBoxStyle.OkOnly, "Tire")
             End If
         Else
             Exit Sub
@@ -2471,7 +2717,7 @@ Public Class FrmGreenTire
 
         msg = "Change Active Green Tire : " & GrdDV.Item(oldrow).Row("final") _
              & " Revision : " & GrdDV.Item(oldrow).Row("Rev")  'Define message.
-        style = MsgBoxStyle.DefaultButton2 Or _
+        style = MsgBoxStyle.DefaultButton2 Or
            MsgBoxStyle.Information Or MsgBoxStyle.YesNo
         title = "Green Tire"   ' Define title.
         ' Display message.
@@ -2483,7 +2729,7 @@ Public Class FrmGreenTire
                 CheckBox()
                 oldrow = 0
             Else
-                MsgBox("Can't Change. Please check Usage.", MsgBoxStyle.OKOnly, "Tire")
+                MsgBox("Can't Change. Please check Usage.", MsgBoxStyle.OkOnly, "Tire")
             End If
         Else
             Exit Sub
@@ -2520,5 +2766,4 @@ Public Class FrmGreenTire
         End Try
         Me.Cursor = System.Windows.Forms.Cursors.Default()
     End Sub
-
 End Class
