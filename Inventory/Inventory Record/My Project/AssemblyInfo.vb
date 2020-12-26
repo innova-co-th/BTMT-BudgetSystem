@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Manage Master, Calculate and Price")>
 <Assembly: AssemblyCompany("Bridgestone Tire Manufacturing (Thailand) Co., Ltd.")>
 <Assembly: AssemblyProduct("Inventory Record System")>
-<Assembly: AssemblyCopyright("Copyright ©  2020")>
+<Assembly: AssemblyCopyright("Copyright 2020")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: CLSCompliant(True)> 
 
@@ -29,6 +29,6 @@ Imports System.Runtime.InteropServices
 ' You can specify all the values or you can default the Build and Revision Numbers 
 ' by using the '*' as shown below:
 
-<Assembly: AssemblyVersion("2.0.0.13")>
+<Assembly: AssemblyVersion("2.0.0.14")>
 
-<Assembly: AssemblyFileVersion("2.0.0.13")>
+<Assembly: AssemblyFileVersion("2.0.0.14")>
