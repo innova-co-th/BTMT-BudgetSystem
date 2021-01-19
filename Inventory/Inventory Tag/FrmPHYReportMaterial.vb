@@ -382,103 +382,109 @@ Public Class FrmPHYReportMaterial
 
         If CHKGroup.Checked Then
             'If check Group by Material 
-            sb.AppendLine(" SELECT  code,typecode,typename,trxyear,Period,MName,")
-            sb.AppendLine(" sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,")
-            sb.AppendLine(" sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
-            sb.AppendLine(" FROM ( ")
-            sb.AppendLine("   SELECT *")
-            'sb.AppendLine("   FROM  tagKG ") 'Use new View by Aek 30/09/2020 14:38
-            sb.AppendLine("   FROM  tagKG_New ")
-            sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
+            sb.AppendLine("SELECT code,typecode,typename,trxyear,Period,MName,")
+            sb.AppendLine("sum(UQty) UQty, zQty, stdut, actut, sum(astdUt) astdUt,sum(aactut) aactut,")
+            sb.AppendLine("sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg ")
+            sb.AppendLine("FROM (") 'Group by Unit = KG and Unit <> KG
+            sb.AppendLine("  SELECT  code,typecode,typename,trxyear,Period,MName,")
+            sb.AppendLine("  sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,")
+            sb.AppendLine("  sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
+            sb.AppendLine("  FROM ( ")
+            sb.AppendLine("    SELECT *")
+            'sb.AppendLine("    FROM  tagKG ") 'Use new View by Aek 30/09/2020 14:38
+            sb.AppendLine("    FROM  tagKG_New ") 'View for Unit = KG
+            sb.AppendLine("    WHERE period  = '" & sTrxPeriod.Trim() & "' ")
 
             If sType <> "" Then
                 'Type Code
-                sb.AppendLine("   AND Typecode = '" & sType.Trim() & "' ")
+                sb.AppendLine("    AND Typecode = '" & sType.Trim() & "' ")
             End If
             If sLoc <> "" Then
                 'Department
-                sb.AppendLine("   AND Location = '" & sLoc.Trim() & "' ")
+                sb.AppendLine("    AND Location = '" & sLoc.Trim() & "' ")
             End If
             If sLoc2 <> "" Then
                 'WIP (Material Warehouse or Tire Warehouse)
-                sb.AppendLine("   AND Location not in ( '3130','6400' )")
+                sb.AppendLine("    AND Location not in ( '3130','6400' )")
             End If
             If sPeriod1 <> "" Then
                 'Year
-                sb.AppendLine("   AND trxyear > = '" & sPeriod1.Trim() & "' ")
+                sb.AppendLine("    AND trxyear > = '" & sPeriod1.Trim() & "' ")
             End If
             If sPeriod2 <> "" Then
                 'Year
-                sb.AppendLine("   AND trxyear < = '" & sPeriod2.Trim() & "' ")
+                sb.AppendLine("    AND trxyear < = '" & sPeriod2.Trim() & "' ")
             End If
             If sMType <> "" Then
                 'Material Type
-                sb.AppendLine("   AND MaterialType = '" & sMType.Trim() & "' ")
+                sb.AppendLine("    AND MaterialType = '" & sMType.Trim() & "' ")
             End If
             If sCODE <> "" Then
                 'Table TBLGroup
-                sb.AppendLine("   AND CODE = '" & sCODE.Trim() & "' ")
+                sb.AppendLine("    AND CODE = '" & sCODE.Trim() & "' ")
             End If
             If sTag1 <> "" And sTag2 <> "" Then
-                sb.AppendLine("   AND Tagno >= '" & sTag1.Trim() & "' ")
-                sb.AppendLine("   AND Tagno <= '" & sTag2.Trim() & "' ")
+                sb.AppendLine("    AND Tagno >= '" & sTag1.Trim() & "' ")
+                sb.AppendLine("    AND Tagno <= '" & sTag2.Trim() & "' ")
             End If
 
-            sb.AppendLine(" ) xxx")
-            sb.AppendLine(" GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
+            sb.AppendLine("  ) xxx")
+            sb.AppendLine("  GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
 
-            sb.AppendLine(" UNION ")
+            sb.AppendLine("  UNION ")
 
-            sb.AppendLine(" SELECT  code,typecode,typename,trxyear,Period,MName,")
-            sb.AppendLine(" sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,")
-            sb.AppendLine(" sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
-            sb.AppendLine(" FROM ( ")
-            sb.AppendLine("   SELECT *")
-            'sb.AppendLine("   FROM  tagUT ") 'Use new View by Aek 30/09/2020 14:38
-            sb.AppendLine("   FROM  tagUT_New ")
-            sb.AppendLine("   WHERE period  = '" & sTrxPeriod.Trim() & "' ")
+            sb.AppendLine("  SELECT  code,typecode,typename,trxyear,Period,MName,")
+            sb.AppendLine("  sum(Qty) UQty,zQty,stdut,actut,sum(astdUt) astdUt,sum(aactut) aactut ,")
+            sb.AppendLine("  sum(kQty) kQty,stdkg,actkg,sum(astdkg) astdkg,sum(aactkg) aactkg")
+            sb.AppendLine("  FROM ( ")
+            sb.AppendLine("    SELECT *")
+            'sb.AppendLine("    FROM  tagUT ") 'Use new View by Aek 30/09/2020 14:38
+            sb.AppendLine("    FROM  tagUT_New ") 'View for Unit <> KG
+            sb.AppendLine("    WHERE period  = '" & sTrxPeriod.Trim() & "' ")
 
             If sType <> "" Then
                 'Type Code
-                sb.AppendLine("   AND Typecode = '" & sType.Trim() & "' ")
+                sb.AppendLine("    AND Typecode = '" & sType.Trim() & "' ")
             End If
             If sLoc <> "" Then
                 'Location
-                sb.AppendLine("   AND Location = '" & sLoc.Trim() & "' ")
+                sb.AppendLine("    AND Location = '" & sLoc.Trim() & "' ")
             End If
             If sLoc2 <> "" Then
                 'WIP (Material Warehouse or Tire Warehouse)
-                sb.AppendLine("   AND Location not in ( '3130','6400' )")
+                sb.AppendLine("    AND Location not in ( '3130','6400' )")
             End If
             If sPeriod1 <> "" Then
                 'Year
-                sb.AppendLine("   AND trxyear > = '" & sPeriod1.Trim() & "' ")
+                sb.AppendLine("    AND trxyear > = '" & sPeriod1.Trim() & "' ")
             End If
             If sPeriod2 <> "" Then
                 'Year
-                sb.AppendLine("  AND trxyear < = '" & sPeriod2.Trim() & "' ")
+                sb.AppendLine("    AND trxyear < = '" & sPeriod2.Trim() & "' ")
             End If
             If sMType <> "" Then
                 'Material Type
-                sb.AppendLine("   AND MaterialType = '" & sMType.Trim() & "' ")
+                sb.AppendLine("    AND MaterialType = '" & sMType.Trim() & "' ")
             End If
             If sCODE <> "" Then
-                sb.AppendLine("   AND CODE = '" & sCODE.Trim() & "' ")
+                sb.AppendLine("    AND CODE = '" & sCODE.Trim() & "' ")
             End If
             If sTag1 <> "" And sTag2 <> "" Then
-                sb.AppendLine("   AND Tagno >= '" & sTag1.Trim() & "' ")
-                sb.AppendLine("   AND Tagno <= '" & sTag2.Trim() & "' ")
+                sb.AppendLine("    AND Tagno >= '" & sTag1.Trim() & "' ")
+                sb.AppendLine("    AND Tagno <= '" & sTag2.Trim() & "' ")
             End If
 
-            sb.AppendLine(" ) xxx")
-            sb.AppendLine(" GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
-            sb.AppendLine(" ORDER BY typecode,code")
+            sb.AppendLine("  ) xxx")
+            sb.AppendLine("  GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
+            sb.AppendLine(") xx ") 'Group by Unit = KG and Unit <> KG
+            sb.AppendLine("GROUP BY code,typecode,typename,trxyear,Period,MName,zQty,stdut,actut,stdkg,actkg")
+            sb.AppendLine("ORDER BY typecode,code")
 
         Else
             'If uncheck Group by Material
             sb.AppendLine(" SELECT * ")
             'sb.AppendLine(" FROM  tagKG ") 'Use new View by Aek 30/09/2020 14:38
-            sb.AppendLine(" FROM  tagKG_New ")
+            sb.AppendLine(" FROM  tagKG_New ") 'View for Unit = KG
             sb.AppendLine(" WHERE period  = '" & sTrxPeriod.Trim() & "' ")
             If sType <> "" Then
                 'Type Code
@@ -517,7 +523,7 @@ Public Class FrmPHYReportMaterial
 
             sb.AppendLine(" SELECT  * ")
             'sb.AppendLine(" FROM  tagUT ") 'Use new View by Aek 30/09/2020 14:38
-            sb.AppendLine(" FROM  tagUT_New ")
+            sb.AppendLine(" FROM  tagUT_New ") 'View for Unit <> KG
             sb.AppendLine(" WHERE period  = '" & sTrxPeriod.Trim() & "' ")
             If sType <> "" Then
                 'Type Code
