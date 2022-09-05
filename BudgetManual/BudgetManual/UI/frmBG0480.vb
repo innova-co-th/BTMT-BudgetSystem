@@ -260,7 +260,7 @@ Public Class frmBG0480
                 Case CType(enumPeriodType.ForecastBudget, Integer)
                     strPeriod = "Forecast"
                     Exit Select
-                Case CType(enumPeriodType.MTPBudget, Integer)
+                Case CType(enumPeriodType.MBPBudget, Integer)
                     strPeriod = "MTP"
                     Exit Select
             End Select
@@ -410,7 +410,7 @@ Public Class frmBG0480
                         strPeriod = "Estimate"
                     Case CType(enumPeriodType.ForecastBudget, Integer)
                         strPeriod = "Forecast"
-                    Case CType(enumPeriodType.MTPBudget, Integer)
+                    Case CType(enumPeriodType.MBPBudget, Integer)
                         strPeriod = "MTP"
                 End Select
 
@@ -1354,7 +1354,7 @@ Public Class frmBG0480
             Me.chkShowMTP.Enabled = False
         End If
 
-        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) Then
+        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
             Me.gbPrevYear.Text = "Previous Year"
 
         ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
@@ -1362,7 +1362,7 @@ Public Class frmBG0480
 
         End If
 
-        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) OrElse _
+        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) OrElse _
         '    CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
         '    EnablePrev()
         'Else

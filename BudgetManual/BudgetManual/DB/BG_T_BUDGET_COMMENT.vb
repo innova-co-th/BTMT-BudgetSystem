@@ -399,7 +399,7 @@ Public Class BG_T_BUDGET_COMMENT
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
-            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                 Select Case Me.RRTNo
                     Case "1"
                         strCondition = " RRT1 = '" & Me.Comment & "'"
@@ -500,7 +500,7 @@ Public Class BG_T_BUDGET_COMMENT
             strSQL = strSQL.Replace("@RevNo", Me.RevNo)
             strSQL = strSQL.Replace("@ProjectNo", Me.ProjectNo)
 
-            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                 Select Case Me.RRTNo
                     Case "1"
                         strCondition = "RRT1"
@@ -542,7 +542,7 @@ Public Class BG_T_BUDGET_COMMENT
                         strCondition = "M12"
                 End Select
             End If
-           
+
 
             strSQL = strSQL.Replace("@Condition", strCondition)
             strSQL = strSQL.Replace("@Value", Me.Comment)

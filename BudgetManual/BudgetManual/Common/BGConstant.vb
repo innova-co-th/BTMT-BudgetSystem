@@ -47,7 +47,7 @@
         EstimateBudget3 = 7
         ForecastBudget3 = 8
         ForecastBudget4 = 9
-        MTPBudget = 10
+        MBPBudget = 10
         BudgetCompareVer10 = 11 '1st Half
         BudgetCompareVer20 = 12 '2nd Half
     End Enum

@@ -152,7 +152,7 @@ Public Class frmBG0450
                             Else
                                 strReportName = "RPT005-4.rpt"
                             End If
-                        Case enumPeriodType.MTPBudget
+                        Case enumPeriodType.MBPBudget
                             strReportName = "RPT005-5.rpt"
                     End Select
 
@@ -2780,7 +2780,7 @@ Public Class frmBG0450
             'LoadPrevRevNo()
         End If
 
-        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) Then
+        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
         '    Me.gbPrevYear.Text = "Previous Year"
 
         'ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
@@ -2788,7 +2788,7 @@ Public Class frmBG0450
 
         'End If
 
-        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) OrElse _
+        'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) OrElse _
         '        CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
         '    EnablePrev()
         'Else
@@ -2817,7 +2817,7 @@ Public Class frmBG0450
                 chkShowMTP.Enabled = False
             End If
 
-            'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) Then
+            'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
             '    Me.gbPrevYear.Text = "Previous Year"
 
             'ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
@@ -2825,7 +2825,7 @@ Public Class frmBG0450
 
             'End If
 
-            'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) OrElse _
+            'If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) OrElse _
             '    CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
             '    EnablePrev()
             'Else
@@ -2917,7 +2917,7 @@ Public Class frmBG0450
                                 GeneratForecastExcel(dsGroups, dtColumns, True)
                             End If
 
-                        Case enumPeriodType.MTPBudget
+                        Case enumPeriodType.MBPBudget
                             InsertMTPColumnData(dtColumns, strYear)
                             dsGroups = SetupMTPGroupbyData(ds, "COST", "COST", 8)
                             GeneratMTPExcel(dsGroups, dtColumns)

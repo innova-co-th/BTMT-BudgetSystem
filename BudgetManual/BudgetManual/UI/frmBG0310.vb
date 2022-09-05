@@ -61,7 +61,7 @@ Public Class frmBG0310
     Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
 
         '// Check if new MTP, must have Forecast budget.
-        If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MTPBudget) Then
+        If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MBPBudget) Then
             myClsBG0310BL.BudgetYear = numYear.Value.ToString("0000")
             myClsBG0310BL.ProjectNo = numProjectNo.Value.ToString
 
@@ -106,7 +106,7 @@ Public Class frmBG0310
 
         If cboPeriodType.SelectedIndex >= 0 Then
 
-            If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MTPBudget) Then
+            If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MBPBudget) Then
                 Me.numProjectNo.Enabled = True
             Else
                 Me.numProjectNo.Value = 1

@@ -381,7 +381,7 @@ Public Class frmBG0350
     Private Sub cboPeriodType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPeriodType.SelectedIndexChanged
         If cboPeriodType.SelectedIndex >= 0 Then
 
-            If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MTPBudget) Then
+            If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MBPBudget) Then
                 Me.numProjectNo.Enabled = True
             Else
                 Me.numProjectNo.Value = 1

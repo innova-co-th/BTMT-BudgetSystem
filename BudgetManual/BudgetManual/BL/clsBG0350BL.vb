@@ -264,7 +264,7 @@ Public Class clsBG0350BL
 
                 Return rtn
             End If
-        ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+        ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
             '// Import MTP Data
             '// -- MTP Data => Input Data Table
             If Me.DataType = CStr(enumUploadDataType.MTPData) Then
@@ -278,7 +278,7 @@ Public Class clsBG0350BL
                 clsBG_T_BUDGET_DATA.UserId = p_strUserId
                 clsBG_T_BUDGET_DATA.ProjectNo = Me.ProjectNo
 
-                clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.MTPBudget)
+                clsBG_T_BUDGET_DATA.PeriodType = CStr(enumPeriodType.MBPBudget)
                 clsBG_T_BUDGET_DATA.DataList = Me.DataList
 
                 If clsBG_T_BUDGET_DATA.Select019() = True AndAlso clsBG_T_BUDGET_DATA.dtResult.Rows.Count > 0 Then

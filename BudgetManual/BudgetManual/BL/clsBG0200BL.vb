@@ -822,7 +822,7 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MTPBudget)
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MBPBudget)
 
                 blnRtn = clsBG_T_BUDGET_REFERENCE.Select001()
 
@@ -841,10 +841,10 @@ Public Class clsBG0200BL
                     clsBG_T_BUDGET_DATA.RefRevNo = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_REV_NO").ToString
                 Else
                     clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
-                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.MTPBudget)
+                    clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.MBPBudget)
                 End If
 
-            ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
 
                 '// Ref. Forecast  
                 clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
@@ -875,7 +875,7 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MTPBudget)
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MBPBudget)
 
                 blnRtn = clsBG_T_BUDGET_REFERENCE.Select001()
 
@@ -908,7 +908,7 @@ Public Class clsBG0200BL
         Me.OperationCd = enumOperationCd.Authorize2 Then
             clsBG_T_BUDGET_DATA.Status = CStr(enumBudgetStatus.Approve)
 
-            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                 If Me.UserPIC = "0000" Then
                     blnRtn = clsBG_T_BUDGET_DATA.Select027()
                 Else
@@ -925,7 +925,7 @@ Public Class clsBG0200BL
 
         ElseIf Me.OperationCd = enumOperationCd.ViewBudget Then
 
-            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                 If Me.UserPIC = "0000" Then
                     blnRtn = clsBG_T_BUDGET_DATA.Select026()
                 Else
@@ -942,7 +942,7 @@ Public Class clsBG0200BL
 
         Else
 
-            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                 If Me.UserPIC = "0000" Then
                     blnRtn = clsBG_T_BUDGET_DATA.Select024()
                 Else
@@ -1140,7 +1140,7 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MBPBudget)
                 clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
                 clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
                 clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
@@ -1159,7 +1159,7 @@ Public Class clsBG0200BL
                     Throw New Exception("Can not insert budget reference!")
                 End If
 
-            ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.MTPBudget Then
+            ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.MBPBudget Then
                 '// Add Forecast (Same year)
                 clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
@@ -1216,7 +1216,7 @@ Public Class clsBG0200BL
                 clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
                 clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
                 clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
+                clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MBPBudget)
                 clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 1)
                 clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
                 clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
@@ -1503,7 +1503,7 @@ Public Class clsBG0200BL
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
+            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MBPBudget)
             clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
             clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
             clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
@@ -1524,7 +1524,7 @@ Public Class clsBG0200BL
                 Return False
             End If
 
-        ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.MTPBudget Then
+        ElseIf CInt(Me.PeriodType) = BGConstant.enumPeriodType.MBPBudget Then
             '// Add Forecast (Same year)
             clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
@@ -1557,7 +1557,7 @@ Public Class clsBG0200BL
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
-            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
+            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(BGConstant.enumPeriodType.MBPBudget)
             clsBG_T_BUDGET_REFERENCE.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 1)
             clsBG_T_BUDGET_REFERENCE.RefProjectNo = "1"
             clsBG_T_BUDGET_REFERENCE.RefRevNo = "1"
@@ -2983,7 +2983,7 @@ Public Class clsBG0200BL
         ElseIf Me.PeriodType = CStr(enumPeriodType.ForecastBudget) Then
             strPeriodType = "Forecast Budget"
 
-        ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+        ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
             strPeriodType = "MTP Budget"
 
         End If
@@ -3225,7 +3225,7 @@ Public Class clsBG0200BL
                                                     (CDbl(Nz(drData(idx).Item("M" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))
                             Next
 
-                        ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                        ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                             For i = 0 To 4
                                 dblTransValue(i) = dblTransValue(i) - _
                                                     (CDbl(Nz(drData(idx).Item("RRT" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))
@@ -3277,7 +3277,7 @@ Public Class clsBG0200BL
                                                     (CDbl(Nz(drData(idx).Item("M" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))
                             Next
 
-                        ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                        ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                             For i = 0 To 4
                                 dblTransValue(i) = dblTransValue(i) + _
                                                     (CDbl(Nz(drData(idx).Item("RRT" & (i + 1)), 0))) / 100 * CDbl(drData(idx).Item("TRANSFER_RATE"))

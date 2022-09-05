@@ -1713,7 +1713,7 @@ Public Class BG_T_BUDGET_DATA
                     strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT006_1")
                 ElseIf Me.PeriodType = CStr(enumPeriodType.EstimateBudget) Then
                     strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT006_3")
-                ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                     strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT006_8")
                 End If
 
@@ -1728,7 +1728,7 @@ Public Class BG_T_BUDGET_DATA
                     strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT006_2")
                 ElseIf Me.PeriodType = CStr(enumPeriodType.EstimateBudget) Then
                     strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT006_5")
-                ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+                ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                     strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "SELECT006_7")
                 End If
 
@@ -5387,7 +5387,7 @@ Public Class BG_T_BUDGET_DATA
                 'strSQL = strSQL.Replace("@RRT4", CStr(Nz(Me.BudgetData("RRT4"), "0")).Replace(",", ""))
                 'strSQL = strSQL.Replace("@RRT5", CStr(Nz(Me.BudgetData("RRT5"), "0")).Replace(",", ""))
 
-            ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
 
                 strSQL = strSQL.Replace("@M01", "0")
                 strSQL = strSQL.Replace("@M02", "0")
@@ -5524,7 +5524,7 @@ Public Class BG_T_BUDGET_DATA
                 strSQL = strSQL.Replace("@M11", CStr(Nz(Me.BudgetData2(10), "0")))
                 strSQL = strSQL.Replace("@M12", CStr(Nz(Me.BudgetData2(11), "0")))
 
-            ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
 
                 strSQL = readXMLConfig(p_strDataPath & My.Settings.SqlCmdFile, "BG_T_BUDGET_DATA", "UPDATE002-4")
                 strSQL = strSQL.Replace("@BudgetYear", Me.BudgetYear)

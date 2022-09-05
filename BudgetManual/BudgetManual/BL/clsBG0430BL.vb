@@ -235,7 +235,7 @@ Public Class clsBG0430BL
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MTPBudget)
+            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MBPBudget)
 
             If Me.RevNo = "" Then
                 If clsBG_T_BUDGET_REFERENCE.Select002 = False Then
@@ -259,10 +259,10 @@ Public Class clsBG0430BL
                 clsBG_T_BUDGET_DATA.MtpRevNo = clsBG_T_BUDGET_REFERENCE.dtResult.Rows(0)("REF_REV_NO").ToString
             Else
                 clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(CInt(Me.BudgetYear) - 2)
-                clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(enumPeriodType.MTPBudget)
+                clsBG_T_BUDGET_DATA.RefBudgetYear = CStr(enumPeriodType.MBPBudget)
             End If
 
-        ElseIf Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+        ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
 
             '// Ref. Forecast  
             clsBG_T_BUDGET_REFERENCE.BudgetYear = Me.BudgetYear
@@ -300,7 +300,7 @@ Public Class clsBG0430BL
             clsBG_T_BUDGET_REFERENCE.PeriodType = Me.PeriodType
             clsBG_T_BUDGET_REFERENCE.RevNo = Me.RevNo
             clsBG_T_BUDGET_REFERENCE.ProjectNo = Me.ProjectNo
-            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MTPBudget)
+            clsBG_T_BUDGET_REFERENCE.RefPeriodType = CStr(enumPeriodType.MBPBudget)
 
             If Me.RevNo = "" Then
                 If clsBG_T_BUDGET_REFERENCE.Select002 = False Then
@@ -355,7 +355,7 @@ Public Class clsBG0430BL
                         Return False
                     End If
 
-                Case enumPeriodType.MTPBudget
+                Case enumPeriodType.MBPBudget
                     clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     clsBG_T_BUDGET_DATA.TableName = "MTPBudget"
                     clsBG_T_BUDGET_DATA.Status = CStr(enumBudgetStatus.Approve)
@@ -391,7 +391,7 @@ Public Class clsBG0430BL
                         Return False
                     End If
 
-                Case enumPeriodType.MTPBudget
+                Case enumPeriodType.MBPBudget
                     clsBG_T_BUDGET_DATA.RefPeriodType = CStr(enumPeriodType.OriginalBudget)
                     clsBG_T_BUDGET_DATA.TableName = "MTPBudget"
                     clsBG_T_BUDGET_DATA.Status = CStr(enumBudgetStatus.Approve)

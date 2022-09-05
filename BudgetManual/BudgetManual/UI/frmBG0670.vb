@@ -367,7 +367,7 @@ Public Class frmBG0670
                     '    grbReference.Enabled = True
                     '    Me.cboRefBudgetYear.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue)
                     '    Me.ComboBox1_SelectedIndexChanged("", Nothing)
-                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
+                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MBPBudget Then
                     grbReference.Enabled = True
                     Me.cboRefBudgetYear.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) + 1
                     Me.ComboBox1_SelectedIndexChanged("", Nothing)
@@ -394,7 +394,7 @@ Public Class frmBG0670
                     Me.cboRefBudgetYear2.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 2
                     Me.cboRefBudgetYear2_SelectedIndexChanged("", Nothing)
 
-                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
+                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MBPBudget Then
                     grbReference2.Enabled = True
                     Me.cboRefBudgetYear2.SelectedValue = CInt(Me.cboBudgetYear.SelectedValue) - 1
                     Me.cboRefBudgetYear2_SelectedIndexChanged("", Nothing)
@@ -626,7 +626,7 @@ Public Class frmBG0670
                     'ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.ForecastBudget Then
                     '    Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget
                     '    cboRefPeriodType_SelectedIndexChanged("", Nothing)
-                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
+                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MBPBudget Then
                     Me.cboRefPeriodType.SelectedValue = BGConstant.enumPeriodType.OriginalBudget ' Edited by Kwang for Prototype No.4. Menu : Budget Adjust Master 'BGConstant.enumPeriodType.ForecastBudget
                     cboRefPeriodType_SelectedIndexChanged("", Nothing)
                 Else
@@ -729,11 +729,11 @@ Public Class frmBG0670
                 Dim strPeriod = Me.cboPeriodType.SelectedValue.ToString
 
                 If CInt(strPeriod) = BGConstant.enumPeriodType.OriginalBudget Then
-                    Me.cboRefPeriodType2.SelectedValue = BGConstant.enumPeriodType.MTPBudget
+                    Me.cboRefPeriodType2.SelectedValue = BGConstant.enumPeriodType.MBPBudget
                     cboRefPeriodType2_SelectedIndexChanged("", Nothing)
 
-                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MTPBudget Then
-                    Me.cboRefPeriodType2.SelectedValue = BGConstant.enumPeriodType.MTPBudget
+                ElseIf CInt(strPeriod) = BGConstant.enumPeriodType.MBPBudget Then
+                    Me.cboRefPeriodType2.SelectedValue = BGConstant.enumPeriodType.MBPBudget
                     cboRefPeriodType2_SelectedIndexChanged("", Nothing)
                 Else
 

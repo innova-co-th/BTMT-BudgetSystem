@@ -198,7 +198,7 @@ Public Class clsBG0201BL
         clsBG_T_BUDGET_COMMENT.BudgetOrderNo = Me.BudgetOrderNo
         clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
         clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
-        If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+        If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
             clsBG_T_BUDGET_COMMENT.RRTNo = Me.RRTNo
         Else
             clsBG_T_BUDGET_COMMENT.MonthNo = Me.MonthNo
@@ -226,7 +226,7 @@ Public Class clsBG0201BL
         clsBG_T_BUDGET_COMMENT.BudgetOrderNo = Me.BudgetOrderNo
         clsBG_T_BUDGET_COMMENT.RevNo = Me.RevNo
         clsBG_T_BUDGET_COMMENT.ProjectNo = Me.ProjectNo
-        If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+        If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
             clsBG_T_BUDGET_COMMENT.RRTNo = Me.RRTNo
         Else
             clsBG_T_BUDGET_COMMENT.MonthNo = Me.MonthNo

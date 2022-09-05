@@ -221,7 +221,7 @@ Public Class frmBG0200
                     '//-- End Edit 2011-05-27
                 End If
 
-                If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                     m_dtCheckMTPNew = CType(grvBudget4.DataSource, DataTable).DefaultView.Table.Copy
 
                     '// Show Investment for MTP
@@ -249,7 +249,7 @@ Public Class frmBG0200
 
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then
                     CalcForecastBudget(False)
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                     CalcForecastMTPBudget()
                 End If
 
@@ -266,7 +266,7 @@ Public Class frmBG0200
                     HighlightTransferCost()
                 End If
 
-                If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) And _
+                If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) And _
                     Me.GetBudgetType() = P_BUDGET_TYPE_EXPENSE Then
                     HighlightMTPValueAllNew()
                 End If
@@ -357,7 +357,7 @@ Public Class frmBG0200
                     grvBudget3.Top = GRIDVIEW_TOP2
                 End If
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget
                 grvBudget1.Visible = False
                 grvBudget2.Visible = False
                 grvBudget3.Visible = False
@@ -408,7 +408,7 @@ Public Class frmBG0200
                     dt.Rows.Clear()
                     grvBudget3.DataSource = dt
                 End If
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget
                 dt = CType(grvBudget4.DataSource, DataTable)
                 If dt IsNot Nothing Then
                     dt.Rows.Clear()
@@ -771,7 +771,7 @@ Public Class frmBG0200
                     dc = New DataColumn("OBFullYear", GetType(Double))
                     dtGrid.Columns.Add(dc)
 
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget
 
                     dc = New DataColumn("RevYear", GetType(Double))
                     dtGrid.Columns.Add(dc)
@@ -943,7 +943,7 @@ Public Class frmBG0200
                             dr("M12") = CDbl(drDat("M12")).ToString("#,##0.00")
                         End If
 
-                    ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
+                    ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget
 
                         If CDec(Nz(drDat("RevYear"), 0)) <> 0 Then
                             dr("RevYear") = CDbl(drDat("RevYear")).ToString("#,##0.00")
@@ -1095,7 +1095,7 @@ Public Class frmBG0200
                     '// Show Record Num
                     lblRecNum.Text = grvBudget3.Rows.Count.ToString("#,##0") & " Record(s)"
 
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget
 
                     '// Bind Datasource
                     grvBudget4.AutoGenerateColumns = False
@@ -1247,7 +1247,7 @@ Public Class frmBG0200
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then    '// Forecast Budget
                 lblBudgetPeriod.Text += " Forecast Budget"
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then    '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then    '// MTP Budget
                 lblBudgetPeriod.Text += " MTP Budget"
             End If
 
@@ -1313,7 +1313,7 @@ Public Class frmBG0200
                 '// Save full data
                 myDtAllData = CType(grvBudget3.DataSource, DataTable)
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then    '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then    '// MTP Budget
                 '// Save full data
                 myDtAllData = CType(grvBudget4.DataSource, DataTable)
             End If
@@ -1423,7 +1423,7 @@ Public Class frmBG0200
                 grvTemp = grvBudget3
                 strNamePrefix = "g3col"
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then    '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then    '// MTP Budget
 
                 If mydtBG4 Is Nothing Then
                     Dim dtGrvBudget4 As New DataTable
@@ -1758,7 +1758,7 @@ Public Class frmBG0200
                         lblSum9Val.Text = "0.00"
                     End If
 
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                     Dim returnvalue As Object
 
                     'lblSumMTP1.Text = "MTP" & Me.GetBudgetYear()
@@ -2198,7 +2198,7 @@ Public Class frmBG0200
                     lblSum9Val.Text = "0.00"
                 End If
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                 Dim returnvalue As Object
                 Dim dtTemp1 As DataTable = CType(grvBudget4.DataSource, DataTable)
 
@@ -4315,7 +4315,7 @@ Public Class frmBG0200
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then        '// Forecast Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then        '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then        '// MTP Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
             End If
 
@@ -4410,7 +4410,7 @@ Public Class frmBG0200
                 Me.CurrRevNo = "1"
             End If
 
-            If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+            If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                 myClsBG0200BL.BudgetYear = Me.GetBudgetYear()
                 myClsBG0200BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
                 myClsBG0200BL.BudgetType = Me.GetBudgetType()
@@ -4436,7 +4436,7 @@ Public Class frmBG0200
                 If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
 
                     myClsBG0310BL.BudgetYear = CStr(CInt(Me.GetBudgetYear()) - 1)
-                    myClsBG0310BL.PeriodType = CStr(BGConstant.enumPeriodType.MTPBudget)
+                    myClsBG0310BL.PeriodType = CStr(BGConstant.enumPeriodType.MBPBudget)
                     myClsBG0310BL.ProjectNo = strProjectNo
                     myClsBG0310BL.BudgetType = BGConstant.P_BUDGET_TYPE_EXPENSE
 
@@ -4490,7 +4490,7 @@ Public Class frmBG0200
                             Exit For
                         End If
                     Next
-                Case CStr(enumPeriodType.MTPBudget)  '// MTP
+                Case CStr(enumPeriodType.MBPBudget)  '// MTP
                     For Each row As DataGridViewRow In grvBudget4.Rows
                         blnSelected = DirectCast(grvBudget4(0, row.Index).Value, Boolean)
                         If blnSelected = True Then
@@ -4725,7 +4725,7 @@ Public Class frmBG0200
                         Me.pnlWKH.Visible = False
                         Me.pnlMTP_SUM.Visible = False
                     End If
-                    If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                    If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                         Me.fraWBMTP.Visible = True
                         Me.pnlMTPInvestment.Visible = True
                         Me.pnlWKH.Visible = False
@@ -4761,7 +4761,7 @@ Public Class frmBG0200
                         Me.pnlWKH.Visible = False
                         Me.pnlMTP_SUM.Visible = False
                     End If
-                    If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                    If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                         Me.fraWBMTP.Visible = True
                         Me.pnlMTPInvestment.Visible = True
                         Me.pnlWKH.Visible = False
@@ -5604,7 +5604,7 @@ Public Class frmBG0200
 
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then        '// Forecast Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then        '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then        '// MTP Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
             End If
 
@@ -5640,7 +5640,7 @@ Public Class frmBG0200
                     myClsBG0200BL.RevNo = Me.CurrRevNo
                     myClsBG0200BL.SaveWKH()
 
-                    If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                    If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                         myClsBG0200BL.MTP_SUM1 = CStr(IIf(IsNumeric(txtMTPInv1.Text), txtMTPInv1.Text, "0")).Replace(",", "")
                         myClsBG0200BL.MTP_SUM2 = CStr(IIf(IsNumeric(txtMTPInv2.Text), txtMTPInv2.Text, "0")).Replace(",", "")
                         myClsBG0200BL.MTP_SUM3 = CStr(IIf(IsNumeric(txtMTPInv3.Text), txtMTPInv3.Text, "0")).Replace(",", "")
@@ -5694,7 +5694,7 @@ Public Class frmBG0200
                             myClsBG0200BL.RevNo = Me.CurrRevNo
                             myClsBG0200BL.SaveWKH()
 
-                            If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                            If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                                 myClsBG0200BL.MTP_SUM1 = CStr(IIf(IsNumeric(txtMTPInv1.Text), txtMTPInv1.Text, "0")).Replace(",", "")
                                 myClsBG0200BL.MTP_SUM2 = CStr(IIf(IsNumeric(txtMTPInv2.Text), txtMTPInv2.Text, "0")).Replace(",", "")
                                 myClsBG0200BL.MTP_SUM3 = CStr(IIf(IsNumeric(txtMTPInv3.Text), txtMTPInv3.Text, "0")).Replace(",", "")
@@ -5775,7 +5775,7 @@ Public Class frmBG0200
 
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then        '// Forecast Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then        '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then        '// MTP Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
             End If
             Dim blnSave As Boolean = False
@@ -5941,7 +5941,7 @@ Public Class frmBG0200
                     myClsBG0200BL.BudgetList = CType(grvBudget2.DataSource, DataTable)
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then        '// Forecast Budget
                     myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then         '// MTP Budget
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then         '// MTP Budget
                     myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
                 End If
 
@@ -5993,7 +5993,7 @@ Public Class frmBG0200
                         drS("Status") = CStr(enumBudgetStatus.Submit)
                         dtSave.Rows.Add(drS)
                     Next
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget        
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget        
                     For Each row As DataGridViewRow In grvBudget4.Rows
                         Dim isChecked As Boolean = DirectCast(grvBudget4(0, row.Index).Value, Boolean)
                         drS = dtSave.NewRow
@@ -6137,7 +6137,7 @@ Public Class frmBG0200
                 myClsBG0200BL.BudgetList = CType(grvBudget2.DataSource, DataTable)
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then        '// Forecast Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then         '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then         '// MTP Budget
                 myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
             End If
 
@@ -6399,7 +6399,7 @@ Public Class frmBG0200
                     myClsBG0200BL.RevNo = Me.CurrRevNo
                     myClsBG0200BL.SaveWKH()
 
-                    If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+                    If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
 
                         myClsBG0200BL.MTP_SUM1 = CStr(IIf(IsNumeric(txtMTPInv1.Text), txtMTPInv1.Text, "0")).Replace(",", "")
                         myClsBG0200BL.MTP_SUM2 = CStr(IIf(IsNumeric(txtMTPInv2.Text), txtMTPInv2.Text, "0")).Replace(",", "")
@@ -6676,7 +6676,7 @@ Public Class frmBG0200
                         dtSave.Rows.Add(drS)
                     End If
                 Next
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget        
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget        
                 For Each row As DataGridViewRow In grvBudget4.Rows
                     Dim isChecked As Boolean = DirectCast(grvBudget4(0, row.Index).Value, Boolean)
                     If isChecked Then
@@ -6784,7 +6784,7 @@ Public Class frmBG0200
                     myClsBG0200BL.BudgetList = CType(grvBudget2.DataSource, DataTable)
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.ForecastBudget) Then        '// Forecast Budget
                     myClsBG0200BL.BudgetList = CType(grvBudget3.DataSource, DataTable)
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then         '// MTP Budget
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then         '// MTP Budget
                     myClsBG0200BL.BudgetList = CType(grvBudget4.DataSource, DataTable)
                 End If
 
@@ -6834,7 +6834,7 @@ Public Class frmBG0200
                         drS("Status") = CStr(enumBudgetStatus.Submit)
                         dtSave.Rows.Add(drS)
                     Next
-                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then   '// MTP Budget        
+                ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then   '// MTP Budget        
                     For Each row As DataGridViewRow In grvBudget4.Rows
                         Dim isChecked As Boolean = DirectCast(grvBudget4(0, row.Index).Value, Boolean)
                         drS = dtSave.NewRow
@@ -6904,7 +6904,7 @@ Public Class frmBG0200
             p_frmBG0201.BudgetOrderNo = budgetOrderNo
             p_frmBG0201.RevNo = Me.CurrRevNo
             p_frmBG0201.ProjectNo = Me.GetProjectNo()
-            If Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then
+            If Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                 p_frmBG0201.RRTNo = CStr(intNum)
             Else
                 p_frmBG0201.MonthNo = CStr(intNum)
@@ -7515,7 +7515,7 @@ Public Class frmBG0200
                         Next
                     End If
                 End If
-               
+
                 'For i = 0 To grvBudget2.RowCount - 1
                 '    strOrderNo = CStr(grvBudget2.Item("OrderNo2", i).Value)
                 '    dt = GetComment(strOrderNo)
@@ -7763,7 +7763,7 @@ Public Class frmBG0200
                 '    End If
                 'Next
 
-            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MTPBudget) Then    '// MTP Budget
+            ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then    '// MTP Budget
                 Dim dt As DataTable = CType(grvBudget4.DataSource, DataTable).DefaultView.Table.Copy
                 If Not dt Is Nothing AndAlso dt.Rows.Count > 0 Then
                     If Not dtComment Is Nothing AndAlso dtComment.Rows.Count > 0 Then

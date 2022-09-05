@@ -43,7 +43,7 @@ Public Class frmBG0330
                 ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.ForecastBudget Then
                     strTemp = CStr(dr("BUDGET_YEAR")) & " Forecast Budget " & CStr(dr("PROJECT_NO"))
 
-                ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.MTPBudget Then
+                ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.MBPBudget Then
                     strTemp = CStr(dr("BUDGET_YEAR")) & " MTP Budget " & CStr(dr("PROJECT_NO"))
 
                 End If
@@ -71,7 +71,7 @@ Public Class frmBG0330
         ElseIf cboPeriod2.Text.Contains("Forecast") Then
             myClsBG0330BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod2.Text.Contains("MTP") Then
-            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MTPBudget)
+            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0330BL.ProjectNo = Mid(cboPeriod2.Text, cboPeriod2.Text.LastIndexOf(" ") + 2, cboPeriod2.Text.Length - cboPeriod2.Text.LastIndexOf(" "))
         If myClsBG0330BL.SearchReopenAccount() Then
@@ -191,7 +191,7 @@ Public Class frmBG0330
         ElseIf cboPeriod.Text.Contains("Forecast") Then
             myClsBG0330BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod.Text.Contains("MTP") Then
-            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MTPBudget)
+            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0330BL.UserId = p_strUserId
         myClsBG0330BL.ProjectNo = Mid(cboPeriod.Text, cboPeriod.Text.LastIndexOf(" ") + 2, cboPeriod.Text.Length - cboPeriod.Text.LastIndexOf(" "))
@@ -233,7 +233,7 @@ Public Class frmBG0330
         ElseIf cboPeriod2.Text.Contains("Forecast") Then
             myClsBG0330BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod2.Text.Contains("MTP") Then
-            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MTPBudget)
+            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0330BL.AccountNo = Me.grvMaster.SelectedRows(0).Cells(2).Value.ToString
         myClsBG0330BL.PicNo = Me.grvMaster.SelectedRows(0).Cells(4).Value.ToString
@@ -273,7 +273,7 @@ Public Class frmBG0330
         ElseIf cboPeriod2.Text.Contains("Forecast") Then
             myClsBG0330BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod2.Text.Contains("MTP") Then
-            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MTPBudget)
+            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0330BL.ProjectNo = Mid(cboPeriod2.Text, cboPeriod2.Text.LastIndexOf(" ") + 2, cboPeriod2.Text.Length - cboPeriod2.Text.LastIndexOf(" "))
 
@@ -304,7 +304,7 @@ Public Class frmBG0330
         ElseIf cboPeriod2.Text.Contains("Forecast") Then
             myClsBG0330BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
         ElseIf cboPeriod2.Text.Contains("MTP") Then
-            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MTPBudget)
+            myClsBG0330BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0330BL.AccountNo = Me.cboAccount.SelectedValue.ToString
         myClsBG0330BL.PicNo = Me.cboPic.SelectedValue.ToString

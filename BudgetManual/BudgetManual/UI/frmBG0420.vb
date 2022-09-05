@@ -193,7 +193,7 @@ Public Class frmBG0420
                         End If
                         strPeriod = "Forecast"
                         Exit Select
-                    Case CType(enumPeriodType.MTPBudget, Integer)
+                    Case CType(enumPeriodType.MBPBudget, Integer)
                         reportPath = p_strAppPath & "\Reports\RPT002-5.rpt"
                         strPeriod = "Original"
                         Exit Select
@@ -338,7 +338,7 @@ Public Class frmBG0420
                     End If
                     strPeriod = "Forecast"
                     Exit Select
-                Case CType(enumPeriodType.MTPBudget, Integer)
+                Case CType(enumPeriodType.MBPBudget, Integer)
                     clsBG0400.ReportName = "RPT002-5.rpt"
                     strPeriod = "MTP"
                     Exit Select
@@ -494,7 +494,7 @@ Public Class frmBG0420
                 OutputExcel(dsGroups, dtColumns, bMTPCheck, strSubTitle, strYear, False, _
                             intGroupFirstIndex, intGroupSecondIndex, strPeriod)
 
-            Case CType(enumPeriodType.MTPBudget, Integer)  '//MTP
+            Case CType(enumPeriodType.MBPBudget, Integer)  '//MTP
 
                 InsertMTPBudgetColumnData(dtColumns, strYear)
 

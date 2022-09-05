@@ -256,7 +256,7 @@ Public Class frmBG0410
                     End If
                     strPeriod = "Forecast"
                     Exit Select
-                Case CType(enumPeriodType.MTPBudget, Integer)
+                Case CType(enumPeriodType.MBPBudget, Integer)
                     clsBG0400.ReportName = "RPT001-5.rpt"
                     strPeriod = "MTP"
                     Exit Select
@@ -320,7 +320,7 @@ Public Class frmBG0410
                             reportPath = p_strAppPath & "\Reports\RPT001-3.rpt"
                         End If
                         Exit Select
-                    Case CType(enumPeriodType.MTPBudget, Integer)
+                    Case CType(enumPeriodType.MBPBudget, Integer)
                         reportPath = p_strAppPath & "\Reports\RPT001-5.rpt"
                         Exit Select
                     Case Else
@@ -385,7 +385,7 @@ Public Class frmBG0410
                         strPeriod = "Estimate"
                     Case CType(enumPeriodType.ForecastBudget, Integer)
                         strPeriod = "Forecast"
-                    Case CType(enumPeriodType.MTPBudget, Integer)
+                    Case CType(enumPeriodType.MBPBudget, Integer)
                         strPeriod = "MTP"
                 End Select
 
@@ -522,7 +522,7 @@ Public Class frmBG0410
                 '//Create Output Excel
                 OutputExcel(dsGroups, dtColumns, bMTPCheck, strSubTitle, strYear, True, strPeriod)
 
-            Case CType(enumPeriodType.MTPBudget, Integer) '//MTP
+            Case CType(enumPeriodType.MBPBudget, Integer) '//MTP
 
                 InsertMTPColumnDataNew(dtColumns, strYear)
 
@@ -1497,7 +1497,7 @@ Public Class frmBG0410
             Me.chkShowMTP.Enabled = False
         End If
 
-        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MTPBudget, Integer) Then
+        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
             Me.gbPrevYear.Text = "Previous Year"
 
         ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then

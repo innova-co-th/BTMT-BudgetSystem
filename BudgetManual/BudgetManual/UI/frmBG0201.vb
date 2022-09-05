@@ -176,7 +176,7 @@ Public Class frmBG0201
     Private Sub BindDatagrid(ByVal pSource As DataTable)
         Try
             Me.Comment = ""
-            If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+            If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
                 If Not pSource Is Nothing AndAlso pSource.Rows.Count > 0 Then
                     Select Case Me.RRTNo
                         Case "1"
@@ -239,7 +239,7 @@ Public Class frmBG0201
         myClsBG0201BL.RevNo = Me.RevNo
         myClsBG0201BL.ProjectNo = Me.ProjectNo
 
-        If Me.PeriodType = CStr(enumPeriodType.MTPBudget) Then
+        If Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
             myClsBG0201BL.RRTNo = Me.RRTNo
         Else
             myClsBG0201BL.MonthNo = Me.MonthNo

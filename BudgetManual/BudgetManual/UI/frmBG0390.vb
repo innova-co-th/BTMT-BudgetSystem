@@ -73,8 +73,8 @@ Public Class frmBG0390
                     myClsBG0390BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
                 Case CType(enumPeriodType.ForecastBudget, Integer)
                     myClsBG0390BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
-                Case CType(enumPeriodType.MTPBudget, Integer)
-                    myClsBG0390BL.PeriodType = CStr(enumPeriodType.MTPBudget)
+                Case CType(enumPeriodType.MBPBudget, Integer)
+                    myClsBG0390BL.PeriodType = CStr(enumPeriodType.MBPBudget)
             End Select
             myClsBG0390BL.ProjectNo = numProjectNo.Value.ToString
 
@@ -124,7 +124,7 @@ Public Class frmBG0390
     Private Sub cboPeriodType_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPeriodType.SelectedIndexChanged
         If cboPeriodType.SelectedIndex >= 0 Then
 
-            If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MTPBudget) Then
+            If CStr(cboPeriodType.SelectedValue) = CStr(enumPeriodType.MBPBudget) Then
                 Me.numProjectNo.Enabled = True
             Else
                 Me.numProjectNo.Value = 1
