@@ -191,7 +191,7 @@ Public Class frmBG0010
                 ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
                     strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MBPBudget) Then
-                    strPeriodName = "MBP Budget"
+                    strPeriodName = "MBP Budget" '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
                 End If
 
                 '// Set common parameters
@@ -214,7 +214,6 @@ Public Class frmBG0010
                 myClsBG0010BL.RevNo = "1"
 
                 If myClsBG0010BL.CheckBudgetDataExistView() = True Then
-
                     If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
                         trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodViewBudget").Nodes.Add( _
                      strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, "journal.ico", "journal.ico")
@@ -246,6 +245,8 @@ Public Class frmBG0010
         Dim strPeriodName As String = String.Empty
         Dim strProjectNo As String = String.Empty
         Dim strProjectName As String = String.Empty
+        Dim intYearMBP As Integer = 0
+        Dim strYearMBP As String = String.Empty
 
         '// Create Node if do not exist.
         If trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget") Is Nothing Then
@@ -261,6 +262,8 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
+                intYearMBP = CInt(strYear) + 1
+                strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
                     strPeriodName = "Original Budget"
@@ -269,7 +272,7 @@ Public Class frmBG0010
                 ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
                     strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MBPBudget) Then
-                    strPeriodName = "MBP Budget" '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
+                    strPeriodName = "MBP Budget"  '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
                 End If
 
                 '// Set common parameters
@@ -294,21 +297,43 @@ Public Class frmBG0010
                         myClsBG0010BL.UserPIC = CStr(dr("PERSON_IN_CHARGE_NO"))
 
                         If myClsBG0010BL.CheckBudgetDataExist() = False Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
-                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                    "journal.ico", "journal.ico")
+
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                             strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                                 "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                             strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                                 "journal.ico", "journal.ico")
+                            End If
                             Exit For
 
                         ElseIf myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
-                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                    "journal.ico", "journal.ico")
+
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                               strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                                   "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                               strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                                   "journal.ico", "journal.ico")
+                            End If
+                           
                             Exit For
 
                         ElseIf myClsBG0010BL.CheckBudgetDataStatusReInputByOrder() = True Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
-                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                    "journal.ico", "journal.ico")
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                               strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                                   "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                               strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                                   "journal.ico", "journal.ico")
+                            End If
+                           
                             Exit For
 
                         End If
@@ -325,21 +350,42 @@ Public Class frmBG0010
                         myClsBG0010BL.UserPIC = CStr(dr("PERSON_IN_CHARGE_NO"))
 
                         If myClsBG0010BL.CheckBudgetDataExist() = False Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
-                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
-                                    "journal.ico", "journal.ico")
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                              strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYearMBP & " " & strPeriodName & " (Investment)" & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                              strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            End If
+                          
                             Exit For
 
                         ElseIf myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
-                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
-                                    "journal.ico", "journal.ico")
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                              strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYearMBP & " " & strPeriodName & " (Investment)" & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                              strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            End If
+                          
                             Exit For
 
                         ElseIf myClsBG0010BL.CheckBudgetDataStatusReInputByOrder() = True Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
+                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodInputBudget").Nodes.Add( _
                                 strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                    "journal.ico", "journal.ico")
+                                  "journal.ico", "journal.ico")
+                            End If
+                          
                             Exit For
 
                         End If
@@ -356,6 +402,8 @@ Public Class frmBG0010
         Dim strPeriodName As String = String.Empty
         Dim strProjectNo As String = String.Empty
         Dim strProjectName As String = String.Empty
+        Dim intYearMBP As Integer = 0
+        Dim strYearMBP As String = String.Empty
 
         '// Create Node if do not exist.
         If trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget") Is Nothing Then
@@ -371,6 +419,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
+                intYearMBP = CInt(strYear) + 1
+                strYearMBP = CStr(intYearMBP)
+
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
@@ -399,17 +450,33 @@ Public Class frmBG0010
                 myClsBG0010BL.BudgetType = P_BUDGET_TYPE_EXPENSE
 
                 If myClsBG0010BL.CheckBudgetDataStatus(True) = True Then
-                    trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
-                        strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                            "journal.ico", "journal.ico")
+
+                    If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    Else
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    End If
+
 
                 Else
 
                     '// Add Approve From ReINPUTBYORDERNO
                     If myClsBG0010BL.CheckBudgetDataStatusReInputByOrder(True) = True Then
-                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
-                            strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                "journal.ico", "journal.ico")
+                        If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
+                           strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                               "journal.ico", "journal.ico")
+                        Else
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
+                           strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                               "journal.ico", "journal.ico")
+                        End If
+
+                       
                     End If
 
                 End If
@@ -422,14 +489,19 @@ Public Class frmBG0010
                     trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
                         strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
                             "journal.ico", "journal.ico")
-
                 Else
-
                     '// Add Approve From ReINPUTBYORDERNO
                     If myClsBG0010BL.CheckBudgetDataStatusReInputByOrder(True) = True Then
-                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
-                            strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                "journal.ico", "journal.ico")
+                        If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
+                          strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                              "journal.ico", "journal.ico")
+                        Else
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodApproveBudget").Nodes.Add( _
+                          strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                              "journal.ico", "journal.ico")
+                        End If
+                      
                     End If
 
                 End If
@@ -444,6 +516,8 @@ Public Class frmBG0010
         Dim strPeriodName As String = String.Empty
         Dim strProjectNo As String = String.Empty
         Dim strProjectName As String = String.Empty
+        Dim intYearMBP As Integer = 0
+        Dim strYearMBP As String = String.Empty
 
         '// Create Node if do not exist.
         If trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget") Is Nothing Then
@@ -459,6 +533,8 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
+                intYearMBP = CInt(strYear) + 1
+                strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
                     strPeriodName = "Original Budget"
@@ -467,7 +543,7 @@ Public Class frmBG0010
                 ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
                     strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MBPBudget) Then
-                    strPeriodName = "MBP Budget" '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
+                    strPeriodName = "MTP Budget" '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
                 End If
 
                 '// Set common parameters
@@ -489,16 +565,30 @@ Public Class frmBG0010
                 myClsBG0010BL.Status = CStr(enumBudgetStatus.Approve)
 
                 If myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                    trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
-                        strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                            "journal.ico", "journal.ico")
+                    If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    Else
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    End If
+                   
                 Else
                     myClsBG0010BL.Status = CStr(enumBudgetStatus.Authorize2)
 
                     If myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
-                            strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                                "journal.ico", "journal.ico")
+                        If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                                                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                                                           "journal.ico", "journal.ico")
+                        Else
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                           strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                               "journal.ico", "journal.ico")
+                        End If
+                       
                     End If
                 End If
 
@@ -511,16 +601,31 @@ Public Class frmBG0010
                 If strPeriodId <> CStr(enumPeriodType.MBPBudget) Then
 
                     If myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
-                            strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
-                                "journal.ico", "journal.ico")
+
+                        If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                        strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYearMBP & " " & strPeriodName & " (Investment)" & strProjectName, _
+                            "journal.ico", "journal.ico")
+                        Else
+                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                        strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
+                            "journal.ico", "journal.ico")
+                        End If
+                    
                     Else
                         myClsBG0010BL.Status = CStr(enumBudgetStatus.Authorize2)
 
                         If myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                            trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
-                                strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
-                                    "journal.ico", "journal.ico")
+                            If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                              strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYearMBP & " " & strPeriodName & " (Investment)" & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            Else
+                                trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAdjustBudget").Nodes.Add( _
+                              strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_ASSET & strProjectNo, strYear & " " & strPeriodName & " (Investment)" & strProjectName, _
+                                  "journal.ico", "journal.ico")
+                            End If
+                           
                         End If
                     End If
 
@@ -627,6 +732,8 @@ Public Class frmBG0010
         Dim strPeriodName As String = String.Empty
         Dim strProjectNo As String = String.Empty
         Dim strProjectName As String = String.Empty
+        Dim intYearMBP As Integer = 0
+        Dim strYearMBP As String = String.Empty
 
         '// Create Node if do not exist.
         If trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth1Budget") Is Nothing Then
@@ -642,6 +749,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
+                intYearMBP = CInt(strYear) + 1
+                strYearMBP = CStr(intYearMBP)
+
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
@@ -671,9 +781,16 @@ Public Class frmBG0010
                 myClsBG0010BL.GetMaxRevNo()
 
                 If myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                    trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth1Budget").Nodes.Add( _
-                        strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                            "journal.ico", "journal.ico")
+                    If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth1Budget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    Else
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth1Budget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    End If
+                   
                 End If
 
                 '// 2) Add Adjust Budget Node (Asset)
@@ -696,6 +813,8 @@ Public Class frmBG0010
         Dim strPeriodName As String = String.Empty
         Dim strProjectNo As String = String.Empty
         Dim strProjectName As String = String.Empty
+        Dim intYearMBP As Integer = 0
+        Dim strYearMBP As String = String.Empty
 
         '// Create Node if do not exist.
         If trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth2Budget") Is Nothing Then
@@ -711,6 +830,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
+                intYearMBP = CInt(strYear) + 1
+                strYearMBP = CStr(intYearMBP)
+
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
                     strPeriodName = "Original Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.EstimateBudget) Then
@@ -740,9 +862,16 @@ Public Class frmBG0010
                 myClsBG0010BL.GetMaxRevNo()
 
                 If myClsBG0010BL.CheckBudgetDataStatus() = True Then
-                    trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth2Budget").Nodes.Add( _
-                        strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
-                            "journal.ico", "journal.ico")
+                    If strPeriodId = CStr(enumPeriodType.MBPBudget) Then
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth2Budget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYearMBP & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    Else
+                        trvMenu.Nodes("nodMenu").Nodes("nodBudgetJournal").Nodes("nodAuth2Budget").Nodes.Add( _
+                       strYear & CInt(strPeriodId).ToString("00") & P_BUDGET_TYPE_EXPENSE & strProjectNo, strYear & " " & strPeriodName & strProjectName, _
+                           "journal.ico", "journal.ico")
+                    End If
+                   
                 End If
 
                 '// 2) Add Adjust Budget Node (Asset)
