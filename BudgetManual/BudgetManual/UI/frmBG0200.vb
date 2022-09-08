@@ -998,6 +998,9 @@ Public Class frmBG0200
                     dtGrid.Rows.Add(dr)
                 Next
 
+                Dim strg1col25 As String = ""
+                Dim strg1col26 As String = ""
+
                 '// Load data into datagrid
                 If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then   '// Original Budget
 
@@ -1018,9 +1021,19 @@ Public Class frmBG0200
                         Next
                         grvBudget1.Columns("g1col17").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
                         grvBudget1.Columns("g1col18").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
+                        'grvBudget1.Columns("g1col25").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
+                        'grvBudget1.Columns("g1col25").HeaderText = grvBudget1.Columns("g1col25").HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
+                        'grvBudget1.Columns("g1col26").HeaderText += (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00")
                         grvBudget1.Columns("g1col25").HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
-                        grvBudget1.Columns("g1col25").HeaderText = grvBudget1.Columns("g1col25").HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
-                        grvBudget1.Columns("g1col26").HeaderText += (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00")
+                        grvBudget1.Columns("g1col25").HeaderText = grvBudget1.Columns("g1col25").HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                        grvBudget1.Columns("g1col26").HeaderText += (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
+
+                        strg1col25 = grvBudget1.Columns("g1col25").HeaderText
+                        strg1col26 = grvBudget1.Columns("g1col26").HeaderText
+
+                        grvBudget1.Columns("g1col25").HeaderText = strg1col25.Replace("MTP", "MBP")
+                        grvBudget1.Columns("g1col26").HeaderText = strg1col26.Replace("MTP", "MBP")
+
                     End If
 
                     '// Show/Hide WK Column
@@ -1525,8 +1538,10 @@ Public Class frmBG0200
                     lblSum5.Text = "Diff 1st Half"
                     lblSum6.Text = "Diff 2st Half"
                     lblSum7.Text = "Total Year'" & Me.GetBudgetYear()
-                    lblSum9.Text = "MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00") & "Y" & Me.GetBudgetYear()
-                    lblSum10.Text = "Diff vs MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00")
+                    'lblSum9.Text = "MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00") & "Y" & Me.GetBudgetYear()
+                    'lblSum10.Text = "Diff vs MTP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00")
+                    lblSum9.Text = "MBP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00") & "Y" & Me.GetBudgetYear()
+                    lblSum10.Text = "Diff vs MBP" & (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00")
                     lblSum11.Text = "Total Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
                     lblSum12.Text = "Diff vs Year'" & CStr(CInt(Me.GetBudgetYear()) - 1)
 
