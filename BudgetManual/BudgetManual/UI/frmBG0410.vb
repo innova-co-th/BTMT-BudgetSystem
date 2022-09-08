@@ -655,14 +655,24 @@ Public Class frmBG0410
         dRow("Column_Title") = "Total Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
+        'dRow = dtColumns.NewRow()
+        'dRow("Column_Name") = "MTP_RRT1"
+        'dRow("Column_Title") = "MTP " & CInt(strYear) - 2 & " Year'" & strYear
+        'dtColumns.Rows.Add(dRow)
+
+        'dRow = dtColumns.NewRow()
+        'dRow("Column_Name") = "DIFF_MTP"
+        'dRow("Column_Title") = "Diff vs MTP" & CInt(strYear) - 2
+        'dtColumns.Rows.Add(dRow)
+
         dRow = dtColumns.NewRow()
         dRow("Column_Name") = "MTP_RRT1"
-        dRow("Column_Title") = "MTP " & CInt(strYear) - 2 & " Year'" & strYear
+        dRow("Column_Title") = "MBP " & CInt(strYear) - 1 & " Year'" & strYear
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow()
         dRow("Column_Name") = "DIFF_MTP"
-        dRow("Column_Title") = "Diff vs MTP" & CInt(strYear) - 2
+        dRow("Column_Title") = "Diff vs MBP" & CInt(strYear) - 1
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
