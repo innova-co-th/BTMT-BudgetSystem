@@ -1117,22 +1117,35 @@ Public Class frmBG0200
                     '// Set Column Headers
                     If Not grvBudget4.Columns("g4col6").HeaderText.Contains("'") Then
                         For i = 6 To 8
-                            'grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & Mid(Me.BudgetKey, 3, 2)
+                            If (grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Substring(0, 3).Equals("MTP")) Then
+                               
+                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2)) + 1
 
-                            grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2)) + 1
+                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2))).ToString("00"))
 
-                            'grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("MTP", "MBP")
+                            Else
+                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2)) + 1
 
-                            grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
 
+                            End If
                         Next
 
                         If CStr(Me.GetBudgetType()) = P_BUDGET_TYPE_EXPENSE Then
                             For i = 1 To 5
                                 '// Current Year
                                 'grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
-                                grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
-                                grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Replace("@1", CInt(Mid(Me.BudgetKey, 3, 2)).ToString("00"))
+                                If (grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Substring(0, 3).Equals("MTP")) Then
+
+                                    grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                    grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) + 1).ToString("00"))
+                                    grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = (grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText).Replace("MTP", "MBP")
+
+                                Else
+                                    grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                    grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(9 + ((i - 1) * 2))).HeaderText.Replace("@1", CInt(Mid(Me.BudgetKey, 3, 2)).ToString("00"))
+                                End If
                             Next
 
                             'grvBudget4.Columns("g4colDiff1").HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (1)).ToString("00")
@@ -1144,12 +1157,24 @@ Public Class frmBG0200
                             For i = 1 To 4
                                 '// Previous Year
                                 'grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i)).ToString("00")
-                                If Me.GetBudgetYear() = "2019" AndAlso i = 2 Then
-                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
-                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
+                                If ((grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText).Substring(0, 3)).Equals("MTP") Then
+                                    If Me.GetBudgetYear() = "2019" AndAlso i = 2 Then
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
+                                    Else
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 0).ToString("00"))
+                                    End If
+
+                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("MTP", "MBP")
                                 Else
-                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
-                                    grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                                    If Me.GetBudgetYear() = "2019" AndAlso i = 2 Then
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 2).ToString("00"))
+                                    Else
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText += "'" & (CInt(Mid(Me.BudgetKey, 3, 2)) + (i + 1)).ToString("00")
+                                        grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText = grvBudget4.Columns("g4col" & CStr(10 + ((i - 1) * 2))).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
+                                    End If
                                 End If
 
 
@@ -1251,6 +1276,10 @@ Public Class frmBG0200
 
             '// Set Labels
             lblBudgetPeriod.Text = Mid(Me.BudgetKey, 1, 4)
+            Dim intBudgetPeriodMBP As Integer
+            intBudgetPeriodMBP = CInt(lblBudgetPeriod.Text)
+            Dim strBudgetPeriodMBP As String = (intBudgetPeriodMBP + 1).ToString()
+
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then      '// Original Budget
                 lblBudgetPeriod.Text += " Original Budget"
 
@@ -1261,7 +1290,8 @@ Public Class frmBG0200
                 lblBudgetPeriod.Text += " Forecast Budget"
 
             ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then    '// MTP Budget
-                lblBudgetPeriod.Text += " MTP Budget"
+                'lblBudgetPeriod.Text += " MTP Budget"
+                lblBudgetPeriod.Text = strBudgetPeriodMBP + " MBP Budget"
             End If
 
             If Me.GetBudgetType() = P_BUDGET_TYPE_ASSET Then  '// Investment Budget
@@ -1776,21 +1806,25 @@ Public Class frmBG0200
                 ElseIf Me.GetPeriodType() = CStr(enumPeriodType.MBPBudget) Then
                     Dim returnvalue As Object
 
-                    'lblSumMTP1.Text = "MTP" & Me.GetBudgetYear()
                     lblSumMTP1.Text = "Original"
-                    lblSumMTP2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    lblSumMTPN1.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    'lblSumMTP3.Text = "OB Y" & CStr(CInt(Me.GetBudgetYear()) + 1) 'Me.GetBudgetYear()
-                    lblSumMTP3.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1) 'Me.GetBudgetYear()
+                    'lblSumMTP2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    lblSumMTP2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
+                    'lblSumMTPN1.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    lblSumMTPN1.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
+                    lblSumMTP3.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1)
                     lblSumMTP4.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1)
                     lblSumMTP5.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 2)
                     lblSumMTP6.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 3)
                     lblSumMTP7.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 4)
                     lblSumMTP8.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 5)
 
-                    lblSumMTPN2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()))
-                    lblSumMTPN3.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    lblSumMTPN4.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    'lblSumMTPN2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()))
+                    'lblSumMTPN3.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    'lblSumMTPN4.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+
+                    lblSumMTPN2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) + 1)
+                    lblSumMTPN3.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
+                    lblSumMTPN4.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
 
                     lblSumMTP3Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                     lblSumMTP7Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
