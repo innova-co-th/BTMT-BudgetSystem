@@ -543,7 +543,7 @@ Public Class frmBG0010
                 ElseIf strPeriodId = CStr(enumPeriodType.ForecastBudget) Then
                     strPeriodName = "Forecast Budget"
                 ElseIf strPeriodId = CStr(enumPeriodType.MBPBudget) Then
-                    strPeriodName = "MTP Budget" '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
+                    strPeriodName = "MBP Budget" '//"MTP Budget" --- Changed MTP to MBP 05/09/2022
                 End If
 
                 '// Set common parameters

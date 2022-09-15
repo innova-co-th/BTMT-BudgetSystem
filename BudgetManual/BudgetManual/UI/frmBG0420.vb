@@ -199,7 +199,7 @@ Public Class frmBG0420
                         Exit Select
                     Case Else
                         reportPath = p_strAppPath & "\Reports\RPT002-1.rpt"
-                        strPeriod = "MTP"
+                        strPeriod = "MBP"
                         Exit Select
                 End Select
 
@@ -340,7 +340,7 @@ Public Class frmBG0420
                     Exit Select
                 Case CType(enumPeriodType.MBPBudget, Integer)
                     clsBG0400.ReportName = "RPT002-5.rpt"
-                    strPeriod = "MTP"
+                    strPeriod = "MBP"
                     Exit Select
             End Select
 
