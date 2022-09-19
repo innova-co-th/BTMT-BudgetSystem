@@ -232,7 +232,7 @@ Partial Class frmBG0670
         Me.fraMTP.Size = New System.Drawing.Size(363, 93)
         Me.fraMTP.TabIndex = 63
         Me.fraMTP.TabStop = False
-        Me.fraMTP.Text = "MTP Budget"
+        Me.fraMTP.Text = "MBP Budget"
         '
         'lblRRT5
         '

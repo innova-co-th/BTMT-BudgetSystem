@@ -14658,7 +14658,7 @@
       WHEN PERIOD_TYPE = 1 THEN 'Original Budget'
       WHEN PERIOD_TYPE = 2 THEN 'Estimate Budget'
       WHEN PERIOD_TYPE = 3 THEN 'Forecast Budget'
-      WHEN PERIOD_TYPE = 10 THEN 'MTP Budget'
+      WHEN PERIOD_TYPE = 10 THEN 'MBP Budget'
       END AS PERIOD_NAME
       FROM BG_T_BUDGET_ADJUST
       WHERE BUDGET_YEAR = @YEAR
@@ -14902,7 +14902,7 @@
       WHEN 1 THEN 'Original Budget'
       WHEN 2 THEN 'Estimate Budget'
       WHEN 3 THEN 'Forecast Budget'
-      WHEN 10 THEN 'MTP Budget'
+      WHEN 10 THEN 'MBP Budget'
       END  AS PERIOD_TYPE_NAME,
       CASE TL.PERSON_IN_CHARGE_NO
       WHEN '0000' THEN 'ALL'
@@ -14946,7 +14946,7 @@
       WHEN 1 THEN 'Original Budget'
       WHEN 2 THEN 'Estimate Budget'
       WHEN 3 THEN 'Forecast Budget'
-      WHEN 10 THEN 'MTP Budget'
+      WHEN 10 THEN 'MBP Budget'
       END  AS PERIOD_TYPE_NAME,
       CASE TL.PERSON_IN_CHARGE_NO
       WHEN '0000' THEN 'ALL'
@@ -14976,7 +14976,7 @@
       WHEN 1 THEN 'Original Budget'
       WHEN 2 THEN 'Estimate Budget'
       WHEN 3 THEN 'Forecast Budget'
-      WHEN 10 THEN 'MTP Budget'
+      WHEN 10 THEN 'MBP Budget'
       END AS PERIOD_NAME,
       AO.ACCOUNT_NO, AC.ACCOUNT_NAME,
       AO.PERSON_IN_CHARGE_NO, PIC.PERSON_IN_CHARGE_NAME,
