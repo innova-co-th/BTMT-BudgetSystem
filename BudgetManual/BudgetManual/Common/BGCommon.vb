@@ -454,7 +454,7 @@ Public Class BGCommon
             MergeColumnsCells(xSt, arrColRowList(i), colStartIndex - 1, colStartIndex)
         Next
 
-        xSt.Cells(colStartIndex - 1, intMTPStart) = "MTP Budget"
+        xSt.Cells(colStartIndex - 1, intMTPStart) = "MBP Budget"
         xSt.Range(xSt.Cells(colStartIndex - 1, intMTPStart), xSt.Cells(colStartIndex - 1, intMTPEnd)).MergeCells = True
         xSt.Range(xSt.Cells(colStartIndex - 1, intMTPStart), xSt.Cells(colStartIndex - 1, intMTPEnd)).Font.Bold = True
         xSt.Range(xSt.Cells(colStartIndex - 1, intMTPStart), xSt.Cells(colStartIndex - 1, intMTPEnd)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter

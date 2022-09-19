@@ -258,7 +258,7 @@ Public Class frmBG0410
                     Exit Select
                 Case CType(enumPeriodType.MBPBudget, Integer)
                     clsBG0400.ReportName = "RPT001-5.rpt"
-                    strPeriod = "MTP"
+                    strPeriod = "MBP"
                     Exit Select
             End Select
 
@@ -386,7 +386,7 @@ Public Class frmBG0410
                     Case CType(enumPeriodType.ForecastBudget, Integer)
                         strPeriod = "Forecast"
                     Case CType(enumPeriodType.MBPBudget, Integer)
-                        strPeriod = "MTP"
+                        strPeriod = "MBP"
                 End Select
 
                 m_Report.SetParameterValue("PERSON_IN_CHARGE_NM", Me.cboUserPIC.Text.ToString)
@@ -1057,7 +1057,8 @@ Public Class frmBG0410
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "PrevRRT2"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 1)
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 1)
+        dRow("Column_Title") = "MBP" & intYear - 0 & " Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1067,12 +1068,14 @@ Public Class frmBG0410
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "RRT2"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 2)
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 2)
+        dRow("Column_Title") = "MBP" & (intYear + 1) & " Year'" & CStr(intYear + 2)
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "PrevRRT3"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
+        dRow("Column_Title") = "MBP" & intYear - 0 & " Year'" & CStr(intYear + 2)
         dtColumns.Rows.Add(dRow)
 
 
@@ -1084,7 +1087,8 @@ Public Class frmBG0410
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "RRT3"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
+        dRow("Column_Title") = "MBP" & (intYear + 1) & " Year'" & CStr(intYear + 3)
         dtColumns.Rows.Add(dRow)
 
         'dRow = dtColumns.NewRow
@@ -1191,7 +1195,7 @@ Public Class frmBG0410
                 SetupForecastColumnsCells(xSt, colStartIndex, bMTPCheck, 1, 2, "Budget Order Number & Budget Name", _
                                         arrCols, 6, 8, 9, 11, 15, 20, 6, 11, 25, 29)
 
-            ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MBP" Then
                 arrCols = New Integer() {3, 4, 5, 6, 7} '// Two Row Merge Col
                 SetupMTPColumnsCells(xSt, colStartIndex, 1, 2, "Budget Order Number & Budget Name", _
                                         arrCols, 8, 11)
@@ -1316,7 +1320,7 @@ Public Class frmBG0410
                 xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).Columns.ColumnWidth = 13
                 xSt.Range(xSt.Cells(2, 21), xSt.Cells(rowMax, 24)).WrapText = True
 
-            ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MBP" Then
 
                 xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).Columns.ColumnWidth = 9
                 xSt.Range(xSt.Cells(2, 4), xSt.Cells(rowMax, 4)).WrapText = True
@@ -1343,7 +1347,7 @@ Public Class frmBG0410
 
 
             '//Insert empty column
-            If strPeriod = "MTP" AndAlso bMTPCheck = True Then
+            If strPeriod = "MBP" AndAlso bMTPCheck = True Then
                 '   SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
             ElseIf bMTPCheck = True Then
                 'SetupMTPEmptyColumn(xSt, colStartIndex, rowMax, colMax, 25, rowMax - 2, 1)
@@ -1396,7 +1400,7 @@ Public Class frmBG0410
                     xSt.Range(xSt.Cells(rowMax - 2, 1), xSt.Cells(rowMax - 2, colMax)).MergeCells = True
                 End If
 
-            ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MBP" Then
 
 
                 xSt.Range(xSt.Cells(colStartIndex, 5), xSt.Cells(rowMax, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
@@ -1480,7 +1484,7 @@ Public Class frmBG0410
                     intImageIndex = 1215
                 End If
 
-            Case "MTP"
+            Case "MBP"
 
                 intUnitPriceStart = 10
                 intUnitPriceEnd = 11
@@ -1511,7 +1515,7 @@ Public Class frmBG0410
             Me.gbPrevYear.Text = "Previous Year"
 
         ElseIf CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.OriginalBudget, Integer) Then
-            Me.gbPrevYear.Text = "MTP"
+            Me.gbPrevYear.Text = "MBP"
 
         End If
 

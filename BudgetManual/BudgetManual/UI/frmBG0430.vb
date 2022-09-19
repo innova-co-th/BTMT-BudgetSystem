@@ -2002,7 +2002,8 @@ Public Class frmBG0430
 
         row = dtColumns.NewRow
         row("Column_Name") = "PrevRRT2"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 1
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 1
+        row("Column_Title") = "MBP" & CInt(strYear) - 0 & " Year'" & CInt(strYear) + 1
         dtColumns.Rows.Add(row)
 
         '0 AS DIFF_YEAR,
@@ -2013,12 +2014,14 @@ Public Class frmBG0430
 
         row = dtColumns.NewRow
         row("Column_Name") = "RRT2"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 2
+        row("Column_Title") = "MBP" & (CInt(strYear) + 1) & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow
         row("Column_Name") = "PrevRRT3"
-        row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
+        'row("Column_Title") = "MTP" & CInt(strYear) - 1 & " Year'" & CInt(strYear) + 2
+        row("Column_Title") = "MBP" & CInt(strYear) - 0 & " Year'" & CInt(strYear) + 2
         dtColumns.Rows.Add(row)
 
         row = dtColumns.NewRow()
@@ -2028,7 +2031,8 @@ Public Class frmBG0430
 
         row = dtColumns.NewRow
         row("Column_Name") = "RRT3"
-        row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
+        'row("Column_Title") = "MTP" & CInt(strYear) & " Year'" & CInt(strYear) + 3
+        row("Column_Title") = "MBP" & (CInt(strYear) + 1) & " Year'" & CInt(strYear) + 3
         dtColumns.Rows.Add(row)
 
         'row = dtColumns.NewRow

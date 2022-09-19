@@ -581,7 +581,7 @@ Public Class frmBG0420
                 End If
                 SetupForecastColumnsCells(xSt, colStartIndex, bMTPCheck, 2, 3, "Person in Charge Section", arrCols, 5, 7, 8, 10, 14, 19, 5, 10, 24, 28)
 
-            ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MBP" Then
 
                 arrCols = New Integer() {1, 4, 5, 6} '// Two Row Merge Col
                 SetupMTPColumnsCells(xSt, colStartIndex, 2, 3, "Person in Charge Section", arrCols, 7, 10)
@@ -712,7 +712,7 @@ Public Class frmBG0420
                 xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 16)).Columns.ColumnWidth = 13
                 xSt.Range(xSt.Cells(2, 12), xSt.Cells(rowMax, 16)).WrapText = True
 
-            ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MBP" Then
 
                 xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 10)).Columns.ColumnWidth = 12
                 xSt.Range(xSt.Cells(2, 7), xSt.Cells(rowMax, 10)).WrapText = True
@@ -756,7 +756,7 @@ Public Class frmBG0420
             xSt.Range(xSt.Cells(intGroup2, 4), xSt.Cells(intGroup2, colMax)).Font.Bold = True
 
             '//Set NumberFormat = "#,##0.00;[Red]-#,##0.00"
-            If strPeriod = "MTP" Then
+            If strPeriod = "MBP" Then
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, 5)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
                 xSt.Range(xSt.Cells(colStartIndex, 7), xSt.Cells(rowMax - 1, 8)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
                 xSt.Range(xSt.Cells(colStartIndex, 10), xSt.Cells(rowMax - 1, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
@@ -805,7 +805,7 @@ Public Class frmBG0420
                     xSt.Range(xSt.Cells(colStartIndex, 20), xSt.Cells(rowMax - 1, 24)).Borders(Excel.XlBordersIndex.xlInsideVertical).Weight = Excel.XlBorderWeight.xlMedium
                 End If
 
-            ElseIf strPeriod = "MTP" Then
+            ElseIf strPeriod = "MBP" Then
 
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, 5)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
                 xSt.Range(xSt.Cells(colStartIndex, 6), xSt.Cells(rowMax - 1, 6)).Borders(Excel.XlBordersIndex.xlEdgeRight).Weight = Excel.XlBorderWeight.xlMedium
@@ -870,7 +870,7 @@ Public Class frmBG0420
 
                 intImageIndex = 1160
 
-            Case "MTP"
+            Case "MBP"
                 intUnitPriceStart = 9
                 intUnitPriceEnd = 10
 
@@ -1376,7 +1376,8 @@ Public Class frmBG0420
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "PrevRRT2"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 1)
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 1)
+        dRow("Column_Title") = "MBP" & intYear - 0 & " Year'" & CStr(intYear + 1)
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1386,12 +1387,14 @@ Public Class frmBG0420
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "RRT2"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 2)
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 2)
+        dRow("Column_Title") = "MBP" & (intYear + 1) & " Year'" & CStr(intYear + 2)
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "PrevRRT3"
-        dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
+        'dRow("Column_Title") = "MTP" & intYear - 1 & " Year'" & CStr(intYear + 2)
+        dRow("Column_Title") = "MBP" & intYear - 0 & " Year'" & CStr(intYear + 2)
         dtColumns.Rows.Add(dRow)
 
         dRow = dtColumns.NewRow
@@ -1402,7 +1405,8 @@ Public Class frmBG0420
 
         dRow = dtColumns.NewRow
         dRow("Column_Name") = "RRT3"
-        dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
+        'dRow("Column_Title") = "MTP" & intYear & " Year'" & CStr(intYear + 3)
+        dRow("Column_Title") = "MTP" & (intYear + 1) & " Year'" & CStr(intYear + 3)
         dtColumns.Rows.Add(dRow)
 
         'dRow = dtColumns.NewRow
