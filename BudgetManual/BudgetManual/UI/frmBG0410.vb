@@ -324,6 +324,17 @@ Public Class frmBG0410
             PrintDialog1.AllowSomePages = True
             '     printDialog1.ShowDialog()
 
+            '//Change BugetYear Parameter for MBP
+            Dim intNumYear As Integer
+            intNumYear = CInt(Me.numYear.Value.ToString)
+            Dim strNumYear As String
+
+            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
+                intNumYear = intNumYear - 1
+            End If
+            strNumYear = intNumYear.ToString
+            '//Change BugetYear Parameter for MBP
+
             If PrintDialog1.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
 
                 Me.Cursor = Cursors.WaitCursor
@@ -353,7 +364,7 @@ Public Class frmBG0410
 
                 m_Report.Load(reportPath)
 
-                myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
+                myClsBG0410BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
                 myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
                 myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
                 myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
@@ -413,7 +424,8 @@ Public Class frmBG0410
                 End Select
 
                 m_Report.SetParameterValue("PERSON_IN_CHARGE_NM", Me.cboUserPIC.Text.ToString)
-                m_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
+                'm_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
+                m_Report.SetParameterValue("BUDGET_YEAR", strNumYear)
                 m_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString.Substring(2, 2))
                 m_Report.SetParameterValue("PERIOD", strPeriod)
                 m_Report.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString)
@@ -453,9 +465,20 @@ Public Class frmBG0410
 
         Me.Cursor = Cursors.WaitCursor
 
+        '//Change BugetYear Parameter for MBP
+        Dim intNumYear As Integer
+        intNumYear = CInt(Me.numYear.Value.ToString)
+        Dim strNumYear As String
+
+        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
+            intNumYear = intNumYear - 1
+        End If
+        strNumYear = intNumYear.ToString
+        '//Change BugetYear Parameter for MBP
+
         '//Get Export Data
         Dim dsData As DataSet
-        myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
+        myClsBG0410BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
         myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
         myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
         myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
@@ -547,7 +570,8 @@ Public Class frmBG0410
 
             Case CType(enumPeriodType.MBPBudget, Integer) '//MTP
 
-                InsertMTPColumnDataNew(dtColumns, strYear)
+                'InsertMTPColumnDataNew(dtColumns, strYear)
+                InsertMTPColumnDataNew(dtColumns, strNumYear)
 
                 '//Create group data
                 Dim dsGroups As DataSet = SetupGroupbyData(dsData, "PERSON_IN_CHARGE_NO", "PERSON_IN_CHARGE_NAME", 11, True)
