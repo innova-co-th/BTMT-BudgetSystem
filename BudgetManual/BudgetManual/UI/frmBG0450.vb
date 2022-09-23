@@ -114,7 +114,19 @@ Public Class frmBG0450
 
             Cursor = Cursors.WaitCursor
 
-            myClsBG0450BL.BudgetYear = CStr(Me.numYear.Value)
+            '//Change BugetYear Parameter for MBP
+            Dim intNumYear As Integer
+            intNumYear = CInt(Me.numYear.Value.ToString)
+            Dim strNumYear As String
+
+            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
+                intNumYear = intNumYear - 1
+            End If
+            strNumYear = intNumYear.ToString
+            '//Change BugetYear Parameter for MBP
+
+
+            myClsBG0450BL.BudgetYear = strNumYear 'CStr(Me.numYear.Value)
             myClsBG0450BL.PeriodType = CStr(Me.cboPeriodType.SelectedValue)
             myClsBG0450BL.ProjectNo = Me.numProjectNo.Value.ToString
             myClsBG0450BL.UserLevelId = p_intUserLevelId
@@ -167,7 +179,7 @@ Public Class frmBG0450
                         clsBG0400 = New frmBG0400()
                         clsBG0400.MdiParent = p_frmBG0010
                         clsBG0400.ReportName = strReportName
-                        clsBG0400.BudgetYear = Me.numYear.Value.ToString()
+                        clsBG0400.BudgetYear = strNumYear 'Me.numYear.Value.ToString()
                         'clsBG0400.ParamPersonInCharge = False
                         clsBG0400.ReportType = "SummaryByApplicant"
                         clsBG0400.BudgetStatus = myClsBG0450BL.BudgetStatus
@@ -251,7 +263,8 @@ Public Class frmBG0450
 
                             rpt1.SetDataSource(ds)
 
-                            rpt1.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString())
+                            'rpt1.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString())
+                            rpt1.SetParameterValue("BUDGET_YEAR", strNumYear)
                             rpt1.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString().Substring(2, 2))
                             rpt1.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString())
 
@@ -2731,10 +2744,22 @@ Public Class frmBG0450
 
             End If
 
+            '//Change BugetYear Parameter for MBP
+            Dim intNumYear As Integer
+            intNumYear = CInt(Me.numYear.Value.ToString)
+            Dim strNumYear As String
+
+            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
+                intNumYear = intNumYear - 1
+            End If
+            strNumYear = intNumYear.ToString
+            '//Change BugetYear Parameter for MBP
+
+
             Dim strProjectNo = Me.numProjectNo.Value.ToString
             If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
 
-                myClsBG0310BL.BudgetYear = Me.numYear.Value.ToString
+                myClsBG0310BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
                 myClsBG0310BL.PeriodType = Me.cboPeriodType.SelectedValue.ToString
                 myClsBG0310BL.ProjectNo = strProjectNo
                 myClsBG0310BL.BudgetType = BGConstant.P_BUDGET_TYPE_EXPENSE
@@ -2873,7 +2898,19 @@ Public Class frmBG0450
 
             Cursor = Cursors.WaitCursor
 
-            myClsBG0450BL.BudgetYear = CStr(Me.numYear.Value)
+
+            '//Change BugetYear Parameter for MBP
+            Dim intNumYear As Integer
+            intNumYear = CInt(Me.numYear.Value.ToString)
+            Dim strNumYear As String
+
+            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
+                intNumYear = intNumYear - 1
+            End If
+            strNumYear = intNumYear.ToString
+            '//Change BugetYear Parameter for MBP
+
+            myClsBG0450BL.BudgetYear = strNumYear 'CStr(Me.numYear.Value)
             myClsBG0450BL.PeriodType = CStr(Me.cboPeriodType.SelectedValue)
             myClsBG0450BL.ProjectNo = Me.numProjectNo.Value.ToString
             myClsBG0450BL.UserLevelId = p_intUserLevelId
@@ -2932,7 +2969,8 @@ Public Class frmBG0450
                             End If
 
                         Case enumPeriodType.MBPBudget
-                            InsertMTPColumnData(dtColumns, strYear)
+                            'InsertMTPColumnData(dtColumns, strYear)
+                            InsertMTPColumnData(dtColumns, strNumYear)
                             dsGroups = SetupMTPGroupbyData(ds, "COST", "COST", 8)
                             GeneratMTPExcel(dsGroups, dtColumns)
 
