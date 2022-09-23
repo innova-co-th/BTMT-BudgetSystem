@@ -1120,6 +1120,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C532377020B7158682122BE40218D33A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B24161E742A625C30636E59B1CCD7927"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1163,6 +1169,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_961A40D9455AA56A7038D10D90AE2B17"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8AF7678E8E25D14059E34B9320DB7A6F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1253,18 +1265,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_CA323EF3AE9C83079569FABDEA788B47"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8AF7678E8E25D14059E34B9320DB7A6F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C532377020B7158682122BE40218D33A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -3024,14 +3024,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:BTMT Budgeting System"
-        "ProductCode" = "8:{A5FA930A-B4F7-4802-8665-171F01D2EB81}"
-        "PackageCode" = "8:{B347CF0B-D77F-4ADD-8A92-7E0AA0670EA4}"
+        "ProductCode" = "8:{62C39889-E893-4281-A5FB-5A0B73AB6D84}"
+        "PackageCode" = "8:{A6E2C19F-61F6-4F67-8FD9-DFD580F930A6}"
         "UpgradeCode" = "8:{94F5380C-52F0-4AEC-8672-A75BD135516D}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.7"
+        "ProductVersion" = "8:1.2.8"
         "Manufacturer" = "8:INNOVA Software"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
