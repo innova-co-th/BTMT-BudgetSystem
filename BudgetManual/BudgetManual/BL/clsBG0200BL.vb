@@ -2998,31 +2998,31 @@ Public Class clsBG0200BL
         '// Create Subject & Status
         If Me.OperationCd = enumOperationCd.SubmitBudget Then
             strSubject = "[Budget System] Submit " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been submitted."
+            strStatus = " has been submitted."
 
         ElseIf Me.OperationCd = enumOperationCd.RejectBudget1 Then
             strSubject = "[Budget System] Reject " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been rejected."
+            strStatus = " has been rejected."
 
         ElseIf Me.OperationCd = enumOperationCd.ApproveBudget Then
             strSubject = "[Budget System] Approve " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been approved."
+            strStatus = " has been approved."
 
         ElseIf Me.OperationCd = enumOperationCd.RejectBudget2 Then
             strSubject = "[Budget System] Reject " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been rejected."
+            strStatus = " has been rejected."
 
         ElseIf Me.OperationCd = enumOperationCd.AdjustBudget Then
             strSubject = "[Budget System] Adjust " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been adjusted."
+            strStatus = " has been adjusted."
 
         ElseIf Me.OperationCd = enumOperationCd.Authorize1 Then
             strSubject = "[Budget System] Authorize (AUTH1) " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been authorized (AUTH1)."
+            strStatus = " has been authorized (AUTH1)."
 
         ElseIf Me.OperationCd = enumOperationCd.Authorize2 Then
             strSubject = "[Budget System] Authorize (AUTH2) " & Me.BudgetYear & " " & strPeriodType & " " & Me.ProjectNo
-            strStatus = " was been authorized (AUTH2)."
+            strStatus = " has been authorized (AUTH2)."
         End If
 
         '// Create send message
