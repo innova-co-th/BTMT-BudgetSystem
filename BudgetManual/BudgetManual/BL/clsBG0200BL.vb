@@ -2984,7 +2984,7 @@ Public Class clsBG0200BL
             strPeriodType = "Forecast Budget"
 
         ElseIf Me.PeriodType = CStr(enumPeriodType.MBPBudget) Then
-            strPeriodType = "MTP Budget"
+            strPeriodType = "MBP Budget" '"MTP Budget"
 
         End If
 

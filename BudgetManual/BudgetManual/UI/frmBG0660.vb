@@ -508,7 +508,8 @@ Public Class frmBG0660
                     Case "3"
                         periodType = "Forecast Budget"
                     Case "10"
-                        periodType = "MTP Budget"
+                        'periodType = "MTP Budget"
+                        periodType = "MBP Budget"
                 End Select
 
                 If myClsBG0660BL.saveImportData(tempDT) Then

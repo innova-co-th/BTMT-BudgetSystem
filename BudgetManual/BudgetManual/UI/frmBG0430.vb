@@ -2729,7 +2729,7 @@ Public Class frmBG0430
             'ws.Range(ws.Cells(colStartIndex - 1, 15), ws.Cells(colStartIndex - 1, 20)).Font.Bold = True
             'ws.Range(ws.Cells(colStartIndex - 1, 15), ws.Cells(colStartIndex - 1, 20)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
 
-            ws.Cells(colStartIndex - 1, 11) = "MTP Budget"
+            ws.Cells(colStartIndex - 1, 11) = "MBP Budget" '"MTP Budget"
             ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 11)).MergeCells = True
             ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 11)).Font.Bold = True
             ws.Range(ws.Cells(colStartIndex - 1, 8), ws.Cells(colStartIndex - 1, 11)).HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
