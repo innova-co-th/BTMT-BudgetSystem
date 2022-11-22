@@ -326,3 +326,7 @@ C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetManual.v
 C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.TrustInfo.xml
 C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.exe.manifest
 C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.application
+D:\Work\BTMT\BTMT-BudgetSystem\BudgetManual\BudgetManual\bin\Debug\BudgetingSystem.exe.config
+D:\Work\BTMT\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.exe
+D:\Work\BTMT\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.xml
+D:\Work\BTMT\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.pdb
