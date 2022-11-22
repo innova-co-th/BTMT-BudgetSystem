@@ -122,21 +122,10 @@ Public Class frmBG0410
 
             End If
 
-            '//Change BugetYear Parameter for MBP
-            Dim intNumYear As Integer
-            intNumYear = CInt(Me.numYear.Value.ToString)
-            Dim strNumYear As String
-
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-                intNumYear = intNumYear - 1
-            End If
-            strNumYear = intNumYear.ToString
-            '//Change BugetYear Parameter for MBP
-
             Dim strProjectNo = Me.numProjectNo.Value.ToString
             If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
 
-                myClsBG0310BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+                myClsBG0310BL.BudgetYear = Me.numYear.Value.ToString
                 myClsBG0310BL.PeriodType = Me.cboPeriodType.SelectedValue.ToString
                 myClsBG0310BL.ProjectNo = strProjectNo
                 myClsBG0310BL.BudgetType = BGConstant.P_BUDGET_TYPE_EXPENSE
@@ -209,17 +198,7 @@ Public Class frmBG0410
             'End If
 
 
-            '//Change BugetYear Parameter for MBP
-            Dim intNumYear As Integer
-            intNumYear = CInt(Me.numYear.Value.ToString)
-            Dim strNumYear As String
-
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-                intNumYear = intNumYear - 1
-            End If
-            strNumYear = intNumYear.ToString
-            '//Change BugetYear Parameter for MBP
-
+            
             Me.Cursor = Cursors.WaitCursor
 
             If clsBG0400 IsNot Nothing Then
@@ -227,7 +206,7 @@ Public Class frmBG0410
                 clsBG0400.Dispose()
             End If
             clsBG0400 = New frmBG0400()
-            myClsBG0410BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+            myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
             myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
             myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
             myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
@@ -324,16 +303,6 @@ Public Class frmBG0410
             PrintDialog1.AllowSomePages = True
             '     printDialog1.ShowDialog()
 
-            '//Change BugetYear Parameter for MBP
-            Dim intNumYear As Integer
-            intNumYear = CInt(Me.numYear.Value.ToString)
-            Dim strNumYear As String
-
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-                intNumYear = intNumYear - 1
-            End If
-            strNumYear = intNumYear.ToString
-            '//Change BugetYear Parameter for MBP
 
             If PrintDialog1.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
 
@@ -364,7 +333,7 @@ Public Class frmBG0410
 
                 m_Report.Load(reportPath)
 
-                myClsBG0410BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+                myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
                 myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
                 myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
                 myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked
@@ -465,20 +434,10 @@ Public Class frmBG0410
 
         Me.Cursor = Cursors.WaitCursor
 
-        '//Change BugetYear Parameter for MBP
-        Dim intNumYear As Integer
-        intNumYear = CInt(Me.numYear.Value.ToString)
-        Dim strNumYear As String
-
-        If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-            intNumYear = intNumYear - 1
-        End If
-        strNumYear = intNumYear.ToString
-        '//Change BugetYear Parameter for MBP
 
         '//Get Export Data
         Dim dsData As DataSet
-        myClsBG0410BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+        myClsBG0410BL.BudgetYear = Me.numYear.Value.ToString
         myClsBG0410BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
         myClsBG0410BL.PIC = Me.cboUserPIC.SelectedValue.ToString
         myClsBG0410BL.MTPChecked = Me.chkShowMTP.Checked

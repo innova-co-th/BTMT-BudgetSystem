@@ -131,18 +131,8 @@ Public Class frmBG0430
 
             Cursor = Cursors.WaitCursor
 
-            '//Change BugetYear Parameter for MBP
-            Dim intNumYear As Integer
-            intNumYear = CInt(Me.numYear.Value.ToString)
-            Dim strNumYear As String
 
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-                intNumYear = intNumYear - 1
-            End If
-            strNumYear = intNumYear.ToString
-            '//Change BugetYear Parameter for MBP
-
-            myClsBG0430BL.BudgetYear = strNumYear 'CStr(Me.numYear.Value)
+            myClsBG0430BL.BudgetYear = CStr(Me.numYear.Value)
             myClsBG0430BL.PeriodType = CStr(Me.cboPeriodType.SelectedValue)
             myClsBG0430BL.AccountNo = Me.cboAccountNo.SelectedItem.ToString()
             myClsBG0430BL.ProjectNo = Me.numProjectNo.Value.ToString
@@ -3049,21 +3039,11 @@ Public Class frmBG0430
 
             End If
 
-            '//Change BugetYear Parameter for MBP
-            Dim intNumYear As Integer
-            intNumYear = CInt(Me.numYear.Value.ToString)
-            Dim strNumYear As String
-
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-                intNumYear = intNumYear - 1
-            End If
-            strNumYear = intNumYear.ToString
-            '//Change BugetYear Parameter for MBP
 
             Dim strProjectNo = Me.numProjectNo.Value.ToString
             If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
 
-                myClsBG0310BL.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+                myClsBG0310BL.BudgetYear = Me.numYear.Value.ToString
                 myClsBG0310BL.PeriodType = Me.cboPeriodType.SelectedValue.ToString
                 myClsBG0310BL.ProjectNo = strProjectNo
                 myClsBG0310BL.BudgetType = BGConstant.P_BUDGET_TYPE_EXPENSE
@@ -3204,18 +3184,8 @@ Public Class frmBG0430
             Cursor = Cursors.WaitCursor
 
 
-            '//Change BugetYear Parameter for MBP
-            Dim intNumYear As Integer
-            intNumYear = CInt(Me.numYear.Value.ToString)
-            Dim strNumYear As String
 
-            If CType(cboPeriodType.SelectedValue, Integer) = CType(enumPeriodType.MBPBudget, Integer) Then
-                intNumYear = intNumYear - 1
-            End If
-            strNumYear = intNumYear.ToString
-            '//Change BugetYear Parameter for MBP
-
-            myClsBG0430BL.BudgetYear = strNumYear 'CStr(Me.numYear.Value)
+            myClsBG0430BL.BudgetYear = CStr(Me.numYear.Value)
             myClsBG0430BL.PeriodType = CStr(Me.cboPeriodType.SelectedValue)
             myClsBG0430BL.AccountNo = Me.cboAccountNo.SelectedItem.ToString()
             myClsBG0430BL.ProjectNo = Me.numProjectNo.Value.ToString
