@@ -110,6 +110,7 @@ Partial Class frmBG0000
         'lblUsername
         '
         Me.lblUsername.AutoSize = True
+        Me.lblUsername.BackColor = System.Drawing.Color.Red
         Me.lblUsername.Location = New System.Drawing.Point(156, 17)
         Me.lblUsername.Name = "lblUsername"
         Me.lblUsername.Size = New System.Drawing.Size(46, 13)
