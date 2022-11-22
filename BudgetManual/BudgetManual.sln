@@ -6,18 +6,6 @@ EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BudgetManual Setup", "BudgetManual Setup\BudgetManual Setup.vdproj", "{0A51A6DE-6634-43CB-B047-3A5DC8920E92}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs.innova.co.th:8080/tfs/japanese
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = BudgetManual\u0020Setup\\BudgetManual\u0020Setup.vdproj
-		SccProjectName1 = BudgetManual\u0020Setup
-		SccLocalPath1 = BudgetManual\u0020Setup
-		SccProjectUniqueName2 = BudgetManual\\BudgetManual.vbproj
-		SccProjectName2 = BudgetManual
-		SccLocalPath2 = BudgetManual
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86

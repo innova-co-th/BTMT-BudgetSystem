@@ -162,3 +162,7 @@ C:\Projects\BTMT\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.application
 C:\Projects\BTMT\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.exe
 C:\Projects\BTMT\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.xml
 C:\Projects\BTMT\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.pdb
+C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\bin\Debug\BudgetingSystem.exe.config
+C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.exe
+C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.xml
+C:\Projects\BTMT-BudgetSystem\BudgetManual\BudgetManual\obj\Debug\BudgetingSystem.pdb
