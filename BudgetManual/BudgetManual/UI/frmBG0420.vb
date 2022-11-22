@@ -92,7 +92,6 @@ Public Class frmBG0420
 
             End If
 
-
             Dim strProjectNo = Me.numProjectNo.Value.ToString
             If Not strProjectNo Is Nothing And strProjectNo <> String.Empty And strProjectNo <> "System.Data.DataRowView" Then
 
@@ -111,7 +110,6 @@ Public Class frmBG0420
             Else
                 Me.cboRevNo.DataSource = Nothing
             End If
-
         End If
     End Sub
 
@@ -165,7 +163,6 @@ Public Class frmBG0420
                 Exit Sub
             End If
 
-
             PrintDialog1.AllowSomePages = True
             '     printDialog1.ShowDialog()
 
@@ -205,7 +202,6 @@ Public Class frmBG0420
                 End Select
 
                 m_Report.Load(reportPath)
-
 
                 myClsBG0420BL.BudgetYear = Me.numYear.Value.ToString
                 myClsBG0420BL.PeriodType = (Me.cboPeriodType.SelectedValue).ToString
@@ -322,7 +318,6 @@ Public Class frmBG0420
 
             myClsBG0420BL.GetBudgetStatus()
 
-
             Dim strPeriod As String = String.Empty
             Select Case CInt(Me.cboPeriodType.SelectedValue)
                 Case CType(enumPeriodType.OriginalBudget, Integer)
@@ -348,7 +343,7 @@ Public Class frmBG0420
             End Select
 
             'clsBG0400.ConfigureCrystalReports()
-            clsBG0400.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+            clsBG0400.BudgetYear = Me.numYear.Value.ToString
             clsBG0400.Period = strPeriod
             clsBG0400.ReportType = "SummaryByPersonInCharge"
             clsBG0400.BudgetStatus = myClsBG0420BL.BudgetStatus
@@ -380,9 +375,7 @@ Public Class frmBG0420
             Me.chkHideEstimate.Enabled = False
         End If
 
-
         LoadRevNo()
-
     End Sub
 
     Private Sub cmdExcel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExcel.Click
@@ -393,10 +386,7 @@ Public Class frmBG0420
             Exit Sub
         End If
 
-
-
         Me.Cursor = Cursors.WaitCursor
-
 
         '//Get Export Data
         Dim dsData As DataSet
@@ -540,7 +530,6 @@ Public Class frmBG0420
             Next
         End If
 
-
         '//Set Style Value < 0 please fill color "Red"
         Dim style As Excel.Style = excelApp.ActiveWorkbook.Styles.Add("NewStyle")
         ''style.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red)
@@ -558,7 +547,6 @@ Public Class frmBG0420
             Else
                 xSt.Name = dsData.Tables(intSheetCount).TableName
             End If
-
 
             '//Setup DataColumn
             For i As Integer = 0 To dtColumns.Rows.Count - 1
@@ -622,7 +610,6 @@ Public Class frmBG0420
                         excelApp.Cells(rowIndex + rowStartIndex, colIndex + 1) = row(col.ColumnName)
                         xSt.Range(excelApp.Cells(rowIndex + rowStartIndex, colIndex + 1), excelApp.Cells(rowIndex + rowStartIndex, colIndex + 1)).NumberFormat = "#,##0.00"
 
-
                     Else
                         excelApp.Cells(rowIndex + rowStartIndex, colIndex + 1) = row(col.ColumnName).ToString()
                     End If
@@ -681,7 +668,6 @@ Public Class frmBG0420
                 xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).Font.Bold = True
                 xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(rowStartIndex + intGroupSecondIndex, 1)).VerticalAlignment = Excel.XlVAlign.xlVAlignTop
             End If
-
 
             'xSt.Range(xSt.Cells(intGroup2, 1), xSt.Cells(intGroup2, colMax)).Font.Bold = True
 
@@ -768,7 +754,6 @@ Public Class frmBG0420
             Else
                 xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, colMax)).NumberFormat = "#,##0.00;[Red]-#,##0.00"
             End If
-
 
             '//Set Frame All
             xSt.Range(xSt.Cells(colStartIndex, 4), xSt.Cells(rowMax - 1, colMax)).Borders.LineStyle = 1
