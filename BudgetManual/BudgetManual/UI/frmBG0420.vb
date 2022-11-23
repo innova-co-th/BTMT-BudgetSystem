@@ -248,8 +248,7 @@ Public Class frmBG0420
                 End If
 
                 m_Report.SetParameterValue("PERIOD", strPeriod)
-                'm_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
-                m_Report.SetParameterValue("BUDGET_YEAR", strNumYear)
+                m_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
                 m_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString.Substring(2, 2))
                 m_Report.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString)
 
@@ -489,8 +488,7 @@ Public Class frmBG0420
                             intGroupFirstIndex, intGroupSecondIndex, strPeriod)
 
             Case CType(enumPeriodType.MBPBudget, Integer)  '//MTP
-                'InsertMTPBudgetColumnData(dtColumns, strYear)
-                InsertMTPBudgetColumnData(dtColumns, strNumYear)
+                InsertMTPBudgetColumnData(dtColumns, strYear)
 
                 '//Create group data
                 Dim intGroupFirstIndex As Integer = 0

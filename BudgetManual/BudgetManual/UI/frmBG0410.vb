@@ -266,7 +266,7 @@ Public Class frmBG0410
 
             'clsBG0400.ConfigureCrystalReports()
             clsBG0400.PIC = Me.cboUserPIC.Text.ToString
-            clsBG0400.BudgetYear = strNumYear 'Me.numYear.Value.ToString
+            clsBG0400.BudgetYear = Me.numYear.Value.ToString
             'clsBG0400.ParamPersonInCharge = True
             clsBG0400.Period = strPeriod
             clsBG0400.ReportType = "DetailByPersonInCharge"
@@ -393,8 +393,7 @@ Public Class frmBG0410
                 End Select
 
                 m_Report.SetParameterValue("PERSON_IN_CHARGE_NM", Me.cboUserPIC.Text.ToString)
-                'm_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
-                m_Report.SetParameterValue("BUDGET_YEAR", strNumYear)
+                m_Report.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString)
                 m_Report.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString.Substring(2, 2))
                 m_Report.SetParameterValue("PERIOD", strPeriod)
                 m_Report.SetParameterValue("PROJECT_NO", Me.numProjectNo.Value.ToString)
@@ -529,8 +528,7 @@ Public Class frmBG0410
 
             Case CType(enumPeriodType.MBPBudget, Integer) '//MTP
 
-                'InsertMTPColumnDataNew(dtColumns, strYear)
-                InsertMTPColumnDataNew(dtColumns, strNumYear)
+                InsertMTPColumnDataNew(dtColumns, strYear)
 
                 '//Create group data
                 Dim dsGroups As DataSet = SetupGroupbyData(dsData, "PERSON_IN_CHARGE_NO", "PERSON_IN_CHARGE_NAME", 11, True)

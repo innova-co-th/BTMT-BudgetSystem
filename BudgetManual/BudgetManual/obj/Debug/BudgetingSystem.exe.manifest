@@ -63,14 +63,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BudgetingSystem.exe" size="15485440">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BudgetingSystem.exe" size="15484416">
       <assemblyIdentity name="BudgetingSystem" version="1.2.0.9" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>f51DNYOQh4dFH7Bgbf3sy7uY+TQ=</dsig:DigestValue>
+        <dsig:DigestValue>Jp9H+K4tQuOWwd2m/HS/iONAd3I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
