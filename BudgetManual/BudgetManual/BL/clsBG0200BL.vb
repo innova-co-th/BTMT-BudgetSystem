@@ -1936,7 +1936,7 @@ Public Class clsBG0200BL
     Public Function SaveRejectBudgetData4Tran(ByVal pConn As SqlConnection, _
                                ByVal pTrans As SqlTransaction) As Boolean
         Dim clsBG_T_BUDGET_HEADER As New BG_T_BUDGET_HEADER
-        Dim rtn As Boolean
+        Dim rtn As Boolean = False
 
         '// Update Budget Data Header
         '// Set Parameters

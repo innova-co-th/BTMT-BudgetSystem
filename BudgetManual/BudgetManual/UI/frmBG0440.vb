@@ -190,7 +190,7 @@ Public Class frmBG0440
                         clsBG0400 = New frmBG0400()
                         clsBG0400.MdiParent = p_frmBG0010
                         clsBG0400.ReportName = strReportName
-                        clsBG0400.BudgetYear = strNumYear 'Me.numYear.Value.ToString()
+                        clsBG0400.BudgetYear = Me.numYear.Value.ToString()
                         clsBG0400.ReportType = "SummaryByAccountNoReport"
                         clsBG0400.BudgetStatus = myClsBG0440BL.BudgetStatus
                         clsBG0400.ProjectNo = Me.numProjectNo.Value.ToString
@@ -253,8 +253,7 @@ Public Class frmBG0440
 
                             rpt1.SetDataSource(ds)
 
-                            'rpt1.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString())
-                            rpt1.SetParameterValue("BUDGET_YEAR", strNumYear)
+                            rpt1.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString())
                             rpt1.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString().Substring(2, 2))
                             rpt1.SetParameterValue("FC_COST", enumCost.FC)
                             rpt1.SetParameterValue("ADMIN_COST", enumCost.ADMIN)
@@ -4354,8 +4353,7 @@ Public Class frmBG0440
 
                         Case enumPeriodType.MBPBudget
                             '//Insert Columndata
-                            'InsertMTPColumnData(dtColumns, strYear)
-                            InsertMTPColumnData(dtColumns, strNumYear)
+                            InsertMTPColumnData(dtColumns, strYear)
                             '//DataSet GroupBy (Estimate)
                             dsGroups = SetupMTPGroupbyData(ds, "EXPENSE_TYPE", "EXPENSE_TYPE", 7)
                             '//Generate excel

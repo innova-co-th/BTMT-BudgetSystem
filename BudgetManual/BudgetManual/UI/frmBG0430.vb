@@ -194,7 +194,7 @@ Public Class frmBG0430
                         clsBG0400.MdiParent = p_frmBG0010
                         clsBG0400.ReportName = strReportName
                         clsBG0400.AccountNo = Me.cboAccountNo.SelectedItem.ToString()
-                        clsBG0400.BudgetYear = strNumYear 'Me.numYear.Value.ToString()
+                        clsBG0400.BudgetYear = Me.numYear.Value.ToString()
                         clsBG0400.ProjectNo = Me.numProjectNo.Value.ToString
 
                         'clsBG0400.ParamPersonInCharge = False
@@ -283,8 +283,7 @@ Public Class frmBG0430
                             rpt1.SetDataSource(ds)
 
                             rpt1.SetParameterValue("ACCOUNT_NO", Me.cboAccountNo.SelectedItem.ToString())
-                            'rpt1.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString())
-                            rpt1.SetParameterValue("BUDGET_YEAR", strNumYear)
+                            rpt1.SetParameterValue("BUDGET_YEAR", Me.numYear.Value.ToString())
                             rpt1.SetParameterValue("HALF_BUDGET_YEAR", Me.numYear.Value.ToString().Substring(2, 2))
                             rpt1.SetParameterValue("FC_COST", enumCost.FC)
                             rpt1.SetParameterValue("ADMIN_COST", enumCost.ADMIN)
@@ -3260,8 +3259,7 @@ Public Class frmBG0430
                                 GeneratForecastExcel(dsGroups, dtColumns, True)
                             End If
                         Case enumPeriodType.MBPBudget
-                            'InsertForecastMTPColumnDataNew(dtColumns, strYear)
-                            InsertForecastMTPColumnDataNew(dtColumns, strNumYear)
+                            InsertForecastMTPColumnDataNew(dtColumns, strYear)
                             dsGroups = SetupForecastGroupbyData(ds, "ACCOUNT_NO", "ACCOUNT_NAME", 37, True)
                             GeneratMTPExcel(dsGroups, dtColumns, True)
 

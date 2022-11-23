@@ -3601,10 +3601,10 @@ Public Class frmBG0200
     End Sub
 
     Private Sub CalcMTPBudgetNew(ByVal intRow As Integer)
-        Dim dblForecastYear As Double
+        Dim dblForecastYear As Double = 0
         Dim strRRT(5) As String
-        Dim intRRT As Integer
-        Dim strOrderNo As String
+        Dim intRRT As Integer = 0
+        Dim strOrderNo As String = ""
 
         Try
             Debug.Print(Now.ToString & ": Begin CalcMTPBudget")
@@ -7196,7 +7196,7 @@ Public Class frmBG0200
             Debug.Print(Now.ToString() & ": Begin HighlightWorkingBGAndComment")
             'Dim dt As DataTable = Nothing
             Dim dtComment As DataTable = GetDtComment()
-            Dim strOrderNo As String
+            Dim strOrderNo As String = ""
             Dim i As Integer = 0
             '' // Hightlight Comment
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then '// Original Budget
