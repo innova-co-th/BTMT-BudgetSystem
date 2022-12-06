@@ -12,5 +12,6 @@
     </BootstrapperUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ReferencePath>C:\Program Files (x86)\Business Objects\Common\2.8\managed\</ReferencePath>
   </PropertyGroup>
 </Project>

@@ -44,7 +44,7 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="mscorcfg" version="3.5.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="Microsoft.VisualStudio.Debugger.Interop" version="8.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -70,7 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>z4u7F7pETKVAwGYtvcEP75Ygj6k=</dsig:DigestValue>
+        <dsig:DigestValue>AV2JnRfY8vbHB/dOis9QuRmKWwQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -135,24 +135,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32616">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32392">
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>H7EjqMV64UmZKI2srOm8FbwZoQk=</dsig:DigestValue>
+        <dsig:DigestValue>ktNm3hC1M2WpE4GIHeFQW655yXk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BudgetingSystem.exe.config" size="3649">
+  <file name="BudgetingSystem.exe.config" size="3694">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>sw60vN0i3sQpSdQ7A60jukqQdzE=</dsig:DigestValue>
+      <dsig:DigestValue>7kizq1KfaZUWR84NPvfvIDzUNa4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
@@ -233,7 +233,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>NqOZtIQzv+BHw1TjmL1R0KukULM=</dsig:DigestValue>
+      <dsig:DigestValue>QIhP60wStII1kqCjKbLtpk5PTKk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT001-5_5Y.rpt" size="475136">
@@ -296,7 +296,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>1KP3vu/xMFYPVLjiP7mmlGIBXuE=</dsig:DigestValue>
+      <dsig:DigestValue>vLRDdF6EyNisLbP8pF9/VcRJLlU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT002-5_5Y.rpt" size="475136">
@@ -368,7 +368,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>GlYHX0xrUWYG4sOWCRztMlrGpJQ=</dsig:DigestValue>
+      <dsig:DigestValue>EiSvQ2wysTfKoXwKP+u60XrKxA4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT003-5_5Y.rpt" size="475136">
@@ -440,7 +440,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>f/t1DLs8kSQ9O4aiTXZ+Q7cCPAg=</dsig:DigestValue>
+      <dsig:DigestValue>lTCHHU4/nKRWVOBDDjO8vVBqbYs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT004-5_5Y.rpt" size="475136">
@@ -512,7 +512,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>msVBYdbpWT2trei7po05rqqApbw=</dsig:DigestValue>
+      <dsig:DigestValue>g7fhuO/oKZbR5eI++pVsd5xSDUs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT005-5_5Y.rpt" size="458752">

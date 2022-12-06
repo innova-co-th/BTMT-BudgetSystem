@@ -6,10 +6,380 @@ BudgetingSystem
 </name>
 </assembly>
 <members>
-<member name="M:BudgetManual.clsBG0430BL.getAccountNoList">
+<member name="M:BudgetManual.BG_T_TRANS_LOG.Select001">
+	<summary>
+ Select001
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_TRANS_LOG.Select002">
+	<summary>
+ Select001
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_TRANS_LOG.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0200BL.AdjustTransferCost">
+	<summary>
+ AdjustTransferCost()
+ </summary>
+	<returns></returns>
+	<remarks>Last Updated: 2011/05/30 by S.Watcharapong</remarks>
+</member><member name="T:BudgetManual.DS008.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS008.COMMENT_BY_PICDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS008.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS008.COMMENT_BY_PICRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS008.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS008.COMMENT_BY_PICRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS008">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:BudgetManual.DS002.BUDGET_MANAGEMENTDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS002.ORIGINAL_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS002.ESTIMATE_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS002.REVISE_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS002.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS002.BUDGET_MANAGEMENTRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS002.ORIGINAL_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS002.ESTIMATE_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS002.REVISE_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS002.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS002.BUDGET_MANAGEMENTRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS002.ORIGINAL_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS002.ESTIMATE_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS002.REVISE_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS002.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS002">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:BudgetManual.DS005.OriginalApplicantDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS005.EstimateApplicantDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS005.ReviseApplicantDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS005.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS005.MTPApplicantDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS005.OriginalApplicantRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS005.EstimateApplicantRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS005.ReviseApplicantRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS005.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS005.MTPApplicantRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS005.OriginalApplicantRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS005.EstimateApplicantRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS005.ReviseApplicantRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS005.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS005.MTPApplicantRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS005">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="M:BudgetManual.clsBG0472BL.getAccountNoList">
 	<summary>
  Get Account list
  </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_DEPT.Select001">
+	<summary>
+ Query account data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_DEPT.Select002">
+	<summary>
+ Query account data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_DEPT.Select003">
+	<summary>
+ Query account data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_DEPT.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_DEPT.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Select001">
+	<summary>
+ Select all budget header data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Rev
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Delete002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Rev
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Delete003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Rev
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Select001">
+	<summary>
+ Select Reference
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Select002">
+	<summary>
+ Select Reference
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert Budget Adjust Master
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update exist data
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0430BL.getAccountNoList">
+	<summary>
+ Get Account list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select001">
+	<summary>
+ Select Open Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select002">
+	<summary>
+ Select Closed Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select003">
+	<summary>
+ Select Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select004">
+	<summary>
+ Select Budget Period for view
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select005">
+	<summary>
+ Select all Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select006">
+	<summary>
+ Select Open/Reopen Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select007">
+	<summary>
+ Select Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select008">
+	<summary>
+ Select View Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select009">
+	<summary>
+ Select View Budget Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update002
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
 	<returns></returns>
 	<remarks></remarks>
 </member><member name="M:BudgetManual.BG_T_ACCOUNT_REOPEN.Select001">
@@ -56,11 +426,628 @@ BudgetingSystem
 	<param name="pTrans"></param>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select001">
+	<summary>
+ Select budget year list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select002">
+	<summary>
+ Select period type list according budget year
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select003">
+	<summary>
+ Select REV list according budget year, period type
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select004">
+	<summary>
+ Select budget according budget year, period type, rev_no
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select005">
+	<summary>
+ Select Working budget H1, H2
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select006">
+	<summary>
+ Select MTP Summary
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select007">
+	<summary>
+ Select REV list according budget year, period type
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select008">
+	<summary>
+ Select MTP Summary
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select009">
+	<summary>
+ Select Reference
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update Budget Adjust Master
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update Working budget H1, H2 in report
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update Working budget MTP Summary in report
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update004(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update Investment for MTP budget
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert Budget Adjust Master
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert Budget Adjust Master2
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Insert003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert Budget Adjust Master2
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Adjust master
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Delete002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Adjust master2
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BGCommon.Nz(System.Object,System.Object)">
+	<summary>
+ Convert object to empty string if is DBNULL
+ </summary>
+	<returns>String</returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BGCommon.readXMLConfig(System.String,System.String,System.String,System.String)">
+	<summary>
+ readXMLConfig
+ </summary>
+	<param name="FilePath"></param>
+	<param name="SectionName"></param>
+	<param name="ValueName"></param>
+	<param name="DefaultValue"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BGCommon.SaveXMLConfig(System.String,System.String,System.String,System.String)">
+	<summary>
+ SaveXMLConfig
+ </summary>
+	<param name="FilePath"></param>
+	<param name="SectionName"></param>
+	<param name="ValueName"></param>
+	<param name="Value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BGCommon.showSystemMessage(System.String)">
+	<summary>
+ Show general program message with information icon
+ </summary>
+	<param name="message">Message to display</param>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BGCommon.showErrorMessage(System.String)">
+	<summary>
+ Show general program message with error icon
+ </summary>
+	<param name="message">Error message to display</param>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BGCommon.showConfirmMessage(System.String)">
+	<summary>
+ Show confirmation message, return Yes or No
+ </summary>
+	<param name="message">Confirmation message to display</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0360BL.getAccountList">
+	<summary>
+ Get Account list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0360BL.getExportList">
+	<summary>
+ Get budget data to export
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select001">
+	<summary>
+ Select all budget header data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select001_1">
+	<summary>
+ Select all budget header data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select002">
+	<summary>
+ Select budget header by PIC
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select002_1">
+	<summary>
+ Select budget header by PIC
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select003">
+	<summary>
+ Select all budget header by status
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select004">
+	<summary>
+ Select budget header by status and PIC
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select005">
+	<summary>
+ Get Max rev no.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select006">
+	<summary>
+ Get Max rev no.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select007">
+	<summary>
+ Search Max Budget Status by Budget Year and Period Type
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select008">
+	<summary>
+ Select Budget Header by Status
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select008_1">
+	<summary>
+ Select Budget Header by Status
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select009">
+	<summary>
+ Select Budget Header by Status
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select010">
+	<summary>
+ Select budget header by PIC included Child PIC
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select011">
+	<summary>
+ Get status of Max rev no.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select012">
+	<summary>
+ Get Max rev no.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select014">
+	<summary>
+ Get All rev no.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select015">
+	<summary>
+ Check buget header exitsted for Import
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select016">
+	<summary>
+ Check buget header exitsted for Import
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select017">
+	<summary>
+ Check buget header exitsted for Import
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert002
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Insert003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert002
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update002
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update003
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update004(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update004
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Rev
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Delete002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Specific PIC
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:BudgetManual.DS001.BUDGET_DATADataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS001.REVISE_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS001.ESTIMATE_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS001.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS001.MTP_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS001.BUDGET_DATARow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS001.REVISE_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS001.ESTIMATE_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS001.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS001.MTP_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS001.BUDGET_DATARowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS001.REVISE_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS001.ESTIMATE_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS001.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS001.MTP_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS001">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:BudgetManual.DS007.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_DETAIL_PICDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_INVESTMENTDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_PICDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_ACCOUNTDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_DETAIL_PICRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_INVESTMENTRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_PICRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_ACCOUNTRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS007.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_DETAIL_PICRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_INVESTMENTRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_PICRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_ACCOUNTRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS007">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:BudgetManual.DS004.OriginalSummaryByAccountCodeDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS004.EstimateSummaryByAccountCodeDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS004.ReviseSummaryByAccountCodeDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS004.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS004.MTPSummaryByAccountCodeDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS004.OriginalSummaryByAccountCodeRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS004.EstimateSummaryByAccountCodeRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS004.ReviseSummaryByAccountCodeRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS004.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS004.MTPSummaryByAccountCodeRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS004.OriginalSummaryByAccountCodeRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS004.EstimateSummaryByAccountCodeRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS004.ReviseSummaryByAccountCodeRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS004.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS004.MTPSummaryByAccountCodeRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS004">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
 </member><member name="M:BudgetManual.frmBG0000.InitForm">
 	<summary>
  InitForm
  </summary>
 	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.getAccountList">
+	<summary>
+ Get Account list
+ </summary>
+	<returns></returns>
+</member><member name="M:BudgetManual.clsBG0620BL.getDepartmentList">
+	<summary>
+ Get Department list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.getBudgetOrderList">
+	<summary>
+ Get budget order list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.getAssetGroupList">
+	<summary>
+ Get asset group list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.getPersonInChargeList">
+	<summary>
+ Get person in charge list
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.saveBudgetOrder">
+	<summary>
+ Save budget order data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.deleteBudgetOrder">
+	<summary>
+ Delete budget order data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.saveBudgetOrderAll(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Save budget order data (for imported data from excel)
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.clsBG0620BL.getPICShowFlag">
+	<summary>
+ Get PIC Show Flag
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_PERIOD.Select001">
+	<summary>
+ Query Period
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_PERIOD.Select002">
+	<summary>
+ Query period data by open flg
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.frmBG0200.AdjustWorkingBG">
+	<summary>
+ AdjustWorkingBG()
+ </summary>
+	<remarks>Last Updated: 2011/05/30 by S.Watcharapong</remarks>
 </member><member name="M:BudgetManual.BG_M_ACCOUNT.Select001">
 	<summary>
  Query account data
@@ -101,23 +1088,148 @@ BudgetingSystem
 	<param name="pTrans">Transaction</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.frmBG0200.AdjustWorkingBG">
+</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Update001">
 	<summary>
- AdjustWorkingBG()
- </summary>
-	<remarks>Last Updated: 2011/05/30 by S.Watcharapong</remarks>
-</member><member name="M:BudgetManual.clsBG0360BL.getAccountList">
-	<summary>
- Get Account list
+ Update001
  </summary>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0360BL.getExportList">
+</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
 	<summary>
- Get budget data to export
+ Insert001
  </summary>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert002
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Delete Rev
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:BudgetManual.DS006.ORIGINAL_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS006.ESTIMATE_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS006.REVISE_BUDGETDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS006.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS006.ORIGINAL_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS006.ESTIMATE_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS006.REVISE_BUDGETRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS006.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS006.ORIGINAL_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS006.ESTIMATE_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS006.REVISE_BUDGETRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS006.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS006">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member><member name="T:BudgetManual.DS003.DetailByAccountCodeDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS003.EstimateBudgetDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS003.ReviseBudgetDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS003.BG_M_SETTINGSDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS003.MTPBudgetDataTable">
+	<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member><member name="T:BudgetManual.DS003.DetailByAccountCodeRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS003.EstimateBudgetRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS003.ReviseBudgetRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS003.BG_M_SETTINGSRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS003.MTPBudgetRow">
+	<summary>
+Represents strongly named DataRow class.
+</summary>
+</member><member name="T:BudgetManual.DS003.DetailByAccountCodeRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS003.EstimateBudgetRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS003.ReviseBudgetRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS003.BG_M_SETTINGSRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS003.MTPBudgetRowChangeEvent">
+	<summary>
+Row event argument class
+</summary>
+</member><member name="T:BudgetManual.DS003">
+	<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
 </member><member name="M:BudgetManual.BG_M_ASSET_GROUP.Select001">
 	<summary>
  Query account data
@@ -206,6 +1318,166 @@ BudgetingSystem
  </summary>
 	<param name="pConn">Connection</param>
 	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Select001">
+	<summary>
+ Query child data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Select002">
+	<summary>
+ Query child data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Select003">
+	<summary>
+ Query child data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update001
+ </summary>
+	<param name="pConn">Connection</param>
+	<param name="pTrans">Transaction</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select001">
+	<summary>
+ Query user data by user id
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select002">
+	<summary>
+ Query all user data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select003">
+	<summary>
+ Query all user PIC
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select004">
+	<summary>
+ Query all user level
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select005">
+	<summary>
+ Query all user data
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select006">
+	<summary>
+ Select006
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select007">
+	<summary>
+ Select007
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select008">
+	<summary>
+ Select008
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select009">
+	<summary>
+ Select009
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select010">
+	<summary>
+ Select all approver
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select011">
+	<summary>
+ Select Login User
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select012">
+	<summary>
+ Select Locked Pic
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select013">
+	<summary>
+ Select User Level
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select015">
+	<summary>
+ Select Last User Level Id
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Select014">
+	<summary>
+ Select Login User
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Update001">
+	<summary>
+ Update001
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update002
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Update003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Update User Level
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert001
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Insert002
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:BudgetManual.BG_M_USER.Insert003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ Add User Level
+ </summary>
 	<returns></returns>
 	<remarks></remarks>
 </member><member name="M:BudgetManual.BG_T_BUDGET_DATA.Select001">
@@ -702,198 +1974,6 @@ BudgetingSystem
 	<param name="pTrans">Transaction</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="T:BudgetManual.DS001.BUDGET_DATADataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS001.REVISE_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS001.ESTIMATE_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS001.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS001.MTP_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS001.BUDGET_DATARow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS001.REVISE_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS001.ESTIMATE_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS001.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS001.MTP_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS001.BUDGET_DATARowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS001.REVISE_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS001.ESTIMATE_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS001.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS001.MTP_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS001">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:BudgetManual.DS007.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_DETAIL_PICDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_INVESTMENTDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_PICDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_ACCOUNTDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_DETAIL_PICRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_INVESTMENTRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_PICRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_ACCOUNTRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS007.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_DETAIL_PICRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_INVESTMENTRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_PICRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS007.BUDGET_COMPARE_SUM_ACCOUNTRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS007">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:BudgetManual.DS004.OriginalSummaryByAccountCodeDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS004.EstimateSummaryByAccountCodeDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS004.ReviseSummaryByAccountCodeDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS004.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS004.MTPSummaryByAccountCodeDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS004.OriginalSummaryByAccountCodeRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS004.EstimateSummaryByAccountCodeRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS004.ReviseSummaryByAccountCodeRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS004.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS004.MTPSummaryByAccountCodeRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS004.OriginalSummaryByAccountCodeRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS004.EstimateSummaryByAccountCodeRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS004.ReviseSummaryByAccountCodeRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS004.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS004.MTPSummaryByAccountCodeRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS004">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
 </member><member name="M:BudgetManual.BG_M_PERSON_IN_CHARGE.Select001">
 	<summary>
  Query account data
@@ -1008,85 +2088,15 @@ Represents a strongly typed in-memory cache of data.
 	<param name="pTrans">Transaction</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_SETTINGS.Select001">
+</member><member name="M:BudgetManual.BG_M_BUDGET_ORDER.Select009">
 	<summary>
- Get Options
+ Select all PIC of Active Order 
  </summary>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_SETTINGS.Select002">
+</member><member name="M:BudgetManual.BG_M_BUDGET_ORDER.Select010">
 	<summary>
-	</summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_SETTINGS.Update001">
-	<summary>
- Save Options
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.getAccountList">
-	<summary>
- Get Account list
- </summary>
-	<returns></returns>
-</member><member name="M:BudgetManual.clsBG0620BL.getDepartmentList">
-	<summary>
- Get Department list
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.getBudgetOrderList">
-	<summary>
- Get budget order list
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.getAssetGroupList">
-	<summary>
- Get asset group list
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.getPersonInChargeList">
-	<summary>
- Get person in charge list
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.saveBudgetOrder">
-	<summary>
- Save budget order data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.deleteBudgetOrder">
-	<summary>
- Delete budget order data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.saveBudgetOrderAll(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Save budget order data (for imported data from excel)
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0620BL.getPICShowFlag">
-	<summary>
- Get PIC Show Flag
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_PERIOD.Select001">
-	<summary>
- Query Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_PERIOD.Select002">
-	<summary>
- Query period data by open flg
+ Select Related PIC of Active Order 
  </summary>
 	<returns></returns>
 	<remarks></remarks>
@@ -1142,129 +2152,20 @@ Represents a strongly typed in-memory cache of data.
 	<param name="pTrans">Transaction</param>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select001">
+</member><member name="M:BudgetManual.BG_M_SETTINGS.Select001">
 	<summary>
- Query user data by user id
+ Get Options
  </summary>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select002">
+</member><member name="M:BudgetManual.BG_M_SETTINGS.Select002">
 	<summary>
- Query all user data
- </summary>
+	</summary>
 	<returns></returns>
 	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select003">
+</member><member name="M:BudgetManual.BG_M_SETTINGS.Update001">
 	<summary>
- Query all user PIC
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select004">
-	<summary>
- Query all user level
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select005">
-	<summary>
- Query all user data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select006">
-	<summary>
- Select006
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select007">
-	<summary>
- Select007
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select008">
-	<summary>
- Select008
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select009">
-	<summary>
- Select009
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select010">
-	<summary>
- Select all approver
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select011">
-	<summary>
- Select Login User
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select012">
-	<summary>
- Select Locked Pic
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select013">
-	<summary>
- Select User Level
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select015">
-	<summary>
- Select Last User Level Id
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Select014">
-	<summary>
- Select Login User
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Update001">
-	<summary>
- Update001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update002
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Update003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update User Level
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert002
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_USER.Insert003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Add User Level
+ Save Options
  </summary>
 	<returns></returns>
 	<remarks></remarks>
@@ -1281,907 +2182,6 @@ Represents a strongly typed in-memory cache of data.
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
-</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Select001">
-	<summary>
- Query child data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Select002">
-	<summary>
- Query child data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Select003">
-	<summary>
- Query child data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_CHILD_PIC.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select001">
-	<summary>
- Select Open Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select002">
-	<summary>
- Select Closed Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select003">
-	<summary>
- Select Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select004">
-	<summary>
- Select Budget Period for view
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select005">
-	<summary>
- Select all Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select006">
-	<summary>
- Select Open/Reopen Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select007">
-	<summary>
- Select Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select008">
-	<summary>
- Select View Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Select009">
-	<summary>
- Select View Budget Period
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_PERIOD.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update002
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select001">
-	<summary>
- Select budget year list
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select002">
-	<summary>
- Select period type list according budget year
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select003">
-	<summary>
- Select REV list according budget year, period type
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select004">
-	<summary>
- Select budget according budget year, period type, rev_no
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select005">
-	<summary>
- Select Working budget H1, H2
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select006">
-	<summary>
- Select MTP Summary
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select007">
-	<summary>
- Select REV list according budget year, period type
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select008">
-	<summary>
- Select MTP Summary
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Select009">
-	<summary>
- Select Reference
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update Budget Adjust Master
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update Working budget H1, H2 in report
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update Working budget MTP Summary in report
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Update004(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update Investment for MTP budget
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert Budget Adjust Master
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert Budget Adjust Master2
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Insert003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert Budget Adjust Master2
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Adjust master
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_ADJUST.Delete002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Adjust master2
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Update001">
-	<summary>
- Update001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert002
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_COMMENT.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Rev
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="T:BudgetManual.DS006.ORIGINAL_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS006.ESTIMATE_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS006.REVISE_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS006.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS006.ORIGINAL_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS006.ESTIMATE_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS006.REVISE_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS006.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS006.ORIGINAL_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS006.ESTIMATE_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS006.REVISE_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS006.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS006">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:BudgetManual.DS003.DetailByAccountCodeDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS003.EstimateBudgetDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS003.ReviseBudgetDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS003.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS003.MTPBudgetDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS003.DetailByAccountCodeRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS003.EstimateBudgetRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS003.ReviseBudgetRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS003.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS003.MTPBudgetRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS003.DetailByAccountCodeRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS003.EstimateBudgetRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS003.ReviseBudgetRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS003.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS003.MTPBudgetRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS003">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Select001">
-	<summary>
- Select Reference
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Select002">
-	<summary>
- Select Reference
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert Budget Adjust Master
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_REFERENCE.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update exist data
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Select001">
-	<summary>
- Select all budget header data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Rev
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Delete002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Rev
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_DATA_REINPUT.Delete003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Rev
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select001">
-	<summary>
- Select all budget header data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select001_1">
-	<summary>
- Select all budget header data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select002">
-	<summary>
- Select budget header by PIC
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select002_1">
-	<summary>
- Select budget header by PIC
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select003">
-	<summary>
- Select all budget header by status
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select004">
-	<summary>
- Select budget header by status and PIC
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select005">
-	<summary>
- Get Max rev no.
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select006">
-	<summary>
- Get Max rev no.
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select007">
-	<summary>
- Search Max Budget Status by Budget Year and Period Type
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select008">
-	<summary>
- Select Budget Header by Status
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select008_1">
-	<summary>
- Select Budget Header by Status
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select009">
-	<summary>
- Select Budget Header by Status
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select010">
-	<summary>
- Select budget header by PIC included Child PIC
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select011">
-	<summary>
- Get status of Max rev no.
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select012">
-	<summary>
- Get Max rev no.
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select014">
-	<summary>
- Get All rev no.
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select015">
-	<summary>
- Check buget header exitsted for Import
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select016">
-	<summary>
- Check buget header exitsted for Import
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Select017">
-	<summary>
- Check buget header exitsted for Import
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Insert002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert002
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Insert003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert002
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update002
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update003(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update003
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Update004(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update004
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Delete001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Rev
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_BUDGET_HEADER.Delete002(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Delete Specific PIC
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_TRANS_LOG.Select001">
-	<summary>
- Select001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_TRANS_LOG.Select002">
-	<summary>
- Select001
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_T_TRANS_LOG.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_DEPT.Select001">
-	<summary>
- Query account data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_DEPT.Select002">
-	<summary>
- Query account data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_DEPT.Select003">
-	<summary>
- Query account data
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_DEPT.Insert001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Insert001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_DEPT.Update001(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction)">
-	<summary>
- Update001
- </summary>
-	<param name="pConn">Connection</param>
-	<param name="pTrans">Transaction</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.clsBG0200BL.AdjustTransferCost">
-	<summary>
- AdjustTransferCost()
- </summary>
-	<returns></returns>
-	<remarks>Last Updated: 2011/05/30 by S.Watcharapong</remarks>
-</member><member name="M:BudgetManual.BG_M_BUDGET_ORDER.Select009">
-	<summary>
- Select all PIC of Active Order 
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BG_M_BUDGET_ORDER.Select010">
-	<summary>
- Select Related PIC of Active Order 
- </summary>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BGCommon.Nz(System.Object,System.Object)">
-	<summary>
- Convert object to empty string if is DBNULL
- </summary>
-	<returns>String</returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BGCommon.readXMLConfig(System.String,System.String,System.String,System.String)">
-	<summary>
- readXMLConfig
- </summary>
-	<param name="FilePath"></param>
-	<param name="SectionName"></param>
-	<param name="ValueName"></param>
-	<param name="DefaultValue"></param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BGCommon.SaveXMLConfig(System.String,System.String,System.String,System.String)">
-	<summary>
- SaveXMLConfig
- </summary>
-	<param name="FilePath"></param>
-	<param name="SectionName"></param>
-	<param name="ValueName"></param>
-	<param name="Value"></param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BGCommon.showSystemMessage(System.String)">
-	<summary>
- Show general program message with information icon
- </summary>
-	<param name="message">Message to display</param>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BGCommon.showErrorMessage(System.String)">
-	<summary>
- Show general program message with error icon
- </summary>
-	<param name="message">Error message to display</param>
-	<remarks></remarks>
-</member><member name="M:BudgetManual.BGCommon.showConfirmMessage(System.String)">
-	<summary>
- Show confirmation message, return Yes or No
- </summary>
-	<param name="message">Confirmation message to display</param>
-	<returns></returns>
-	<remarks></remarks>
-</member><member name="T:BudgetManual.DS008.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS008.COMMENT_BY_PICDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS008.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS008.COMMENT_BY_PICRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS008.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS008.COMMENT_BY_PICRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS008">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:BudgetManual.DS002.BUDGET_MANAGEMENTDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS002.ORIGINAL_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS002.ESTIMATE_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS002.REVISE_BUDGETDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS002.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS002.BUDGET_MANAGEMENTRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS002.ORIGINAL_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS002.ESTIMATE_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS002.REVISE_BUDGETRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS002.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS002.BUDGET_MANAGEMENTRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS002.ORIGINAL_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS002.ESTIMATE_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS002.REVISE_BUDGETRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS002.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS002">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="T:BudgetManual.DS005.OriginalApplicantDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS005.EstimateApplicantDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS005.ReviseApplicantDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS005.BG_M_SETTINGSDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS005.MTPApplicantDataTable">
-	<summary>
-Represents the strongly named DataTable class.
-</summary>
-</member><member name="T:BudgetManual.DS005.OriginalApplicantRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS005.EstimateApplicantRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS005.ReviseApplicantRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS005.BG_M_SETTINGSRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS005.MTPApplicantRow">
-	<summary>
-Represents strongly named DataRow class.
-</summary>
-</member><member name="T:BudgetManual.DS005.OriginalApplicantRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS005.EstimateApplicantRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS005.ReviseApplicantRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS005.BG_M_SETTINGSRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS005.MTPApplicantRowChangeEvent">
-	<summary>
-Row event argument class
-</summary>
-</member><member name="T:BudgetManual.DS005">
-	<summary>
-Represents a strongly typed in-memory cache of data.
-</summary>
-</member><member name="M:BudgetManual.clsBG0472BL.getAccountNoList">
-	<summary>
- Get Account list
- </summary>
-	<returns></returns>
-	<remarks></remarks>
 </member>
 </members>
 </doc>
