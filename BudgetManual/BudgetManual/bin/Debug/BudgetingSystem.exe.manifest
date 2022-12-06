@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly manifestVersion="1.0" xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1">
-  <asmv1:assemblyIdentity version="1.2.0.9" name="BudgetingSystem.exe" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
+  <asmv1:assemblyIdentity version="1.2.0.9" name="BudgetingSystem.exe" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Images\kspread_ksp.ico" asmv2:publisher="INNOVA Software" asmv2:product="BTMT Budgeting System" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="BudgetingSystem" version="1.2.0.9" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="BudgetingSystem" version="1.2.0.9" language="neutral" processorArchitecture="msil" />
     <commandLine file="BudgetingSystem.exe" parameters="" />
   </entryPoint>
   <co.v1:useManifestForTrust xmlns="urn:schemas-microsoft-com:asm.v1" />
@@ -44,11 +44,6 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="Microsoft.VisualStudio.Debugger.Interop" version="8.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
       <assemblyIdentity name="System.Core" version="3.5.0.0" publicKeyToken="b77a5c561934e089" language="neutral" processorArchitecture="msil" />
     </dependentAssembly>
   </dependency>
@@ -64,13 +59,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BudgetingSystem.exe" size="15484416">
-      <assemblyIdentity name="BudgetingSystem" version="1.2.0.9" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="BudgetingSystem" version="1.2.0.9" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Jp9H+K4tQuOWwd2m/HS/iONAd3I=</dsig:DigestValue>
+        <dsig:DigestValue>dcXy5VBAQ3on6reEdtePfs6G4kY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -135,24 +130,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="25592">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="16384">
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>HK7QglaoDljVckUtLki3iqaSlyI=</dsig:DigestValue>
+        <dsig:DigestValue>umKzfUIzuIlI/cL/7QjzyC6GJ/E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BudgetingSystem.exe.config" size="3694">
+  <file name="BudgetingSystem.exe.config" size="3698">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>7kizq1KfaZUWR84NPvfvIDzUNa4=</dsig:DigestValue>
+      <dsig:DigestValue>VoDoMTbRtGBou2mAZyaZ/SzUw3w=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
@@ -179,7 +174,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>luOgsdSEmHrIEUVrzeBqFwx8fPA=</dsig:DigestValue>
+      <dsig:DigestValue>mmHbQb2duQXb1Cb0qEC1w59uSbk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT001-1_6M.rpt" size="475136">
@@ -233,7 +228,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>NqOZtIQzv+BHw1TjmL1R0KukULM=</dsig:DigestValue>
+      <dsig:DigestValue>4duTzTvB+CSNzRqrS/zH31pAKHc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT001-5_5Y.rpt" size="475136">
@@ -296,7 +291,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>1KP3vu/xMFYPVLjiP7mmlGIBXuE=</dsig:DigestValue>
+      <dsig:DigestValue>tSUOZrMPa3N9dk/hmbJ9f7akgJw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT002-5_5Y.rpt" size="475136">
@@ -368,7 +363,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>GlYHX0xrUWYG4sOWCRztMlrGpJQ=</dsig:DigestValue>
+      <dsig:DigestValue>d6r7I3SzQXZM9zpHc4Zb9QDzIFw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT003-5_5Y.rpt" size="475136">
@@ -440,7 +435,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>f/t1DLs8kSQ9O4aiTXZ+Q7cCPAg=</dsig:DigestValue>
+      <dsig:DigestValue>gFLN3x4rNC8U4qvo9KaZUsI7exM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT004-5_5Y.rpt" size="475136">
@@ -512,7 +507,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>msVBYdbpWT2trei7po05rqqApbw=</dsig:DigestValue>
+      <dsig:DigestValue>Es9wgwHX6E6CHszQwIb0k6JZThc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT005-5_5Y.rpt" size="458752">
@@ -521,7 +516,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>5lKSRrcLIxk9zzJ+bTNGMt/cRjs=</dsig:DigestValue>
+      <dsig:DigestValue>tg4OCgYyjcQTulcM6BxHWXs2HDw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT006-1.rpt" size="49152">
