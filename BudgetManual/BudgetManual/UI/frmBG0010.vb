@@ -181,7 +181,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
-                intYearMBP = CInt(strYear) + 1
+                'Debug ITSARES
+                'intYearMBP = CInt(strYear) + 1
+                intYearMBP = CInt(strYear)
                 strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
@@ -262,7 +264,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
-                intYearMBP = CInt(strYear) + 1
+                'Debug ITSARES
+                'intYearMBP = CInt(strYear) + 1
+                intYearMBP = CInt(strYear)
                 strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
@@ -419,7 +423,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
-                intYearMBP = CInt(strYear) + 1
+                'Debug ITSARES
+                'intYearMBP = CInt(strYear) + 1
+                intYearMBP = CInt(strYear)
                 strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
@@ -533,7 +539,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
-                intYearMBP = CInt(strYear) + 1
+                'Debug ITSARES
+                'intYearMBP = CInt(strYear) + 1
+                intYearMBP = CInt(strYear)
                 strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
@@ -749,7 +757,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
-                intYearMBP = CInt(strYear) + 1
+                'Debug ITSARES
+                'intYearMBP = CInt(strYear) + 1
+                intYearMBP = CInt(strYear)
                 strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
@@ -830,7 +840,9 @@ Public Class frmBG0010
                 strYear = CStr(drPd("BUDGET_YEAR"))
                 strPeriodId = CStr(drPd("PERIOD_TYPE"))
                 strProjectNo = CStr(drPd("PROJECT_NO"))
-                intYearMBP = CInt(strYear) + 1
+                'Debug ITSARES
+                'intYearMBP = CInt(strYear) + 1
+                intYearMBP = CInt(strYear)
                 strYearMBP = CStr(intYearMBP)
 
                 If strPeriodId = CStr(enumPeriodType.OriginalBudget) Then
