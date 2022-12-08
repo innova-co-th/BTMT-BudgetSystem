@@ -43,7 +43,7 @@ Public Class frmBG0320
                     strTemp = CStr(dr("BUDGET_YEAR")) & " Forecast Budget " & CStr(dr("PROJECT_NO"))
 
                 ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.MBPBudget Then
-                    strTemp = CStr(dr("BUDGET_YEAR")) & " MTP Budget " & CStr(dr("PROJECT_NO"))
+                    strTemp = CStr(dr("BUDGET_YEAR")) & " MBP Budget " & CStr(dr("PROJECT_NO"))
 
                 End If
 
