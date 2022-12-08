@@ -85,7 +85,7 @@ Public Class frmBG0320
             myClsBG0320BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
         ElseIf cboPeriod.Text.Contains("Forecast") Then
             myClsBG0320BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
-        ElseIf cboPeriod.Text.Contains("MTP") Then
+        ElseIf cboPeriod.Text.Contains("MBP") Then
             myClsBG0320BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0320BL.UserId = p_strUserId
