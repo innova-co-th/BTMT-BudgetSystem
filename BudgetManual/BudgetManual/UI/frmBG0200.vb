@@ -1278,7 +1278,7 @@ Public Class frmBG0200
             lblBudgetPeriod.Text = Mid(Me.BudgetKey, 1, 4)
             Dim intBudgetPeriodMBP As Integer
             intBudgetPeriodMBP = CInt(lblBudgetPeriod.Text)
-            Dim strBudgetPeriodMBP As String = (intBudgetPeriodMBP + 1).ToString()
+            Dim strBudgetPeriodMBP As String = (intBudgetPeriodMBP).ToString()
 
             If Me.GetPeriodType() = CStr(enumPeriodType.OriginalBudget) Then      '// Original Budget
                 lblBudgetPeriod.Text += " Original Budget"

@@ -44,7 +44,11 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+<<<<<<< HEAD
       <assemblyIdentity name="mscorcfg" version="3.5.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="x86" />
+=======
+      <assemblyIdentity name="Microsoft.VisualStudio.Debugger.Interop" version="8.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
+>>>>>>> bbfdf2ac544f31720c893f970f006061725b20f5
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -70,7 +74,11 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+<<<<<<< HEAD
         <dsig:DigestValue>N4CLkZ/JFYaTv3jfue56HTgYdCk=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>DVEn1IbK7n9EEzdewsYXr4mJQYA=</dsig:DigestValue>
+>>>>>>> bbfdf2ac544f31720c893f970f006061725b20f5
       </hash>
     </dependentAssembly>
   </dependency>
@@ -135,14 +143,22 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+<<<<<<< HEAD
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32616">
+=======
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32392">
+>>>>>>> bbfdf2ac544f31720c893f970f006061725b20f5
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+<<<<<<< HEAD
         <dsig:DigestValue>H7EjqMV64UmZKI2srOm8FbwZoQk=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>ktNm3hC1M2WpE4GIHeFQW655yXk=</dsig:DigestValue>
+>>>>>>> bbfdf2ac544f31720c893f970f006061725b20f5
       </hash>
     </dependentAssembly>
   </dependency>

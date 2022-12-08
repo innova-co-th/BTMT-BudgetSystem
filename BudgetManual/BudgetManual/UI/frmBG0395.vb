@@ -43,7 +43,7 @@ Public Class frmBG0395
                     strTemp = CStr(dr("BUDGET_YEAR")) & " Forecast Budget " & CStr(dr("PROJECT_NO"))
 
                 ElseIf CInt(dr("PERIOD_TYPE")) = enumPeriodType.MBPBudget Then
-                    strTemp = CStr(dr("BUDGET_YEAR")) & " MTP Budget " & CStr(dr("PROJECT_NO"))
+                    strTemp = CStr(dr("BUDGET_YEAR")) & " MBP Budget " & CStr(dr("PROJECT_NO"))
 
                 End If
 
@@ -70,7 +70,7 @@ Public Class frmBG0395
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
         ElseIf cboPeriod.Text.Contains("Forecast") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
-        ElseIf cboPeriod.Text.Contains("MTP") Then
+        ElseIf cboPeriod.Text.Contains("MBP") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0395BL.ProjectNo = Mid(cboPeriod.Text, cboPeriod.Text.LastIndexOf(" ") + 2, cboPeriod.Text.Length - cboPeriod.Text.LastIndexOf(" "))
@@ -116,7 +116,7 @@ Public Class frmBG0395
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.EstimateBudget)
         ElseIf cboPeriod.Text.Contains("Forecast") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.ForecastBudget)
-        ElseIf cboPeriod.Text.Contains("MTP") Then
+        ElseIf cboPeriod.Text.Contains("MBP") Then
             myClsBG0395BL.PeriodType = CStr(enumPeriodType.MBPBudget)
         End If
         myClsBG0395BL.UserId = p_strUserId
@@ -138,6 +138,10 @@ Public Class frmBG0395
         Else
             MessageBox.Show("Can not save Budget period!", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
+
+        'Debug ID 5 by Itsares
+        '// Refresh side menu
+        p_frmBG0010.ShowBudgetMenu()
     End Sub
 
     Private Sub cmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClose.Click
