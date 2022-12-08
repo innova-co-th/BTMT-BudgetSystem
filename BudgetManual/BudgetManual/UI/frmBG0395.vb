@@ -138,6 +138,10 @@ Public Class frmBG0395
         Else
             MessageBox.Show("Can not save Budget period!", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
+
+        'Debug ID 5 by Itsares
+        '// Refresh side menu
+        p_frmBG0010.ShowBudgetMenu()
     End Sub
 
     Private Sub cmdClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClose.Click
