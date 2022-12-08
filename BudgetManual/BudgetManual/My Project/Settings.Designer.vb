@@ -131,16 +131,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("user id=sa; data source=PC-DEV01A1\SQLEXPRESS2014; persist security info=True; in"& _ 
-            "itial catalog=BUDGET;password=abc123$1")>  _
-        Public ReadOnly Property ConnStr() As String
-            Get
-                Return CType(Me("ConnStr"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("BUDGET")>  _
         Public ReadOnly Property DatabaseName() As String
             Get
@@ -165,6 +155,16 @@ Namespace My
         Public ReadOnly Property BUDGETConnectionString() As String
             Get
                 Return CType(Me("BUDGETConnectionString"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("user id=sa; data source=PC-DEV01A1\SQLEXPRESS2014; persist security info=True; in"& _ 
+            "itial catalog=BUDGET;password=abc123$1")>  _
+        Public ReadOnly Property ConnStr() As String
+            Get
+                Return CType(Me("ConnStr"),String)
             End Get
         End Property
     End Class
