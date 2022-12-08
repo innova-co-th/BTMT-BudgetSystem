@@ -44,11 +44,7 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-<<<<<<< HEAD
       <assemblyIdentity name="mscorcfg" version="3.5.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="x86" />
-=======
-      <assemblyIdentity name="Microsoft.VisualStudio.Debugger.Interop" version="8.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
->>>>>>> f85d8a1c1db1df826be28da09a59d02edc90824c
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -74,11 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
-        <dsig:DigestValue>xLE+RPdJc8ulc88FWNf3GZMIbuQ=</dsig:DigestValue>
-=======
-        <dsig:DigestValue>YdkyEZyDzdNrncnxnMygmnhVdhI=</dsig:DigestValue>
->>>>>>> f85d8a1c1db1df826be28da09a59d02edc90824c
+        <dsig:DigestValue>N4CLkZ/JFYaTv3jfue56HTgYdCk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -143,40 +135,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-<<<<<<< HEAD
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32616">
-=======
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32392">
->>>>>>> f85d8a1c1db1df826be28da09a59d02edc90824c
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
         <dsig:DigestValue>H7EjqMV64UmZKI2srOm8FbwZoQk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <file name="BudgetingSystem.exe.config" size="3694">
-=======
-        <dsig:DigestValue>ktNm3hC1M2WpE4GIHeFQW655yXk=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <file name="BudgetingSystem.exe.config" size="3698">
->>>>>>> f85d8a1c1db1df826be28da09a59d02edc90824c
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
       <dsig:DigestValue>dRzP8qiqd1MGjUlQyJxD8sMKwyY=</dsig:DigestValue>
-=======
-      <dsig:DigestValue>XwiAQBwo2uHXijRC/310TJV1mx0=</dsig:DigestValue>
->>>>>>> f85d8a1c1db1df826be28da09a59d02edc90824c
     </hash>
   </file>
   <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
