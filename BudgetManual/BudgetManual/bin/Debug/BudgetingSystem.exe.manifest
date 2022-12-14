@@ -44,7 +44,11 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+<<<<<<< HEAD
       <assemblyIdentity name="Microsoft.VisualStudio.Debugger.Interop" version="8.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
+=======
+      <assemblyIdentity name="mscorcfg" version="3.5.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="x86" />
+>>>>>>> 4c435a3575562858361b95772a74db026687578b
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -63,14 +67,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BudgetingSystem.exe" size="15484416">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BudgetingSystem.exe" size="15500800">
       <assemblyIdentity name="BudgetingSystem" version="1.2.0.9" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+<<<<<<< HEAD
         <dsig:DigestValue>mx5eHM4qHAcwpnDnJY3nBTm/gfk=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>0WjPD4lD4HZdLvnCXQeBLUY+WlA=</dsig:DigestValue>
+>>>>>>> 4c435a3575562858361b95772a74db026687578b
       </hash>
     </dependentAssembly>
   </dependency>
@@ -135,24 +143,32 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+<<<<<<< HEAD
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32392">
+=======
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32616">
+>>>>>>> 4c435a3575562858361b95772a74db026687578b
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+<<<<<<< HEAD
         <dsig:DigestValue>ktNm3hC1M2WpE4GIHeFQW655yXk=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>H7EjqMV64UmZKI2srOm8FbwZoQk=</dsig:DigestValue>
+>>>>>>> 4c435a3575562858361b95772a74db026687578b
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BudgetingSystem.exe.config" size="3694">
+  <file name="BudgetingSystem.exe.config" size="3649">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>dRzP8qiqd1MGjUlQyJxD8sMKwyY=</dsig:DigestValue>
+      <dsig:DigestValue>aK4OZcDtZ2L48hMquiClxol1TlI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
