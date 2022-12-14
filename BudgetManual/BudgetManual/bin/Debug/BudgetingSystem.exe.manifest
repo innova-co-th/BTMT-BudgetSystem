@@ -70,7 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>0WjPD4lD4HZdLvnCXQeBLUY+WlA=</dsig:DigestValue>
+        <dsig:DigestValue>yKdvK3a9brDSdQz+EjmujkbH3nQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -146,13 +146,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BudgetingSystem.exe.config" size="3649">
+  <file name="BudgetingSystem.exe.config" size="3694">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>aK4OZcDtZ2L48hMquiClxol1TlI=</dsig:DigestValue>
+      <dsig:DigestValue>dRzP8qiqd1MGjUlQyJxD8sMKwyY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
