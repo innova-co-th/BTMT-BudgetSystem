@@ -6189,7 +6189,7 @@ Public Class frmBG0200
 
     Private Sub grvBudget4_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles grvBudget4.CellValueChanged
         Try
-            If e.RowIndex > 0 And mySetGridValue = False Then
+            If e.RowIndex >= 0 And mySetGridValue = False Then
                 If grvBudget4.Columns(e.ColumnIndex).Name <> "g4Wk" Then
                     '// Validate input data
                     CheckValidateMTPBudget(e.ColumnIndex, e.RowIndex)
