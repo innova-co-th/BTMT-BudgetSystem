@@ -1990,19 +1990,8 @@ Public Class frmBG0200
                     If Not grvBudget4.Columns("g4col6").HeaderText.Contains("'") Then
                         For i = 6 To 8
                             If (grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Substring(0, 3).Equals("MTP")) Then
-<<<<<<< HEAD
-                               
-                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2)) + 0
-
-                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2))).ToString("00"))
-
-                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("MTP", "MBP")
-                            Else
-                                grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2)) + 0
-=======
 
                                 grvBudget4.Columns("g4col" & CStr(i)).HeaderText += "'" & CInt(Mid(Me.BudgetKey, 3, 2))
->>>>>>> 4c435a3575562858361b95772a74db026687578b
 
                                 grvBudget4.Columns("g4col" & CStr(i)).HeaderText = grvBudget4.Columns("g4col" & CStr(i)).HeaderText.Replace("@1", (CInt(Mid(Me.BudgetKey, 3, 2)) - 1).ToString("00"))
 
@@ -2207,11 +2196,7 @@ Public Class frmBG0200
             End If
 
             lblRRT0.Text = "Y20" & Mid(Me.BudgetKey, 3, 2) & ":"
-<<<<<<< HEAD
-            lblRRT1.Text = "Y20" & (CInt(Mid(Me.BudgetKey, 3, 2)) + 0).ToString("00") & ":"
-=======
             lblRRT1.Text = "Y20" & (CInt(Mid(Me.BudgetKey, 3, 2))).ToString("00") & ":"
->>>>>>> 4c435a3575562858361b95772a74db026687578b
             lblRRT2.Text = "Y20" & (CInt(Mid(Me.BudgetKey, 3, 2)) + 1).ToString("00") & ":"
             lblRRT3.Text = "Y20" & (CInt(Mid(Me.BudgetKey, 3, 2)) + 2).ToString("00") & ":"
             lblRRT4.Text = "Y20" & (CInt(Mid(Me.BudgetKey, 3, 2)) + 3).ToString("00") & ":"
