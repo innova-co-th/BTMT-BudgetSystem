@@ -44,11 +44,7 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-<<<<<<< HEAD
       <assemblyIdentity name="Microsoft.VisualStudio.Debugger.Interop" version="8.0.1.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
-=======
-      <assemblyIdentity name="mscorcfg" version="3.5.0.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" processorArchitecture="x86" />
->>>>>>> 7047f940e869d6fe949a27bdfcbb98f8eb05ed21
     </dependentAssembly>
   </dependency>
   <dependency>
@@ -74,11 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
         <dsig:DigestValue>7oV63v0FzXkZAEnJrO1z0pOs3F4=</dsig:DigestValue>
-=======
-        <dsig:DigestValue>yKdvK3a9brDSdQz+EjmujkbH3nQ=</dsig:DigestValue>
->>>>>>> 7047f940e869d6fe949a27bdfcbb98f8eb05ed21
       </hash>
     </dependentAssembly>
   </dependency>
@@ -143,32 +135,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-<<<<<<< HEAD
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32392">
-=======
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="32616">
->>>>>>> 7047f940e869d6fe949a27bdfcbb98f8eb05ed21
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-<<<<<<< HEAD
         <dsig:DigestValue>ktNm3hC1M2WpE4GIHeFQW655yXk=</dsig:DigestValue>
-=======
-        <dsig:DigestValue>H7EjqMV64UmZKI2srOm8FbwZoQk=</dsig:DigestValue>
->>>>>>> 7047f940e869d6fe949a27bdfcbb98f8eb05ed21
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BudgetingSystem.exe.config" size="3694">
+  <file name="BudgetingSystem.exe.config" size="3706">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>dRzP8qiqd1MGjUlQyJxD8sMKwyY=</dsig:DigestValue>
+      <dsig:DigestValue>/7DnSel7H56J1UjtRazauM3GlL0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
