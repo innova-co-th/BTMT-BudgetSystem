@@ -70,7 +70,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Mm+gIdlIhY+xXQYpi0DBqZvCbxI=</dsig:DigestValue>
+        <dsig:DigestValue>aoO1b/Pgyzb53cn4bFMPwnfVUDA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -368,7 +368,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>EiSvQ2wysTfKoXwKP+u60XrKxA4=</dsig:DigestValue>
+      <dsig:DigestValue>lwh2wNI3w4D/49IjUhWgdq213DU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Reports\RPT003-5_5Y.rpt" size="475136">
