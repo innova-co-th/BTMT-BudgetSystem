@@ -4608,7 +4608,7 @@
 
       LEFT JOIN BG_T_BUDGET_DATA AS MTP
       ON MAX_REV.BUDGET_ORDER_NO = MTP.BUDGET_ORDER_NO
-      AND MTP.BUDGET_YEAR=(@BudgetYear-2)
+      AND MTP.BUDGET_YEAR=(@BudgetYear-1)
       AND MTP.PERIOD_TYPE = 10
       AND MTP.PROJECT_NO = @MtpProjectNo
       AND MTP.REV_NO = '@MtpRevNo'
@@ -7995,7 +7995,7 @@
 
       LEFT JOIN BG_T_BUDGET_DATA AS MTP
       ON MAX_REV.BUDGET_ORDER_NO = MTP.BUDGET_ORDER_NO
-      AND MTP.BUDGET_YEAR=(@BudgetYear-2)
+      AND MTP.BUDGET_YEAR=(@BudgetYear-1)
       AND MTP.PERIOD_TYPE = 10
       AND MTP.PROJECT_NO = @MtpProjectNo
       AND MTP.REV_NO = '@MtpRevNo'
@@ -8185,7 +8185,7 @@
       AND MIN_REV.REV_NO = 1
 
       LEFT JOIN BG_T_BUDGET_ADJUST2 AS BD
-      ON BD.BUDGET_YEAR = (@BudgetYear-2)
+      ON BD.BUDGET_YEAR = (@BudgetYear-1)
       AND BD.PERIOD_TYPE = 10
       AND BD.REV_NO = '@MtpRevNo'
       AND BD.PROJECT_NO = @MtpProjectNo
