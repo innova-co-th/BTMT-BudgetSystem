@@ -155,13 +155,13 @@
       <dsig:DigestValue>dRzP8qiqd1MGjUlQyJxD8sMKwyY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="DB\SqlCmd.xml" size="851518" writeableType="applicationData">
+  <file name="DB\SqlCmd.xml" size="851464" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>tUEqpx5pENad40q5cRVgpfcQF1U=</dsig:DigestValue>
+      <dsig:DigestValue>KuW5Py5R+0ROlQSTXROInV9TBZ0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Images\kspread_ksp.ico" size="323590">
