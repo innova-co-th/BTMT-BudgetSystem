@@ -11,14 +11,14 @@
     <deploymentProvider codebase="file://10.30.99.37/Install/BudgetingSystem.application" />
   </deployment>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="BudgetingSystem.exe.manifest" size="33769">
+    <dependentAssembly dependencyType="install" codebase="BudgetingSystem.exe.manifest" size="28620">
       <assemblyIdentity name="BudgetingSystem.exe" version="1.2.0.9" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>kYKECcao4ocXnDj9XblJAsxzDfE=</dsig:DigestValue>
+        <dsig:DigestValue>98hQX5EklB/zbzhvm0x9rI33Om0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

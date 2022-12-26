@@ -2681,10 +2681,10 @@ Public Class frmBG0200
                     Dim returnvalue As Object
 
                     lblSumMTP1.Text = "Original"
-                    'lblSumMTP2.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    lblSumMTP2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
-                    'lblSumMTPN1.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
-                    lblSumMTPN1.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
+                    lblSumMTP2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    'lblSumMTP2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
+                    lblSumMTPN1.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    'lblSumMTPN1.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
                     lblSumMTP3.Text = "Y" & CStr(CInt(Me.GetBudgetYear()))
                     lblSumMTP4.Text = "Y" & CStr(CInt(Me.GetBudgetYear()))
                     lblSumMTP5.Text = "Y" & CStr(CInt(Me.GetBudgetYear()) + 1)
@@ -2696,9 +2696,9 @@ Public Class frmBG0200
                     'lblSumMTPN3.Text = "MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
                     'lblSumMTPN4.Text = "Diff vs MTP" & CStr(CInt(Me.GetBudgetYear()) - 1)
 
-                    lblSumMTPN2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) + 1)
-                    lblSumMTPN3.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
-                    lblSumMTPN4.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 0)
+                    lblSumMTPN2.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()))
+                    lblSumMTPN3.Text = "MBP" & CStr(CInt(Me.GetBudgetYear()) - 1)
+                    lblSumMTPN4.Text = "Diff vs MBP" & CStr(CInt(Me.GetBudgetYear()) - 1)
 
                     lblSumMTP3Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
                     lblSumMTP7Val.BackColor = System.Drawing.Color.FromArgb(255, 255, 192)
