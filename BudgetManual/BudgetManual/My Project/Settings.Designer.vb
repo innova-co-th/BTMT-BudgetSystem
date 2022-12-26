@@ -113,24 +113,6 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("PC-DEV01A1\SQLEXPRESS2014")>  _
-        Public ReadOnly Property ServerName() As String
-            Get
-                Return CType(Me("ServerName"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("abc123$1")>  _
-        Public ReadOnly Property Password() As String
-            Get
-                Return CType(Me("Password"),String)
-            End Get
-        End Property
-        
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("BUDGET")>  _
         Public ReadOnly Property DatabaseName() As String
             Get
@@ -140,7 +122,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Description : Changed MTP to MBP")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Description : Changed MTP to MBP Migration DB Support")>  _
         Public ReadOnly Property ProgramDesc() As String
             Get
                 Return CType(Me("ProgramDesc"),String)
@@ -150,8 +132,8 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=PC-DEV01A1\SQLEXPRESS2014;Initial Catalog=BUDGET;Persist Security Inf"& _ 
-            "o=True;User ID=sa;Password=abc123$1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=10.30.99.232;Initial Catalog=BUDGET;Persist Security Info=True;User I"& _ 
+            "D=sa;Password=P@ssw0rd")>  _
         Public ReadOnly Property BUDGETConnectionString() As String
             Get
                 Return CType(Me("BUDGETConnectionString"),String)
@@ -160,8 +142,26 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("user id=sa; data source=PC-DEV01A1\SQLEXPRESS2014; persist security info=True; in"& _ 
-            "itial catalog=BUDGET;password=abc123$1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10.30.99.232")>  _
+        Public ReadOnly Property ServerName() As String
+            Get
+                Return CType(Me("ServerName"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("P@ssw0rd")>  _
+        Public ReadOnly Property Password() As String
+            Get
+                Return CType(Me("Password"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("user id=sa; data source=10.30.99.232; persist security info=True; initial catalog"& _ 
+            "=BUDGET;password=P@ssw0rd")>  _
         Public ReadOnly Property ConnStr() As String
             Get
                 Return CType(Me("ConnStr"),String)

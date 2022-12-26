@@ -19,18 +19,18 @@
     <OptionInfer>On</OptionInfer>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
     <ApplicationIcon>Images\kspread_ksp.ico</ApplicationIcon>
     <TargetZone>LocalIntranet</TargetZone>
     <GenerateManifests>true</GenerateManifests>
-    <ManifestCertificateThumbprint>091E4A1C65BF1A336CD24CC5E82E902704BE6B0A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>844E87D3442515D66FE3C93C8EE82851C7CB8C2D</ManifestCertificateThumbprint>
     <ManifestKeyFile>BudgetManual_TemporaryKey.pfx</ManifestKeyFile>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
-    <PublishUrl>D:\Project2008\BTMT\BudgetManual\BudgetManual\Publish\</PublishUrl>
+    <PublishUrl>D:\Projects\BTMT-BudgetSystem\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -44,8 +44,8 @@
     <UpdateUrl>\\10.30.99.37\Install\</UpdateUrl>
     <ProductName>BTMT Budgeting System</ProductName>
     <PublisherName>INNOVA Software</PublisherName>
-    <ApplicationRevision>9</ApplicationRevision>
-    <ApplicationVersion>1.2.0.9</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.2.1.1</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -1419,6 +1419,7 @@
     <Content Include="DB\SqlCmd.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="BudgetManual_TemporaryKey.pfx" />
     <None Include="ClassDiagram1.cd" />
     <None Include="Lib\ICSharpCode.SharpZipLib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
