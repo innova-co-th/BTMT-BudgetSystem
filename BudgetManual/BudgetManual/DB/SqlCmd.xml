@@ -9829,7 +9829,7 @@
 
 
       WHERE
-      BD.BUDGET_YEAR = @BudgetYear-1 AND BD.PERIOD_TYPE = @PeriodType AND BD.REV_NO = @RevNo AND BD.PROJECT_NO = @ProjectNo AND
+      BD.BUDGET_YEAR = @BudgetYear AND BD.PERIOD_TYPE = @PeriodType AND BD.REV_NO = @RevNo AND BD.PROJECT_NO = @ProjectNo AND
       BO.BUDGET_TYPE = '@BudgetType' AND BO.ACTIVE_FLAG = 1 AND BH.Status >= @Status
       AND BD.BUDGET_ORDER_NO NOT IN
       (
