@@ -122,7 +122,7 @@ Namespace My
         
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Description : Changed MTP to MBP Migration DB Support")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Description : Changed MTP to MBP")>  _
         Public ReadOnly Property ProgramDesc() As String
             Get
                 Return CType(Me("ProgramDesc"),String)

@@ -1,10 +1,10 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PublishUrlHistory>D:\Projects\BTMT-BudgetSystem\Publish\|D:\Project2008\BTMT\BudgetManual\BudgetManual\Publish\</PublishUrlHistory>
-    <InstallUrlHistory>\\10.30.99.37\Install\</InstallUrlHistory>
+    <InstallUrlHistory>\\10.30.99.232\Install\|\\10.30.99.37\Install\</InstallUrlHistory>
     <SupportUrlHistory>
     </SupportUrlHistory>
-    <UpdateUrlHistory>\\10.30.99.37\Install\</UpdateUrlHistory>
+    <UpdateUrlHistory>\\10.30.99.232\Install\|\\10.30.99.37\Install\</UpdateUrlHistory>
     <BootstrapperUrlHistory>
     </BootstrapperUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
